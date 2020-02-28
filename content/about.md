@@ -51,6 +51,12 @@ Production Tools: Git, LaTex
        	   <span style="margin-left: 2%; display:inline; float:left; vertical-align: middle;">Mengzelev (Enmeng Liu)'s Blog </span>
        </a>
     </li>
+    <li style="margin: 1%;">
+        <a href="https://doowzs.com/">
+     	   <img src="/images/doowzs.png" style="width: 3%; margin-left: 1px; display:inline; float:left; vertical-align: middle;">
+       	   <span style="margin-left: 2%; display:inline; float:left; vertical-align: middle;">Doowzs(Tianyun Zhang)'s Blog </span>
+       </a>
+    </li>
    <li style="margin: 1%;">
         <a href="https://zhengzangw.github.io/">
      	   <img src="/images/zhengzangw.png" style="width: 3%; margin-left: 1px; display:inline; float:left; vertical-align: middle;">
@@ -64,7 +70,7 @@ Production Tools: Git, LaTex
        </a>
     </li>
      <li style="margin: 1%;">
-        <a href="https://marukohe.github.io/">
+        <a href="https://marukohe.com/">
      	   <img src="/images/maruko.png" style="width: 3%; margin-left: 1px; display:inline; float:left; vertical-align: middle;">
        	   <span style="margin-left: 2%; display:inline; float:left; vertical-align: middle;">Maruko (Wei He)'s Blog </span>
        </a>
