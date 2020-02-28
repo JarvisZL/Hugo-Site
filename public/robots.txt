@@ -61,4 +61,4 @@ Disallow: /
 User-agent: ZoominfoBot
 Disallow: /
 
-Sitemap: https://jarviszl.github.io/sitemap.xml
+Sitemap: https://jarviszly.com/sitemap.xml

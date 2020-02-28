@@ -3,7 +3,7 @@
 
 ## Info
 
-I am a junior student at [Kuang Yaming Honors School, Nanjing University]( https://dii.nju.edu.cn/ ),  pursuing Bachelor's Degree of Computer Science. 
+I am a junior student at [Kuang Yaming Honors School, Nanjing University]( https://dii.nju.edu.cn/ ),  pursuing Bachelor's Degree of Computer Science.
 
 <br>
 

@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>计算机网络-第三章 | 浙语临湖</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noodp" />
-<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszl.github.io/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%BA%94%E7%AB%A0/" /><link rel="next" href="https://jarviszl.github.io/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E6%8B%A5%E5%A1%9E%E5%92%8Cqos/" /><link rel="canonical" href="https://jarviszl.github.io/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%B8%89%E7%AB%A0/" />
+<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%BA%94%E7%AB%A0/" /><link rel="next" href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E6%8B%A5%E5%A1%9E%E5%92%8Cqos/" /><link rel="canonical" href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%B8%89%E7%AB%A0/" />
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -16,7 +16,7 @@
 <meta name="theme-color" content="#ffffff"><meta property="og:title" content="计算机网络-第三章" />
 <meta property="og:description" content="第三章 运输层 概述  运输层协议为运行在不同主机上的应用进程之间提供了逻辑通信，其只工作在端系统上，将应用进程的报文移动到网络边缘(网络层)，或者从网络层获取报文。 两个主要的协议：  UDP(用户数据协议)，不可靠的，无序的，无连接的。 TCP(传输控制协议)，可靠的，有序的，面向连接的。   运输层将主机之间的交付扩展到进程间的交互被称为 运输层的多路复用和多路分解。  多路复用和多路分解  $&lt;IP，Port&gt;$这样被称为套接字。 将运输层报文段中数据交付到正确的 套接字的做工称为 多路分解。 从不同套接字收集数据，加上首部，生成报文段后传递到网络层 ，这个工作称为 多路复用。 多路复用和多路分解的要求：  套接字有唯一标识。 报文段中有特殊字段指示所需交付的套接字，即源端口号和目的端口号。 端口号是16比特数，其中$0\sim 1023$这部分是 周知端口号，用于如HTTP等协议使用，其他可以随意分配。 报文段格式     无连接的多路复用和多路分解(UDP)  UDP套接字由一个 二元组(目的主机IP，目的端口号) 唯一确定，在这里源端口号和源IP作用是作为返回地址。  面向连接的多路复用和多路分解(TCP)  TCP套接字由一个 四元组(源IP,源端口号，目的IP，目的端口号) 唯一确定，只有四个属性全部一致的报文才会被发送到同一个端口上，除非该TCP报文段首部的 连接建立位是置位(即该报文用来建立连接)，则都会发送给主机上用来建立连接的端口上。  UDP(用户数据)协议  仅仅提供了复用/分解服务和差错检验服务。  报文段格式：UDP报文格式  其中Checksum用于差错检验，其计算方法和因特网校验和一样，二进制求和取反。 UDP首部为8字节。   UDP协议的优点：  UDP能够立马发送应用层传下来的数据，不会有过分的延迟传输，对于实时应用是很重要的。 不需要建立连接，不需要维持连接，所以没有连接延迟和维持连接的开销。    可靠数据传输原理  经 完全可靠信道传输 的FSM(有限状态机器)  发送方和接收方都有数据就传输，有数据就接收。   经 具有比特差错信道传输 的FSM  加入 差错检验和接收端反馈(ACK/NAK)，即发送后 停止等待 但没有考虑到接收端发送的ACK/NAK也可能受损，解决方法是在数据分组中加入 序号 字段 或者也可不使用NAK而是发送ACK时候带上ACK的分组序号，由发送方判断是否是刚刚发送的分组的ACK从而决定是否要重发。   经 具有比特差错和丢包信道传输 的FSM  加入 定时器，在时间阈值内没有收到正确的ACK则重发。    流水线可靠数据传输协议  针对rdt3的停止等待导致信道利用率低下的问题，改用不使用停止等待，而是允许发送一定量的分组而不需要得到确认。 流水线里面的差错恢复有 回退N步(滑动窗口) 和 选择重传 回退N步    在rdt3的基础上最多允许不加确认的条件下传输N个分组。 一旦超时，则重发从[base,nextseqnum-1]的全部分组。 同时在本协议内，接收端丢弃所有失序分组，也就是说如果第i个分组出现丢包，则i后面的分组都会被接收端丢弃。   选择重传  发送方和接收方各自维护一个大小为N的窗口。 发送方的事件和动作  1." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://jarviszl.github.io/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%B8%89%E7%AB%A0/" />
+<meta property="og:url" content="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%B8%89%E7%AB%A0/" />
 <meta property="article:published_time" content="2019-12-10T22:20:20+00:00" />
 <meta property="article:modified_time" content="2019-12-10T22:20:20+00:00" />
 <meta name="twitter:card" content="summary"/>
@@ -29,19 +29,19 @@
         "headline": "计算机网络-第三章",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/jarviszl.github.io\/documents\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%B8%89%E7%AB%A0\/"
+            "@id": "https:\/\/jarviszly.com\/documents\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%B8%89%E7%AB%A0\/"
         },"image": {
                 "@type": "ImageObject",
-                "url": "https:\/\/jarviszl.github.io\/cover.png",
+                "url": "https:\/\/jarviszly.com\/cover.png",
                 "width":  800 ,
                 "height":  600 
             },"genre": "documents","wordcount":  353 ,
-        "url": "https:\/\/jarviszl.github.io\/documents\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%B8%89%E7%AB%A0\/","datePublished": "2019-12-10T22:20:20\x2b00:00","dateModified": "2019-12-10T22:20:20\x2b00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "https:\/\/jarviszly.com\/documents\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%B8%89%E7%AB%A0\/","datePublished": "2019-12-10T22:20:20\x2b00:00","dateModified": "2019-12-10T22:20:20\x2b00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "xxxx",
                 "logo": {
                 "@type": "ImageObject",
-                "url": "https:\/\/jarviszl.github.io\/images\/logo.png",
+                "url": "https:\/\/jarviszly.com\/images\/logo.png",
                 "width":  127 ,
                 "height":  40 
                 }
@@ -54,22 +54,22 @@
         </script><div class="wrapper"><nav class="navbar">
     <div class="navbar-container">
         <div class="navbar-header animated bounceIn">
-            <a href="https://jarviszl.github.io/">浙语临湖</a>
+            <a href="https://jarviszly.com">浙语临湖</a>
         </div>
-        <div class="navbar-menu"><a class="menu-item" href="https://jarviszl.github.io/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszl.github.io/categories" title="">Documents</a><a class="menu-item" href="https://jarviszl.github.io/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Documents</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav><nav class="navbar-mobile">
     <div class="navbar-container">
         <div class="navbar-header">
             <div class="navbar-header-title animated bounceIn">
-                <a href="https://jarviszl.github.io/">浙语临湖</a>
+                <a href="https://jarviszly.com">浙语临湖</a>
             </div>
             <div class="menu-toggle" id="menu-toggle">
                 <span></span><span></span><span></span>
             </div>
         </div>
-        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszl.github.io/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszl.github.io/categories" title="">Documents</a><a class="menu-item" href="https://jarviszl.github.io/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Documents</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav>

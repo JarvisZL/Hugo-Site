@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>计算机网络 on 浙语临湖</title>
-    <link>https://jarviszl.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</link>
+    <link>https://jarviszly.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</link>
     <description>Recent content in 计算机网络 on 浙语临湖</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Tue, 24 Dec 2019 19:26:48 +0000</lastBuildDate>
     
-	<atom:link href="https://jarviszl.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://jarviszly.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>计算机网络-拥塞和Qos</title>
-      <link>https://jarviszl.github.io/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E6%8B%A5%E5%A1%9E%E5%92%8Cqos/</link>
+      <link>https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E6%8B%A5%E5%A1%9E%E5%92%8Cqos/</link>
       <pubDate>Tue, 24 Dec 2019 19:26:48 +0000</pubDate>
       
-      <guid>https://jarviszl.github.io/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E6%8B%A5%E5%A1%9E%E5%92%8Cqos/</guid>
+      <guid>https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E6%8B%A5%E5%A1%9E%E5%92%8Cqos/</guid>
       <description>拥塞和Qos 拥塞 拥塞原因  大量分组在网络上传输，数量超出路由器的处理能力。  拥塞代价  造成丢包，时延；重传使得浪费之前发送的资源。  拥塞控制方法   抑制分组(choke packet): 产生拥塞的路由器通过特定协议(如ICMP)向源端系统发送抑制分组来抑制源端系统的分组发送。
   反向施压(Backpressure): 当传播时间大于传输时间时，choke packet往往没有作用，则通过产生拥塞路由器向前面一个路由器反向施压抑制前面路由器的发送，这样传递下去，最终影响到源端系统。
   标志位(Warning bit): 通过在分组上设置一个标志位来告诉端系统可能发生拥塞。
@@ -29,46 +29,46 @@
     
     <item>
       <title>计算机网络-第三章</title>
-      <link>https://jarviszl.github.io/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%B8%89%E7%AB%A0/</link>
+      <link>https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%B8%89%E7%AB%A0/</link>
       <pubDate>Tue, 10 Dec 2019 22:20:20 +0000</pubDate>
       
-      <guid>https://jarviszl.github.io/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%B8%89%E7%AB%A0/</guid>
+      <guid>https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%B8%89%E7%AB%A0/</guid>
       <description>第三章 运输层 概述  运输层协议为运行在不同主机上的应用进程之间提供了逻辑通信，其只工作在端系统上，将应用进程的报文移动到网络边缘(网络层)，或者从网络层获取报文。 两个主要的协议：  UDP(用户数据协议)，不可靠的，无序的，无连接的。 TCP(传输控制协议)，可靠的，有序的，面向连接的。   运输层将主机之间的交付扩展到进程间的交互被称为 运输层的多路复用和多路分解。  多路复用和多路分解  $&amp;lt;IP，Port&amp;gt;$这样被称为套接字。 将运输层报文段中数据交付到正确的 套接字的做工称为 多路分解。 从不同套接字收集数据，加上首部，生成报文段后传递到网络层 ，这个工作称为 多路复用。 多路复用和多路分解的要求：  套接字有唯一标识。 报文段中有特殊字段指示所需交付的套接字，即源端口号和目的端口号。 端口号是16比特数，其中$0\sim 1023$这部分是 周知端口号，用于如HTTP等协议使用，其他可以随意分配。 报文段格式     无连接的多路复用和多路分解(UDP)  UDP套接字由一个 二元组(目的主机IP，目的端口号) 唯一确定，在这里源端口号和源IP作用是作为返回地址。  面向连接的多路复用和多路分解(TCP)  TCP套接字由一个 四元组(源IP,源端口号，目的IP，目的端口号) 唯一确定，只有四个属性全部一致的报文才会被发送到同一个端口上，除非该TCP报文段首部的 连接建立位是置位(即该报文用来建立连接)，则都会发送给主机上用来建立连接的端口上。  UDP(用户数据)协议  仅仅提供了复用/分解服务和差错检验服务。  报文段格式：UDP报文格式  其中Checksum用于差错检验，其计算方法和因特网校验和一样，二进制求和取反。 UDP首部为8字节。   UDP协议的优点：  UDP能够立马发送应用层传下来的数据，不会有过分的延迟传输，对于实时应用是很重要的。 不需要建立连接，不需要维持连接，所以没有连接延迟和维持连接的开销。    可靠数据传输原理  经 完全可靠信道传输 的FSM(有限状态机器)  发送方和接收方都有数据就传输，有数据就接收。   经 具有比特差错信道传输 的FSM  加入 差错检验和接收端反馈(ACK/NAK)，即发送后 停止等待 但没有考虑到接收端发送的ACK/NAK也可能受损，解决方法是在数据分组中加入 序号 字段 或者也可不使用NAK而是发送ACK时候带上ACK的分组序号，由发送方判断是否是刚刚发送的分组的ACK从而决定是否要重发。   经 具有比特差错和丢包信道传输 的FSM  加入 定时器，在时间阈值内没有收到正确的ACK则重发。    流水线可靠数据传输协议  针对rdt3的停止等待导致信道利用率低下的问题，改用不使用停止等待，而是允许发送一定量的分组而不需要得到确认。 流水线里面的差错恢复有 回退N步(滑动窗口) 和 选择重传 回退N步    在rdt3的基础上最多允许不加确认的条件下传输N个分组。 一旦超时，则重发从[base,nextseqnum-1]的全部分组。 同时在本协议内，接收端丢弃所有失序分组，也就是说如果第i个分组出现丢包，则i后面的分组都会被接收端丢弃。   选择重传  发送方和接收方各自维护一个大小为N的窗口。 发送方的事件和动作  1.</description>
     </item>
     
     <item>
       <title>计算机网络-第五章</title>
-      <link>https://jarviszl.github.io/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%BA%94%E7%AB%A0/</link>
+      <link>https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%BA%94%E7%AB%A0/</link>
       <pubDate>Mon, 09 Dec 2019 18:51:04 +0000</pubDate>
       
-      <guid>https://jarviszl.github.io/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%BA%94%E7%AB%A0/</guid>
+      <guid>https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%BA%94%E7%AB%A0/</guid>
       <description>第五章 路由选择算法  路由选择算法的目的是从发送方到接收方的过程中确定一条通过路由器网络的好的路径。  分类  集中式路由选择算法和分散式路由选择算法  集中式路由选择算法：用完整的全局性的网络信息计算出最低开销路径，以所有节点之间的连通性及所有链路的开销作为输入，如链路状态算法(LS) 分散式路由选择算法：路由器以 迭代，分布式方法计算出最低开销路径，每个节点仅有与其直接相连的链路开销信息即可开始工作。如 距离向量算法(DV)   静态路由选择算法和动态路由选择算法 负载敏感算法和负载迟钝算法  现在因特网路由选择算法(RIP,OSPF,BGP)都是负载迟钝算法。    LS算法  在该算法中，网络拓扑和所有链路开销都是已知的。实践中是通过让每个节点向网络中广播链路状态分组来完成的。其中链路状态分组包含和自己相连的链路的开销信息，这常常由 链路状态广播算法完成。 使用协议：OSPF，使用的算法：Dijkstra算法，复杂度$O({|V|}^2)$  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15  1 Initialization: 2 N’ = {u} 3 for all nodes v 4 if v is a neighbor of u 5 then D(v) = c(u, v) 6 else D(v) = ∞ 7 8 Loop 9 find w not in N’ such that D(w) is a minimum 10 add w to N’ 11 update D(v) for each neighbor v of w and not in N’: 12 D(v) = min(D(v), D(w)+ c(w, v) ) 13 /* new cost to v is either old cost to v or known 14 least path cost to w plus cost from w to v */ 15 until N’= N    链路状态算法运行过程： table  存在的问题：拥塞敏感的选择振荡  在拥塞敏感且将路径负载当作开销的情况下，所有路由器同时运行LS算法，会使得由于选择了某一条目前最短开销路径而导致网络中路径开销改变，LS算法得出的最短开销路径会不断摇摆振荡。 解决办法是 使每台路由器广播链路状态分组的时间随机化。    DV算法  该算法是一种 迭代的，异步的，分布式的算法，使用的协议有BGP，RIP.</description>
     </item>
     
     <item>
       <title>计算机网络-第四章</title>
-      <link>https://jarviszl.github.io/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%9B%9B%E7%AB%A0/</link>
+      <link>https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%9B%9B%E7%AB%A0/</link>
       <pubDate>Thu, 05 Dec 2019 09:41:06 +0000</pubDate>
       
-      <guid>https://jarviszl.github.io/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%9B%9B%E7%AB%A0/</guid>
+      <guid>https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%9B%9B%E7%AB%A0/</guid>
       <description>第四章 转发和交换(路由选择) 转发  是网络层：数据平面实现的唯一功能。 是指将一个分组从一个输入链路接口转移到适当的输出链路接口的路由器本地动作，时间尺度很短。  交换(路由选择)  是网络层：控制平面的功能，当分组从发送方流向接收方时，网络层需要决定这些分组采用的路由或路径，计算这些路径的算法称为 路由选择算法 是指确定分组从发送方到接收方所采取的端到端路径的网络范围处理过程，事件尺度相对更长。  转发表  每个网络路由器都有一个转发表，路由器在检测到分组首部的若干字段后，用这些首部值在转发表中索引，从而确定分组转发的输出链路接口。 链路层交换机时根据链路层帧首部的字段(如MAC地址)进行转发，而 路由器是根据网络层数据报中的首部(如IP地址)进行转发  路由器工作原理 路由器体系结构 体系结构  交换  经内存交换：通过终端路由选择处理器 经总线交换：通过给分组打上标签，到达本地输出链路后去除标签。 经互联网络交换：允许并行，交换时将沿途结点封锁。    基于目的地的转发  路由器转发表采用前缀匹配的方式生成表项，对于每一个链路接口，其目的地址范围的前缀为表项中的前缀匹配。 在收到分组时，路由器用分组的目的地址和表项中的前缀匹配，匹配成功则将该分组转发到对应的链路接口。 当存在多个成功匹配时，采用 最长前缀匹配规则，转发到匹配长度最长的那个链路接口。  分组调度  排队的分组如何经输出链路传输。 先进先出(FIFO) 优先权排队  将到达输出链路的分组按照优先级分成多个类，优先级高的类先传输，类内采用FIFO的方式。 非抢占式优先权排队：一旦分组开始被传输，即使此时有更高优先级的分组到达，该分组的传输也不会被打断。   循环排队规则  也将分组分成多个类，循环调度器在类之间轮流传输。   加权公平排队  和循环排队类似，但是在第i个类有需要发送的分组的任何时间间隔中，都能保证该类等待发送的分组中有$w_i/(\sum w_j)$的部分接收到了发送服务。    网际协议：IP IPv4 IPv4数据报格式 IPv4   版本号：规定了数据报IP协议版本，路由器根据该部分决定如何识别解释后面的部分 首部长度：一般为20字节。 服务类型：说明该IP数据报是什么类型。 数据报长度：整个IP数据报总长度。 标识，标志，片偏移：和IP分片相关。 寿命(TTL): 确保数据报不会再网络中循环，没经过一个路由器该值-1，为0时丢弃。 上层协议：指示了IP数据报的数据部分应该交给哪一个特定的运输层协议。 首部校验和：帮助路由器检测IP数据报中的比特错误。 源/目的IP地址，选项，数据。  IPv4数据报分片  分片原因：由于不同的链路层协议的 最大传送单元不一样，有时一个链路层帧并不能完全承载一个IP数据报的内容，故需要将IP数据报分片。 最大传送单元：一个链路层帧能够承载的最大数据量。 IPv4将重组IP数据报的工作交给了端系统。 IPv4数据报分片利用标识，标志，片偏移三个字段：  发送主机通常将它发送的每一个数据报的标识号依次加1.</description>
     </item>
     
     <item>
       <title>计算机网络-第六章</title>
-      <link>https://jarviszl.github.io/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%85%AD%E7%AB%A0/</link>
+      <link>https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%85%AD%E7%AB%A0/</link>
       <pubDate>Tue, 26 Nov 2019 19:00:45 +0000</pubDate>
       
-      <guid>https://jarviszl.github.io/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%85%AD%E7%AB%A0/</guid>
+      <guid>https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%85%AD%E7%AB%A0/</guid>
       <description>第六章 链路层概述  运行链路层协议的任何设备称为节点，沿着通信路径连接相邻节点的通信信道称为链路 在通过特定链路时，传输节点将数据报封装在链路层帧中，并将该帧发送到链路中。  链路层服务  成帧(framing)  链路层帧由一个数据字段和若干首部字段组成，其中网络层数据报就插在数据字段中。   链路接入(link access)  协调对共享多访问媒体的访问 媒体访问控制(MAC)协议规定了帧在链路上传输的规则。   可同时发送和接收 可靠交付  保证无差错地经链路层移动每个网络层数据报。   流控制 差错检测和纠正  链路层实现  链路层主体部分是网络适配器(网卡)，位于网卡核心的是链路层控制器，通常是一个实现了许多链路层服务的专用芯片。链路层涉及到硬件，软件和固件。 链路层帧的发送和接收  发送端：将网络层数据报封装成链路层帧，在帧的首部设置差错检测比特。 接收端：检查错误，从链路层帧中抽取网络层数据报传给上层网络层。    差错检测和纠正技术  比特级差错检测和纠正：即对从一个节点发送到另一个物理上连接的邻近节点的链路层帧中的比特损伤进行检测和纠正。 使用 差错检测和纠正比特(EDC) 来增强数据D。 通常要保护的信息除了数据报内容还包括帧首部链路级的寻址信息等。  三种检错纠错技术  奇偶校验  单个奇偶校验位  简单易用 出现偶数个bit错误时无法检测出来，且只可以检测错误。   二维奇偶检验  二位奇偶校验  发生单个错时，可以根据行和列的索引定位纠正错误。 可以检测(但不能纠正)一个分组(同一行或同一列)中任意两个比特错误的组合。 接收方检测和纠正错误的能力交错前向纠错     因特网校验和(Internet checksum)  将数据的自己作为16bit的整数并求和，这个和的 反码 形成了携带在报文段首部的 校验和。(这一步即是二进制反码求和) 二进制反码求和：从低位到高位逐列进行和计算,如果最高位(16位)进位,则得到的结果加1,一直循环到最高位没有进位为止.</description>
     </item>
     
     <item>
       <title>计算机网络-第七章</title>
-      <link>https://jarviszl.github.io/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%B8%83%E7%AB%A0/</link>
+      <link>https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%B8%83%E7%AB%A0/</link>
       <pubDate>Fri, 01 Nov 2019 22:29:54 +0000</pubDate>
       
-      <guid>https://jarviszl.github.io/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%B8%83%E7%AB%A0/</guid>
+      <guid>https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%B8%83%E7%AB%A0/</guid>
       <description>无线网络和移动网络 基本概念   基站：负责协调与之关联的多个无线主机之间数据的传输。比如蜂窝塔，802.11无线LAN中的接入点。
   基础设施模式：与基站关联的主机以此模式运行。
   网络基础设施：无线主机希望与之进行通信的更大的网络。

@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>计算机网络-第五章 | 浙语临湖</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noodp" />
-<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszl.github.io/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%9B%9B%E7%AB%A0/" /><link rel="next" href="https://jarviszl.github.io/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%B8%89%E7%AB%A0/" /><link rel="canonical" href="https://jarviszl.github.io/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%BA%94%E7%AB%A0/" />
+<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%9B%9B%E7%AB%A0/" /><link rel="next" href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%B8%89%E7%AB%A0/" /><link rel="canonical" href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%BA%94%E7%AB%A0/" />
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -16,7 +16,7 @@
 <meta name="theme-color" content="#ffffff"><meta property="og:title" content="计算机网络-第五章" />
 <meta property="og:description" content="第五章 路由选择算法  路由选择算法的目的是从发送方到接收方的过程中确定一条通过路由器网络的好的路径。  分类  集中式路由选择算法和分散式路由选择算法  集中式路由选择算法：用完整的全局性的网络信息计算出最低开销路径，以所有节点之间的连通性及所有链路的开销作为输入，如链路状态算法(LS) 分散式路由选择算法：路由器以 迭代，分布式方法计算出最低开销路径，每个节点仅有与其直接相连的链路开销信息即可开始工作。如 距离向量算法(DV)   静态路由选择算法和动态路由选择算法 负载敏感算法和负载迟钝算法  现在因特网路由选择算法(RIP,OSPF,BGP)都是负载迟钝算法。    LS算法  在该算法中，网络拓扑和所有链路开销都是已知的。实践中是通过让每个节点向网络中广播链路状态分组来完成的。其中链路状态分组包含和自己相连的链路的开销信息，这常常由 链路状态广播算法完成。 使用协议：OSPF，使用的算法：Dijkstra算法，复杂度$O({|V|}^2)$  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15  1 Initialization: 2 N’ = {u} 3 for all nodes v 4 if v is a neighbor of u 5 then D(v) = c(u, v) 6 else D(v) = ∞ 7 8 Loop 9 find w not in N’ such that D(w) is a minimum 10 add w to N’ 11 update D(v) for each neighbor v of w and not in N’: 12 D(v) = min(D(v), D(w)&#43; c(w, v) ) 13 /* new cost to v is either old cost to v or known 14 least path cost to w plus cost from w to v */ 15 until N’= N    链路状态算法运行过程： table  存在的问题：拥塞敏感的选择振荡  在拥塞敏感且将路径负载当作开销的情况下，所有路由器同时运行LS算法，会使得由于选择了某一条目前最短开销路径而导致网络中路径开销改变，LS算法得出的最短开销路径会不断摇摆振荡。 解决办法是 使每台路由器广播链路状态分组的时间随机化。    DV算法  该算法是一种 迭代的，异步的，分布式的算法，使用的协议有BGP，RIP." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://jarviszl.github.io/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%BA%94%E7%AB%A0/" />
+<meta property="og:url" content="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%BA%94%E7%AB%A0/" />
 <meta property="article:published_time" content="2019-12-09T18:51:04+00:00" />
 <meta property="article:modified_time" content="2019-12-09T18:51:04+00:00" />
 <meta name="twitter:card" content="summary"/>
@@ -29,19 +29,19 @@
         "headline": "计算机网络-第五章",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/jarviszl.github.io\/documents\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%BA%94%E7%AB%A0\/"
+            "@id": "https:\/\/jarviszly.com\/documents\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%BA%94%E7%AB%A0\/"
         },"image": {
                 "@type": "ImageObject",
-                "url": "https:\/\/jarviszl.github.io\/cover.png",
+                "url": "https:\/\/jarviszly.com\/cover.png",
                 "width":  800 ,
                 "height":  600 
             },"genre": "documents","wordcount":  356 ,
-        "url": "https:\/\/jarviszl.github.io\/documents\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%BA%94%E7%AB%A0\/","datePublished": "2019-12-09T18:51:04\x2b00:00","dateModified": "2019-12-09T18:51:04\x2b00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "https:\/\/jarviszly.com\/documents\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%BA%94%E7%AB%A0\/","datePublished": "2019-12-09T18:51:04\x2b00:00","dateModified": "2019-12-09T18:51:04\x2b00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "xxxx",
                 "logo": {
                 "@type": "ImageObject",
-                "url": "https:\/\/jarviszl.github.io\/images\/logo.png",
+                "url": "https:\/\/jarviszly.com\/images\/logo.png",
                 "width":  127 ,
                 "height":  40 
                 }
@@ -54,22 +54,22 @@
         </script><div class="wrapper"><nav class="navbar">
     <div class="navbar-container">
         <div class="navbar-header animated bounceIn">
-            <a href="https://jarviszl.github.io/">浙语临湖</a>
+            <a href="https://jarviszly.com">浙语临湖</a>
         </div>
-        <div class="navbar-menu"><a class="menu-item" href="https://jarviszl.github.io/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszl.github.io/categories" title="">Documents</a><a class="menu-item" href="https://jarviszl.github.io/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Documents</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav><nav class="navbar-mobile">
     <div class="navbar-container">
         <div class="navbar-header">
             <div class="navbar-header-title animated bounceIn">
-                <a href="https://jarviszl.github.io/">浙语临湖</a>
+                <a href="https://jarviszly.com">浙语临湖</a>
             </div>
             <div class="menu-toggle" id="menu-toggle">
                 <span></span><span></span><span></span>
             </div>
         </div>
-        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszl.github.io/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszl.github.io/categories" title="">Documents</a><a class="menu-item" href="https://jarviszl.github.io/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Documents</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav>

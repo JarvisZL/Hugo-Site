@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>计算机网络-第六章 | 浙语临湖</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noodp" />
-<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszl.github.io/documents/%E5%BE%AE%E7%94%B5%E5%AD%90%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B8%89%E7%AB%A0/" /><link rel="next" href="https://jarviszl.github.io/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%9B%9B%E7%AB%A0/" /><link rel="canonical" href="https://jarviszl.github.io/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%85%AD%E7%AB%A0/" />
+<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszly.com/documents/%E5%BE%AE%E7%94%B5%E5%AD%90%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B8%89%E7%AB%A0/" /><link rel="next" href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%9B%9B%E7%AB%A0/" /><link rel="canonical" href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%85%AD%E7%AB%A0/" />
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -16,7 +16,7 @@
 <meta name="theme-color" content="#ffffff"><meta property="og:title" content="计算机网络-第六章" />
 <meta property="og:description" content="第六章 链路层概述  运行链路层协议的任何设备称为节点，沿着通信路径连接相邻节点的通信信道称为链路 在通过特定链路时，传输节点将数据报封装在链路层帧中，并将该帧发送到链路中。  链路层服务  成帧(framing)  链路层帧由一个数据字段和若干首部字段组成，其中网络层数据报就插在数据字段中。   链路接入(link access)  协调对共享多访问媒体的访问 媒体访问控制(MAC)协议规定了帧在链路上传输的规则。   可同时发送和接收 可靠交付  保证无差错地经链路层移动每个网络层数据报。   流控制 差错检测和纠正  链路层实现  链路层主体部分是网络适配器(网卡)，位于网卡核心的是链路层控制器，通常是一个实现了许多链路层服务的专用芯片。链路层涉及到硬件，软件和固件。 链路层帧的发送和接收  发送端：将网络层数据报封装成链路层帧，在帧的首部设置差错检测比特。 接收端：检查错误，从链路层帧中抽取网络层数据报传给上层网络层。    差错检测和纠正技术  比特级差错检测和纠正：即对从一个节点发送到另一个物理上连接的邻近节点的链路层帧中的比特损伤进行检测和纠正。 使用 差错检测和纠正比特(EDC) 来增强数据D。 通常要保护的信息除了数据报内容还包括帧首部链路级的寻址信息等。  三种检错纠错技术  奇偶校验  单个奇偶校验位  简单易用 出现偶数个bit错误时无法检测出来，且只可以检测错误。   二维奇偶检验  二位奇偶校验  发生单个错时，可以根据行和列的索引定位纠正错误。 可以检测(但不能纠正)一个分组(同一行或同一列)中任意两个比特错误的组合。 接收方检测和纠正错误的能力交错前向纠错     因特网校验和(Internet checksum)  将数据的自己作为16bit的整数并求和，这个和的 反码 形成了携带在报文段首部的 校验和。(这一步即是二进制反码求和) 二进制反码求和：从低位到高位逐列进行和计算,如果最高位(16位)进位,则得到的结果加1,一直循环到最高位没有进位为止." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://jarviszl.github.io/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%85%AD%E7%AB%A0/" />
+<meta property="og:url" content="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%85%AD%E7%AB%A0/" />
 <meta property="article:published_time" content="2019-11-26T19:00:45+00:00" />
 <meta property="article:modified_time" content="2019-11-26T19:00:45+00:00" />
 <meta name="twitter:card" content="summary"/>
@@ -29,19 +29,19 @@
         "headline": "计算机网络-第六章",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/jarviszl.github.io\/documents\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%85%AD%E7%AB%A0\/"
+            "@id": "https:\/\/jarviszly.com\/documents\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%85%AD%E7%AB%A0\/"
         },"image": {
                 "@type": "ImageObject",
-                "url": "https:\/\/jarviszl.github.io\/cover.png",
+                "url": "https:\/\/jarviszly.com\/cover.png",
                 "width":  800 ,
                 "height":  600 
             },"genre": "documents","keywords": "232, 174, 161, 231, 174, 151, 230, 156, 186, 231, 189, 145, 231, 187, 156, 45, 67, 50, 231, 155, 180, 232, 191, 158, 231, 189, 145","wordcount":  302 ,
-        "url": "https:\/\/jarviszl.github.io\/documents\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%85%AD%E7%AB%A0\/","datePublished": "2019-11-26T19:00:45\x2b00:00","dateModified": "2019-11-26T19:00:45\x2b00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "https:\/\/jarviszly.com\/documents\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%85%AD%E7%AB%A0\/","datePublished": "2019-11-26T19:00:45\x2b00:00","dateModified": "2019-11-26T19:00:45\x2b00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "xxxx",
                 "logo": {
                 "@type": "ImageObject",
-                "url": "https:\/\/jarviszl.github.io\/images\/logo.png",
+                "url": "https:\/\/jarviszly.com\/images\/logo.png",
                 "width":  127 ,
                 "height":  40 
                 }
@@ -54,22 +54,22 @@
         </script><div class="wrapper"><nav class="navbar">
     <div class="navbar-container">
         <div class="navbar-header animated bounceIn">
-            <a href="https://jarviszl.github.io/">浙语临湖</a>
+            <a href="https://jarviszly.com">浙语临湖</a>
         </div>
-        <div class="navbar-menu"><a class="menu-item" href="https://jarviszl.github.io/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszl.github.io/categories" title="">Documents</a><a class="menu-item" href="https://jarviszl.github.io/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Documents</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav><nav class="navbar-mobile">
     <div class="navbar-container">
         <div class="navbar-header">
             <div class="navbar-header-title animated bounceIn">
-                <a href="https://jarviszl.github.io/">浙语临湖</a>
+                <a href="https://jarviszly.com">浙语临湖</a>
             </div>
             <div class="menu-toggle" id="menu-toggle">
                 <span></span><span></span><span></span>
             </div>
         </div>
-        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszl.github.io/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszl.github.io/categories" title="">Documents</a><a class="menu-item" href="https://jarviszl.github.io/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Documents</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav>
