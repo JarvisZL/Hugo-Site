@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>计算机网络-第六章 | 浙语临湖</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszl.github.io/documents/%E5%BE%AE%E7%94%B5%E5%AD%90%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B8%89%E7%AB%A0/" /><link rel="next" href="https://jarviszl.github.io/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%9B%9B%E7%AB%A0/" /><link rel="canonical" href="https://jarviszl.github.io/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%85%AD%E7%AB%A0/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="计算机网络-第六章" />
+<meta property="og:description" content="第六章 链路层概述  运行链路层协议的任何设备称为节点，沿着通信路径连接相邻节点的通信信道称为链路 在通过特定链路时，传输节点将数据报封装在链路层帧中，并将该帧发送到链路中。  链路层服务  成帧(framing)  链路层帧由一个数据字段和若干首部字段组成，其中网络层数据报就插在数据字段中。   链路接入(link access)  协调对共享多访问媒体的访问 媒体访问控制(MAC)协议规定了帧在链路上传输的规则。   可同时发送和接收 可靠交付  保证无差错地经链路层移动每个网络层数据报。   流控制 差错检测和纠正  链路层实现  链路层主体部分是网络适配器(网卡)，位于网卡核心的是链路层控制器，通常是一个实现了许多链路层服务的专用芯片。链路层涉及到硬件，软件和固件。 链路层帧的发送和接收  发送端：将网络层数据报封装成链路层帧，在帧的首部设置差错检测比特。 接收端：检查错误，从链路层帧中抽取网络层数据报传给上层网络层。    差错检测和纠正技术  比特级差错检测和纠正：即对从一个节点发送到另一个物理上连接的邻近节点的链路层帧中的比特损伤进行检测和纠正。 使用 差错检测和纠正比特(EDC) 来增强数据D。 通常要保护的信息除了数据报内容还包括帧首部链路级的寻址信息等。  三种检错纠错技术  奇偶校验  单个奇偶校验位  简单易用 出现偶数个bit错误时无法检测出来，且只可以检测错误。   二维奇偶检验  二位奇偶校验  发生单个错时，可以根据行和列的索引定位纠正错误。 可以检测(但不能纠正)一个分组(同一行或同一列)中任意两个比特错误的组合。 接收方检测和纠正错误的能力交错前向纠错     因特网校验和(Internet checksum)  将数据的自己作为16bit的整数并求和，这个和的 反码 形成了携带在报文段首部的 校验和。(这一步即是二进制反码求和) 二进制反码求和：从低位到高位逐列进行和计算,如果最高位(16位)进位,则得到的结果加1,一直循环到最高位没有进位为止." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jarviszl.github.io/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%85%AD%E7%AB%A0/" />
+<meta property="article:published_time" content="2019-11-26T19:00:45+00:00" />
+<meta property="article:modified_time" content="2019-11-26T19:00:45+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="计算机网络-第六章"/>
+<meta name="twitter:description" content="第六章 链路层概述  运行链路层协议的任何设备称为节点，沿着通信路径连接相邻节点的通信信道称为链路 在通过特定链路时，传输节点将数据报封装在链路层帧中，并将该帧发送到链路中。  链路层服务  成帧(framing)  链路层帧由一个数据字段和若干首部字段组成，其中网络层数据报就插在数据字段中。   链路接入(link access)  协调对共享多访问媒体的访问 媒体访问控制(MAC)协议规定了帧在链路上传输的规则。   可同时发送和接收 可靠交付  保证无差错地经链路层移动每个网络层数据报。   流控制 差错检测和纠正  链路层实现  链路层主体部分是网络适配器(网卡)，位于网卡核心的是链路层控制器，通常是一个实现了许多链路层服务的专用芯片。链路层涉及到硬件，软件和固件。 链路层帧的发送和接收  发送端：将网络层数据报封装成链路层帧，在帧的首部设置差错检测比特。 接收端：检查错误，从链路层帧中抽取网络层数据报传给上层网络层。    差错检测和纠正技术  比特级差错检测和纠正：即对从一个节点发送到另一个物理上连接的邻近节点的链路层帧中的比特损伤进行检测和纠正。 使用 差错检测和纠正比特(EDC) 来增强数据D。 通常要保护的信息除了数据报内容还包括帧首部链路级的寻址信息等。  三种检错纠错技术  奇偶校验  单个奇偶校验位  简单易用 出现偶数个bit错误时无法检测出来，且只可以检测错误。   二维奇偶检验  二位奇偶校验  发生单个错时，可以根据行和列的索引定位纠正错误。 可以检测(但不能纠正)一个分组(同一行或同一列)中任意两个比特错误的组合。 接收方检测和纠正错误的能力交错前向纠错     因特网校验和(Internet checksum)  将数据的自己作为16bit的整数并求和，这个和的 反码 形成了携带在报文段首部的 校验和。(这一步即是二进制反码求和) 二进制反码求和：从低位到高位逐列进行和计算,如果最高位(16位)进位,则得到的结果加1,一直循环到最高位没有进位为止."/>
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "计算机网络-第六章",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/jarviszl.github.io\/documents\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%85%AD%E7%AB%A0\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszl.github.io\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "documents","keywords": "232, 174, 161, 231, 174, 151, 230, 156, 186, 231, 189, 145, 231, 187, 156, 45, 67, 50, 231, 155, 180, 232, 191, 158, 231, 189, 145","wordcount":  302 ,
+        "url": "https:\/\/jarviszl.github.io\/documents\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%85%AD%E7%AB%A0\/","datePublished": "2019-11-26T19:00:45\x2b00:00","dateModified": "2019-11-26T19:00:45\x2b00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "xxxx",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszl.github.io\/images\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/forkawesome/fork-awesome.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://jarviszl.github.io/">浙语临湖</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://jarviszl.github.io/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszl.github.io/categories" title="">Documents</a><a class="menu-item" href="https://jarviszl.github.io/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://jarviszl.github.io/">浙语临湖</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszl.github.io/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszl.github.io/categories" title="">Documents</a><a class="menu-item" href="https://jarviszl.github.io/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><div class="page single"><h1 class="post-title animated pulse faster">计算机网络-第六章</h1><div class="post-content"><h1 id="第六章">第六章</h1>
+<!-- more -->
+<a class="post-dummy-target" id="链路层概述"></a><h2>链路层概述</h2>
+<ul>
+<li>运行链路层协议的任何设备称为<strong>节点</strong>，沿着通信路径连接相邻节点的通信信道称为<strong>链路</strong></li>
+<li>在通过特定链路时，传输节点将数据报封装在链路层帧中，并将该帧发送到链路中。</li>
+</ul>
+<a class="post-dummy-target" id="链路层服务"></a><h2>链路层服务</h2>
+<ul>
+<li>成帧(framing)
+<ul>
+<li>链路层帧由一个数据字段和若干首部字段组成，其中网络层数据报就插在数据字段中。</li>
+</ul>
+</li>
+<li>链路接入(link access)
+<ul>
+<li>协调对共享多访问媒体的访问</li>
+<li>媒体访问控制(MAC)协议规定了帧在链路上传输的规则。</li>
+</ul>
+</li>
+<li>可同时发送和接收</li>
+<li>可靠交付
+<ul>
+<li>保证无差错地经链路层移动每个网络层数据报。</li>
+</ul>
+</li>
+<li>流控制</li>
+<li>差错检测和纠正</li>
+</ul>
+<a class="post-dummy-target" id="链路层实现"></a><h2>链路层实现</h2>
+<ul>
+<li>链路层主体部分是<strong>网络适配器(网卡)</strong>，位于网卡核心的是链路层控制器，通常是一个实现了许多链路层服务的专用芯片。链路层涉及到硬件，软件和固件。</li>
+<li>链路层帧的发送和接收
+<ul>
+<li>发送端：将网络层数据报封装成链路层帧，在帧的首部设置差错检测比特。</li>
+<li>接收端：检查错误，从链路层帧中抽取网络层数据报传给上层网络层。</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="差错检测和纠正技术"></a><h2>差错检测和纠正技术</h2>
+<ul>
+<li><strong>比特级差错检测和纠正</strong>：即对从一个节点发送到另一个物理上连接的邻近节点的链路层帧中的比特损伤进行检测和纠正。</li>
+<li>使用 <strong>差错检测和纠正比特(EDC)</strong> 来增强数据D。 通常要保护的信息除了数据报内容还包括帧首部链路级的寻址信息等。</li>
+</ul>
+<a class="post-dummy-target" id="三种检错纠错技术"></a><h2>三种检错纠错技术</h2>
+<ul>
+<li>奇偶校验
+<ul>
+<li>单个奇偶校验位
+<ul>
+<li>简单易用</li>
+<li>出现偶数个bit错误时无法检测出来，且只可以检测错误。</li>
+</ul>
+</li>
+<li>二维奇偶检验
+<ul>
+<li><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e8%ae%a1%e7%ae%97%e6%9c%ba%e7%bd%91%e7%bb%9c-%e7%ac%ac%e5%85%ad%e7%ab%a0/%e4%ba%8c%e7%bb%b4%e5%a5%87%e5%81%b6%e6%a0%a1%e9%aa%8c.png" alt="二位奇偶校验" class="lazyload"><figcaption class="image-caption">二位奇偶校验</figcaption></figure>
+</li>
+<li>发生单个错时，可以根据行和列的索引定位纠正错误。</li>
+<li>可以检测(但不能纠正)一个分组(同一行或同一列)中任意两个比特错误的组合。
+<strong>接收方检测和纠正错误的能力交错前向纠错</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>因特网校验和(Internet checksum)
+<ul>
+<li>将数据的自己作为16bit的整数并求和，这个和的 <strong>反码</strong> 形成了携带在报文段首部的 <strong>校验和</strong>。(这一步即是二进制反码求和)</li>
+<li><strong>二进制反码求和</strong>：从低位到高位逐列进行和计算,如果最高位(16位)进位,则得到的结果加1,一直循环到最高位没有进位为止.最后把得到的结果取反。</li>
+<li>接收端使用相同的算法，得到的和取反后如果全为0(取反前相当于是checksum + ~checksum)，则表明传输正确。</li>
+</ul>
+</li>
+<li>循环冗余检测(CRC)
+<ul>
+<li>CRC编码也称为 <strong>多项式编码</strong></li>
+<li><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e8%ae%a1%e7%ae%97%e6%9c%ba%e7%bd%91%e7%bb%9c-%e7%ac%ac%e5%85%ad%e7%ab%a0/CRC.png" alt="CRC" class="lazyload"><figcaption class="image-caption">CRC</figcaption></figure>
+</li>
+<li>原理：
+<ul>
+<li>接收方发送方确定长度为r+1的生成多项式G(其最高有效bit需要为1)</li>
+<li>发送方对于一个给定的数据段D，需要在后面附加上一段长度为r的附加比特R，得到一个长度为d+r的二进制数</li>
+<li>接收方只需要用G取除(模2)接收到的d+r比特即可知道是否发生错误。<strong>模2除法</strong>：当前被除数最高位为1时商1，反之商0，然后进行模2异或运算。</li>
+<li>满足条件 $D* 2^r \oplus R = nG$，说明$R =$ remainder $\dfrac{D*2^r}{G}$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="流控制"></a><h2>流控制</h2>
+<ul>
+<li>防止缓冲区溢出</li>
+<li>方法有 <strong>停止等待</strong> 和 <strong>滑动窗口</strong></li>
+</ul>
+<a class="post-dummy-target" id="停止等待"></a><h3>停止等待</h3>
+<ul>
+<li>发送端发送链路层帧。</li>
+<li>接收端接收后回复一个 ACK。</li>
+<li>发送端等待 ACK再发送下一个链路层帧。</li>
+<li>接收端可以通过不回复ACK来中断数据流。</li>
+</ul>
+<a class="post-dummy-target" id="滑动窗口"></a><h3>滑动窗口</h3>
+<ul>
+<li>允许多个帧都在传输。</li>
+<li>接收方维护一个接收窗口，发送方维护一个发送窗口。</li>
+<li>发送窗口的大小Ws表示在目前发送方最多还可以发送帧的数量，每收到一个确认帧就发送窗口就会向前移动一格，发送这一帧。</li>
+<li>接收窗口用来控制接收哪些数据不接收哪些数据(只会接收落在接收窗口内的编号对应的数据帧)</li>
+<li>接收方回复的确认帧中包含了期待下一次收到的数据帧的编号。</li>
+<li><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e8%ae%a1%e7%ae%97%e6%9c%ba%e7%bd%91%e7%bb%9c-%e7%ac%ac%e5%85%ad%e7%ab%a0/%e6%bb%91%e5%8a%a8%e7%aa%97%e5%8f%a3.png" alt="滑动窗口" class="lazyload"><figcaption class="image-caption">滑动窗口</figcaption></figure>
+</li>
+<li>错误处理：
+<ul>
+<li>全部重发(回退)：接收方检测到错误，回复NAK，则发送方需要重新发送错误帧及其后面所有已经发送的帧。</li>
+<li>选择性拒绝：只需要重发检测到错误的帧。</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="点对点链路协议"></a><h2>点对点链路协议</h2>
+<ul>
+<li>点对点协议(PPP),高级数据链路控制(HDLC).</li>
+</ul>
+<a class="post-dummy-target" id="多路访问"></a><h2>多路访问</h2>
+<ul>
+<li>多路访问协议(MAC)，信道划分协议，随机接入协议，轮流协议</li>
+<li>对于速率为R bps的广播信道，多路访问协议应该具有以下所希望的特性：
+<ul>
+<li>当仅有一个节点发送数据时，该节点具有R bps的吞吐量。</li>
+<li>当有M个节点发送数据时，每个节点吞吐量为R/M bps，不要求每个节点总是有R/M bps的瞬时速率，而是在适当的时间间隔内平均速率达到。</li>
+<li>协议是分散的，不会因为某主节点故障而使得整个系统崩溃。</li>
+<li>协议是简单的，实现昂贵。</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="多路访问链接概述"></a><h3>多路访问链接概述</h3>
+<ul>
+<li>通过有线连接(Old-fasioned Ethernet)</li>
+<li>通过无线连接(802.11 Wireless LAN)</li>
+<li>一些特点：
+<ul>
+<li>信号在广播信道中共享。</li>
+<li>节点的同步传输会相互干扰。</li>
+<li>一个节点同时接收多个信号造成冲突。</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="信道划分协议"></a><h3>信道划分协议</h3>
+<ul>
+<li>时分复用(TDM)
+<ul>
+<li>过程
+<ul>
+<li>将时间划分为时间帧，并进一步将每个时间帧划分为N(对应支持N个节点的信道)个时隙。</li>
+<li>将N个时隙分别分给N个节点。</li>
+</ul>
+</li>
+<li>优点
+<ul>
+<li>避免了碰撞而且公平</li>
+<li>每个节点中在属于自己的时隙中可以占用信号全部的带宽。</li>
+</ul>
+</li>
+<li>缺点
+<ul>
+<li>在每一个时间帧中，每个节点的传输速率只有R/N bps.</li>
+<li>节点必须等待一个轮次才能进行下一次传输</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>频分复用(FDM)
+<ul>
+<li>过程
+<ul>
+<li>将R bps的信道划分为不同的频段，每个带宽R/N。</li>
+<li>将每个频段分给每个节点。</li>
+</ul>
+</li>
+<li>优点
+<ul>
+<li>避免了碰撞而且公平。</li>
+<li>每个节点可以任意时刻都传输数据。</li>
+</ul>
+</li>
+<li>缺点
+<ul>
+<li>每个节点只有R/N的带宽。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>码分多址(CDMA)
+<ul>
+<li>对每个节点分配一种不同的编码，每个节点用唯一的编码对它发送的数据进行编码，精心选择编码可以使得多个节点能够同时发送。</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="随机接入协议"></a><h3>随机接入协议</h3>
+<ul>
+<li>ALOHA(非时隙，完全分散的协议)
+<ul>
+<li>节点首次获取某一个数据帧后，立即将该帧完整地传输到信道中。</li>
+<li>如果收到ACK则成功，反之则以概率p重传，或1-p等待一个帧时间。</li>
+<li>效率：假设某帧在$t_0$发送，则需要其他节点在$[t_0-1,t_0]$和$[t_0,t_0+1]$内都不会传输，所以一个节点成功传输的概率为$p(1-p)^{2(N-1)}$,一共N个节点，所以一个帧时间内成功传输的帧数量为$Np(1-p)^{2(N-1)}$，最大效率(求导的p且$N\rightarrow\infty$)为$1/(2e)$</li>
+</ul>
+</li>
+<li>时隙ALOHA
+<ul>
+<li>预先假设
+<ul>
+<li>所有帧长为L</li>
+<li>时间被划分成为L/R秒的时隙(一个时隙可以传输一帧)</li>
+<li>节点只在时隙起点开始传输</li>
+<li>节点是同步的，每个节点都知道时隙何时开始</li>
+<li>如果一个时隙中发生碰撞，则所有节点在该时隙结束前能够检测到该碰撞。</li>
+</ul>
+</li>
+<li>过程
+<ul>
+<li>节点有新帧需要发送，其需要等到下一个时隙开始时才可以发送。</li>
+<li>没有碰撞则传输成功，反之该节点以概率p在后面每个时隙开始重传该帧直到传输成功。</li>
+</ul>
+</li>
+<li>效率：对每一个节点，其在某一个时隙传输成功的概率为$p(1-p)^{N-1}$，则一个时隙中传输成功数据帧期望为$Np(1-p)^{N-1}$，最大效率为$1/e$</li>
+</ul>
+</li>
+<li>载波侦听多路访问(CSMA) 和 具有碰撞检测的CSMA(CSMA/CD)
+<ul>
+<li>假设：传播时间远小于传输时间</li>
+<li>过程
+<ul>
+<li><strong>载波侦听</strong>：一个节点在传输前先侦听信道，等待知道检测到一段时间信道空闲，然后开始传输。</li>
+<li><strong>碰撞检测</strong>：节点在传输时也一直侦听信道，如果检测到另一个节点也在传输，则马上终止自己的传输，且在进入&quot;侦听-检测&quot;新的循环之前，随机等待一段时间(二进制指数回退)。</li>
+</ul>
+</li>
+<li><strong>二进制指数回退</strong>：一个帧发生了n次碰撞，则节点从${0,1,&hellip;,2^n-1}$中随机选一个K值，然后该节点等待$K\cdot512$比特时间。一共尝试传输16次，n最大取10，后面六次范围大小保持，16次均失败后放弃重传。</li>
+<li>效率 = $\dfrac{1}{1+5d_{prop}/d_{trans}}$</li>
+<li>0坚持CSMA: 空闲时立即传输，忙时随机等待一个时间后再次检测。1坚持CSMA：空闲时立即传输，忙时监听信道直到空闲立即传输(CSMA/CD使用)p坚持CSMA: 空闲时以概率p重传，1-p延后一个时间单位。忙时一直监听。
+<figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e8%ae%a1%e7%ae%97%e6%9c%ba%e7%bd%91%e7%bb%9c-%e7%ac%ac%e5%85%ad%e7%ab%a0/CSMACD.png" alt="CSMA/CD" class="lazyload"><figcaption class="image-caption">CSMA/CD</figcaption></figure>
+</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="轮流协议"></a><h3>轮流协议</h3>
+<ul>
+<li>轮询协议
+<ul>
+<li>一个主节点轮询其他节点，告诉其他节点可以传输的帧的最大数量。</li>
+<li>优点：避免碰撞和随机接入协议里面会出现的空时隙。</li>
+<li>缺点：1.主节点故障，整个系统崩溃。2.引入了轮询时延。</li>
+</ul>
+</li>
+<li>令牌环协议
+<ul>
+<li>一个被称为 <strong>令牌</strong> 的特殊帧在节点间按照固定次序交换。</li>
+<li>获得令牌的节点才可以传输数据，传输最大数目的帧。如果没有则应该把令牌环马上发给下一个节点。</li>
+<li>缺点：1.一个节点故障会导致最原始模式的令牌环协议崩溃。 2.令牌环额外的开销和延迟。</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="链路层寻址"></a><h2>链路层寻址</h2>
+<a class="post-dummy-target" id="mac地址"></a><h3>MAC地址</h3>
+<ul>
+<li>并不是主机或者路由器具有链路层地址，而是它们的适配器(网络接口)具有链路层地址。因此具有多个网络接口的主机或者路由器具有多个链路层地址。</li>
+<li>链路层地址称为LAN地址，物理地址或MAC地址。</li>
+<li>MAC地址长度为6字节，所以共有$2^{48}$个可能的MAC地址常用16进制表示为XX-XX-XX-XX-XX-XX</li>
+<li>适配器的MAC地址具有扁平化结构，带有以太网接口的便携机总是具有同样的MAC地址</li>
+<li>发送过程
+<ul>
+<li>发送适配器将目的适配器的MAC地址插入到链路层帧中，再发送到局域网上。</li>
+<li>接收适配器接收到帧后，检查其中MAC地址是否与自己MAC地址相匹配，如果匹配则取出其中数据，向上层传递，如果不是，则丢弃该帧。</li>
+</ul>
+</li>
+<li>广播：发送适配器需要让局域网上所有适配器都接受并处理某帧，则在该帧的目的地址中插入一个特殊的MAC地址(FF-FF-FF-FF-FF-FF)</li>
+</ul>
+<a class="post-dummy-target" id="地址解析协议arp"></a><h3>地址解析协议(ARP)</h3>
+<ul>
+<li>在网络层地址(IP)和链路层地址(MAC)之间进行转换.</li>
+<li>作用
+<ul>
+<li>当源需要向目的发送数据时，需要提供IP数据报和目的对应的MAC地址，该MAC地址是源中ARP模块根据主题提供在相同局域网(同一子网)中IP地址得到的对应的MAC地址.</li>
+</ul>
+</li>
+<li>每台主机或者路由器在内存中都有一个ARP表，每一个表项为一个IP地址到MAC地址的映射，还有加上这一表项过期的时间。</li>
+<li>工作过程
+<ul>
+<li>如果目的IP和MAC地址的映射在源的ARP表中，显然是很容易的。</li>
+<li>如果不在，则源会以广播的方式(目的MAC地址为广播地址)发送一个查询ARP分组，同一子网中的其他适配器接收到后，都会把这个向上传递给ARP模块，ARP模块检测自己的ARP表中是否有查询所需要的表项，如果有则发送回一个响应ARP分组。</li>
+</ul>
+</li>
+<li>ARP协议是一个跨越了链路层和网络层的协议。</li>
+<li>发送数据到子网外
+<ul>
+<li><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e8%ae%a1%e7%ae%97%e6%9c%ba%e7%bd%91%e7%bb%9c-%e7%ac%ac%e5%85%ad%e7%ab%a0/ARP.png" alt="ARP" class="lazyload"><figcaption class="image-caption">ARP</figcaption></figure>
+</li>
+<li>111.111.111.111 to 222.222.222.222</li>
+<li>过程：
+<ul>
+<li>源发送一个以111.111.111.110为目的的包含寻址到222.222.222.222的数据报</li>
+<li>路由器左侧的适配器接收到后上传该数据报，通过路由器转发表知道要把该数据报通过接口222.222.222.220转发，然后把该数据报给接口的适配器，然后适配器封装成一个新帧发送，该新帧的MAC地址即为目的的MAC地址。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="以太网"></a><h2>以太网</h2>
+<a class="post-dummy-target" id="以太网帧"></a><h3>以太网帧</h3>
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e8%ae%a1%e7%ae%97%e6%9c%ba%e7%bd%91%e7%bb%9c-%e7%ac%ac%e5%85%ad%e7%ab%a0/EthernetFrame.png" alt="" class="lazyload"></figure>
+</p>
+<ul>
+<li>
+<p>Data段承载IP数据报，以太网最长传输单元(MTU)为1500字节，超过之后得分片，</p>
+</li>
+<li>
+<p>Dest. address为目的MAC地址</p>
+</li>
+<li>
+<p>Source address为源MAC地址</p>
+</li>
+<li>
+<p>Type指明了该帧用了什么网络层的协议，便于接收端分解</p>
+</li>
+<li>
+<p>CRC为检测帧</p>
+</li>
+<li>
+<p>Preamble(前同步码)长度为8字节前7个字节值都是10101010用于唤醒接收适配器，同步时钟，最后一个字节是10101011</p>
+</li>
+<li>
+<p>以太网技术向网络层提供无连接服务，也就是源适配器要发送数据报时需要先将IP数据报封装在以太网帧中然后发到局域网上，而非像TCP协议那样三次握手建立连接。</p>
+</li>
+<li>
+<p>以太网技术向网络层提供不可靠服务，当适配器收到一个以太网帧后执行CRC检验，检验通过不会发送ACK帧，检验不通过也不会发送否定帧，而是直接丢弃该帧</p>
+</li>
+</ul>
+<a class="post-dummy-target" id="ieee-8023"></a><h3>IEEE 802.3</h3>
+<ul>
+<li>IEEE 802.3是一个定义了有线以太网物理层和链路层的媒体访问控制(MAC)的标准</li>
+</ul>
+<a class="post-dummy-target" id="链路层交换机网桥"></a><h2>链路层交换机(网桥)</h2>
+<ul>
+<li>交换机的任务是接收入链路层帧并将它们转发出链路，其对于主机和路由器是<strong>透明</strong>的。</li>
+<li>交换机是采用 <strong>存储转发方式</strong></li>
+<li>交换机使用IEEE 802.1D协议</li>
+</ul>
+<a class="post-dummy-target" id="转发和过滤"></a><h3>转发和过滤</h3>
+<ul>
+<li><strong>过滤:</strong> 决定一个帧是该被转发还是应当丢弃的交换机功能。</li>
+<li><strong>转发:</strong> 决定一个帧该被转发到哪个接口，并将该帧移动到那些接口的交换机功能。</li>
+<li>交换机表的表项：
+<ul>
+<li>MAC地址 + 接口 + 表项存放在表中的时间。</li>
+</ul>
+</li>
+<li>交换机工作过程：当交换机从接口x接收到一个目的地址为XX-XX-XX-XX-XX-XX的链路层帧,用该MAC地址查找自己的交换机表：
+<ul>
+<li>如果表中没有该MAC地址所在的表项，则该交换机向除x以外的其他接口广播该帧。</li>
+<li>如果表中该MAC地址对应的接口就是x，则丢弃该帧。</li>
+<li>如果表中该MAC地址对应的接口是y$\neq$x，则向接口y发送该帧。</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="自学习"></a><h3>自学习</h3>
+<ul>
+<li>交换机是 <strong>即插即用</strong>的设备，因为不需要管理员或者用户手动配置，其交换机表是动态，自动，自洽地建立起来的。</li>
+<li>建立过程
+<ul>
+<li>初始表为空。</li>
+<li>对于每个接口接收的每个帧，储存下交换表表项内容即<strong>MAC地址+接收接口+接收时间</strong></li>
+<li>一段时间后(老化期)如果该交换机没有收到从某表项中接受接口来的以该表项中MAC地址为源地址的帧，则删除对应表项。</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="链路层交换机性质"></a><h3>链路层交换机性质</h3>
+<ul>
+<li><strong>消除碰撞：</strong> 交换机缓存帧并且绝不会在网段上同时传输多余一个帧。</li>
+<li><strong>异质的链路：</strong> 交换机将链路隔离开，所以可以使用不同链路</li>
+<li><strong>管理</strong></li>
+</ul>
+<a class="post-dummy-target" id="生成树"></a><h3>生成树</h3>
+<ul>
+<li>过于复杂的链路层网络会导致存在环路，而环路的存在会使得交换机可能在循环转发数据帧。<figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e8%ae%a1%e7%ae%97%e6%9c%ba%e7%bd%91%e7%bb%9c-%e7%ac%ac%e5%85%ad%e7%ab%a0/loop.png" alt="loop" class="lazyload"><figcaption class="image-caption">loop</figcaption></figure>
+ 网桥a和网桥b都会不断地转发t1和t2</li>
+<li>于是需要关闭某些交换机地接口来使得网络中不出现环路，此处使用生成树算法。</li>
+<li>算法过程
+<ul>
+<li>选取ID最小的网桥为 <strong>根网桥</strong></li>
+<li>对于除根网桥以外的其他网桥，取网桥所有接口中里根网桥最近的接口为 <strong>根接口</strong></li>
+<li>对于这些网桥连接的每一个LAN，取和LAN相连的所有网桥中离 <strong>根网桥</strong>最近的网桥为 <strong>选定网桥</strong>，记录这些网桥和LAN连接的接口。</li>
+<li>将根接口和选定网桥和LAN连接的接口设为允许转发的状态，其他接口都关闭。</li>
+<li><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e8%ae%a1%e7%ae%97%e6%9c%ba%e7%bd%91%e7%bb%9c-%e7%ac%ac%e5%85%ad%e7%ab%a0/spanningtree.png" alt="spt" class="lazyload"><figcaption class="image-caption">spt</figcaption></figure>
+</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="路由发现"></a><h3>路由发现</h3>
+<ul>
+<li>有的情况下可以在以太网帧中插入路由信息来指定路由路径。</li>
+<li>源主机：网络中的交换机必须通过生成树算法构成好
+<ul>
+<li>源主机发送single-route帧，该帧中不指定路由路径。</li>
+<li>最终在&quot;生成树网络&quot;中到达目的地。</li>
+</ul>
+</li>
+<li>目的主机：
+<ul>
+<li>接收到single-route帧后，回复一个all-routes广播帧。</li>
+<li>对于该帧到达的第一个交换机，交换机在帧中路由信息插入&lt;incoming LAN#,bridge#,outgoing#&gt;，然后转发</li>
+<li>对于后面接收到该帧的交换机，在路由信息中插入&lt;bridge#,outgoing#&gt;，并且在转发之前查看接下来要转发的地方是否已经在路由信息中(表示已经走过不需要再走)</li>
+<li>最后到达源主机。</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="集线器交换机和路由器"></a><h3>集线器,交换机和路由器</h3>
+<ul>
+<li>集线器(hub)：
+<ul>
+<li>星型拓扑以太网的中心，是一种 <strong>物理层设备</strong>。</li>
+<li>每一个站点都有一个接收线以及一根传输线和集线器相连。</li>
+<li>作用于每一个比特，将比特重新生成并放大能量强度。</li>
+<li>以广播的形式传输，遇到碰撞生成该帧的节点需要重传。</li>
+</ul>
+</li>
+<li>交换机(layer2-switch,网桥)
+<ul>
+<li>交换机每一个端口都组成一个局域网，所以是&quot;无碰撞的&rdquo;。</li>
+<li>交换机是在<strong>链路层</strong>运行的设备(包含链路层，物理层)。</li>
+<li>交换机对于主机和路由器是 <strong>透明的</strong>。</li>
+<li>交换机采用 <strong>存储转发</strong>的工作方式，从而允许了多个节点同时转发，以MAC地址为标准来转发，交换机是 <strong>自学习的</strong>。</li>
+<li>靠交换机搭建的网络拓扑被限制为一个生成树,两个节点之间只有一条路径，无法根据路径拥塞情况动态选择路径。</li>
+<li>用于不同网段之间的互联，必须是相同类型的网段，不涉及到协议转变。</li>
+</ul>
+</li>
+<li>路由器(layer3-switch)
+<ul>
+<li>运行于<strong>网络层</strong>(包含网络层，链路层，物理层)。</li>
+<li>可能设计到多个协议之间的转变，基于IP地址转发。</li>
+<li>非即插即用，需要管理员或者用户提前配置。</li>
+<li>网络拓扑结构可以多变。</li>
+</ul>
+</li>
+</ul>
+</div>
+    </div></div>
+            </main><footer class="footer">
+    <div class="copyright">
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://jarviszl.github.io/" target="_blank">Lingyu Zhang</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/js/lib/jquery/jquery.slim.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><script src="/js/lib/katex/katex.min.js"></script><script defer src="/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script defer src="/js/lib/katex/copy-tex.min.js"></script><script defer src="/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$$", right: "$$", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/js/blog.min.js"></script>
+</body>
+</html>

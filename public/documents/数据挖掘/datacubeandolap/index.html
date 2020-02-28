@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>DataCubeAndOLAP | 浙语临湖</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszl.github.io/documents/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" /><link rel="canonical" href="https://jarviszl.github.io/documents/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/datacubeandolap/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="DataCubeAndOLAP" />
+<meta property="og:description" content="Data Cube And OLAP" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jarviszl.github.io/documents/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/datacubeandolap/" />
+<meta property="article:published_time" content="2020-02-26T19:36:58+08:00" />
+<meta property="article:modified_time" content="2020-02-26T19:36:58+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="DataCubeAndOLAP"/>
+<meta name="twitter:description" content="Data Cube And OLAP"/>
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "DataCubeAndOLAP",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/jarviszl.github.io\/documents\/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98\/datacubeandolap\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszl.github.io\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "documents","keywords": "数据挖掘","wordcount":  41 ,
+        "url": "https:\/\/jarviszl.github.io\/documents\/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98\/datacubeandolap\/","datePublished": "2020-02-26T19:36:58\x2b08:00","dateModified": "2020-02-26T19:36:58\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "xxxx",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszl.github.io\/images\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/forkawesome/fork-awesome.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://jarviszl.github.io/">浙语临湖</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://jarviszl.github.io/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszl.github.io/categories" title="">Documents</a><a class="menu-item" href="https://jarviszl.github.io/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://jarviszl.github.io/">浙语临湖</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszl.github.io/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszl.github.io/categories" title="">Documents</a><a class="menu-item" href="https://jarviszl.github.io/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><div class="page single"><h1 class="post-title animated pulse faster">DataCubeAndOLAP</h1><div class="post-content"><h1 id="data-cube-and-olap">Data Cube And OLAP</h1>
+<a class="post-dummy-target" id="data-warehouse"></a><h2>Data warehouse</h2>
+<ul>
+<li>数据仓库是支持管理决策过程的面向主题的，集成的，长期的，稳定的数据集合</li>
+<li>关系数据库
+<ul>
+<li>On-line transaction processing(<strong>OLTP</strong>)</li>
+</ul>
+</li>
+<li>数据仓库
+<ul>
+<li>On-line analytical processing(<strong>OLAP</strong>)</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="data-warehouse-architecture"></a><h3>Data warehouse architecture</h3>
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e6%95%b0%e6%8d%ae%e6%8c%96%e6%8e%98%e5%af%bc%e8%ae%ba/OLAParchitecture.png" alt="architecture" class="lazyload"><figcaption class="image-caption">architecture</figcaption></figure>
+</p>
+<a class="post-dummy-target" id="data-model-for-data-warehouse"></a><h3>Data model for data warehouse</h3>
+<ul>
+<li><strong>多维数据模型(Multidimensional data model)</strong>
+<ul>
+<li>维度指的是和那些数据仓库管理者期望相关的视角或实体</li>
+</ul>
+</li>
+<li>模型
+<ul>
+<li>
+<p>星型模型: 一个事务表在中间连接一些维度表</p>
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e6%95%b0%e6%8d%ae%e6%8c%96%e6%8e%98%e5%af%bc%e8%ae%ba/starschema.png" alt="star shema" class="lazyload"><figcaption class="image-caption">star shema</figcaption></figure>
+</p>
+</li>
+<li>
+<p>雪花模型:
+<figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e6%95%b0%e6%8d%ae%e6%8c%96%e6%8e%98%e5%af%bc%e8%ae%ba/snowschema.png" alt="Snowflake shcema" class="lazyload"><figcaption class="image-caption">Snowflake shcema</figcaption></figure>
+</p>
+</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="data-cube"></a><h3>Data Cube</h3>
+<ul>
+<li>Data Cube 是由一个个立方体组成的格。其只是一个理论上的东西，并不是实际上数据存储的方式。</li>
+<li></li>
+</ul></div>
+    </div></div>
+            </main><footer class="footer">
+    <div class="copyright">
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://jarviszl.github.io/" target="_blank">Lingyu Zhang</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/js/lib/jquery/jquery.slim.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><script src="/js/lib/katex/katex.min.js"></script><script defer src="/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script defer src="/js/lib/katex/copy-tex.min.js"></script><script defer src="/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$$", right: "$$", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/js/blog.min.js"></script>
+</body>
+</html>

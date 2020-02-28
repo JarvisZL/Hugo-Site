@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>第二部分 | 浙语临湖</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszl.github.io/documents/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" /><link rel="next" href="https://jarviszl.github.io/documents/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90/" /><link rel="canonical" href="https://jarviszl.github.io/documents/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="第二部分" />
+<meta property="og:description" content="Data Cube And OLAP" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jarviszl.github.io/documents/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86/" />
+<meta property="article:published_time" content="2020-02-26T19:36:58+08:00" />
+<meta property="article:modified_time" content="2020-02-26T19:36:58+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="第二部分"/>
+<meta name="twitter:description" content="Data Cube And OLAP"/>
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "第二部分",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/jarviszl.github.io\/documents\/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98\/%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszl.github.io\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "documents","keywords": "数据挖掘","wordcount":  124 ,
+        "url": "https:\/\/jarviszl.github.io\/documents\/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98\/%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86\/","datePublished": "2020-02-26T19:36:58\x2b08:00","dateModified": "2020-02-26T19:36:58\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "xxxx",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszl.github.io\/images\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/forkawesome/fork-awesome.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://jarviszl.github.io/">浙语临湖</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://jarviszl.github.io/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszl.github.io/categories" title="">Documents</a><a class="menu-item" href="https://jarviszl.github.io/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://jarviszl.github.io/">浙语临湖</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszl.github.io/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszl.github.io/categories" title="">Documents</a><a class="menu-item" href="https://jarviszl.github.io/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><div class="page single"><h1 class="post-title animated pulse faster">第二部分</h1><div class="post-content"><h1 id="data-cube-and-olap">Data Cube And OLAP</h1>
+<a class="post-dummy-target" id="data-warehouse"></a><h2>Data warehouse</h2>
+<ul>
+<li>数据仓库是支持管理决策过程的面向主题的，集成的，长期的，稳定的数据集合</li>
+<li>关系数据库
+<ul>
+<li>On-line transaction processing(<strong>OLTP</strong>)</li>
+</ul>
+</li>
+<li>数据仓库
+<ul>
+<li>On-line analytical processing(<strong>OLAP</strong>)</li>
+</ul>
+</li>
+<li>OLAP architecture
+<figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e6%95%b0%e6%8d%ae%e6%8c%96%e6%8e%98%e5%af%bc%e8%ae%ba/OLAParchitecture.png" alt="architecture" class="lazyload"><figcaption class="image-caption">architecture</figcaption></figure>
+</li>
+</ul>
+<a class="post-dummy-target" id="data-model-for-data-warehouse"></a><h2>Data model for data warehouse</h2>
+<ul>
+<li><strong>多维数据模型(Multidimensional data model)</strong>
+<ul>
+<li>维度指的是和那些数据仓库管理者期望相关的视角或实体</li>
+</ul>
+</li>
+<li>模型
+<ul>
+<li>
+<p>星型模型: 一个事务表在中间连接一些维度表
+<figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e6%95%b0%e6%8d%ae%e6%8c%96%e6%8e%98%e5%af%bc%e8%ae%ba/starschema.png" alt="star shema" class="lazyload"><figcaption class="image-caption">star shema</figcaption></figure>
+</p>
+</li>
+<li>
+<p>雪花模型: 在星型模型的基础上可以存在某些维度表向外部连接其他更小的维度表
+<figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e6%95%b0%e6%8d%ae%e6%8c%96%e6%8e%98%e5%af%bc%e8%ae%ba/snowschema.png" alt="Snowflake shcema" class="lazyload"><figcaption class="image-caption">Snowflake shcema</figcaption></figure>
+</p>
+</li>
+<li>
+<p>星系模型：由多个星型模型组成，事务表之间由维度表连接起来。
+<figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e6%95%b0%e6%8d%ae%e6%8c%96%e6%8e%98%e5%af%bc%e8%ae%ba/constellationschema.png" alt="Constellation shcema" class="lazyload"><figcaption class="image-caption">Constellation shcema</figcaption></figure>
+</p>
+</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="data-cube"></a><h2>Data Cube</h2>
+<ul>
+<li>Data Cube 是由一个个立方体组成的格。其只是一个理论上的东西，并不是实际上数据存储的方式。</li>
+</ul>
+<a class="post-dummy-target" id="concept-hierachy概念层次结构"></a><h3>Concept Hierachy(概念层次结构)</h3>
+<ul>
+<li>概念层次结构是一序列的从低层级到高层级的映射组成</li>
+<li>具体的层次
+<ul>
+<li>模式层次：全序和偏序</li>
+<li>集分组层次结构：将较大的集合不断拆分成较小的集合</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="olap在data-cube上的操作operations"></a><h2>OLAP在Data Cube上的操作(operations)</h2>
+<ul>
+<li><strong>roll-up</strong>: 将某一维度提升一个层次结构或者删除某些维度。
+<figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e6%95%b0%e6%8d%ae%e6%8c%96%e6%8e%98%e5%af%bc%e8%ae%ba/roll-up.png" alt="roll-up" class="lazyload"><figcaption class="image-caption">roll-up</figcaption></figure>
+</li>
+<li><strong>drill-down</strong>: 和roll-up操作对立
+<figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e6%95%b0%e6%8d%ae%e6%8c%96%e6%8e%98%e5%af%bc%e8%ae%ba/drill-down.png" alt="drill-down" class="lazyload"><figcaption class="image-caption">drill-down</figcaption></figure>
+</li>
+<li><strong>slice</strong>: 在Data Cube上确定一个维度的值，相当于从立方体上切一片
+<figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e6%95%b0%e6%8d%ae%e6%8c%96%e6%8e%98%e5%af%bc%e8%ae%ba/slice.png" alt="slice" class="lazyload"><figcaption class="image-caption">slice</figcaption></figure>
+</li>
+<li><strong>dice</strong>: 在Data Cube上对多个维度的选择，相当于从立方体上切小一小块
+<figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e6%95%b0%e6%8d%ae%e6%8c%96%e6%8e%98%e5%af%bc%e8%ae%ba/dice.png" alt="dice" class="lazyload"><figcaption class="image-caption">dice</figcaption></figure>
+</li>
+<li><strong>pivot</strong>: 对Data Cube进行旋转
+<figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e6%95%b0%e6%8d%ae%e6%8c%96%e6%8e%98%e5%af%bc%e8%ae%ba/pivot.png" alt="pivot" class="lazyload"><figcaption class="image-caption">pivot</figcaption></figure>
+</li>
+</ul>
+<a class="post-dummy-target" id="data-cube-measures"></a><h2>Data Cube Measures</h2>
+<ul>
+<li>定义：一个data cube measure 是一个能够在data cude空间中每一个点上进行估算的数值函数。</li>
+<li>分布聚合函数(Distributive aggregate function)：
+<ul>
+<li>假设数据分成n份</li>
+<li>该函数在每一份上计算出一个聚合值</li>
+<li>由该函数在每一份上计算出聚合值派生的结果和由该函数直接作用在整个数据上的结果一致</li>
+<li>比如：count(),sum(),min(),max()</li>
+</ul>
+</li>
+<li>Measures的分类
+<ul>
+<li>分布的(Distributive): 通过分布聚合函数得到的，如count(),sum()</li>
+<li>代数的(Algebraic): 通过一个代数函数作用在M(M是一个有界的整数)个由分布聚合函数得到的参数上得到，如avg(),min_N(),max_N(),standard_deviation()</li>
+<li>整体的(Holistic): 没有一个常数的界来限制用来描述一个子聚合的存储空间。如rank(),median(),mode()</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="olap-服务架构"></a><h2>OLAP 服务架构</h2>
+<ul>
+<li><strong>ROLAP(Relational OLAP)</strong>
+<ul>
+<li>使用(拓展)关系数据库来存储数据仓库</li>
+<li>有较好的可扩展性</li>
+</ul>
+</li>
+<li><strong>MOLAP(Multidimensional OLAP)</strong>
+<ul>
+<li>使用基于数组的多维度存储引擎</li>
+<li>能很快地索引到 <strong>提前计算好(pre-computed)</strong> 地总计数据</li>
+</ul>
+</li>
+<li><strong>HOLAP(Hybrid OLAP)</strong>
+<ul>
+<li>同时具备ROLAP的扩展性和MOLAP的计算速度快</li>
+</ul>
+</li>
+<li><strong>Specialized SQL servers</strong>
+<ul>
+<li>支持在星型模型和雪花模型上的SQL查询</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="预先计算precompute"></a><h3>预先计算(precompute)</h3>
+<ul>
+<li>提前计算能够保证较快的反映时间和避免冗余的计算</li>
+<li>预先计算最好的方式：
+<ul>
+<li><strong>部分具体化(提前计算部分数据立方体)</strong>，优于无具体化(响应时间长)和全部具体化(存储开销大)</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="有效的计算"></a><h3>有效的计算</h3>
+<ul>
+<li>以ROLAP(基于tuples 和 relational tables)为基础的cube计算
+<ul>
+<li>基于一些<strong>优化技巧</strong>，相对较慢</li>
+</ul>
+</li>
+<li>以MOLAP(基于multidimensional array)为基础的cube计算
+<ul>
+<li>基于<strong>多路数组的聚合</strong>，相对较快</li>
+</ul>
+</li>
+</ul></div>
+    </div></div>
+            </main><footer class="footer">
+    <div class="copyright">
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://jarviszl.github.io/" target="_blank">Lingyu Zhang</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/js/lib/jquery/jquery.slim.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><script src="/js/lib/katex/katex.min.js"></script><script defer src="/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script defer src="/js/lib/katex/copy-tex.min.js"></script><script defer src="/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$$", right: "$$", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/js/blog.min.js"></script>
+</body>
+</html>

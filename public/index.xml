@@ -1,0 +1,93 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>浙语临湖 | 浙语临湖</title>
+        <link>https://jarviszl.github.io/</link>
+        <description>浙语临湖 | 浙语临湖</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 27 Feb 2020 10:06:04 +0800</lastBuildDate><atom:link href="https://jarviszl.github.io/" rel="self" type="application/rss+xml" /><item>
+                <title>Documents</title>
+                <link>https://jarviszl.github.io/documents/</link>
+                <pubDate>Thu, 27 Feb 2020 10:06:04 +0800</pubDate><guid>https://jarviszl.github.io/documents/</guid>
+                <description></description>
+            </item><item>
+                <title>About</title>
+                <link>https://jarviszl.github.io/about/</link>
+                <pubDate>Sun, 09 Feb 2020 20:45:31 +0800</pubDate><guid>https://jarviszl.github.io/about/</guid>
+                <description>&lt;h2 id=&#34;info&#34;&gt;Info&lt;/h2&gt;
+&lt;p&gt;I am a junior student at &lt;a href=&#34;https://dii.nju.edu.cn/&#34; target=&#34;_blank&#34;&gt;Kuang Yaming Honors School, Nanjing University&lt;/a&gt;
+,  pursuing Bachelor&amp;rsquo;s Degree of Computer Science.&lt;/p&gt;
+&lt;br&gt;
+&lt;h2 id=&#34;skills&#34;&gt;Skills&lt;/h2&gt;
+&lt;p&gt;Programming:  C/C++, Java&lt;/p&gt;
+&lt;p&gt;Production Tools: Git, LaTex&lt;/p&gt;
+&lt;br&gt;
+&lt;h2 id=&#34;friends&#34;&gt;Friends&lt;/h2&gt;
+&lt;ul&gt;
+    &lt;li style=&#34;margin: 1%;&#34;&gt;
+        &lt;a href=&#34;https://fancypei.github.io/&#34;&gt;
+     	   &lt;img src=&#34;https://jarviszl.github.io/images/Fancy.png&#34; style=&#34;width: 3%; margin-left: 1px; display:inline; float:left; vertical-align: middle;&#34;&gt;
+       	   &lt;span style=&#34;margin-left: 2%; display:inline; float:left; vertical-align: middle;&#34;&gt; Fancy (Pei Yifan)&#39;s Blog &lt;/span&gt;
+       &lt;/a&gt;
+    &lt;/li&gt; 
+     &lt;li style=&#34;margin: 1%;&#34;&gt;
+        &lt;a href=&#34;https://mengzelev.github.io/&#34;&gt;
+     	   &lt;img src=&#34;https://jarviszl.github.io/images/Mengzelev.png&#34; style=&#34;width: 3%; margin-left: 1px; display:inline; float:left; vertical-align: middle;&#34;&gt;
+       	   &lt;span style=&#34;margin-left: 2%; display:inline; float:left; vertical-align: middle;&#34;&gt;Mengzelev (Enmeng Liu)&#39;s Blog &lt;/span&gt;
+       &lt;/a&gt;
+    &lt;/li&gt;
+   &lt;li style=&#34;margin: 1%;&#34;&gt;
+        &lt;a href=&#34;https://zhengzangw.github.io/&#34;&gt;
+     	   &lt;img src=&#34;https://jarviszl.github.io/images/zhengzangw.png&#34; style=&#34;width: 3%; margin-left: 1px; display:inline; float:left; vertical-align: middle;&#34;&gt;
+       	   &lt;span style=&#34;margin-left: 2%; display:inline; float:left; vertical-align: middle;&#34;&gt;Fermat (Zangwei Zheng)&#39;s Blog &lt;/span&gt;
+       &lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li style=&#34;margin: 1%;&#34;&gt;
+        &lt;a href=&#34;https://jbesu.com/&#34;&gt;
+     	   &lt;img src=&#34;https://jarviszl.github.io/images/Forewing.png&#34; style=&#34;width: 3%; margin-left: 1px; display:inline; float:left; vertical-align: middle;&#34;&gt;
+       	   &lt;span style=&#34;margin-left: 2%; display:inline; float:left; vertical-align: middle;&#34;&gt;Forewing (Nairong Xie)&#39;s Page &lt;/span&gt;
+       &lt;/a&gt;
+    &lt;/li&gt;
+     &lt;li style=&#34;margin: 1%;&#34;&gt;
+        &lt;a href=&#34;https://marukohe.github.io/&#34;&gt;
+     	   &lt;img src=&#34;https://jarviszl.github.io/images/maruko.png&#34; style=&#34;width: 3%; margin-left: 1px; display:inline; float:left; vertical-align: middle;&#34;&gt;
+       	   &lt;span style=&#34;margin-left: 2%; display:inline; float:left; vertical-align: middle;&#34;&gt;Maruko (Wei He)&#39;s Blog &lt;/span&gt;
+       &lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li style=&#34;margin: 1%;&#34;&gt;
+        &lt;a href=&#34;https://maxmute.com/&#34;&gt;
+     	   &lt;img src=&#34;https://jarviszl.github.io/images/massimo.png&#34; style=&#34;width: 3%; margin-left: 1px; display:inline; float:left; vertical-align: middle;&#34;&gt;
+       	   &lt;span style=&#34;margin-left: 2%; display:inline; float:left; vertical-align: middle;&#34;&gt;Massimo (Dong Yangjing)&#39;s Page &lt;/span&gt;
+       &lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li style=&#34;margin: 1%;&#34;&gt;
+        &lt;a href=&#34;https://maxwell-lyu.github.io/&#34;&gt;
+     	   &lt;img src=&#34;https://jarviszl.github.io/images/maxwell.png&#34; style=&#34;width: 3%; margin-left: 1px; display:inline; float:left; vertical-align: middle;&#34;&gt;
+       	   &lt;span style=&#34;margin-left: 2%; display:inline; float:left; vertical-align: middle;&#34;&gt;Maxwell (Yunzhe Lv)&#39;s Blog &lt;/span&gt;
+       &lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li style=&#34;margin: 1%;&#34;&gt;
+        &lt;a href=&#34;https://michael1015198808.github.io/&#34;&gt;
+     	   &lt;img src=&#34;https://jarviszl.github.io/images/michael.png&#34; style=&#34;width: 3%; margin-left: 1px; display:inline; float:left; vertical-align: middle;&#34;&gt;
+       	   &lt;span style=&#34;margin-left: 2%; display:inline; float:left; vertical-align: middle;&#34;&gt;Micheal (Zhenyu Yan)&#39;s Blog &lt;/span&gt;
+       &lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li style=&#34;margin: 1%;&#34;&gt;
+        &lt;a href=&#34;https://https://rivers-shall.github.io/&#34;&gt;
+     	   &lt;img src=&#34;https://jarviszl.github.io/images/river.png&#34; style=&#34;width: 3%; margin-left: 1px; display:inline; float:left; vertical-align: middle;&#34;&gt;
+       	   &lt;span style=&#34;margin-left: 2%; display:inline; float:left; vertical-align: middle;&#34;&gt;Rivers-Shall (Jiang Xiao)&#39;s Blog &lt;/span&gt;
+       &lt;/a&gt;
+    &lt;/li&gt;
+     &lt;li style=&#34;margin: 1%;&#34;&gt;
+        &lt;a href=&#34;https://tyler-ytr.github.io/&#34;&gt;
+     	   &lt;img src=&#34;https://jarviszl.github.io/images/yin.png&#34; style=&#34;width: 3%; margin-left: 1px; display:inline; float:left; vertical-align: middle;&#34;&gt;
+       	   &lt;span style=&#34;margin-left: 2%; display:inline; float:left; vertical-align: middle;&#34;&gt;Tyler (Tianrun Yin)&#39;s Blog &lt;/span&gt;
+       &lt;/a&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+</description>
+            </item><item>
+                <title>Blogs</title>
+                <link>https://jarviszl.github.io/blogs/</link>
+                <pubDate>Sun, 25 Aug 2019 16:22:42 +0800</pubDate><guid>https://jarviszl.github.io/blogs/</guid>
+                <description></description>
+            </item></channel>
+</rss>

@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>组合数学 | 浙语临湖</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszl.github.io/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E6%8B%A5%E5%A1%9E%E5%92%8Cqos/" /><link rel="next" href="https://jarviszl.github.io/documents/%E6%95%B0%E6%8D%AE%E5%BA%93/" /><link rel="canonical" href="https://jarviszl.github.io/documents/%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="组合数学" />
+<meta property="og:description" content="基本计数" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jarviszl.github.io/documents/%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6/" />
+<meta property="article:published_time" content="2019-12-28T13:50:55+00:00" />
+<meta property="article:modified_time" content="2019-12-28T13:50:55+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="组合数学"/>
+<meta name="twitter:description" content="基本计数"/>
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "组合数学",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/jarviszl.github.io\/documents\/%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszl.github.io\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "documents","keywords": "231, 187, 132, 229, 144, 136, 230, 149, 176, 229, 173, 166","wordcount":  720 ,
+        "url": "https:\/\/jarviszl.github.io\/documents\/%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6\/","datePublished": "2019-12-28T13:50:55\x2b00:00","dateModified": "2019-12-28T13:50:55\x2b00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "xxxx",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszl.github.io\/images\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/forkawesome/fork-awesome.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://jarviszl.github.io/">浙语临湖</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://jarviszl.github.io/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszl.github.io/categories" title="">Documents</a><a class="menu-item" href="https://jarviszl.github.io/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://jarviszl.github.io/">浙语临湖</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszl.github.io/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszl.github.io/categories" title="">Documents</a><a class="menu-item" href="https://jarviszl.github.io/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><div class="page single"><h1 class="post-title animated pulse faster">组合数学</h1><div class="post-content"><h1 id="基本计数">基本计数</h1>
+<a class="post-dummy-target" id="基本计数规则"></a><h2><strong>基本计数规则</strong></h2>
+<ul>
+<li>两个disjoint集合满足: $|S|+|T| = |S\bigcup T|$</li>
+<li>两个集合的笛卡尔乘积: $|S\times T| = |S|\cdot |T|$</li>
+<li>集合大小相等：如果$S \mathop{\Longleftrightarrow}\limits_{on-to}^{1-1} T$，则$|S| = |T|$</li>
+</ul>
+<a class="post-dummy-target" id="twelvfold-way"></a><h2><strong>Twelvfold way</strong></h2>
+<table>
+<thead>
+<tr>
+<th align="center">n balls</th>
+<th align="center">m bins</th>
+<th align="center">没有限制</th>
+<th align="center">每个bin至多一个</th>
+<th align="center">每个bin至少一个</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">不同</td>
+<td align="center">不同</td>
+<td align="center">$m^n$(<font color=red>tuple</font>)<font color=blue>1</font></td>
+<td align="center">$m_n(A_m^n)$(<font color=red>function</font>)<font color=blue>2</font></td>
+<td align="center">$m!{n\brace m}$(<font color=red>先分为m类再排列</font>)<font color=blue>9</font></td>
+</tr>
+<tr>
+<td align="center">相同</td>
+<td align="center">不同</td>
+<td align="center">$\left(\binom{m}{n}\right) = \binom{m+n-1}{n}$(<font color=red>弱整数分解,多重集</font>))<font color=blue>5</font></td>
+<td align="center">$\binom{m}{n}$(<font color=red>fixed size subset</font>)<font color=blue>3</font></td>
+<td align="center">$\binom{n-1}{m-1}$(<font color=red>隔板法,整数分解</font>)<font color=blue>4</font></td>
+</tr>
+<tr>
+<td align="center">不同</td>
+<td align="center">相同</td>
+<td align="center">$\sum_{k=1}^{m}{n\brace k}$(<font color=red>集合划分</font>)<font color=blue>8</font></td>
+<td align="center">1  $m\geq n$ <br> 0 $m&lt;n$<font color=blue>6</font></td>
+<td align="center">${n\brace m}$(<font color=red>集合划分</font>)<font color=blue>7</font></td>
+</tr>
+<tr>
+<td align="center">相同</td>
+<td align="center">相同</td>
+<td align="center">$\sum_{k=1}^{m}P_k(n)$(<font color=red>整数无序划分</font>)<font color=blue>11</font></td>
+<td align="center">1  $m\geq n$ <br> 0 $m&lt;n$<font color=blue>12</font></td>
+<td align="center">$P_m(n)$(<font color=red>整数无序划分</font>)<font color=blue>10</font></td>
+</tr>
+</tbody>
+</table>
+<a class="post-dummy-target" id="整数分解隔板法"></a><h3><strong>整数分解(隔板法)</strong></h3>
+<ul>
+<li>分钱问题，n块钱分给m个不同的人，<strong>要求每个人至少有一块</strong>
+$$x_1+&hellip;+x_m = n$$</li>
+</ul>
+<a class="post-dummy-target" id="弱整数分解多重集"></a><h3><strong>弱整数分解,多重集</strong></h3>
+<ul>
+<li>分钱问题，n块钱分给m个不同的人
+$$x_1+&hellip;+x_m = n$$
+<ul>
+<li>可以多给m块钱，每个人至少那一块，所以变成
+$$x_1^\prime+&hellip;+x_m^\prime = m+n$$</li>
+</ul>
+</li>
+<li>多重集：从S集合(m)里面选n元<strong>多重集</strong>即允许每个元素出现多次，n元多重集的个数：
+$$ \left(\binom{m}{n}\right)(多重集) = \binom{m+n-1}{n}(弱整数分解)$$</li>
+</ul>
+<a class="post-dummy-target" id="二项式系数"></a><h3>二项式系数</h3>
+<ul>
+<li>n个不同的球放入k个不同的篮子并且第i个篮子中放$m_i$个球：$\binom{n}{m_1,m_2,&hellip;,m_k}$
+$$\binom{n}{m_1,m_2,&hellip;,m_k} = \dfrac{n!}{m_1!m_2!&hellip;m_k!}$$</li>
+</ul>
+<a class="post-dummy-target" id="集合划分"></a><h3><strong>集合划分</strong></h3>
+<ul>
+<li>规定划分的集合数：将n个人划分到m条相同的船上.
+$${n\brace m}(第二类斯特林数)$$</li>
+<li>求所有划分集合数：
+$$\sum_{k = 1}^{m}{n\brace k}$$</li>
+<li>第二类斯特林数：
+<ul>
+<li>${n\brace k} = k{n-1 \brace k} + {n-1 \brace k-1}$ 根据n是不是单独一类判断。</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="整数无序划分"></a><h3><strong>整数无序划分</strong></h3>
+<ul>
+<li>n块钱划分到m个相同的箱子里，和前面的整数分解不同的时，这里没有序的约束。</li>
+<li>定义 $P_m(n)$表示该分解的种类即满足$\begin{cases}x_1+x_2+&hellip;+x_m = n\ x_1 \geq x_2\geq &hellip;\geq x_m\geq 1\end{cases}$
+<ul>
+<li>$P_m(n) = P_{m-1}(n-1) + P_m(n-m)$按照$x_m$是否为1.</li>
+</ul>
+</li>
+<li><strong>Ferrers图</strong>
+<ul>
+<li><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e7%bb%84%e5%90%88%e6%95%b0%e5%ad%a6/ferrers1.png" alt="" class="lazyload"></figure>
+</li>
+<li><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e7%bb%84%e5%90%88%e6%95%b0%e5%ad%a6/ferrers2.png" alt="" class="lazyload"></figure>
+(k行每一行都删除一个)</li>
+</ul>
+</li>
+</ul>
+<p><br><br><br></p>
+<h1 id="生成函数">生成函数</h1>
+<a class="post-dummy-target" id="例子"></a><h2>例子</h2>
+<ul>
+<li>用来表示子集的个数
+<ul>
+<li>n个元素的k元子集：
+$$(x^0+x^1)^n = (1+x)^n$$
+求$x^k$的系数。</li>
+</ul>
+</li>
+<li>两幅扑克抽卡
+<ul>
+<li>抽m张卡的情况：
+$$(1+x+x^2)^n$$
+求$x^m$的系数。</li>
+</ul>
+</li>
+<li>多重集的个数
+<ul>
+<li>n个元素k元多重子集:
+$$(1+x+x^2+&hellip;)^n = (\dfrac{1}{1-x})^n = \sum_{k\geq0}\left(\binom{n}{k}\right)x^k$$</li>
+</ul>
+</li>
+<li>斐波那契数列
+$$G(x) = F_0+F_1x+\sum_{k\geq 2}F_kx^k = 0+x+\sum_{k\geq 2}F_{k-1}x^k + \sum_{k\geq 2}F_{k-2}x^k$$
+$$\sum_{k\geq 2}F_{k-1}x^k = 0+x\sum_{l\geq 1}F_l x^l = xG(x)$$
+$$\sum_{k\geq 2}F_{k-2}x^k = x^2G(x)$$
+所以
+$$G(x) = x + xG(x) + x^2G(x)$$
+即
+$$G(x) = \dfrac{x}{1-x-x^2} = &hellip; = \sum_{n\geq 0}\dfrac{1}{\sqrt{5}}(\phi^n-\hat{\phi^n})x^n$$</li>
+</ul>
+<a class="post-dummy-target" id="常用公式"></a><h2>常用公式</h2>
+<ul>
+<li>$$\dfrac{1}{1-\alpha x} = \sum_{k = 0}^{\infty}(\alpha x)^k$$</li>
+<li>$$\dfrac{a}{1-bx} = a\sum_{k=0}^{\infty}(bx)^k$$</li>
+<li>$$G(x) = \sum_{k = 0}^{\infty}\dfrac{G^{(k)}(0)}{k!}x^k$$</li>
+<li>$$(1+x)^n = \sum_{k = 0}^{n}\binom{n}{k}x^k$$</li>
+</ul>
+<a class="post-dummy-target" id="生成函数公式"></a><h2>生成函数公式</h2>
+<ul>
+<li>$$x^kG(x) = \sum_{n\geq k} g_{n-k}x^n$$</li>
+<li>$$F(x)+G(x) = \sum_{n \geq 0} (f_n+g_n)x^n$$</li>
+<li>$$G^\prime(x) = \sum_{n\geq 1} ng_{n}x^{n-1}$$</li>
+<li>$$F(x)G(x) = \sum_{n\geq 0}\sum_{k = 0}^{n}f_kg_{n-k}x^n$$</li>
+</ul>
+<a class="post-dummy-target" id="应用-change-money"></a><h2>应用-Change Money</h2>
+<ul>
+<li>用一块钱换n块钱的生成函数： $G_1(x) = \sum_{n\geq 0}\alpha_nx^n = 1+x+x^2+&hellip;. = \dfrac{1}{1-x}$</li>
+<li>用五块钱换n块钱的生成函数： $G_5(x) = \sum_{n\geq 0}\beta_nx^n = 1+x^5+x^{10}+&hellip;. = \dfrac{1}{1-x^5}$</li>
+<li>则同时用一块和五块取换n块钱:  $\gamma_n = (\alpha,\beta)<em>n = \sum</em>{k = 0}^{n} \alpha_k \beta_{n-k}$,则
+$$F(x) = \sum_{n\geq 0}\gamma_nx^n =\sum_{n\geq 0}\sum_{k=0}^{n}\alpha_k\beta_{n-k}x^n\mathop{=}\limits^{卷积}G_1(x)\cdot G_5(x) = \dfrac{1}{(1-x)(1-x^5)}$$</li>
+</ul>
+<a class="post-dummy-target" id="卡特兰数"></a><h2>卡特兰数</h2>
+<ul>
+<li>例子：
+<ul>
+<li>n对括号匹配(右括号的数量在任意时刻都不能超过左括号)
+<ul>
+<li>使用$n\times n$的图中的路径来表示。</li>
+<li>每一条从(0,0)到(n,n)的路径和一种匹配方案一一对应。</li>
+</ul>
+</li>
+<li>拥有n+1个叶子节点的满二叉树的数量</li>
+<li>n+1凸多边形三角化的方案</li>
+</ul>
+</li>
+<li>$$C_n = \dfrac{1}{n+1}\binom{2n}{n}$$</li>
+</ul>
+<a class="post-dummy-target" id="求解生成函数步骤"></a><h2>求解生成函数步骤</h2>
+<ul>
+<li>找出递推式</li>
+<li>通过递推式使用 <strong>生成函数常用公式</strong> 构造G(x)关于自己的等式。</li>
+<li>求解G(x)</li>
+<li>将G(x)规范化(奇技淫巧&hellip;.)</li>
+</ul>
+<p><br><br><br></p>
+<h1 id="筛法">筛法</h1>
+<a class="post-dummy-target" id="容斥原理"></a><h2>容斥原理</h2>
+<p>$$|\bigcup_{i = 1}^{n}A_i| = \sum_{I\subseteq [n],I\neq \emptyset} (-1)^{|I|-1}|\bigcap_{i\in I}A_i|$$
+则可以定义$A_i$为坏事件，则 **坏事件都不发生**的情况有
+$$|\bigcap_{i = 1}^{n}\bar{A_i}| = |U-\bigcup_{i=1}^{n}A_i| = |U| - |\bigcup_{i = 1}^{n}A_i| = |U| - \sum_{I\subseteq [n],I\neq \emptyset} (-1)^{|I|-1}|\bigcap_{i\in I}A_i|$$
+定义$A_{\emptyset} = U，A_I = \bigcap_{i\in I}A_i$,则
+$$|\bigcap_{i = 1}^{n}\bar{A_i}| = \sum_{I \subseteq [n]} (-1)^{|I|}|A_I|$$</p>
+<a class="post-dummy-target" id="应用用来计算第二类斯特林数br"></a><h2>应用：用来<strong>计算第二类斯特林数</strong>:<br></h2>
+<p>考虑twelvford way中n个不同元素到m个不同元素的满射，根据集合划分可以得到结果为$m!{n \brace m}$.<br>
+定义如下坏事件$A_{i} = [n] \longrightarrow [m] - {i}$,则满射的情况就是这些坏事件都不发生的情况即
+$$|\bigcap_{i = 1}^{m}\bar{A_i}| = \sum_{I \subseteq [m]} (-1)^{|I|}|A_I|$$
+而对于$A_I$而言，相当于一个$[n]\longrightarrow [m]-I$,根据twelvford way第一个$|A_I| = (m-|I|)^n$,所以
+$$|\bigcap_{i = 1}^{m}\bar{A_i}| = \sum_{I \subseteq [m]} (-1)^{|I|}(m-|I|)^n = \sum_{k = 0}^{m}(-1)^k\binom{m}{k}(m-k)^n$$
+也就是有$m!{n\brace m} = \sum_{k = 0}^{m}(-1)^k\binom{m}{k}(m-k)^n$,所以${n\brace m} = \dfrac{1}{m!}\sum_{k = 0}^{m}(-1)^k\binom{m}{k}(m-k)^n$</p>
+<a class="post-dummy-target" id="derangement"></a><h2>Derangement</h2>
+<a class="post-dummy-target" id="1-原始版本对n重排列保证forall-ipi_i-neq-i"></a><h3>1. 原始版本：对[n]重排列，保证$\forall i,\pi_i \neq i$</h3>
+<p>定义坏事件$A_i = {\pi|\pi_{i} = i}$,则
+$$|\bigcap_{i = 1} ^ n \bar{A_i}| = \sum_{I\subseteq [n]}(-1)^{|I|}|A_I|$$
+其中$|A_I| = (n-|I|)!$(确定了|I|其他全排)
+$$|\bigcap_{i = 1} ^ n \bar{A_i}|  = \sum_{k=0}^n (-1)^k\binom{n}{k}(n-k)! = n!\sum_{k = 0}^n\dfrac{(-1)^k}{k!}\approx \dfrac{n!}{e}$$
+<br></p>
+<a class="post-dummy-target" id="2-一般性对n重排列保证pi_i_1-neq-j_1"></a><h3>2. 一般性：对[n]重排列，保证$\pi_{i_1} \neq j_1,&hellip;.$</h3>
+<p>棋盘(i,$\pi_i$),对于要求$\pi_{i_1} \neq j_1$，就在棋盘中$(i_1,j_1)$处打叉，最后在一个有叉的棋盘中保证每行每列只有一个棋子。<br>
+根据容斥原理:
+$$N = \sum_{k = 0}^n(-1)^kr_k(n-k)!$$
+选定k个放在对应打叉的地方，其他重排，$r_k$为k个棋子放在打叉的地方的放法，k=0时是Universe. **关键在于求$r_k$**<br>
+**n couple问题**:略</p>
+<a class="post-dummy-target" id="欧拉函数"></a><h2>欧拉函数</h2>
+<p>假设 $n = {p_1}^{k_1}{p_2}^{k_2}&hellip;{p_r}^{k_r}$
+$$\phi(n) = n\prod_{i=1}^r(1-\dfrac{1}{p_i})$$
+定义坏事件$A_i = {a|1\leq a\leq n, p_i|a},A_I = {a|\forall i \in I,p_i|a}$,$|A_I| = \dfrac{n}{\prod_{i\in I}p_i}$
+则
+$$|\bigcap_{i = 1} ^ r \bar{A_i}| = \sum_{k=0}^r \sum_{I\in \binom{[r]}{k}}(-1)^k\dfrac{n}{\prod_{i\in I}p_i} = n\prod_{i=1}^r(1-\dfrac{1}{p_i})$$</p>
+<h1 id="存在性">存在性</h1>
+<a class="post-dummy-target" id="握手定理"></a><h2>握手定理</h2>
+<p>$$\sum_{v\in V} d(v) = 2|E|$$</p>
+<ul>
+<li>可由握手定理推出<strong>sperner定理</strong>: 任意一个合法的染色(大三角形三个顶点不同颜色，然后一条线中间的点只能用线段两端点的颜色染)，必然有一个三个顶点不同颜色的三角形。</li>
+</ul>
+<a class="post-dummy-target" id="鸽笼原理"></a><h2>鸽笼原理</h2>
+<ul>
+<li>迪利克雷近似.
+<ul>
+<li>对于任意无理数x，任取正整数n,必然存在一个有理数$\dfrac{p}{q}$，满足$|x-\dfrac{p}{q}| &lt; \dfrac{1}{nq}$</li>
+<li>鸽子: ${kx}$,$k$取${1,&hellip;.,n+1}$,${x}$表示x的小数部分。</li>
+<li>笼子：$(0,1/n),(1/n,2/n),&hellip;,((n-1)/n,1)$</li>
+</ul>
+</li>
+<li>不可避免相除关系
+<ul>
+<li>在[2n]中选择$N &gt; n$个数，则必然有两个数是倍数关系。</li>
+<li>鸽子：N个数</li>
+<li>笼子：$C_m = 2^km, 2^km \leq 2n$,m取[2n]中所有奇数.</li>
+</ul>
+</li>
+<li>单调序列
+<ul>
+<li>如果一个序列$L&gt;mn$，那么在序列中一定有m+1的单调递增序列或者n+1的单调递减序列</li>
+<li>鸽子：L个数</li>
+<li>笼子：$m\times n$个格子，每个格子$(x_i,y_i)$表示以$a_i$结尾的最长单调递增序列长度或以$a_i$开始的最长单调递减序列长度。</li>
+</ul>
+</li>
+</ul>
+<h1 id="概率法">概率法</h1>
+<ul>
+<li>形式一： 如果$P(x) &lt; 1$,则存在某种情况$\bar{x}$会出现。(如 Ramsey&rsquo;s theorem)</li>
+<li>形式二： <strong>平均值原理</strong>:这里有一个&hellip;最少(最多)有k个&hellip;。(如 Hamiltonian paths in tournament)
+<ul>
+<li>即求期望$E<i class="far fa-square fa-fw"></i>= k$。</li>
+<li>常用随机指示变量来表示随机Sample的一个图里面满足或不满足条件的边或者其他。</li>
+<li><strong>一个n个点m条边的图，存在一个至少为$\dfrac{n^2}{4m}$的独立集</strong>
+<ul>
+<li>随机Sample一个图，然后删除其中的不符合条件(边在图里)的点，求期望.</li>
+</ul>
+</li>
+<li><strong>作业题：n结点d-正则图，存在一个至多为$\dfrac{n(1+\ln(d+1))}{d+1}$的点支配集</strong>
+<ul>
+<li>随机sample一个图，然后加入那些自身和邻居都不在图中的点，求期望.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="lovász-local-lemma"></a><h2>Lovász Local Lemma</h2>
+<ul>
+<li>定义坏事件$A_1,&hellip;,A_n$.</li>
+<li>构建依赖图，如果事件$A_i,A_j$不是相互独立的，那么在图中加一条边(i,j)</li>
+<li>条件：d:max degree of dependency graph
+$$ \forall i, Pr[A_i] \leq p$$
+$$ ep(d+1) \leq 1$$</li>
+<li>结论(存在坏事件都不会发生的情况)：
+$$Pr{\bigcap_{i=1}^n \bar{A_i}} &gt; 0$$</li>
+</ul>
+<h1 id="极值图论">极值图论</h1>
+<ul>
+<li>极值图：如果图G满足条件T，则图G<strong>至多</strong>有多少条边?</li>
+</ul>
+<a class="post-dummy-target" id="cyclic-free"></a><h2>Cyclic-free</h2>
+<ul>
+<li>$|E| = n-1$</li>
+<li>ex: Spanning tree</li>
+</ul>
+<a class="post-dummy-target" id="triangle-free"></a><h2>Triangle-free</h2>
+<ul>
+<li>ex: Bipartite graph</li>
+<li><strong>Mantel&rsquo;s Theorem</strong>
+<ul>
+<li>图G(V,E)，|V| = n，并且满足triangle-free，则$|E|\leq \dfrac{n^2}{4}$</li>
+</ul>
+</li>
+<li>证明：TBD</li>
+</ul>
+<a class="post-dummy-target" id="turans-theorem"></a><h2>Turan&rsquo;s Theorem</h2>
+<ul>
+<li>Turan&rsquo;s Theorem推广了Mantel&rsquo;s Theorem到$K_r$-free.</li>
+<li>图G(V,E)，|V| = n，并且满足$K_r$-free，则$|E|\leq \dfrac{(r-2)}{2(r-1)}n^2$</li>
+<li>ex: Complete multipartite graph $K_{n_1,n_2,&hellip;,n_r}$</li>
+<li>Turan graph: $T(n,r) = K_{n_1,n_2,&hellip;,n_r}$</li>
+<li><strong>Turan&rsquo;s Theorem(independent set)</strong>:
+<ul>
+<li>图G(V,E)，$|V| = n, |E| = m$，则图G存在一个<strong>独立集</strong>的大小满足$&gt;\dfrac{n^2}{2m+n}$</li>
+</ul>
+</li>
+<li>定义ex(n,H): 表示图G(V,E)，$|V| = n$，且$H \nsubseteq G$，G能有的最大边数，所以Turan&rsquo;s Theorem 可以改写为$ex(n,K_r) \leq \dfrac{r-2}{2(r-1)}n^2$</li>
+</ul>
+<h1 id="极值集合论">极值集合论</h1>
+<a class="post-dummy-target" id="sunflower-lema"></a><h2>Sunflower Lema</h2>
+<ul>
+<li>向日葵：$\mathcal{G}$是一个大小为<strong>r</strong>的向日葵，则$|\mathcal{G}| = r，\forall S,T \in \mathcal{G}, S\bigcap T = C$</li>
+<li>若$\mathcal{F} \subseteq \binom{[n]}{k}$,如果$|\mathcal{F}| &gt; k!(r-1)^k$,则在$\mathcal{F}$中存在一个大小为r的<strong>向日葵</strong>。</li>
+<li><strong>数学归纳法</strong>证明：
+<ul>
+<li>k = 1 时显然成立。</li>
+<li>假设$k-1$之前成立，则$k$时，取$\mathcal{F}$中最大的不相交的集合$\mathcal{G}$
+<ul>
+<li>如果$|\mathcal{G}| \geq r$,则成立。</li>
+<li>如果$|\mathcal{G}| \leq r-1$,则找一个<strong>popular-x</strong>,令$H = {S\backslash {x}|x \in S \land S\in \mathcal{F}}$,只要证明$|H| &gt; (k-1)!(r-1)^{k-1}$即可。</li>
+<li>令$Y = \bigcup S,S\in \mathcal{G}$,则$|Y| \leq k*(r-1)$则可以知道$Y$覆盖$\mathcal{F}$,否则仍然存在一个集合A，使得$A\bigcap Y = \emptyset$,和$\mathcal{G}$是最大不相交集合矛盾</li>
+<li>再根据<strong>平均值原理</strong>，则一定有一个值$x\in Y$满足包含x的集合数$&gt; \dfrac{|\mathcal{F}|}{|Y|} = \dfrac{k!(r-1)^k}{k(r-1)} = (k-1)!(r-1)^{k-1}$,得证。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="the-erdőskorado-theorem"></a><h2>The Erdős–Ko–Rado Theorem</h2>
+<ul>
+<li>令$\mathcal{F} \subseteq \binom{[n]}{k}$且$n &gt; 2k$，则如果$\mathcal{F}$是相交的，那么
+$$|\mathcal{F}| \leq \binom{n-1}{k-1}$$</li>
+</ul>
+<a class="post-dummy-target" id="sperner-system"></a><h2>Sperner system</h2>
+<ul>
+<li><strong>反链</strong>：集族$\mathcal{F}\subseteq 2^[n]$是一个反链，则对于任意$S,T\in \mathcal{F},S\neq T$有$S\nsubseteq T$</li>
+<li>Theorem (Sperner 1928):
+<ul>
+<li>如果$\mathcal{F}\subseteq 2^{[n]}$是一个反链，那么$|\mathcal{F}| \leq \binom{n}{\left\lfloor n/2\right\rfloor}$</li>
+</ul>
+</li>
+</ul>
+<h1 id="ramseys-theorem">Ramsey&rsquo;s Theorem</h1>
+<ul>
+<li>$\cdots$</li>
+</ul>
+<h1 id="halls-theorem">Hall&rsquo;s Theorem</h1>
+<ul>
+<li>一系列集合(可能相交)，如果能在每个集合中挑选一个代表元素，且这些代表元素不重复，则称存在一个SDR(不同集合代表系统)</li>
+<li>Hall&rsquo;s Theorem:
+<ul>
+<li>如果$S_1,&hellip;,S_m$存在一个SDR<strong>当且仅当</strong>$\forall I\subseteq [m],|\mathop{\bigcup}\limits_{i\in I}S_i| \geq |I|$</li>
+<li>证明：分$S_1,&hellip;,S_m$中有没有critical family:$|\mathop{\bigcup}\limits_{i = 0}^{k}S_i| = k$
+<ul>
+<li>无：则取一个$x_m$作为$S_m$的代表元，剩下一个子问题，根据数归得证</li>
+<li>有：不妨设为最后k个即$S_{m-k+1},&hellip;,S_{m}$,则令$X = \mathop{\bigcup}\limits_{i = 0}^{k}S_i = {x_1,&hellip;,x_k}$,令$S^\prime_i = S_i\backslash X$,则剩下$S^\prime_1,&hellip;,S^\prime_{m-k}$,根据数归得证。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></div>
+    </div></div>
+            </main><footer class="footer">
+    <div class="copyright">
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://jarviszl.github.io/" target="_blank">Lingyu Zhang</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/js/lib/jquery/jquery.slim.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><script src="/js/lib/katex/katex.min.js"></script><script defer src="/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script defer src="/js/lib/katex/copy-tex.min.js"></script><script defer src="/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$$", right: "$$", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/js/blog.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>计算机网络-拥塞和Qos | 浙语临湖</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszl.github.io/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%B8%89%E7%AB%A0/" /><link rel="next" href="https://jarviszl.github.io/documents/%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6/" /><link rel="canonical" href="https://jarviszl.github.io/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E6%8B%A5%E5%A1%9E%E5%92%8Cqos/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="计算机网络-拥塞和Qos" />
+<meta property="og:description" content="拥塞和Qos 拥塞 拥塞原因  大量分组在网络上传输，数量超出路由器的处理能力。  拥塞代价  造成丢包，时延；重传使得浪费之前发送的资源。  拥塞控制方法   抑制分组(choke packet): 产生拥塞的路由器通过特定协议(如ICMP)向源端系统发送抑制分组来抑制源端系统的分组发送。
+  反向施压(Backpressure): 当传播时间大于传输时间时，choke packet往往没有作用，则通过产生拥塞路由器向前面一个路由器反向施压抑制前面路由器的发送，这样传递下去，最终影响到源端系统。
+  标志位(Warning bit): 通过在分组上设置一个标志位来告诉端系统可能发生拥塞。
+ 前向标记(FECN): 发生拥塞相同的方向 后向标记(BECN): 发生拥塞相反的方向    拥塞窗口：使用在端系统上(如TCP)
+  早期随机丢弃(RED): 作用在路由器上，该方式设置一个下限 $L_{min}$，一个上限 $L_{max}$。
+ 当队列的长度小于小于下限时，保证不会丢掉分组 当队列的长度介于上下限之间时，对于每一个接收到的分组，路由器以概率 p丢弃 当队列长度完全大于上限时，丢弃接收到的分组。    流量整形（Traffic shaping): 在建立连接之后，端系统和路由器之间协商流量整形的方式。
+ 约定数据速率(CIR): RED方式。 漏桶：通过像漏斗一样的东西控制流量，输入速率随意，输出速率固定。 令牌桶：允许多变的输出速率。  令牌桶容量：一次性最多能够输出分组的数量。 令牌产生的速率：用来控制输出分组的平均速率 可以在令牌桶后面连接一个容量为1的令牌桶来控制峰值速率      Qos的两种服务 ISA(Integrated Services Architecture)  由于太复杂，现在还没用。  DS(Differentiated Services)差异化服务  使用IPv4和IPv6里面的服务类型和流量类型来区分不同的分组的重要性。  " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jarviszl.github.io/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E6%8B%A5%E5%A1%9E%E5%92%8Cqos/" />
+<meta property="article:published_time" content="2019-12-24T19:26:48+00:00" />
+<meta property="article:modified_time" content="2019-12-24T19:26:48+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="计算机网络-拥塞和Qos"/>
+<meta name="twitter:description" content="拥塞和Qos 拥塞 拥塞原因  大量分组在网络上传输，数量超出路由器的处理能力。  拥塞代价  造成丢包，时延；重传使得浪费之前发送的资源。  拥塞控制方法   抑制分组(choke packet): 产生拥塞的路由器通过特定协议(如ICMP)向源端系统发送抑制分组来抑制源端系统的分组发送。
+  反向施压(Backpressure): 当传播时间大于传输时间时，choke packet往往没有作用，则通过产生拥塞路由器向前面一个路由器反向施压抑制前面路由器的发送，这样传递下去，最终影响到源端系统。
+  标志位(Warning bit): 通过在分组上设置一个标志位来告诉端系统可能发生拥塞。
+ 前向标记(FECN): 发生拥塞相同的方向 后向标记(BECN): 发生拥塞相反的方向    拥塞窗口：使用在端系统上(如TCP)
+  早期随机丢弃(RED): 作用在路由器上，该方式设置一个下限 $L_{min}$，一个上限 $L_{max}$。
+ 当队列的长度小于小于下限时，保证不会丢掉分组 当队列的长度介于上下限之间时，对于每一个接收到的分组，路由器以概率 p丢弃 当队列长度完全大于上限时，丢弃接收到的分组。    流量整形（Traffic shaping): 在建立连接之后，端系统和路由器之间协商流量整形的方式。
+ 约定数据速率(CIR): RED方式。 漏桶：通过像漏斗一样的东西控制流量，输入速率随意，输出速率固定。 令牌桶：允许多变的输出速率。  令牌桶容量：一次性最多能够输出分组的数量。 令牌产生的速率：用来控制输出分组的平均速率 可以在令牌桶后面连接一个容量为1的令牌桶来控制峰值速率      Qos的两种服务 ISA(Integrated Services Architecture)  由于太复杂，现在还没用。  DS(Differentiated Services)差异化服务  使用IPv4和IPv6里面的服务类型和流量类型来区分不同的分组的重要性。  "/>
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "计算机网络-拥塞和Qos",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/jarviszl.github.io\/documents\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E6%8B%A5%E5%A1%9E%E5%92%8Cqos\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszl.github.io\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "documents","wordcount":  47 ,
+        "url": "https:\/\/jarviszl.github.io\/documents\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E6%8B%A5%E5%A1%9E%E5%92%8Cqos\/","datePublished": "2019-12-24T19:26:48\x2b00:00","dateModified": "2019-12-24T19:26:48\x2b00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "xxxx",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszl.github.io\/images\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/forkawesome/fork-awesome.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://jarviszl.github.io/">浙语临湖</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://jarviszl.github.io/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszl.github.io/categories" title="">Documents</a><a class="menu-item" href="https://jarviszl.github.io/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://jarviszl.github.io/">浙语临湖</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszl.github.io/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszl.github.io/categories" title="">Documents</a><a class="menu-item" href="https://jarviszl.github.io/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><div class="page single"><h1 class="post-title animated pulse faster">计算机网络-拥塞和Qos</h1><div class="post-content"><h1 id="拥塞和qos">拥塞和Qos</h1>
+<!-- more -->
+<a class="post-dummy-target" id="拥塞"></a><h2>拥塞</h2>
+<a class="post-dummy-target" id="拥塞原因"></a><h3>拥塞原因</h3>
+<ul>
+<li>大量分组在网络上传输，数量超出路由器的处理能力。</li>
+</ul>
+<a class="post-dummy-target" id="拥塞代价"></a><h3>拥塞代价</h3>
+<ul>
+<li>造成丢包，时延；重传使得浪费之前发送的资源。</li>
+</ul>
+<a class="post-dummy-target" id="拥塞控制方法"></a><h3>拥塞控制方法</h3>
+<ul>
+<li>
+<p><strong>抑制分组(choke packet):</strong> 产生拥塞的路由器通过特定协议(如ICMP)向源端系统发送抑制分组来抑制源端系统的分组发送。</p>
+</li>
+<li>
+<p><strong>反向施压(Backpressure):</strong> 当传播时间大于传输时间时，choke packet往往没有作用，则通过产生拥塞路由器向前面一个路由器反向施压抑制前面路由器的发送，这样传递下去，最终影响到源端系统。</p>
+</li>
+<li>
+<p><strong>标志位(Warning bit):</strong> 通过在分组上设置一个标志位来告诉端系统可能发生拥塞。</p>
+<ul>
+<li>前向标记(FECN): 发生拥塞相同的方向</li>
+<li>后向标记(BECN): 发生拥塞相反的方向</li>
+</ul>
+</li>
+<li>
+<p><strong>拥塞窗口</strong>：使用在端系统上(如TCP)</p>
+</li>
+<li>
+<p><strong>早期随机丢弃(RED)</strong>: 作用在路由器上，该方式设置一个下限 $L_{min}$，一个上限 $L_{max}$。</p>
+<ul>
+<li>当队列的长度小于小于下限时，保证不会丢掉分组</li>
+<li>当队列的长度介于上下限之间时，对于每一个接收到的分组，路由器以概率 <strong>p</strong>丢弃</li>
+<li>当队列长度完全大于上限时，丢弃接收到的分组。</li>
+</ul>
+</li>
+<li>
+<p><strong>流量整形（Traffic shaping):</strong> 在建立连接之后，端系统和路由器之间协商流量整形的方式。</p>
+<ul>
+<li>约定数据速率(CIR): RED方式。</li>
+<li>漏桶：通过像漏斗一样的东西控制流量，输入速率随意，输出速率固定。</li>
+<li><strong>令牌桶</strong>：允许多变的输出速率。
+<ul>
+<li>令牌桶容量：一次性最多能够输出分组的数量。</li>
+<li>令牌产生的速率：用来控制输出分组的平均速率</li>
+<li>可以在令牌桶后面连接一个容量为1的令牌桶来控制<strong>峰值速率</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="qos的两种服务"></a><h2>Qos的两种服务</h2>
+<a class="post-dummy-target" id="isaintegrated-services-architecture"></a><h3>ISA(Integrated Services Architecture)</h3>
+<ul>
+<li>由于太复杂，现在还没用。</li>
+</ul>
+<a class="post-dummy-target" id="dsdifferentiated-services差异化服务"></a><h3>DS(Differentiated Services)差异化服务</h3>
+<ul>
+<li>使用IPv4和IPv6里面的服务类型和流量类型来区分不同的分组的重要性。</li>
+</ul>
+</div>
+    </div></div>
+            </main><footer class="footer">
+    <div class="copyright">
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://jarviszl.github.io/" target="_blank">Lingyu Zhang</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/js/lib/jquery/jquery.slim.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><script src="/js/lib/katex/katex.min.js"></script><script defer src="/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script defer src="/js/lib/katex/copy-tex.min.js"></script><script defer src="/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$$", right: "$$", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/js/blog.min.js"></script>
+</body>
+</html>
