@@ -25,5 +25,3 @@
   $$\pi_{aid,cid,pid}(O)\div [\pi_{cid}(\sigma_{city ='NY'}(C)) \times \pi_{pid}(\sigma_{price > 1}(P))]$$
 
 
-
-

@@ -1,5 +1,5 @@
 .archive-item {
-  margin-left: 2rem;
+  margin-left: auto;
 }
 
 .categories-card {
@@ -14,9 +14,9 @@
   line-height: 1.6rem;
 
   .card-item {
-    font-size: .875rem;
+    font-size: 0.875rem;
     text-align: left;
-    width: 45%;
+    width: 29%;
     display: flex;
     align-items: flex-start;
     margin-top: 2rem;
@@ -29,7 +29,7 @@
       overflow: hidden;
 
       .card-item-title {
-        font-size: 1.2rem;
+        font-size: 1rem;
         font-weight: bold;
         display: inline-block;
       }

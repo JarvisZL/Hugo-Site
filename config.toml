@@ -81,15 +81,21 @@ dateFormatToUse = "2006-01-02"
 
   [[menu.main]]
     identifier = "documents"
-    name = "Documents"
+    name = "Notes"
     url = "categories"
     weight = 2
+
+  [[menu.main]]
+    identifier = "slides"
+    name = "Slides"
+    url = "slides"
+    weight = 3
 
   [[menu.main]]
     identifier = "about"
     name = "About"
     url = "about"
-    weight = 3
+    weight = 4
 
 
 [taxonomies]

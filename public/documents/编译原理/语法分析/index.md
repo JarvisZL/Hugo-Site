@@ -53,6 +53,7 @@
 - 正式定义
   - 如果$A\rightarrow \gamma$是一个产生式，那么$\alpha A \beta \Longrightarrow \alpha \gamma \beta$
   - **最左(右)推导**：$\alpha(\beta)$中**不包含**非终结符号
+    
     - 符号$\mathop{\Longrightarrow}\limits_{lm}^{*},\mathop{\Longrightarrow}\limits_{rm}^{*}$
   - 经过零步或多步推导出:$\mathop{\Longrightarrow}\limits^{*}$
     - 对于任何串$\alpha \mathop{\Longrightarrow}\limits^{*} \alpha$
@@ -60,6 +61,7 @@
     - 如果$\alpha \mathop{\Longrightarrow}\limits^{*} \beta$且$\beta \Longrightarrow \gamma$则$\alpha \mathop{\Longrightarrow}\limits^{*} \gamma$
     </div>
   - 经过一步或者多步推导出:$\mathop{\Longrightarrow}\limits^{+}$
+    
     - $\alpha \mathop{\Longrightarrow}\limits^{+} \beta$等价于$\alpha \mathop{\Longrightarrow}\limits^{*} \beta$且$\alpha \neq \beta$
 
 ## 句型/句子/语言

@@ -27,6 +27,7 @@ $$||\textbf{x}-\textbf{y}|| = (\textbf{x}-\textbf{y})^T(\textbf{x}-\textbf{y}) =
 ### 角度与投影
 - 定义:
   
+
 $$\textbf{x}^T\textbf{y} = ||\textbf{x}||\cdot||\textbf{y}||\cdot \cos{\theta}$$
 
 - 所以$|\textbf{x}^T\textbf{y}| \leq ||\textbf{x}||\cdot||\textbf{y}||$(实际上就是柯西-施瓦茨不等式)

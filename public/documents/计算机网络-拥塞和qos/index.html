@@ -5,7 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>计算机网络-拥塞和Qos | 浙语临湖</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noodp" />
-<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%B8%89%E7%AB%A0/" /><link rel="next" href="https://jarviszly.com/documents/%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6/" /><link rel="canonical" href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E6%8B%A5%E5%A1%9E%E5%92%8Cqos/" />
+<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszly.com/documents/%E5%BE%AE%E7%94%B5%E5%AD%90%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B8%89%E7%AB%A0/" /><link rel="next" href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%BA%94%E7%AB%A0/" /><link rel="stylesheet" href="/slides.css"/>
+<link rel="canonical" href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E6%8B%A5%E5%A1%9E%E5%92%8Cqos/" />
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -23,8 +24,8 @@
  约定数据速率(CIR): RED方式。 漏桶：通过像漏斗一样的东西控制流量，输入速率随意，输出速率固定。 令牌桶：允许多变的输出速率。  令牌桶容量：一次性最多能够输出分组的数量。 令牌产生的速率：用来控制输出分组的平均速率 可以在令牌桶后面连接一个容量为1的令牌桶来控制峰值速率      Qos的两种服务 ISA(Integrated Services Architecture)  由于太复杂，现在还没用。  DS(Differentiated Services)差异化服务  使用IPv4和IPv6里面的服务类型和流量类型来区分不同的分组的重要性。  " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E6%8B%A5%E5%A1%9E%E5%92%8Cqos/" />
-<meta property="article:published_time" content="2019-12-24T19:26:48+00:00" />
-<meta property="article:modified_time" content="2019-12-24T19:26:48+00:00" />
+<meta property="article:published_time" content="2020-02-29T12:59:22+08:00" />
+<meta property="article:modified_time" content="2020-02-29T12:59:22+08:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="计算机网络-拥塞和Qos"/>
 <meta name="twitter:description" content="拥塞和Qos 拥塞 拥塞原因  大量分组在网络上传输，数量超出路由器的处理能力。  拥塞代价  造成丢包，时延；重传使得浪费之前发送的资源。  拥塞控制方法   抑制分组(choke packet): 产生拥塞的路由器通过特定协议(如ICMP)向源端系统发送抑制分组来抑制源端系统的分组发送。
@@ -47,8 +48,8 @@
                 "url": "https:\/\/jarviszly.com\/cover.png",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "documents","wordcount":  47 ,
-        "url": "https:\/\/jarviszly.com\/documents\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E6%8B%A5%E5%A1%9E%E5%92%8Cqos\/","datePublished": "2019-12-24T19:26:48\x2b00:00","dateModified": "2019-12-24T19:26:48\x2b00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            },"genre": "documents","keywords": "计算机网络","wordcount":  47 ,
+        "url": "https:\/\/jarviszly.com\/documents\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E6%8B%A5%E5%A1%9E%E5%92%8Cqos\/","datePublished": "2020-02-29T12:59:22\x2b08:00","dateModified": "2020-02-29T12:59:22\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "xxxx",
                 "logo": {
@@ -68,7 +69,7 @@
         <div class="navbar-header animated bounceIn">
             <a href="https://jarviszly.com">浙语临湖</a>
         </div>
-        <div class="navbar-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Documents</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav><nav class="navbar-mobile">
@@ -81,12 +82,65 @@
                 <span></span><span></span><span></span>
             </div>
         </div>
-        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Documents</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav>
 <main class="main">
-                <div class="container"><div class="page single"><h1 class="post-title animated pulse faster">计算机网络-拥塞和Qos</h1><div class="post-content"><h1 id="拥塞和qos">拥塞和Qos</h1>
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">计算机网络-拥塞和Qos</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://jarviszly.com" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
+                </a>&nbsp;<span class="post-category">included in&nbsp;<i class="far fa-folder fa-fw"></i><a href="https://jarviszly.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>&nbsp;</span></div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-02-29>2020-02-29</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 47 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>1 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#拥塞">拥塞</a>
+      <ul>
+        <li><a href="#拥塞原因">拥塞原因</a></li>
+        <li><a href="#拥塞代价">拥塞代价</a></li>
+        <li><a href="#拥塞控制方法">拥塞控制方法</a></li>
+      </ul>
+    </li>
+    <li><a href="#qos的两种服务">Qos的两种服务</a>
+      <ul>
+        <li><a href="#isaintegrated-services-architecture">ISA(Integrated Services Architecture)</a></li>
+        <li><a href="#dsdifferentiated-services差异化服务">DS(Differentiated Services)差异化服务</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#拥塞">拥塞</a>
+      <ul>
+        <li><a href="#拥塞原因">拥塞原因</a></li>
+        <li><a href="#拥塞代价">拥塞代价</a></li>
+        <li><a href="#拥塞控制方法">拥塞控制方法</a></li>
+      </ul>
+    </li>
+    <li><a href="#qos的两种服务">Qos的两种服务</a>
+      <ul>
+        <li><a href="#isaintegrated-services-architecture">ISA(Integrated Services Architecture)</a></li>
+        <li><a href="#dsdifferentiated-services差异化服务">DS(Differentiated Services)差异化服务</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><h1 id="拥塞和qos">拥塞和Qos</h1>
 <!-- more -->
 <a class="post-dummy-target" id="拥塞"></a><h2>拥塞</h2>
 <a class="post-dummy-target" id="拥塞原因"></a><h3>拥塞原因</h3>
@@ -147,8 +201,40 @@
 <ul>
 <li>使用IPv4和IPv6里面的服务类型和流量类型来区分不同的分组的重要性。</li>
 </ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-02-29</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span><a href="//twitter.com/share?url=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E8%25AE%25A1%25E7%25AE%2597%25E6%259C%25BA%25E7%25BD%2591%25E7%25BB%259C-%25E6%258B%25A5%25E5%25A1%259E%25E5%2592%258Cqos%2f&amp;text=%e8%ae%a1%e7%ae%97%e6%9c%ba%e7%bd%91%e7%bb%9c-%e6%8b%a5%e5%a1%9e%e5%92%8cQos&amp;via=" target="_blank" title="Share on Twitter">
+            <i class="fab fa-twitter fa-fw"></i>
+        </a><a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E8%25AE%25A1%25E7%25AE%2597%25E6%259C%25BA%25E7%25BD%2591%25E7%25BB%259C-%25E6%258B%25A5%25E5%25A1%259E%25E5%2592%258Cqos%2f" target="_blank" title="Share on Facebook">
+            <i class="fab fa-facebook-square fa-fw"></i>
+        </a><a href="//reddit.com/submit?url=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E8%25AE%25A1%25E7%25AE%2597%25E6%259C%25BA%25E7%25BD%2591%25E7%25BB%259C-%25E6%258B%25A5%25E5%25A1%259E%25E5%2592%258Cqos%2f&amp;title=%e8%ae%a1%e7%ae%97%e6%9c%ba%e7%bd%91%e7%bb%9c-%e6%8b%a5%e5%a1%9e%e5%92%8cQos" target="_blank" title="Share on Reddit">
+            <i class="fab fa-reddit fa-fw"></i>
+        </a></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span class="tag">
+                        <a href="https://jarviszly.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="fas fa-tag fa-fw"></i>&nbsp;计算机网络</a>&nbsp;
+                    </span></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://jarviszly.com">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://jarviszly.com/documents/%E5%BE%AE%E7%94%B5%E5%AD%90%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B8%89%E7%AB%A0/" class="prev" rel="prev" title="微电子笔记第三章"><i class="fas fa-angle-left fa-fw"></i>微电子笔记第三章</a>
+            <a href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%BA%94%E7%AB%A0/" class="next" rel="next" title="计算机网络-第五章">计算机网络-第五章<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
-    </div></div>
+<div class="post-comment"></div>
+    </article></div>
             </main><footer class="footer">
     <div class="copyright">
 

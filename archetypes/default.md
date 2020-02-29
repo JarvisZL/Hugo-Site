@@ -1,6 +1,6 @@
 ---
 author: "Lingyu Zhang"
-author_link: "https://jarviszl.github.io/"
+author_link: "https://jarviszly.com"
 title: "{{ replace .TranslationBaseName "-" " " | title }}"
 date: {{ .Date }}
 lastmod: {{ .Date }}
@@ -17,7 +17,7 @@ featured_image: ""
 featured_image_preview: ""
 
 comment: true
-toc: false
+toc: true
 auto_collapse_toc: true
 math: true
 ---

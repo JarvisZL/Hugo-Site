@@ -5,7 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>计算机网络-第四章 | 浙语临湖</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noodp" />
-<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%85%AD%E7%AB%A0/" /><link rel="next" href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%BA%94%E7%AB%A0/" /><link rel="canonical" href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%9B%9B%E7%AB%A0/" />
+<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%BA%94%E7%AB%A0/" /><link rel="next" href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%B8%89%E7%AB%A0/" /><link rel="stylesheet" href="/slides.css"/>
+<link rel="canonical" href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%9B%9B%E7%AB%A0/" />
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -17,8 +18,8 @@
 <meta property="og:description" content="第四章 转发和交换(路由选择) 转发  是网络层：数据平面实现的唯一功能。 是指将一个分组从一个输入链路接口转移到适当的输出链路接口的路由器本地动作，时间尺度很短。  交换(路由选择)  是网络层：控制平面的功能，当分组从发送方流向接收方时，网络层需要决定这些分组采用的路由或路径，计算这些路径的算法称为 路由选择算法 是指确定分组从发送方到接收方所采取的端到端路径的网络范围处理过程，事件尺度相对更长。  转发表  每个网络路由器都有一个转发表，路由器在检测到分组首部的若干字段后，用这些首部值在转发表中索引，从而确定分组转发的输出链路接口。 链路层交换机时根据链路层帧首部的字段(如MAC地址)进行转发，而 路由器是根据网络层数据报中的首部(如IP地址)进行转发  路由器工作原理 路由器体系结构 体系结构  交换  经内存交换：通过终端路由选择处理器 经总线交换：通过给分组打上标签，到达本地输出链路后去除标签。 经互联网络交换：允许并行，交换时将沿途结点封锁。    基于目的地的转发  路由器转发表采用前缀匹配的方式生成表项，对于每一个链路接口，其目的地址范围的前缀为表项中的前缀匹配。 在收到分组时，路由器用分组的目的地址和表项中的前缀匹配，匹配成功则将该分组转发到对应的链路接口。 当存在多个成功匹配时，采用 最长前缀匹配规则，转发到匹配长度最长的那个链路接口。  分组调度  排队的分组如何经输出链路传输。 先进先出(FIFO) 优先权排队  将到达输出链路的分组按照优先级分成多个类，优先级高的类先传输，类内采用FIFO的方式。 非抢占式优先权排队：一旦分组开始被传输，即使此时有更高优先级的分组到达，该分组的传输也不会被打断。   循环排队规则  也将分组分成多个类，循环调度器在类之间轮流传输。   加权公平排队  和循环排队类似，但是在第i个类有需要发送的分组的任何时间间隔中，都能保证该类等待发送的分组中有$w_i/(\sum w_j)$的部分接收到了发送服务。    网际协议：IP IPv4 IPv4数据报格式 IPv4   版本号：规定了数据报IP协议版本，路由器根据该部分决定如何识别解释后面的部分 首部长度：一般为20字节。 服务类型：说明该IP数据报是什么类型。 数据报长度：整个IP数据报总长度。 标识，标志，片偏移：和IP分片相关。 寿命(TTL): 确保数据报不会再网络中循环，没经过一个路由器该值-1，为0时丢弃。 上层协议：指示了IP数据报的数据部分应该交给哪一个特定的运输层协议。 首部校验和：帮助路由器检测IP数据报中的比特错误。 源/目的IP地址，选项，数据。  IPv4数据报分片  分片原因：由于不同的链路层协议的 最大传送单元不一样，有时一个链路层帧并不能完全承载一个IP数据报的内容，故需要将IP数据报分片。 最大传送单元：一个链路层帧能够承载的最大数据量。 IPv4将重组IP数据报的工作交给了端系统。 IPv4数据报分片利用标识，标志，片偏移三个字段：  发送主机通常将它发送的每一个数据报的标识号依次加1." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%9B%9B%E7%AB%A0/" />
-<meta property="article:published_time" content="2019-12-05T09:41:06+00:00" />
-<meta property="article:modified_time" content="2019-12-05T09:41:06+00:00" />
+<meta property="article:published_time" content="2020-02-29T13:01:43+08:00" />
+<meta property="article:modified_time" content="2020-02-29T13:01:43+08:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="计算机网络-第四章"/>
 <meta name="twitter:description" content="第四章 转发和交换(路由选择) 转发  是网络层：数据平面实现的唯一功能。 是指将一个分组从一个输入链路接口转移到适当的输出链路接口的路由器本地动作，时间尺度很短。  交换(路由选择)  是网络层：控制平面的功能，当分组从发送方流向接收方时，网络层需要决定这些分组采用的路由或路径，计算这些路径的算法称为 路由选择算法 是指确定分组从发送方到接收方所采取的端到端路径的网络范围处理过程，事件尺度相对更长。  转发表  每个网络路由器都有一个转发表，路由器在检测到分组首部的若干字段后，用这些首部值在转发表中索引，从而确定分组转发的输出链路接口。 链路层交换机时根据链路层帧首部的字段(如MAC地址)进行转发，而 路由器是根据网络层数据报中的首部(如IP地址)进行转发  路由器工作原理 路由器体系结构 体系结构  交换  经内存交换：通过终端路由选择处理器 经总线交换：通过给分组打上标签，到达本地输出链路后去除标签。 经互联网络交换：允许并行，交换时将沿途结点封锁。    基于目的地的转发  路由器转发表采用前缀匹配的方式生成表项，对于每一个链路接口，其目的地址范围的前缀为表项中的前缀匹配。 在收到分组时，路由器用分组的目的地址和表项中的前缀匹配，匹配成功则将该分组转发到对应的链路接口。 当存在多个成功匹配时，采用 最长前缀匹配规则，转发到匹配长度最长的那个链路接口。  分组调度  排队的分组如何经输出链路传输。 先进先出(FIFO) 优先权排队  将到达输出链路的分组按照优先级分成多个类，优先级高的类先传输，类内采用FIFO的方式。 非抢占式优先权排队：一旦分组开始被传输，即使此时有更高优先级的分组到达，该分组的传输也不会被打断。   循环排队规则  也将分组分成多个类，循环调度器在类之间轮流传输。   加权公平排队  和循环排队类似，但是在第i个类有需要发送的分组的任何时间间隔中，都能保证该类等待发送的分组中有$w_i/(\sum w_j)$的部分接收到了发送服务。    网际协议：IP IPv4 IPv4数据报格式 IPv4   版本号：规定了数据报IP协议版本，路由器根据该部分决定如何识别解释后面的部分 首部长度：一般为20字节。 服务类型：说明该IP数据报是什么类型。 数据报长度：整个IP数据报总长度。 标识，标志，片偏移：和IP分片相关。 寿命(TTL): 确保数据报不会再网络中循环，没经过一个路由器该值-1，为0时丢弃。 上层协议：指示了IP数据报的数据部分应该交给哪一个特定的运输层协议。 首部校验和：帮助路由器检测IP数据报中的比特错误。 源/目的IP地址，选项，数据。  IPv4数据报分片  分片原因：由于不同的链路层协议的 最大传送单元不一样，有时一个链路层帧并不能完全承载一个IP数据报的内容，故需要将IP数据报分片。 最大传送单元：一个链路层帧能够承载的最大数据量。 IPv4将重组IP数据报的工作交给了端系统。 IPv4数据报分片利用标识，标志，片偏移三个字段：  发送主机通常将它发送的每一个数据报的标识号依次加1."/>
@@ -35,8 +36,8 @@
                 "url": "https:\/\/jarviszly.com\/cover.png",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "documents","keywords": "232, 174, 161, 231, 174, 151, 230, 156, 186, 231, 189, 145, 231, 187, 156, 45, 67, 51, 229, 136, 134, 231, 187, 132, 228, 186, 164, 230, 141, 162, 231, 189, 145, 231, 187, 156","wordcount":  135 ,
-        "url": "https:\/\/jarviszly.com\/documents\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%9B%9B%E7%AB%A0\/","datePublished": "2019-12-05T09:41:06\x2b00:00","dateModified": "2019-12-05T09:41:06\x2b00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            },"genre": "documents","keywords": "计算机网络","wordcount":  135 ,
+        "url": "https:\/\/jarviszly.com\/documents\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%9B%9B%E7%AB%A0\/","datePublished": "2020-02-29T13:01:43\x2b08:00","dateModified": "2020-02-29T13:01:43\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "xxxx",
                 "logo": {
@@ -56,7 +57,7 @@
         <div class="navbar-header animated bounceIn">
             <a href="https://jarviszly.com">浙语临湖</a>
         </div>
-        <div class="navbar-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Documents</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav><nav class="navbar-mobile">
@@ -69,12 +70,105 @@
                 <span></span><span></span><span></span>
             </div>
         </div>
-        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Documents</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav>
 <main class="main">
-                <div class="container"><div class="page single"><h1 class="post-title animated pulse faster">计算机网络-第四章</h1><div class="post-content"><h1 id="第四章">第四章</h1>
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">计算机网络-第四章</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://jarviszly.com" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
+                </a>&nbsp;<span class="post-category">included in&nbsp;<i class="far fa-folder fa-fw"></i><a href="https://jarviszly.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>&nbsp;</span></div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-02-29>2020-02-29</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 135 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>1 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#转发和交换路由选择">转发和交换(路由选择)</a>
+      <ul>
+        <li><a href="#转发">转发</a></li>
+        <li><a href="#交换路由选择">交换(路由选择)</a></li>
+        <li><a href="#转发表">转发表</a></li>
+      </ul>
+    </li>
+    <li><a href="#路由器工作原理">路由器工作原理</a>
+      <ul>
+        <li><a href="#路由器体系结构">路由器体系结构</a></li>
+        <li><a href="#基于目的地的转发">基于目的地的转发</a></li>
+        <li><a href="#分组调度">分组调度</a></li>
+      </ul>
+    </li>
+    <li><a href="#网际协议ip">网际协议：IP</a>
+      <ul>
+        <li><a href="#ipv4">IPv4</a>
+          <ul>
+            <li><a href="#ipv4数据报格式-ipv4imagesdocuments计算机网络-第四章ipv4png">IPv4数据报格式 IPv4</a></li>
+            <li><a href="#ipv4数据报分片">IPv4数据报分片</a></li>
+            <li><a href="#ipv4编址">IPv4编址</a></li>
+            <li><a href="#网络地址转换">网络地址转换</a></li>
+          </ul>
+        </li>
+        <li><a href="#ipv6">IPv6</a>
+          <ul>
+            <li><a href="#ipv6数据报格式">IPv6数据报格式</a></li>
+            <li><a href="#ipv4到ipv6的迁移">IPv4到IPv6的迁移</a></li>
+          </ul>
+        </li>
+        <li><a href="#通用转发和sdn">通用转发和SDN</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#转发和交换路由选择">转发和交换(路由选择)</a>
+      <ul>
+        <li><a href="#转发">转发</a></li>
+        <li><a href="#交换路由选择">交换(路由选择)</a></li>
+        <li><a href="#转发表">转发表</a></li>
+      </ul>
+    </li>
+    <li><a href="#路由器工作原理">路由器工作原理</a>
+      <ul>
+        <li><a href="#路由器体系结构">路由器体系结构</a></li>
+        <li><a href="#基于目的地的转发">基于目的地的转发</a></li>
+        <li><a href="#分组调度">分组调度</a></li>
+      </ul>
+    </li>
+    <li><a href="#网际协议ip">网际协议：IP</a>
+      <ul>
+        <li><a href="#ipv4">IPv4</a>
+          <ul>
+            <li><a href="#ipv4数据报格式-ipv4imagesdocuments计算机网络-第四章ipv4png">IPv4数据报格式 IPv4</a></li>
+            <li><a href="#ipv4数据报分片">IPv4数据报分片</a></li>
+            <li><a href="#ipv4编址">IPv4编址</a></li>
+            <li><a href="#网络地址转换">网络地址转换</a></li>
+          </ul>
+        </li>
+        <li><a href="#ipv6">IPv6</a>
+          <ul>
+            <li><a href="#ipv6数据报格式">IPv6数据报格式</a></li>
+            <li><a href="#ipv4到ipv6的迁移">IPv4到IPv6的迁移</a></li>
+          </ul>
+        </li>
+        <li><a href="#通用转发和sdn">通用转发和SDN</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><h1 id="第四章">第四章</h1>
 <!-- more -->
 <a class="post-dummy-target" id="转发和交换路由选择"></a><h2>转发和交换(路由选择)</h2>
 <a class="post-dummy-target" id="转发"></a><h3>转发</h3>
@@ -250,8 +344,40 @@
 </ul>
 <a class="post-dummy-target" id="通用转发和sdn"></a><h3>通用转发和SDN</h3>
 <p>TBD</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-02-29</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span><a href="//twitter.com/share?url=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E8%25AE%25A1%25E7%25AE%2597%25E6%259C%25BA%25E7%25BD%2591%25E7%25BB%259C-%25E7%25AC%25AC%25E5%259B%259B%25E7%25AB%25A0%2f&amp;text=%e8%ae%a1%e7%ae%97%e6%9c%ba%e7%bd%91%e7%bb%9c-%e7%ac%ac%e5%9b%9b%e7%ab%a0&amp;via=" target="_blank" title="Share on Twitter">
+            <i class="fab fa-twitter fa-fw"></i>
+        </a><a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E8%25AE%25A1%25E7%25AE%2597%25E6%259C%25BA%25E7%25BD%2591%25E7%25BB%259C-%25E7%25AC%25AC%25E5%259B%259B%25E7%25AB%25A0%2f" target="_blank" title="Share on Facebook">
+            <i class="fab fa-facebook-square fa-fw"></i>
+        </a><a href="//reddit.com/submit?url=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E8%25AE%25A1%25E7%25AE%2597%25E6%259C%25BA%25E7%25BD%2591%25E7%25BB%259C-%25E7%25AC%25AC%25E5%259B%259B%25E7%25AB%25A0%2f&amp;title=%e8%ae%a1%e7%ae%97%e6%9c%ba%e7%bd%91%e7%bb%9c-%e7%ac%ac%e5%9b%9b%e7%ab%a0" target="_blank" title="Share on Reddit">
+            <i class="fab fa-reddit fa-fw"></i>
+        </a></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span class="tag">
+                        <a href="https://jarviszly.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="fas fa-tag fa-fw"></i>&nbsp;计算机网络</a>&nbsp;
+                    </span></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://jarviszly.com">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%BA%94%E7%AB%A0/" class="prev" rel="prev" title="计算机网络-第五章"><i class="fas fa-angle-left fa-fw"></i>计算机网络-第五章</a>
+            <a href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%B8%89%E7%AB%A0/" class="next" rel="next" title="计算机网络-第三章">计算机网络-第三章<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
-    </div></div>
+<div class="post-comment"></div>
+    </article></div>
             </main><footer class="footer">
     <div class="copyright">
 

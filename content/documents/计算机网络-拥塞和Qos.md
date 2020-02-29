@@ -1,10 +1,28 @@
 ---
-title: 计算机网络-拥塞和Qos
-date: 2019-12-24 19:26:48
-tags:  
-categories: 计算机网络
-mathjax: true
+author: "Lingyu Zhang"
+author_link: "https://jarviszly.com"
+title: "计算机网络-拥塞和Qos"
+date: 2020-02-29T12:59:22+08:00
+lastmod: 2020-02-29T12:59:22+08:00
+draft: false
+description: ""
+show_in_homepage: true
+description_as_summary: false
+license: ""
+
+tags: [计算机网络]
+categories: [计算机网络]
+
+featured_image: ""
+featured_image_preview: ""
+
+comment: true
+toc: true
+auto_collapse_toc: true
+math: true
 ---
+
+
 
 # 拥塞和Qos
 <!-- more -->

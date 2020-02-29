@@ -5,7 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>Markdown 基本语法预览 | 浙语临湖</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noodp" />
-<meta name="Description" content="这是一篇用于预览 Markdown 基本语法的文章。"><link rel="canonical" href="https://jarviszly.com/blogs/basic-markdown-preview/" />
+<meta name="Description" content="这是一篇用于预览 Markdown 基本语法的文章。"><link rel="stylesheet" href="/slides.css"/>
+<link rel="canonical" href="https://jarviszly.com/blogs/basic-markdown-preview/" />
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -56,7 +57,7 @@
         <div class="navbar-header animated bounceIn">
             <a href="https://jarviszly.com">浙语临湖</a>
         </div>
-        <div class="navbar-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Documents</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav><nav class="navbar-mobile">
@@ -69,12 +70,155 @@
                 <span></span><span></span><span></span>
             </div>
         </div>
-        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Documents</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav>
 <main class="main">
-                <div class="container"><div class="page single"><h1 class="post-title animated pulse faster">Markdown 基本语法预览</h1><div class="post-content"><p>这是一篇用于预览 <i class="fab fa-markdown fa-fw"></i> Markdown 基本语法的文章。</p>
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">Markdown 基本语法预览</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://jarviszl.github.io/" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
+                </a>&nbsp;</div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2019-08-25>2019-08-25</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 2425 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>12 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-引言">1 引言</a></li>
+    <li><a href="#2-块和内联元素">2 块和内联元素</a></li>
+    <li><a href="#3-叶子块">3 叶子块</a>
+      <ul>
+        <li><a href="#31-换行符">3.1 换行符</a></li>
+        <li><a href="#32-标题">3.2 标题</a></li>
+      </ul>
+    </li>
+    <li><a href="#h2-二级标题">H2 二级标题</a>
+      <ul>
+        <li><a href="#h3-三级标题">H3 三级标题</a>
+          <ul>
+            <li><a href="#h4-四级标题">H4 四级标题</a>
+              <ul>
+                <li><a href="#h5-五级标题">H5 五级标题</a>
+                  <ul>
+                    <li><a href="#h6-六级标题">H6 六级标题</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="#33-代码块">3.3 代码块</a></li>
+        <li><a href="#35-引用链接的定义">3.5 引用链接的定义</a></li>
+        <li><a href="#36-空白行">3.6 空白行</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-容器块">4 容器块</a>
+      <ul>
+        <li><a href="#41-引用">4.1 引用</a></li>
+        <li><a href="#42-无序列表">4.2 无序列表</a></li>
+        <li><a href="#43-有序列表">4.3 有序列表</a></li>
+        <li><a href="#44-任务列表">4.4 任务列表</a></li>
+        <li><a href="#45-表格">4.5 表格</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-页内锚">3. 页内锚</a></li>
+    <li><a href="#footnote">4. 脚注</a></li>
+    <li><a href="#5-内联格式">5. 内联格式</a></li>
+    <li><a href="#6-图片">6. 图片</a></li>
+    <li><a href="#abbreviation">Abbreviation</a></li>
+    <li><a href="#unordered-list">Unordered List</a></li>
+    <li><a href="#ordered-list">Ordered List</a></li>
+    <li><a href="#mixed-lists">Mixed Lists</a></li>
+    <li><a href="#blocks">Blocks</a></li>
+    <li><a href="#block-quotes">Block Quotes</a></li>
+    <li><a href="#fenced-block">Fenced Block</a>
+      <ul>
+        <li><a href="#people">People</a></li>
+        <li><a href="#nature">Nature</a></li>
+        <li><a href="#objects">Objects</a></li>
+        <li><a href="#places">Places</a></li>
+        <li><a href="#symbols">Symbols</a></li>
+      </ul>
+    </li>
+    <li><a href="#insert">Insert</a></li>
+    <li><a href="#admonition">Admonition</a></li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#1-引言">1 引言</a></li>
+    <li><a href="#2-块和内联元素">2 块和内联元素</a></li>
+    <li><a href="#3-叶子块">3 叶子块</a>
+      <ul>
+        <li><a href="#31-换行符">3.1 换行符</a></li>
+        <li><a href="#32-标题">3.2 标题</a></li>
+      </ul>
+    </li>
+    <li><a href="#h2-二级标题">H2 二级标题</a>
+      <ul>
+        <li><a href="#h3-三级标题">H3 三级标题</a>
+          <ul>
+            <li><a href="#h4-四级标题">H4 四级标题</a>
+              <ul>
+                <li><a href="#h5-五级标题">H5 五级标题</a>
+                  <ul>
+                    <li><a href="#h6-六级标题">H6 六级标题</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="#33-代码块">3.3 代码块</a></li>
+        <li><a href="#35-引用链接的定义">3.5 引用链接的定义</a></li>
+        <li><a href="#36-空白行">3.6 空白行</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-容器块">4 容器块</a>
+      <ul>
+        <li><a href="#41-引用">4.1 引用</a></li>
+        <li><a href="#42-无序列表">4.2 无序列表</a></li>
+        <li><a href="#43-有序列表">4.3 有序列表</a></li>
+        <li><a href="#44-任务列表">4.4 任务列表</a></li>
+        <li><a href="#45-表格">4.5 表格</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-页内锚">3. 页内锚</a></li>
+    <li><a href="#footnote">4. 脚注</a></li>
+    <li><a href="#5-内联格式">5. 内联格式</a></li>
+    <li><a href="#6-图片">6. 图片</a></li>
+    <li><a href="#abbreviation">Abbreviation</a></li>
+    <li><a href="#unordered-list">Unordered List</a></li>
+    <li><a href="#ordered-list">Ordered List</a></li>
+    <li><a href="#mixed-lists">Mixed Lists</a></li>
+    <li><a href="#blocks">Blocks</a></li>
+    <li><a href="#block-quotes">Block Quotes</a></li>
+    <li><a href="#fenced-block">Fenced Block</a>
+      <ul>
+        <li><a href="#people">People</a></li>
+        <li><a href="#nature">Nature</a></li>
+        <li><a href="#objects">Objects</a></li>
+        <li><a href="#places">Places</a></li>
+        <li><a href="#symbols">Symbols</a></li>
+      </ul>
+    </li>
+    <li><a href="#insert">Insert</a></li>
+    <li><a href="#admonition">Admonition</a></li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><p>这是一篇用于预览 <i class="fab fa-markdown fa-fw"></i> Markdown 基本语法的文章。</p>
 <p>文章内容基于 <a href="https://github.github.com/gfm" target="_blank">GitHub Flavored Markdown Spec</a>
 。</p>
 <p>不包含复杂的规则说明，仅仅展示 GFM 所约定的 Markdown 基本语法。</p>
@@ -1475,8 +1619,39 @@ __^^*insert 倾斜 加粗*^^__  *^^__insert 倾斜 加粗 2__^^*
  <a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
-</section></div>
-    </div></div>
+</section></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2019-08-25</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span><a href="//twitter.com/share?url=https%3a%2f%2fjarviszly.com%2fblogs%2fbasic-markdown-preview%2f&amp;text=Markdown%20%e5%9f%ba%e6%9c%ac%e8%af%ad%e6%b3%95%e9%a2%84%e8%a7%88&amp;via=" target="_blank" title="Share on Twitter">
+            <i class="fab fa-twitter fa-fw"></i>
+        </a><a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fjarviszly.com%2fblogs%2fbasic-markdown-preview%2f" target="_blank" title="Share on Facebook">
+            <i class="fab fa-facebook-square fa-fw"></i>
+        </a><a href="//reddit.com/submit?url=https%3a%2f%2fjarviszly.com%2fblogs%2fbasic-markdown-preview%2f&amp;title=Markdown%20%e5%9f%ba%e6%9c%ac%e8%af%ad%e6%b3%95%e9%a2%84%e8%a7%88" target="_blank" title="Share on Reddit">
+            <i class="fab fa-reddit fa-fw"></i>
+        </a></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span class="tag">
+                        <a href="https://jarviszly.com/tags/markdown/"><i class="fas fa-tag fa-fw"></i>&nbsp;Markdown</a>&nbsp;
+                    </span></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://jarviszly.com">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
             </main><footer class="footer">
     <div class="copyright">
 

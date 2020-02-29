@@ -5,7 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>计算机网络-第五章 | 浙语临湖</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noodp" />
-<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%9B%9B%E7%AB%A0/" /><link rel="next" href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%B8%89%E7%AB%A0/" /><link rel="canonical" href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%BA%94%E7%AB%A0/" />
+<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E6%8B%A5%E5%A1%9E%E5%92%8Cqos/" /><link rel="next" href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%9B%9B%E7%AB%A0/" /><link rel="stylesheet" href="/slides.css"/>
+<link rel="canonical" href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%BA%94%E7%AB%A0/" />
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -17,8 +18,8 @@
 <meta property="og:description" content="第五章 路由选择算法  路由选择算法的目的是从发送方到接收方的过程中确定一条通过路由器网络的好的路径。  分类  集中式路由选择算法和分散式路由选择算法  集中式路由选择算法：用完整的全局性的网络信息计算出最低开销路径，以所有节点之间的连通性及所有链路的开销作为输入，如链路状态算法(LS) 分散式路由选择算法：路由器以 迭代，分布式方法计算出最低开销路径，每个节点仅有与其直接相连的链路开销信息即可开始工作。如 距离向量算法(DV)   静态路由选择算法和动态路由选择算法 负载敏感算法和负载迟钝算法  现在因特网路由选择算法(RIP,OSPF,BGP)都是负载迟钝算法。    LS算法  在该算法中，网络拓扑和所有链路开销都是已知的。实践中是通过让每个节点向网络中广播链路状态分组来完成的。其中链路状态分组包含和自己相连的链路的开销信息，这常常由 链路状态广播算法完成。 使用协议：OSPF，使用的算法：Dijkstra算法，复杂度$O({|V|}^2)$  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15  1 Initialization: 2 N’ = {u} 3 for all nodes v 4 if v is a neighbor of u 5 then D(v) = c(u, v) 6 else D(v) = ∞ 7 8 Loop 9 find w not in N’ such that D(w) is a minimum 10 add w to N’ 11 update D(v) for each neighbor v of w and not in N’: 12 D(v) = min(D(v), D(w)&#43; c(w, v) ) 13 /* new cost to v is either old cost to v or known 14 least path cost to w plus cost from w to v */ 15 until N’= N    链路状态算法运行过程： table  存在的问题：拥塞敏感的选择振荡  在拥塞敏感且将路径负载当作开销的情况下，所有路由器同时运行LS算法，会使得由于选择了某一条目前最短开销路径而导致网络中路径开销改变，LS算法得出的最短开销路径会不断摇摆振荡。 解决办法是 使每台路由器广播链路状态分组的时间随机化。    DV算法  该算法是一种 迭代的，异步的，分布式的算法，使用的协议有BGP，RIP." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%BA%94%E7%AB%A0/" />
-<meta property="article:published_time" content="2019-12-09T18:51:04+00:00" />
-<meta property="article:modified_time" content="2019-12-09T18:51:04+00:00" />
+<meta property="article:published_time" content="2020-02-29T13:00:33+08:00" />
+<meta property="article:modified_time" content="2020-02-29T13:00:33+08:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="计算机网络-第五章"/>
 <meta name="twitter:description" content="第五章 路由选择算法  路由选择算法的目的是从发送方到接收方的过程中确定一条通过路由器网络的好的路径。  分类  集中式路由选择算法和分散式路由选择算法  集中式路由选择算法：用完整的全局性的网络信息计算出最低开销路径，以所有节点之间的连通性及所有链路的开销作为输入，如链路状态算法(LS) 分散式路由选择算法：路由器以 迭代，分布式方法计算出最低开销路径，每个节点仅有与其直接相连的链路开销信息即可开始工作。如 距离向量算法(DV)   静态路由选择算法和动态路由选择算法 负载敏感算法和负载迟钝算法  现在因特网路由选择算法(RIP,OSPF,BGP)都是负载迟钝算法。    LS算法  在该算法中，网络拓扑和所有链路开销都是已知的。实践中是通过让每个节点向网络中广播链路状态分组来完成的。其中链路状态分组包含和自己相连的链路的开销信息，这常常由 链路状态广播算法完成。 使用协议：OSPF，使用的算法：Dijkstra算法，复杂度$O({|V|}^2)$  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15  1 Initialization: 2 N’ = {u} 3 for all nodes v 4 if v is a neighbor of u 5 then D(v) = c(u, v) 6 else D(v) = ∞ 7 8 Loop 9 find w not in N’ such that D(w) is a minimum 10 add w to N’ 11 update D(v) for each neighbor v of w and not in N’: 12 D(v) = min(D(v), D(w)&#43; c(w, v) ) 13 /* new cost to v is either old cost to v or known 14 least path cost to w plus cost from w to v */ 15 until N’= N    链路状态算法运行过程： table  存在的问题：拥塞敏感的选择振荡  在拥塞敏感且将路径负载当作开销的情况下，所有路由器同时运行LS算法，会使得由于选择了某一条目前最短开销路径而导致网络中路径开销改变，LS算法得出的最短开销路径会不断摇摆振荡。 解决办法是 使每台路由器广播链路状态分组的时间随机化。    DV算法  该算法是一种 迭代的，异步的，分布式的算法，使用的协议有BGP，RIP."/>
@@ -35,8 +36,8 @@
                 "url": "https:\/\/jarviszly.com\/cover.png",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "documents","wordcount":  356 ,
-        "url": "https:\/\/jarviszly.com\/documents\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%BA%94%E7%AB%A0\/","datePublished": "2019-12-09T18:51:04\x2b00:00","dateModified": "2019-12-09T18:51:04\x2b00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            },"genre": "documents","keywords": "计算机网络","wordcount":  356 ,
+        "url": "https:\/\/jarviszly.com\/documents\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%BA%94%E7%AB%A0\/","datePublished": "2020-02-29T13:00:33\x2b08:00","dateModified": "2020-02-29T13:00:33\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "xxxx",
                 "logo": {
@@ -56,7 +57,7 @@
         <div class="navbar-header animated bounceIn">
             <a href="https://jarviszly.com">浙语临湖</a>
         </div>
-        <div class="navbar-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Documents</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav><nav class="navbar-mobile">
@@ -69,12 +70,71 @@
                 <span></span><span></span><span></span>
             </div>
         </div>
-        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Documents</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav>
 <main class="main">
-                <div class="container"><div class="page single"><h1 class="post-title animated pulse faster">计算机网络-第五章</h1><div class="post-content"><h1 id="第五章">第五章</h1>
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">计算机网络-第五章</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://jarviszly.com" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
+                </a>&nbsp;<span class="post-category">included in&nbsp;<i class="far fa-folder fa-fw"></i><a href="https://jarviszly.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>&nbsp;</span></div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-02-29>2020-02-29</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 356 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>2 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#路由选择算法">路由选择算法</a>
+      <ul>
+        <li><a href="#分类">分类</a></li>
+        <li><a href="#ls算法">LS算法</a></li>
+        <li><a href="#dv算法">DV算法</a></li>
+        <li><a href="#路由协议">路由协议</a>
+          <ul>
+            <li><a href="#riproute-information-protocol协议">RIP（Route Information Protocol)协议</a></li>
+            <li><a href="#ospfopen-shortest-path-first协议">OSPF(Open Shortest Path First)协议</a></li>
+            <li><a href="#bgpborder-gateway-protocol协议">BGP(Border Gateway Protocol)协议</a></li>
+            <li><a href="#ip任播">IP任播</a></li>
+          </ul>
+        </li>
+        <li><a href="#sdn控制平面">SDN控制平面</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#路由选择算法">路由选择算法</a>
+      <ul>
+        <li><a href="#分类">分类</a></li>
+        <li><a href="#ls算法">LS算法</a></li>
+        <li><a href="#dv算法">DV算法</a></li>
+        <li><a href="#路由协议">路由协议</a>
+          <ul>
+            <li><a href="#riproute-information-protocol协议">RIP（Route Information Protocol)协议</a></li>
+            <li><a href="#ospfopen-shortest-path-first协议">OSPF(Open Shortest Path First)协议</a></li>
+            <li><a href="#bgpborder-gateway-protocol协议">BGP(Border Gateway Protocol)协议</a></li>
+            <li><a href="#ip任播">IP任播</a></li>
+          </ul>
+        </li>
+        <li><a href="#sdn控制平面">SDN控制平面</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><h1 id="第五章">第五章</h1>
 <!-- more -->
 <a class="post-dummy-target" id="路由选择算法"></a><h2>路由选择算法</h2>
 <ul>
@@ -271,8 +331,40 @@
 </ul>
 <a class="post-dummy-target" id="sdn控制平面"></a><h3>SDN控制平面</h3>
 <p>TBD(好像没讲)</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-02-29</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span><a href="//twitter.com/share?url=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E8%25AE%25A1%25E7%25AE%2597%25E6%259C%25BA%25E7%25BD%2591%25E7%25BB%259C-%25E7%25AC%25AC%25E4%25BA%2594%25E7%25AB%25A0%2f&amp;text=%e8%ae%a1%e7%ae%97%e6%9c%ba%e7%bd%91%e7%bb%9c-%e7%ac%ac%e4%ba%94%e7%ab%a0&amp;via=" target="_blank" title="Share on Twitter">
+            <i class="fab fa-twitter fa-fw"></i>
+        </a><a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E8%25AE%25A1%25E7%25AE%2597%25E6%259C%25BA%25E7%25BD%2591%25E7%25BB%259C-%25E7%25AC%25AC%25E4%25BA%2594%25E7%25AB%25A0%2f" target="_blank" title="Share on Facebook">
+            <i class="fab fa-facebook-square fa-fw"></i>
+        </a><a href="//reddit.com/submit?url=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E8%25AE%25A1%25E7%25AE%2597%25E6%259C%25BA%25E7%25BD%2591%25E7%25BB%259C-%25E7%25AC%25AC%25E4%25BA%2594%25E7%25AB%25A0%2f&amp;title=%e8%ae%a1%e7%ae%97%e6%9c%ba%e7%bd%91%e7%bb%9c-%e7%ac%ac%e4%ba%94%e7%ab%a0" target="_blank" title="Share on Reddit">
+            <i class="fab fa-reddit fa-fw"></i>
+        </a></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span class="tag">
+                        <a href="https://jarviszly.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="fas fa-tag fa-fw"></i>&nbsp;计算机网络</a>&nbsp;
+                    </span></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://jarviszly.com">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E6%8B%A5%E5%A1%9E%E5%92%8Cqos/" class="prev" rel="prev" title="计算机网络-拥塞和Qos"><i class="fas fa-angle-left fa-fw"></i>计算机网络-拥塞和Qos</a>
+            <a href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%9B%9B%E7%AB%A0/" class="next" rel="next" title="计算机网络-第四章">计算机网络-第四章<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
-    </div></div>
+<div class="post-comment"></div>
+    </article></div>
             </main><footer class="footer">
     <div class="copyright">
 

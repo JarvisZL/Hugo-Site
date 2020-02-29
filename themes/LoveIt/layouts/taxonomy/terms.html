@@ -19,12 +19,12 @@
 
         {{- /* Categories Page */ -}}
         {{- if eq $taxonomies "categories" -}}
-            <div class="categories-card">
+            <div class="categories-card" style="margin-top: 2rem">
                 {{- range $terms -}}
                     {{- $term := .Term -}}
                     {{- $pages := .Pages -}}
                     {{- with $.Site.GetPage "taxonomy" (printf "%s/%s" $type $term) -}}
-                    <div class="card-item">
+                    <div class="card-item" style="width: 29%">
                         <div class="card-item-wrapper">
                             <h3 class="card-item-title">
                                 <a href="{{ .Permalink }}">
@@ -32,7 +32,7 @@
                                 </a>
                             </h3>
                             {{- range first 5 $pages -}}
-                                <article class="archive-item">
+                                <article class="archive-item" style="margin-left: auto;">
                                     <a href="{{ .Permalink }}" class="archive-item-link">
                                         {{- .Title -}}
                                     </a>
@@ -57,5 +57,7 @@
                 {{- end -}}
             </div>
         {{- end -}}
+
+
     </div>
 {{- end -}}
