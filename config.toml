@@ -4,7 +4,7 @@ languageCode = "en"
 # [en, zh, ...] 设定主题的国际化
 defaultContentLanguage = "en"
 # 网站标题
-title = "浙语临湖"
+title = "张灵毓的个人主页"
 
 # 主题
 theme = "LoveIt"
@@ -58,7 +58,7 @@ dateFormatToUse = "2006-01-02"
 # 作者信息
 [author]
   name = "Lingyu Zhang"
-  link = "https://jarviszl.github.io/"
+  link = "https://jarviszly.com/"
 
 # 网站地图信息
 [sitemap]
