@@ -35,7 +35,7 @@
                 "url": "https:\/\/jarviszly.com\/cover.png",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "documents","keywords": "数据挖掘","wordcount":  124 ,
+            },"genre": "documents","keywords": "数据挖掘","wordcount":  202 ,
         "url": "https:\/\/jarviszly.com\/documents\/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98\/%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86\/","datePublished": "2020-02-26T19:36:58\x2b08:00","dateModified": "2020-02-26T19:36:58\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "xxxx",
@@ -79,7 +79,7 @@
                     <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
                 </a>&nbsp;<span class="post-category">included in&nbsp;<i class="far fa-folder fa-fw"></i><a href="https://jarviszly.com/categories/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/">数据挖掘</a>&nbsp;</span></div>
             <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-02-26>2020-02-26</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>about 124 words&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 202 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>1 min&nbsp;</div>
         </div><div class="post-toc" id="post-toc">
                 <h2 class="post-toc-title">Contents</h2>
@@ -98,6 +98,22 @@
       <ul>
         <li><a href="#预先计算precompute">预先计算(precompute)</a></li>
         <li><a href="#有效的计算">有效的计算</a></li>
+      </ul>
+    </li>
+    <li><a href="#multiway-array-aggregation多路聚合">Multiway array aggregation(多路聚合)</a>
+      <ul>
+        <li><a href="#例子">例子</a></li>
+      </ul>
+    </li>
+    <li><a href="#两种olap数据的索引方式bitmap-index-和-join-index">两种OLAP数据的索引方式：Bitmap Index 和 Join Index</a></li>
+    <li><a href="#metadata">MetaData</a></li>
+    <li><a href="#olam架构">OLAM架构</a></li>
+    <li><a href="#aoiattribute-oriented-induction">AOI(Attribute-oriented induction)</a>
+      <ul>
+        <li><a href="#general-idea">General idea:</a></li>
+        <li><a href="#aoi的大概过程">AOI的大概过程</a></li>
+        <li><a href="#怎么控制data-generalization">怎么控制data generalization</a></li>
+        <li><a href="#定量特征规则">定量特征规则</a></li>
       </ul>
     </li>
   </ul>
@@ -126,6 +142,22 @@
       <ul>
         <li><a href="#预先计算precompute">预先计算(precompute)</a></li>
         <li><a href="#有效的计算">有效的计算</a></li>
+      </ul>
+    </li>
+    <li><a href="#multiway-array-aggregation多路聚合">Multiway array aggregation(多路聚合)</a>
+      <ul>
+        <li><a href="#例子">例子</a></li>
+      </ul>
+    </li>
+    <li><a href="#两种olap数据的索引方式bitmap-index-和-join-index">两种OLAP数据的索引方式：Bitmap Index 和 Join Index</a></li>
+    <li><a href="#metadata">MetaData</a></li>
+    <li><a href="#olam架构">OLAM架构</a></li>
+    <li><a href="#aoiattribute-oriented-induction">AOI(Attribute-oriented induction)</a>
+      <ul>
+        <li><a href="#general-idea">General idea:</a></li>
+        <li><a href="#aoi的大概过程">AOI的大概过程</a></li>
+        <li><a href="#怎么控制data-generalization">怎么控制data generalization</a></li>
+        <li><a href="#定量特征规则">定量特征规则</a></li>
       </ul>
     </li>
   </ul>
@@ -272,6 +304,77 @@
 <ul>
 <li>基于<strong>多路数组的聚合</strong>，相对较快</li>
 </ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="multiway-array-aggregation多路聚合"></a><h2>Multiway array aggregation(多路聚合)</h2>
+<ul>
+<li>定义chunks: 用于存储在内存中小型的立方体</li>
+<li>通过<font color=red size=3>按照一定顺序访问cube cells来计算多路聚合</font>来最小化cube cells被重复访问的次数</li>
+</ul>
+<a class="post-dummy-target" id="例子"></a><h3>例子</h3>
+<ul>
+<li>假设A,B,C三个维度大小为40,400,4000,而chunk的大小为$10 * 100 * 1000$，所以相当于我们在每一维度上都分成了四份
+<img src="/images/documents/数据挖掘导论/多路聚合.png" style="width: 50%"></li>
+<li>按照序号升序开始访问chunks：
+<ul>
+<li>发现当我们访问完1，2，3，4后，$\bm{b_0c_0}$已经计算完成，所以可以将其写入，然后我们访问到5时，就可以复用刚才的缓存空间，所以<strong>BC-plane</strong>需要的缓存是一个chunk的BC面$100 * 1000$</li>
+<li>对于<strong>AC-plane</strong>,我们发现只有当访问到13的时候，$\bm{a_0c_0}$才被计算完成，而为了不重复读取2,3,4等的值，所以我们需要开辟缓存来存储，所以一共需要$40 * 1000$</li>
+<li>对于<strong>AB-plane</strong>,我们发现只有读到第49个的时候，才能计算完$\bm{a_0b_0}$,所以需要$40 * 400$</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="两种olap数据的索引方式bitmap-index-和-join-index"></a><h2>两种OLAP数据的索引方式：Bitmap Index 和 Join Index</h2>
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e6%95%b0%e6%8d%ae%e6%8c%96%e6%8e%98%e5%af%bc%e8%ae%ba/bitmapindex.png" alt="" class="lazyload"></figure>
+
+<img src="/images/documents/数据挖掘导论/joinindex.png" style="width: 50%"></p>
+<a class="post-dummy-target" id="metadata"></a><h2>MetaData</h2>
+<ul>
+<li>元数据在数据仓库中指的是那些定义数据仓库对象的数据</li>
+<li>分类
+<ul>
+<li>潜在数据来源的信息</li>
+<li>数据模型的信息</li>
+<li>有关事务数据结构和仓库数据结构映射的信息</li>
+<li>有关仓库使用的信息</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="olam架构"></a><h2>OLAM架构</h2>
+<img src="/images/documents/数据挖掘导论/OLAM.png" style="width: 70%">
+<a class="post-dummy-target" id="aoiattribute-oriented-induction"></a><h2>AOI(Attribute-oriented induction)</h2>
+<ul>
+<li>最简单的描述性的数据挖掘，可以看作是扩展后的OLAP</li>
+</ul>
+<a class="post-dummy-target" id="general-idea"></a><h3>General idea:</h3>
+<ul>
+<li>收集相关数据</li>
+<li>通过属性删除或者属性泛化来达到泛化数据的目的</li>
+<li>通过合并相同的，泛化的元组并记录他们各自的计数值来实行聚合</li>
+<li>关键点是<font color=red size=3>数据泛化</font></li>
+</ul>
+<a class="post-dummy-target" id="aoi的大概过程"></a><h3>AOI的大概过程</h3>
+<ul>
+<li>Data focusing: 规范化相关数据，初始化工作环境</li>
+<li>Data Generalization：
+<ul>
+<li>attribute removal：当某一属性有很多不同的数据值时，如果对于这个属性没有聚合操作或者这个属性更高层的概念可以被其他属性所反映，则可以使用attribute removal</li>
+<li>attribute generalization: 当，某一属性有很多不同的数据值时，并且对于这个属性存在一些聚合操作，那么可以使用attribute generalization</li>
+</ul>
+</li>
+<li>Presentation</li>
+</ul>
+<a class="post-dummy-target" id="怎么控制data-generalization"></a><h3>怎么控制data generalization</h3>
+<ul>
+<li>属性聚合阈值控制：如果对于一个<font color=red size=3>属性</font>，其不同取值多于该阈值时，会在这个属性上实施属性删除或者属性聚合，一般设置为2-8</li>
+<li>泛化关系阈值控制：如果对于一个<font color=red size=3>泛化关系</font>上不同元组的数量大于该阈值时，更进一步的泛化将会实施在该关系上</li>
+</ul>
+<a class="post-dummy-target" id="定量特征规则"></a><h3>定量特征规则</h3>
+<ul>
+<li>一般形式：
+$$\forall X,targetClass(X) \Longrightarrow condition_1(X)[t:w_1]\vee \cdots \vee conditon_n(x)[t:w_n]$$</li>
+<li>$t-weight$: 用于描述<font color=red size=3>当X处于选定的$targetClass$时，$condition_i$满足的概率</font></li>
+<li>$d-weight$: 用于描述<font color=red size=3>当X满足$condition_i$时，其处于$targetClass$的概率</font></li>
+<li>例子：<figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e6%95%b0%e6%8d%ae%e6%8c%96%e6%8e%98%e5%af%bc%e8%ae%ba/finalexample.png" alt="" class="lazyload"></figure>
 </li>
 </ul></div><div class="post-footer" id="post-footer">
     <div class="post-info">

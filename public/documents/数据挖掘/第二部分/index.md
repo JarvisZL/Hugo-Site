@@ -81,3 +81,104 @@
   - 基于一些**优化技巧**，相对较慢
 - 以MOLAP(基于multidimensional array)为基础的cube计算
   - 基于**多路数组的聚合**，相对较快
+
+## Multiway array aggregation(多路聚合)
+- 定义chunks: 用于存储在内存中小型的立方体
+- 通过<font color=red size=3>按照一定顺序访问cube cells来计算多路聚合</font>来最小化cube cells被重复访问的次数
+
+### 例子
+- 假设A,B,C三个维度大小为40,400,4000,而chunk的大小为$10 * 100 * 1000$，所以相当于我们在每一维度上都分成了四份
+  <img src="/images/documents/数据挖掘导论/多路聚合.png" style="width: 50%">
+- 按照序号升序开始访问chunks：
+  - 发现当我们访问完1，2，3，4后，$\bm{b_0c_0}$已经计算完成，所以可以将其写入，然后我们访问到5时，就可以复用刚才的缓存空间，所以**BC-plane**需要的缓存是一个chunk的BC面$100 * 1000$
+  - 对于**AC-plane**,我们发现只有当访问到13的时候，$\bm{a_0c_0}$才被计算完成，而为了不重复读取2,3,4等的值，所以我们需要开辟缓存来存储，所以一共需要$40 * 1000$
+  - 对于**AB-plane**,我们发现只有读到第49个的时候，才能计算完$\bm{a_0b_0}$,所以需要$40 * 400$
+
+## 两种OLAP数据的索引方式：Bitmap Index 和 Join Index
+![](/images/documents/数据挖掘导论/bitmapindex.png)
+  <img src="/images/documents/数据挖掘导论/joinindex.png" style="width: 50%">
+
+## MetaData
+- 元数据在数据仓库中指的是那些定义数据仓库对象的数据
+- 分类
+  - 潜在数据来源的信息
+  - 数据模型的信息
+  - 有关事务数据结构和仓库数据结构映射的信息
+  - 有关仓库使用的信息
+
+## OLAM架构
+<img src="/images/documents/数据挖掘导论/OLAM.png" style="width: 70%">
+
+## AOI(Attribute-oriented induction)
+- 最简单的描述性的数据挖掘，可以看作是扩展后的OLAP
+
+### General idea:
+- 收集相关数据
+- 通过属性删除或者属性泛化来达到泛化数据的目的
+- 通过合并相同的，泛化的元组并记录他们各自的计数值来实行聚合
+- 关键点是<font color=red size=3>数据泛化</font>
+
+### AOI的大概过程
+- Data focusing: 规范化相关数据，初始化工作环境
+- Data Generalization：
+  - attribute removal：当某一属性有很多不同的数据值时，如果对于这个属性没有聚合操作或者这个属性更高层的概念可以被其他属性所反映，则可以使用attribute removal
+  - attribute generalization: 当，某一属性有很多不同的数据值时，并且对于这个属性存在一些聚合操作，那么可以使用attribute generalization
+- Presentation
+
+### 怎么控制data generalization
+- 属性聚合阈值控制：如果对于一个<font color=red size=3>属性</font>，其不同取值多于该阈值时，会在这个属性上实施属性删除或者属性聚合，一般设置为2-8
+- 泛化关系阈值控制：如果对于一个<font color=red size=3>泛化关系</font>上不同元组的数量大于该阈值时，更进一步的泛化将会实施在该关系上
+
+### 定量特征规则
+- 一般形式：
+  $$\forall X,targetClass(X) \Longrightarrow condition_1(X)[t:w_1]\vee \cdots \vee conditon_n(x)[t:w_n]$$
+- $t-weight$: 用于描述<font color=red size=3>当X处于选定的$targetClass$时，$condition_i$满足的概率</font>
+- $d-weight$: 用于描述<font color=red size=3>当X满足$condition_i$时，其处于$targetClass$的概率</font>
+- 例子：![](/images/documents/数据挖掘导论/finalexample.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

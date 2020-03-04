@@ -117,7 +117,7 @@ dateFormatToUse = "2006-01-02"
   ## [post, other] 主页模式
   home_mode = "post"
   ## 主页在 post 模式下每页 post 显示数量
-  home_paginate = 2
+  home_paginate = 5
   ## 主页显示头像的 URL
   avatar = "images/avatar.png"
   ## 主页显示的网站副标题
