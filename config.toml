@@ -4,7 +4,7 @@ languageCode = "en"
 # [en, zh, ...] 设定主题的国际化
 defaultContentLanguage = "en"
 # 网站标题
-title = "张灵毓的个人主页"
+title = "浙语临湖"
 
 # 主题
 theme = "LoveIt"
@@ -130,10 +130,11 @@ dateFormatToUse = "2006-01-02"
   ## 网站创立年份
   since = 2020
   ## ICP 备案信息，仅在中国使用 (允许使用 HTML 格式)
-  icp = ""
+  icp = '<a href="http://www.beian.miit.gov.cn/">苏ICP备20008191号-1</a>'
   ## 许可协议信息 (允许使用 HTML 格式)
   license= '<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a>'
-
+  ## 公安备案
+  GABA = '<a href="http://www.beian.gov.cn/portal/index"></i>苏公网安备 32011302320886号</a>'
   # 用于生成文章上次修改时间的公共 git 仓库路径，仅在 enableGitInfo 设为 true 时有效
   gitRepo = ""
 

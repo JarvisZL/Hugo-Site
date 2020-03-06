@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>数学基础 | 张灵毓的个人主页</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>数学基础 | 浙语临湖</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noodp" />
 <meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E6%A6%82%E8%AE%BA/" /><link rel="next" href="https://jarviszly.com/documents/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86/" /><link rel="canonical" href="https://jarviszly.com/documents/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" />
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
@@ -35,7 +35,7 @@
                 "url": "https:\/\/jarviszly.com\/cover.png",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "documents","keywords": "模式识别","wordcount":  286 ,
+            },"genre": "documents","keywords": "模式识别","wordcount":  378 ,
         "url": "https:\/\/jarviszly.com\/documents\/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB\/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80\/","datePublished": "2020-02-23T15:36:25\x2b08:00","dateModified": "2020-02-23T15:36:25\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "xxxx",
@@ -54,7 +54,7 @@
         </script><div class="wrapper"><nav class="navbar">
     <div class="navbar-container">
         <div class="navbar-header animated bounceIn">
-            <a href="https://jarviszly.com">张灵毓的个人主页</a>
+            <a href="https://jarviszly.com">浙语临湖</a>
         </div>
         <div class="navbar-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
@@ -63,7 +63,7 @@
     <div class="navbar-container">
         <div class="navbar-header">
             <div class="navbar-header-title animated bounceIn">
-                <a href="https://jarviszly.com">张灵毓的个人主页</a>
+                <a href="https://jarviszly.com">浙语临湖</a>
             </div>
             <div class="menu-toggle" id="menu-toggle">
                 <span></span><span></span><span></span>
@@ -79,7 +79,7 @@
                     <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
                 </a>&nbsp;<span class="post-category">included in&nbsp;<i class="far fa-folder fa-fw"></i><a href="https://jarviszly.com/categories/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/">模式识别</a>&nbsp;</span></div>
             <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-02-23>2020-02-23</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>about 286 words&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 378 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>2 min&nbsp;</div>
         </div><div class="post-toc" id="post-toc">
                 <h2 class="post-toc-title">Contents</h2>
@@ -114,7 +114,17 @@
     <li><a href="#概率论与数理统计">概率论与数理统计</a>
       <ul>
         <li><a href="#联合变换">联合，变换</a></li>
+        <li><a href="#条件期望">条件期望</a></li>
         <li><a href="#均值估计和协方差矩阵">均值估计和协方差矩阵</a></li>
+        <li><a href="#两个随机变量的独立相关">两个随机变量的独立，相关</a></li>
+      </ul>
+    </li>
+    <li><a href="#高斯分布">高斯分布</a>
+      <ul>
+        <li><a href="#一维高斯分布">一维高斯分布</a></li>
+        <li><a href="#多维高斯分布">多维高斯分布</a></li>
+        <li><a href="#高斯分布中的相关和独立">高斯分布中的相关和独立</a></li>
+        <li><a href="#多维和一维高斯分布的关系">多维和一维高斯分布的关系</a></li>
       </ul>
     </li>
   </ul>
@@ -159,7 +169,17 @@
     <li><a href="#概率论与数理统计">概率论与数理统计</a>
       <ul>
         <li><a href="#联合变换">联合，变换</a></li>
+        <li><a href="#条件期望">条件期望</a></li>
         <li><a href="#均值估计和协方差矩阵">均值估计和协方差矩阵</a></li>
+        <li><a href="#两个随机变量的独立相关">两个随机变量的独立，相关</a></li>
+      </ul>
+    </li>
+    <li><a href="#高斯分布">高斯分布</a>
+      <ul>
+        <li><a href="#一维高斯分布">一维高斯分布</a></li>
+        <li><a href="#多维高斯分布">多维高斯分布</a></li>
+        <li><a href="#高斯分布中的相关和独立">高斯分布中的相关和独立</a></li>
+        <li><a href="#多维和一维高斯分布的关系">多维和一维高斯分布的关系</a></li>
       </ul>
     </li>
   </ul>
@@ -314,6 +334,10 @@ $$(\dfrac{\partial x}{\partial \textbf{a}})_i = \dfrac{\partial x}{\partial a_i}
 <li>设$x = g(y)$,则
 $$p_Y(y) = p_X(x)\vert\dfrac{dx}{dy}\vert = p_X(g(y)) \vert g^\prime(y)\vert$$</li>
 </ul>
+<a class="post-dummy-target" id="条件期望"></a><h3>条件期望</h3>
+<ul>
+<li>$E[f(X)\vert Y=y] = \sum_{x} f(x) \cdot p(x\vert y)$</li>
+</ul>
 <a class="post-dummy-target" id="均值估计和协方差矩阵"></a><h3>均值估计和协方差矩阵</h3>
 <ul>
 <li>
@@ -325,6 +349,49 @@ $$Cov(\textbf{x}) = \dfrac{1}{\textcolor{red}{n}}\sum_{i=1}^n(\textbf{x}_i - \ba
 无偏估计:
 $$Cov(\textbf{x}) = \dfrac{1}{\textcolor{red}{n-1}}\sum_{i=1}^n(\textbf{x}_i - \bar{\textbf{x}})(\textbf{x}_i - \bar{\textbf{x}})^T$$</p>
 </li>
+</ul>
+<a class="post-dummy-target" id="两个随机变量的独立相关"></a><h3>两个随机变量的独立，相关</h3>
+<ul>
+<li>如$\forall x,y, p(x,y) = p(x)p(y)$,则x,y相互独立</li>
+<li>协方差：$cov(X,Y) = E[(X-EX)(Y-EY)]$</li>
+<li>Pearson相关系数：
+$$\rho_{XY} = \dfrac{cov(X,Y)}{\sqrt{Var(x)Var(Y)}} \qquad -1\leq \rho_{XY} \leq 1$$
+<ul>
+<li>$\rho_{XY} = 0$,则称为不相关，$\rho_{XY}=\pm 1$,则为完全相关(线性相关)</li>
+<li><font color=red size=3>独立保证不相关，反过来不一定</font></li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="高斯分布"></a><h2>高斯分布</h2>
+<a class="post-dummy-target" id="一维高斯分布"></a><h3>一维高斯分布</h3>
+<ul>
+<li>单变量或一维高斯分布$N(\mu,\sigma^{\textcolor{red}{2}})$
+$$p(x) = \dfrac{1}{\sqrt{2\pi} \sigma}exp(-\dfrac{(x-\mu)^2}{2\sigma^2})$$</li>
+<li>用$\sigma^2$代替$\sigma$得到
+$$p(x) = (2\pi)^{-\dfrac{1}{2}} (\sigma^2)^{-\dfrac{1}{2}} exp{-\dfrac{1}{2} (x-\mu)(\sigma^2)^{-1} (x-\mu)}$$</li>
+<li>Markov不等式：若$X\geq 0$,则$P(X\geq a) \leq \dfrac{EX}{a}$</li>
+<li>Chebyshev不等式: 对任何分布$P((X-\mu)^2 \geq k^2) \leq \dfrac{\sigma^2}{k^2}$或者$P(\vert X-\mu \vert \geq k) \leq \dfrac{\sigma^2}{k^2}$</li>
+</ul>
+<a class="post-dummy-target" id="多维高斯分布"></a><h3>多维高斯分布</h3>
+<p>$$p(x) = (2\pi)^{-\dfrac{\textcolor{red}{D}}{2}} (\textcolor{red}{\vert \Sigma \vert})^{-\dfrac{1}{2}} exp{-\dfrac{1}{2} (x-\mu)(\textcolor{red}{\Sigma})^{-1} (x-\mu)}$$</p>
+<ul>
+<li>记为$N(\mu,\Sigma)$, D表示维数，$\Sigma$表示协方差矩阵</li>
+</ul>
+<a class="post-dummy-target" id="高斯分布中的相关和独立"></a><h3>高斯分布中的相关和独立</h3>
+<ul>
+<li>对于多维高斯分布，不相关意味着协方差矩阵的<font color=red size=3>非对角项</font>是0</li>
+<li>在高斯分布中，不相关就等价于独立</li>
+<li>高斯分布的边缘分布也是高斯分布。</li>
+</ul>
+<a class="post-dummy-target" id="多维和一维高斯分布的关系"></a><h3>多维和一维高斯分布的关系</h3>
+<ul>
+<li>多维高斯分布$X = \binom{X_a}{X_b}$
+<ul>
+<li>条件分布：$x_a\vert x_b$是高斯分布</li>
+<li>边际分布：$P(x_a) = \int p(x_a,x_b) dx_b$也是高斯分布</li>
+</ul>
+</li>
+<li>两个高斯分布的加权和也是高斯分布</li>
 </ul></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
@@ -362,7 +429,9 @@ $$Cov(\textbf{x}) = \dfrac{1}{\textcolor{red}{n-1}}\sum_{i=1}^n(\textbf{x}_i - \
             </main><footer class="footer">
     <div class="copyright">
 
-        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://jarviszly.com/" target="_blank">Lingyu Zhang</a></span></div>
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://jarviszly.com/" target="_blank">Lingyu Zhang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.miit.gov.cn/">苏ICP备20008191号-1</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.gov.cn/portal/index"></i>苏公网安备 32011302320886号</a></span></div>
     </div>
 </footer>
 </div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
