@@ -273,7 +273,7 @@ dateFormatToUse = "2006-01-02"
 
   # 出版者信息，仅用于 SEO
   [params.publisher]
-    name = "xxxx"
+    name = "JarvisZhang"
     [params.publisher.logo]
       url = "images/logo.png"
       width = 127
