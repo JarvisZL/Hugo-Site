@@ -45,6 +45,8 @@
   - 与领域无关的特征变换和特征抽取：Normalization,PCA,FLD
 - 针对不同数据特点的不同学习方法
 
+## 模型评价评估
+
 ### 评价准则-泛化和测试误差
 - 暂时只考虑分类问题的评价
 - 假设$(x,y)\thicksim p(x,y)$
@@ -70,10 +72,46 @@
 
 ### 如果没有测试集
 - 交叉验证
-  - 将训练集分成大小大致相等的N部分
+  - 将训练集分成大小大致相等的N部分-
   - for i = 1:N
     - 取第i部分的数据为测试集
     - 取其余部分数据为训练集
     - 学习模型并评估测试得到的错误率$err_i$
   - 交叉验证得到的错误率为$\dfrac{1}{N} \sum_{i=1}^N err_i$
   - 称为N倍交叉验证
+
+### 数据，代价的不平衡性(imbalance)
+- 如两类问题中，一类数据远比另一类数据多,比如体检中阴性和阳性。
+- 或者在一类犯错的代价远高于另一类，如癌症筛查。
+
+### 评价不平衡时的准则
+
+![](/images/documents/模式识别/评价不平衡准则.png)
+- 总数: $TOTAL = TP+TN+FP+FN$, 正样本数目：$P = TP + FN$, 负样本数目: $N = FP + TN$
+- False Positive rate: $FPR = \dfrac{FP}{\textcolor{red}{N}}$, False negative rate: $FNR = \dfrac{FN}{\textcolor{red}{P}}$, True positive rate: $TPR = \dfrac{TP}{\textcolor{red}{P}}$, True negative rate :$TNR = \dfrac{TN}{\textcolor{red}{N}}$(考虑什么的比例，什么就是分子，而分母为正确值的数目)
+- 准确率: $ACC = \dfrac{(TP+TN)}{TOTAL}$
+
+#### AUC-ROC(Area Under the ROC Curve)
+- ROC: Receiver operating characteristic.
+- Y轴：TPR，X轴：FPR
+<img src="/images/documents/模式识别/AUC-ROC.png" style="zoom:  60%">
+- 曲线单调
+- 对角线为完全随机的情况，我们希望TPR更大一些，所以我们得到的曲线应该要不比对角线低，概率应该大于0.5(面积)
+
+#### 适合检索(retrival)的准则
+- 查准率(Precision): $PRE = \dfrac{TP}{(TP+FP)}$，查全率(Recall)：$REC = \dfrac{TP}{P}$
+- F1 score:Precision和Recall的调和平均(harmonic mean)
+  - $(\dfrac{x^{-1}+y^{-1}}{2})^{-1} = \dfrac{2xy}{x+y}$
+  - $F1 = \dfrac{2TP}{(2TP+FP+FN)}$
+
+#### AUC-PR(Area Under the Precision-Recall Curve)
+- <img src="/images/documents/模式识别/AUC-PR.png" style="zoom:  60%">
+- 曲线非单调，其比AUC-ROC更有区分能力
+
+### 代价矩阵
+- 目前常见的为$\begin{bmatrix} \lambda_{11} & \lambda_{12}\\\\ \lambda_{21} & \lambda_{22}\end{bmatrix} = \begin{bmatrix}0 & 1\\\\ 1 & 0 \end{bmatrix}$
+  - $\lambda_{ij}$：当真实值为i，模型预测为j时付的代价
+  - 0-1代价：即分类正确代价为0，分类错误代价为1
+  - 根据实际情况，代价可以为任何值
+- 对代价的计算$E_{(x,y)}[\lambda_y,f(x)]$
+  - 当使用0-1代价时，和错误率一致。

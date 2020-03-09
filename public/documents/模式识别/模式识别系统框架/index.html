@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>模式识别系统框架 | 浙语临湖</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noodp" />
-<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%85%AD%E7%AB%A0/" /><link rel="canonical" href="https://jarviszly.com/documents/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB%E7%B3%BB%E7%BB%9F%E6%A1%86%E6%9E%B6/" />
+<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%85%AD%E7%AB%A0/" /><link rel="next" href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/%E5%9B%BE%E5%BD%A2%E8%AE%BE%E5%A4%87%E8%BE%93%E5%87%BA%E5%8E%9F%E7%90%86/" /><link rel="canonical" href="https://jarviszly.com/documents/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB%E7%B3%BB%E7%BB%9F%E6%A1%86%E6%9E%B6/" />
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -35,10 +35,10 @@
                 "url": "https:\/\/jarviszly.com\/cover.png",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "documents","keywords": "模式识别","wordcount":  112 ,
+            },"genre": "documents","keywords": "模式识别","wordcount":  215 ,
         "url": "https:\/\/jarviszly.com\/documents\/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB\/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB%E7%B3%BB%E7%BB%9F%E6%A1%86%E6%9E%B6\/","datePublished": "2020-03-05T09:04:58\x2b08:00","dateModified": "2020-03-05T09:04:58\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
-                "name": "xxxx",
+                "name": "JarvisZhang",
                 "logo": {
                 "@type": "ImageObject",
                 "url": "https:\/\/jarviszly.com\/images\/logo.png",
@@ -79,8 +79,8 @@
                     <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
                 </a>&nbsp;<span class="post-category">included in&nbsp;<i class="far fa-folder fa-fw"></i><a href="https://jarviszly.com/categories/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/">模式识别</a>&nbsp;</span></div>
             <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-03-05>2020-03-05</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>about 112 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>1 min&nbsp;</div>
+                <i class="fas fa-pencil-alt fa-fw"></i>about 215 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>2 min&nbsp;</div>
         </div><div class="post-toc" id="post-toc">
                 <h2 class="post-toc-title">Contents</h2>
                 <div class="post-toc-content"><nav id="TableOfContents">
@@ -97,10 +97,23 @@
     <li><a href="#系统各模块混合简介">系统各模块(混合)简介</a>
       <ul>
         <li><a href="#细化refined的框架">细化(refined)的框架</a></li>
+      </ul>
+    </li>
+    <li><a href="#模型评价评估">模型评价评估</a>
+      <ul>
         <li><a href="#评价准则-泛化和测试误差">评价准则-泛化和测试误差</a></li>
         <li><a href="#一种常见的学习框架">一种常见的学习框架</a></li>
         <li><a href="#过拟合和欠拟合">过拟合和欠拟合</a></li>
         <li><a href="#如果没有测试集">如果没有测试集</a></li>
+        <li><a href="#数据代价的不平衡性imbalance">数据，代价的不平衡性(imbalance)</a></li>
+        <li><a href="#评价不平衡时的准则">评价不平衡时的准则</a>
+          <ul>
+            <li><a href="#auc-rocarea-under-the-roc-curve">AUC-ROC(Area Under the ROC Curve)</a></li>
+            <li><a href="#适合检索retrival的准则">适合检索(retrival)的准则</a></li>
+            <li><a href="#auc-prarea-under-the-precision-recall-curve">AUC-PR(Area Under the Precision-Recall Curve)</a></li>
+          </ul>
+        </li>
+        <li><a href="#代价矩阵">代价矩阵</a></li>
       </ul>
     </li>
   </ul>
@@ -128,10 +141,23 @@
     <li><a href="#系统各模块混合简介">系统各模块(混合)简介</a>
       <ul>
         <li><a href="#细化refined的框架">细化(refined)的框架</a></li>
+      </ul>
+    </li>
+    <li><a href="#模型评价评估">模型评价评估</a>
+      <ul>
         <li><a href="#评价准则-泛化和测试误差">评价准则-泛化和测试误差</a></li>
         <li><a href="#一种常见的学习框架">一种常见的学习框架</a></li>
         <li><a href="#过拟合和欠拟合">过拟合和欠拟合</a></li>
         <li><a href="#如果没有测试集">如果没有测试集</a></li>
+        <li><a href="#数据代价的不平衡性imbalance">数据，代价的不平衡性(imbalance)</a></li>
+        <li><a href="#评价不平衡时的准则">评价不平衡时的准则</a>
+          <ul>
+            <li><a href="#auc-rocarea-under-the-roc-curve">AUC-ROC(Area Under the ROC Curve)</a></li>
+            <li><a href="#适合检索retrival的准则">适合检索(retrival)的准则</a></li>
+            <li><a href="#auc-prarea-under-the-precision-recall-curve">AUC-PR(Area Under the Precision-Recall Curve)</a></li>
+          </ul>
+        </li>
+        <li><a href="#代价矩阵">代价矩阵</a></li>
       </ul>
     </li>
   </ul>
@@ -202,6 +228,7 @@
 </li>
 <li>针对不同数据特点的不同学习方法</li>
 </ul>
+<a class="post-dummy-target" id="模型评价评估"></a><h2>模型评价评估</h2>
 <a class="post-dummy-target" id="评价准则-泛化和测试误差"></a><h3>评价准则-泛化和测试误差</h3>
 <ul>
 <li>暂时只考虑分类问题的评价</li>
@@ -240,7 +267,7 @@ $$err = \dfrac{1}{n}\sum_{i=1}^n \mathbb{I}(f(x_i) \neq y_i) \qquad x_i \in D_{t
 <ul>
 <li>交叉验证
 <ul>
-<li>将训练集分成大小大致相等的N部分</li>
+<li>将训练集分成大小大致相等的N部分-</li>
 <li>for i = 1:N
 <ul>
 <li>取第i部分的数据为测试集</li>
@@ -250,6 +277,59 @@ $$err = \dfrac{1}{n}\sum_{i=1}^n \mathbb{I}(f(x_i) \neq y_i) \qquad x_i \in D_{t
 </li>
 <li>交叉验证得到的错误率为$\dfrac{1}{N} \sum_{i=1}^N err_i$</li>
 <li>称为N倍交叉验证</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="数据代价的不平衡性imbalance"></a><h3>数据，代价的不平衡性(imbalance)</h3>
+<ul>
+<li>如两类问题中，一类数据远比另一类数据多,比如体检中阴性和阳性。</li>
+<li>或者在一类犯错的代价远高于另一类，如癌症筛查。</li>
+</ul>
+<a class="post-dummy-target" id="评价不平衡时的准则"></a><h3>评价不平衡时的准则</h3>
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab/%e8%af%84%e4%bb%b7%e4%b8%8d%e5%b9%b3%e8%a1%a1%e5%87%86%e5%88%99.png" alt="" class="lazyload"></figure>
+</p>
+<ul>
+<li>总数: $TOTAL = TP+TN+FP+FN$, 正样本数目：$P = TP + FN$, 负样本数目: $N = FP + TN$</li>
+<li>False Positive rate: $FPR = \dfrac{FP}{\textcolor{red}{N}}$, False negative rate: $FNR = \dfrac{FN}{\textcolor{red}{P}}$, True positive rate: $TPR = \dfrac{TP}{\textcolor{red}{P}}$, True negative rate :$TNR = \dfrac{TN}{\textcolor{red}{N}}$(考虑什么的比例，什么就是分子，而分母为正确值的数目)</li>
+<li>准确率: $ACC = \dfrac{(TP+TN)}{TOTAL}$</li>
+</ul>
+<a class="post-dummy-target" id="auc-rocarea-under-the-roc-curve"></a><h4>AUC-ROC(Area Under the ROC Curve)</h4>
+<ul>
+<li>ROC: Receiver operating characteristic.</li>
+<li>Y轴：TPR，X轴：FPR
+<img src="/images/documents/模式识别/AUC-ROC.png" style="zoom:  60%"></li>
+<li>曲线单调</li>
+<li>对角线为完全随机的情况，我们希望TPR更大一些，所以我们得到的曲线应该要不比对角线低，概率应该大于0.5(面积)</li>
+</ul>
+<a class="post-dummy-target" id="适合检索retrival的准则"></a><h4>适合检索(retrival)的准则</h4>
+<ul>
+<li>查准率(Precision): $PRE = \dfrac{TP}{(TP+FP)}$，查全率(Recall)：$REC = \dfrac{TP}{P}$</li>
+<li>F1 score:Precision和Recall的调和平均(harmonic mean)
+<ul>
+<li>$(\dfrac{x^{-1}+y^{-1}}{2})^{-1} = \dfrac{2xy}{x+y}$</li>
+<li>$F1 = \dfrac{2TP}{(2TP+FP+FN)}$</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="auc-prarea-under-the-precision-recall-curve"></a><h4>AUC-PR(Area Under the Precision-Recall Curve)</h4>
+<ul>
+<li>
+<img src="/images/documents/模式识别/AUC-PR.png" style="zoom:  60%">
+</li>
+<li>曲线非单调，其比AUC-ROC更有区分能力</li>
+</ul>
+<a class="post-dummy-target" id="代价矩阵"></a><h3>代价矩阵</h3>
+<ul>
+<li>目前常见的为$\begin{bmatrix} \lambda_{11} &amp; \lambda_{12}\\ \lambda_{21} &amp; \lambda_{22}\end{bmatrix} = \begin{bmatrix}0 &amp; 1\\ 1 &amp; 0 \end{bmatrix}$
+<ul>
+<li>$\lambda_{ij}$：当真实值为i，模型预测为j时付的代价</li>
+<li>0-1代价：即分类正确代价为0，分类错误代价为1</li>
+<li>根据实际情况，代价可以为任何值</li>
+</ul>
+</li>
+<li>对代价的计算$E_{(x,y)}[\lambda_y,f(x)]$
+<ul>
+<li>当使用0-1代价时，和错误率一致。</li>
 </ul>
 </li>
 </ul></div><div class="post-footer" id="post-footer">
@@ -281,7 +361,8 @@ $$err = \dfrac{1}{n}\sum_{i=1}^n \mathbb{I}(f(x_i) \neq y_i) \qquad x_i \in D_{t
         </section>
     </div>
 
-    <div class="post-nav"><a href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%85%AD%E7%AB%A0/" class="prev" rel="prev" title="计算机网络-第六章"><i class="fas fa-angle-left fa-fw"></i>计算机网络-第六章</a></div>
+    <div class="post-nav"><a href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E5%85%AD%E7%AB%A0/" class="prev" rel="prev" title="计算机网络-第六章"><i class="fas fa-angle-left fa-fw"></i>计算机网络-第六章</a>
+            <a href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/%E5%9B%BE%E5%BD%A2%E8%AE%BE%E5%A4%87%E8%BE%93%E5%87%BA%E5%8E%9F%E7%90%86/" class="next" rel="next" title="图形设备输出原理">图形设备输出原理<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div class="post-comment"></div>
     </article></div>
