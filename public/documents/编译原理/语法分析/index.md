@@ -293,4 +293,72 @@
   - I是一个项集，X是一个文法符号，则GOTO(I,X)定义为I中所有形如项$[A \rightarrow \alpha\cdot X\beta]$所对应的项$[A\rightarrow \alpha X\cdot \beta]$的集合的闭包
   - ![](/images/documents/编译原理/GOTO.png)
 
+### 求LR(0)项集规范族的算法
+- 从初始项集开始，不断计算各种可能的后继，知道生成所有项集。
+![](/images/documents/编译原理/LR(0)项集规范族算法.png)
 
+### LR(0)自动机的构造
+- 构造方法
+  - 基于规范LR(0)项集族可以构造LR(0)自动机
+  - 规范LR(0)项集族种的每个项集对应于LR(0)自动机的一个状态
+  - 状态转换：如果$GOTO(I,X) = J$,则从I到J有一个标号X的转换
+  - 开始状态：$CLOSURE(\{S^\prime \rightarrow \cdot S\})$
+
+### LR(0)自动机的作用
+- 假设文法符号串$\gamma$使得自动机从开始状态运行到状态J
+  - 如果J中存在项$A \rightarrow \alpha \cdot$,那么
+    - 在$\gamma$之后添加一些终结符号可以得到一个最右句型。
+    - $\alpha$是$\gamma$的后缀，且是该句型的句柄
+    - 表示可能找到了当前最右句型的句柄。
+  - 如果J中存在项$B \rightarrow \alpha \cdot X\beta$，那么
+    - 在$\gamma$之后添加$X\beta$和一些终结符号可以得到一个最右句型
+    - 该句型中$\alpha X \beta$是句柄，但还没有找到。
+
+### LR语法分析器的结构
+![](/images/documents/编译原理/LR语法分析器结构.png)
+- 两个部分：ACTION和GOTO
+- ACTION表项有两个参数：状态i，终结符a
+  - 移入j: j是新状态，把j压栈(同时移入a)
+  - 归约$A\rightarrow \beta$: 把栈顶的$\beta$归约成A，并根据GOTO表项压入新状态
+  - 接受：接受输入，完成分析
+  - 报错：在输入中发现语法错误
+- GOTO表项
+  - 如果$GOTO[I_i,A] = I_j(GOTO函数)$，那么$GOTO[i,A] = j(GOTO表项)$
+
+### LR语法分析器格局
+- LR语法分析器的格局包含了栈中内容和余下输入$(s_0s_1\cdots s_m,a_ia_{i+1}\cdots a_n\$)$
+  - 第一个分量是栈中内容(右侧是栈顶)
+  - 第二个分量是余下输入
+- 每一个状态对应一个文法符号($s_0$除外)
+  - $X_i对应s_i$,则$X_1X_2\cdots X_ma_i\cdots a_n$是一个最右句型
+- 对于格局$(s_0s_1\cdots s_m,a_ia_{i+1}\cdots a_n\$)$，LR语法分析器查找$ACTION[s_m,a_i]$
+  - 移入s：将状态s移入栈中，得到新格局$(s_0s_1\cdots s_ms,a_{i+1}\cdots a_n\$)$
+  - 归约$A\rightarrow \beta$：将栈顶$\beta$归约为A，压入状态s，得到新格局$(s_0s_1\cdots s_{m-r}s,a_{i+1}\cdots a_n\$)$，其中r是$\beta$的长度,状态$s = GOTO[s_{m-r},A]$
+    - 接受：分析过程完成
+    - 报错：发现语法错误，进行错误恢复。
+
+### LR语法分析算法
+- 输入：文法G的LR语法分析表，输入串w
+- 输出：如果w在L(G)中，则输出自底向上语法分析的归约步骤，否则输出错误指示
+  ![](/images/documents/编译原理/LR语法分析算法.png)
+
+### SLR语法分析表的构造
+- 以LR(0)自动机为基础的SLR语法分析表构造算法
+  -  构造增广文法$G^\prime$的LR(0)项集规范族$\{I_0,I_1,\cdots,I_n\}$
+  -  状态i对应项集$I_i$,相关的ACTION/GOTO表条目如下：
+     -  $[A \rightarrow \alpha\cdot \textcolor{red}{a}\beta]$在$I_i$中，且$GOTO(I_i,\textcolor{red}{a}) = I_j$,则$ACTION[i,a] = 移入j$
+     -  $[A \rightarrow \alpha \cdot]$在$I_i$中，那么对$\textcolor{red}{FOLLOW(A)}$中所有$\textcolor{red}{a}$,$ACTION[i,a] = 按A\rightarrow \alpha 归约$
+     -  如果$[S^\prime \rightarrow S\cdot]$在$I_i$中，那么$ACTION[i,\$] = 接受$
+     -  如果$GOTO(I_i,A) = I_j$，那么在GOTO表中，$GOTO[i,A] = j$
+  - 空白条目设为error
+- 如果SLR分析表中没有冲突，那么该文法就是SLR的。
+
+### SLR语法分析器的弱点
+- 移入/归约冲突，归约/归约冲突
+
+### 更强大的LR语法分析器
+- 规范LR方法
+  - 添加项$[A \rightarrow \cdot \alpha]$时，把期望的向前看符号也加入项中
+  - 缺点在于状态变多
+- 向前看LR方法(LALR方法)
+  - 在规范LR方法上压缩了状态，使得分析表和SLR分析表一样大但是分析能力更强。

@@ -35,7 +35,7 @@
                 "url": "https:\/\/jarviszly.com\/cover.png",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "documents","keywords": "编译原理","wordcount":  530 ,
+            },"genre": "documents","keywords": "编译原理","wordcount":  647 ,
         "url": "https:\/\/jarviszly.com\/documents\/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86\/%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90\/","datePublished": "2020-02-27T10:06:04\x2b08:00","dateModified": "2020-02-27T10:06:04\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "JarvisZhang",
@@ -79,8 +79,8 @@
                     <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
                 </a>&nbsp;<span class="post-category">included in&nbsp;<i class="far fa-folder fa-fw"></i><a href="https://jarviszly.com/categories/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>&nbsp;</span></div>
             <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-02-27>2020-02-27</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>about 530 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>3 min&nbsp;</div>
+                <i class="fas fa-pencil-alt fa-fw"></i>about 647 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>4 min&nbsp;</div>
         </div><div class="post-toc" id="post-toc">
                 <h2 class="post-toc-title">Contents</h2>
                 <div class="post-toc-content"><nav id="TableOfContents">
@@ -135,6 +135,15 @@
         <li><a href="#lr语法分析技术">LR语法分析技术</a></li>
         <li><a href="#lr0项">LR(0)项</a></li>
         <li><a href="#lr0项集规范族的构造">LR(0)项集规范族的构造</a></li>
+        <li><a href="#求lr0项集规范族的算法">求LR(0)项集规范族的算法</a></li>
+        <li><a href="#lr0自动机的构造">LR(0)自动机的构造</a></li>
+        <li><a href="#lr0自动机的作用">LR(0)自动机的作用</a></li>
+        <li><a href="#lr语法分析器的结构">LR语法分析器的结构</a></li>
+        <li><a href="#lr语法分析器格局">LR语法分析器格局</a></li>
+        <li><a href="#lr语法分析算法">LR语法分析算法</a></li>
+        <li><a href="#slr语法分析表的构造">SLR语法分析表的构造</a></li>
+        <li><a href="#slr语法分析器的弱点">SLR语法分析器的弱点</a></li>
+        <li><a href="#更强大的lr语法分析器">更强大的LR语法分析器</a></li>
       </ul>
     </li>
   </ul>
@@ -200,6 +209,15 @@
         <li><a href="#lr语法分析技术">LR语法分析技术</a></li>
         <li><a href="#lr0项">LR(0)项</a></li>
         <li><a href="#lr0项集规范族的构造">LR(0)项集规范族的构造</a></li>
+        <li><a href="#求lr0项集规范族的算法">求LR(0)项集规范族的算法</a></li>
+        <li><a href="#lr0自动机的构造">LR(0)自动机的构造</a></li>
+        <li><a href="#lr0自动机的作用">LR(0)自动机的作用</a></li>
+        <li><a href="#lr语法分析器的结构">LR语法分析器的结构</a></li>
+        <li><a href="#lr语法分析器格局">LR语法分析器格局</a></li>
+        <li><a href="#lr语法分析算法">LR语法分析算法</a></li>
+        <li><a href="#slr语法分析表的构造">SLR语法分析表的构造</a></li>
+        <li><a href="#slr语法分析器的弱点">SLR语法分析器的弱点</a></li>
+        <li><a href="#更强大的lr语法分析器">更强大的LR语法分析器</a></li>
       </ul>
     </li>
   </ul>
@@ -692,6 +710,130 @@ else if (M[X,a] = $X \rightarrow Y_1\cdots Y_k$){<br>
 <li>I是一个项集，X是一个文法符号，则GOTO(I,X)定义为I中所有形如项$[A \rightarrow \alpha\cdot X\beta]$所对应的项$[A\rightarrow \alpha X\cdot \beta]$的集合的闭包</li>
 <li><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e7%bc%96%e8%af%91%e5%8e%9f%e7%90%86/GOTO.png" alt="" class="lazyload"></figure>
 </li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="求lr0项集规范族的算法"></a><h3>求LR(0)项集规范族的算法</h3>
+<ul>
+<li>从初始项集开始，不断计算各种可能的后继，知道生成所有项集。
+<figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e7%bc%96%e8%af%91%e5%8e%9f%e7%90%86/LR%280%29%e9%a1%b9%e9%9b%86%e8%a7%84%e8%8c%83%e6%97%8f%e7%ae%97%e6%b3%95.png" alt="" class="lazyload"></figure>
+</li>
+</ul>
+<a class="post-dummy-target" id="lr0自动机的构造"></a><h3>LR(0)自动机的构造</h3>
+<ul>
+<li>构造方法
+<ul>
+<li>基于规范LR(0)项集族可以构造LR(0)自动机</li>
+<li>规范LR(0)项集族种的每个项集对应于LR(0)自动机的一个状态</li>
+<li>状态转换：如果$GOTO(I,X) = J$,则从I到J有一个标号X的转换</li>
+<li>开始状态：$CLOSURE({S^\prime \rightarrow \cdot S})$</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="lr0自动机的作用"></a><h3>LR(0)自动机的作用</h3>
+<ul>
+<li>假设文法符号串$\gamma$使得自动机从开始状态运行到状态J
+<ul>
+<li>如果J中存在项$A \rightarrow \alpha \cdot$,那么
+<ul>
+<li>在$\gamma$之后添加一些终结符号可以得到一个最右句型。</li>
+<li>$\alpha$是$\gamma$的后缀，且是该句型的句柄</li>
+<li>表示可能找到了当前最右句型的句柄。</li>
+</ul>
+</li>
+<li>如果J中存在项$B \rightarrow \alpha \cdot X\beta$，那么
+<ul>
+<li>在$\gamma$之后添加$X\beta$和一些终结符号可以得到一个最右句型</li>
+<li>该句型中$\alpha X \beta$是句柄，但还没有找到。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="lr语法分析器的结构"></a><h3>LR语法分析器的结构</h3>
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e7%bc%96%e8%af%91%e5%8e%9f%e7%90%86/LR%e8%af%ad%e6%b3%95%e5%88%86%e6%9e%90%e5%99%a8%e7%bb%93%e6%9e%84.png" alt="" class="lazyload"></figure>
+</p>
+<ul>
+<li>两个部分：ACTION和GOTO</li>
+<li>ACTION表项有两个参数：状态i，终结符a
+<ul>
+<li>移入j: j是新状态，把j压栈(同时移入a)</li>
+<li>归约$A\rightarrow \beta$: 把栈顶的$\beta$归约成A，并根据GOTO表项压入新状态</li>
+<li>接受：接受输入，完成分析</li>
+<li>报错：在输入中发现语法错误</li>
+</ul>
+</li>
+<li>GOTO表项
+<ul>
+<li>如果$GOTO[I_i,A] = I_j(GOTO函数)$，那么$GOTO[i,A] = j(GOTO表项)$</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="lr语法分析器格局"></a><h3>LR语法分析器格局</h3>
+<ul>
+<li>LR语法分析器的格局包含了栈中内容和余下输入$(s_0s_1\cdots s_m,a_ia_{i+1}\cdots a_n$)$
+<ul>
+<li>第一个分量是栈中内容(右侧是栈顶)</li>
+<li>第二个分量是余下输入</li>
+</ul>
+</li>
+<li>每一个状态对应一个文法符号($s_0$除外)
+<ul>
+<li>$X_i对应s_i$,则$X_1X_2\cdots X_ma_i\cdots a_n$是一个最右句型</li>
+</ul>
+</li>
+<li>对于格局$(s_0s_1\cdots s_m,a_ia_{i+1}\cdots a_n$)$，LR语法分析器查找$ACTION[s_m,a_i]$
+<ul>
+<li>移入s：将状态s移入栈中，得到新格局$(s_0s_1\cdots s_ms,a_{i+1}\cdots a_n$)$</li>
+<li>归约$A\rightarrow \beta$：将栈顶$\beta$归约为A，压入状态s，得到新格局$(s_0s_1\cdots s_{m-r}s,a_{i+1}\cdots a_n$)$，其中r是$\beta$的长度,状态$s = GOTO[s_{m-r},A]$
+<ul>
+<li>接受：分析过程完成</li>
+<li>报错：发现语法错误，进行错误恢复。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="lr语法分析算法"></a><h3>LR语法分析算法</h3>
+<ul>
+<li>输入：文法G的LR语法分析表，输入串w</li>
+<li>输出：如果w在L(G)中，则输出自底向上语法分析的归约步骤，否则输出错误指示
+<figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e7%bc%96%e8%af%91%e5%8e%9f%e7%90%86/LR%e8%af%ad%e6%b3%95%e5%88%86%e6%9e%90%e7%ae%97%e6%b3%95.png" alt="" class="lazyload"></figure>
+</li>
+</ul>
+<a class="post-dummy-target" id="slr语法分析表的构造"></a><h3>SLR语法分析表的构造</h3>
+<ul>
+<li>以LR(0)自动机为基础的SLR语法分析表构造算法
+<ul>
+<li>构造增广文法$G^\prime$的LR(0)项集规范族${I_0,I_1,\cdots,I_n}$</li>
+<li>状态i对应项集$I_i$,相关的ACTION/GOTO表条目如下：
+<ul>
+<li>$[A \rightarrow \alpha\cdot \textcolor{red}{a}\beta]$在$I_i$中，且$GOTO(I_i,\textcolor{red}{a}) = I_j$,则$ACTION[i,a] = 移入j$</li>
+<li>$[A \rightarrow \alpha \cdot]$在$I_i$中，那么对$\textcolor{red}{FOLLOW(A)}$中所有$\textcolor{red}{a}$,$ACTION[i,a] = 按A\rightarrow \alpha 归约$</li>
+<li>如果$[S^\prime \rightarrow S\cdot]$在$I_i$中，那么$ACTION[i,$] = 接受$</li>
+<li>如果$GOTO(I_i,A) = I_j$，那么在GOTO表中，$GOTO[i,A] = j$</li>
+</ul>
+</li>
+<li>空白条目设为error</li>
+</ul>
+</li>
+<li>如果SLR分析表中没有冲突，那么该文法就是SLR的。</li>
+</ul>
+<a class="post-dummy-target" id="slr语法分析器的弱点"></a><h3>SLR语法分析器的弱点</h3>
+<ul>
+<li>移入/归约冲突，归约/归约冲突</li>
+</ul>
+<a class="post-dummy-target" id="更强大的lr语法分析器"></a><h3>更强大的LR语法分析器</h3>
+<ul>
+<li>规范LR方法
+<ul>
+<li>添加项$[A \rightarrow \cdot \alpha]$时，把期望的向前看符号也加入项中</li>
+<li>缺点在于状态变多</li>
+</ul>
+</li>
+<li>向前看LR方法(LALR方法)
+<ul>
+<li>在规范LR方法上压缩了状态，使得分析表和SLR分析表一样大但是分析能力更强。</li>
 </ul>
 </li>
 </ul>

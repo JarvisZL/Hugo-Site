@@ -35,7 +35,7 @@
                 "url": "https:\/\/jarviszly.com\/cover.png",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "documents","keywords": "模式识别","wordcount":  215 ,
+            },"genre": "documents","keywords": "模式识别","wordcount":  257 ,
         "url": "https:\/\/jarviszly.com\/documents\/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB\/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB%E7%B3%BB%E7%BB%9F%E6%A1%86%E6%9E%B6\/","datePublished": "2020-03-05T09:04:58\x2b08:00","dateModified": "2020-03-05T09:04:58\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "JarvisZhang",
@@ -79,7 +79,7 @@
                     <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
                 </a>&nbsp;<span class="post-category">included in&nbsp;<i class="far fa-folder fa-fw"></i><a href="https://jarviszly.com/categories/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/">模式识别</a>&nbsp;</span></div>
             <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-03-05>2020-03-05</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>about 215 words&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 257 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>2 min&nbsp;</div>
         </div><div class="post-toc" id="post-toc">
                 <h2 class="post-toc-title">Contents</h2>
@@ -116,6 +116,7 @@
         <li><a href="#代价矩阵">代价矩阵</a></li>
       </ul>
     </li>
+    <li><a href="#贝叶斯框架">贝叶斯框架</a></li>
   </ul>
 </nav></div>
             </div>
@@ -160,6 +161,7 @@
         <li><a href="#代价矩阵">代价矩阵</a></li>
       </ul>
     </li>
+    <li><a href="#贝叶斯框架">贝叶斯框架</a></li>
   </ul>
 </nav></div>
                 </details>
@@ -331,6 +333,38 @@ $$err = \dfrac{1}{n}\sum_{i=1}^n \mathbb{I}(f(x_i) \neq y_i) \qquad x_i \in D_{t
 <ul>
 <li>当使用0-1代价时，和错误率一致。</li>
 </ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="贝叶斯框架"></a><h2>贝叶斯框架</h2>
+<ul>
+<li>对于一个给定的数据集，最好的模型能够有多好。</li>
+<li>$f:x\rightarrow y$，一个数据对$(x,y)$
+<ul>
+<li>假设注重于分类：$y = {1,2,\cdots,m}$</li>
+<li>先验概率$p(y = i)$，没有看到数据。</li>
+<li>后验概率$p(y = i\vert x)$，看到数据之后。</li>
+<li>类条件概率$p(x\vert y = i)$</li>
+</ul>
+</li>
+<li>贝叶斯定理：
+<ul>
+<li>$p(y = i\vert x) = \dfrac{p(x\vert y= i)p(y = i)}{p(x)} = \dfrac{条件\times 先验}{数据}$</li>
+</ul>
+</li>
+<li>贝叶斯决策规则：
+<ul>
+<li>选择代价最小的类别输出：
+$$\mathop{argmin}\limits_y E_{(x,y)}[\lambda_y,f(x)]$$</li>
+<li>贝叶斯风险：使用贝叶斯决策规则的风险，其是理论上能够得到的最低的风险，记为$R^*$</li>
+</ul>
+</li>
+<li>在使用0-1代价时，风险和错误率等价
+<ul>
+<li>所以$1 - R^*$时理论上最高的准确率</li>
+</ul>
+</li>
+<li>类条件概率示意图
+<figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab/%e7%b1%bb%e6%9d%a1%e4%bb%b6%e6%a6%82%e7%8e%87.png" alt="" class="lazyload"></figure>
 </li>
 </ul></div><div class="post-footer" id="post-footer">
     <div class="post-info">
