@@ -35,7 +35,7 @@
                 "url": "https:\/\/jarviszly.com\/cover.png",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "documents","keywords": "模式识别","wordcount":  257 ,
+            },"genre": "documents","keywords": "模式识别","wordcount":  308 ,
         "url": "https:\/\/jarviszly.com\/documents\/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB\/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB%E7%B3%BB%E7%BB%9F%E6%A1%86%E6%9E%B6\/","datePublished": "2020-03-05T09:04:58\x2b08:00","dateModified": "2020-03-05T09:04:58\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "JarvisZhang",
@@ -79,7 +79,7 @@
                     <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
                 </a>&nbsp;<span class="post-category">included in&nbsp;<i class="far fa-folder fa-fw"></i><a href="https://jarviszly.com/categories/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/">模式识别</a>&nbsp;</span></div>
             <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-03-05>2020-03-05</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>about 257 words&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 308 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>2 min&nbsp;</div>
         </div><div class="post-toc" id="post-toc">
                 <h2 class="post-toc-title">Contents</h2>
@@ -114,9 +114,10 @@
           </ul>
         </li>
         <li><a href="#代价矩阵">代价矩阵</a></li>
+        <li><a href="#贝叶斯框架">贝叶斯框架</a></li>
+        <li><a href="#错误来源">错误来源</a></li>
       </ul>
     </li>
-    <li><a href="#贝叶斯框架">贝叶斯框架</a></li>
   </ul>
 </nav></div>
             </div>
@@ -159,9 +160,10 @@
           </ul>
         </li>
         <li><a href="#代价矩阵">代价矩阵</a></li>
+        <li><a href="#贝叶斯框架">贝叶斯框架</a></li>
+        <li><a href="#错误来源">错误来源</a></li>
       </ul>
     </li>
-    <li><a href="#贝叶斯框架">贝叶斯框架</a></li>
   </ul>
 </nav></div>
                 </details>
@@ -335,7 +337,7 @@ $$err = \dfrac{1}{n}\sum_{i=1}^n \mathbb{I}(f(x_i) \neq y_i) \qquad x_i \in D_{t
 </ul>
 </li>
 </ul>
-<a class="post-dummy-target" id="贝叶斯框架"></a><h2>贝叶斯框架</h2>
+<a class="post-dummy-target" id="贝叶斯框架"></a><h3>贝叶斯框架</h3>
 <ul>
 <li>对于一个给定的数据集，最好的模型能够有多好。</li>
 <li>$f:x\rightarrow y$，一个数据对$(x,y)$
@@ -365,6 +367,42 @@ $$\mathop{argmin}\limits_y E_{(x,y)}[\lambda_y,f(x)]$$</li>
 </li>
 <li>类条件概率示意图
 <figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab/%e7%b1%bb%e6%9d%a1%e4%bb%b6%e6%a6%82%e7%8e%87.png" alt="" class="lazyload"></figure>
+</li>
+</ul>
+<a class="post-dummy-target" id="错误来源"></a><h3>错误来源</h3>
+<ul>
+<li>真实(但未知)的函数$F(x)$
+<ul>
+<li>用由其产生的数据集D来学习，即$y = F(x)$没有误差</li>
+<li>回归的代价函数是欧几里得距离</li>
+<li>$x$和$F(x)$是定值，只有D包含随机性。</li>
+</ul>
+</li>
+<li>$E_D[(f(x;D) - F(x))^2] = (E_D[f(x;D)] - F(x))^2 + E_D[(f(x;D) - E_D[f(x;D)])^2]$</li>
+<li>简化为$E[(f-F)^2] = \textcolor{blue}{(F-Ef)^2} + \textcolor{red}{E[(f-Ef)^2]}$
+<ul>
+<li>$\textcolor{blue}{blue}:  真实值-预测值的期望的平方 = \textcolor{blue}{偏置}的平方$，偏置由模型自己本身决定。</li>
+<li>$\textcolor{red}{red}:  预测值的方差$</li>
+<li>该式子就叫偏置方差分解。</li>
+<li>$误差 = 偏置^2 + 方差$</li>
+</ul>
+</li>
+<li>考虑到$y = F(x)$有白噪声
+<ul>
+<li>$误差 = 偏置^2 + 方差 + 噪声$</li>
+</ul>
+</li>
+<li>分解的解读
+<ul>
+<li>偏置和数据无关，由模型决定</li>
+<li>方差和抽样得到的训练集和模型都有关系。</li>
+<li>减少误差：
+<ul>
+<li>得到高质量的数据，减小噪声。</li>
+<li>减小偏置和方差。</li>
+</ul>
+</li>
+</ul>
 </li>
 </ul></div><div class="post-footer" id="post-footer">
     <div class="post-info">
