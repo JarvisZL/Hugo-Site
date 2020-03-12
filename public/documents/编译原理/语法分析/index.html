@@ -35,7 +35,7 @@
                 "url": "https:\/\/jarviszly.com\/cover.png",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "documents","keywords": "编译原理","wordcount":  647 ,
+            },"genre": "documents","keywords": "编译原理","wordcount":  694 ,
         "url": "https:\/\/jarviszly.com\/documents\/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86\/%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90\/","datePublished": "2020-02-27T10:06:04\x2b08:00","dateModified": "2020-02-27T10:06:04\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "JarvisZhang",
@@ -79,7 +79,7 @@
                     <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
                 </a>&nbsp;<span class="post-category">included in&nbsp;<i class="far fa-folder fa-fw"></i><a href="https://jarviszly.com/categories/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>&nbsp;</span></div>
             <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-02-27>2020-02-27</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>about 647 words&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 694 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>4 min&nbsp;</div>
         </div><div class="post-toc" id="post-toc">
                 <h2 class="post-toc-title">Contents</h2>
@@ -144,6 +144,20 @@
         <li><a href="#slr语法分析表的构造">SLR语法分析表的构造</a></li>
         <li><a href="#slr语法分析器的弱点">SLR语法分析器的弱点</a></li>
         <li><a href="#更强大的lr语法分析器">更强大的LR语法分析器</a></li>
+        <li><a href="#lr1项">LR(1)项</a></li>
+        <li><a href="#lr1语法分析表的构造">LR(1)语法分析表的构造</a></li>
+      </ul>
+    </li>
+    <li><a href="#语法错误处理">语法错误处理</a>
+      <ul>
+        <li><a href="#预测分析中的错误恢复">预测分析中的错误恢复</a></li>
+        <li><a href="#恐慌模式">恐慌模式</a>
+          <ul>
+            <li><a href="#同步词法单元的确定">同步词法单元的确定</a></li>
+          </ul>
+        </li>
+        <li><a href="#短语层次恢复">短语层次恢复</a></li>
+        <li><a href="#lr语法分析中的错误分析">LR语法分析中的错误分析</a></li>
       </ul>
     </li>
   </ul>
@@ -218,6 +232,20 @@
         <li><a href="#slr语法分析表的构造">SLR语法分析表的构造</a></li>
         <li><a href="#slr语法分析器的弱点">SLR语法分析器的弱点</a></li>
         <li><a href="#更强大的lr语法分析器">更强大的LR语法分析器</a></li>
+        <li><a href="#lr1项">LR(1)项</a></li>
+        <li><a href="#lr1语法分析表的构造">LR(1)语法分析表的构造</a></li>
+      </ul>
+    </li>
+    <li><a href="#语法错误处理">语法错误处理</a>
+      <ul>
+        <li><a href="#预测分析中的错误恢复">预测分析中的错误恢复</a></li>
+        <li><a href="#恐慌模式">恐慌模式</a>
+          <ul>
+            <li><a href="#同步词法单元的确定">同步词法单元的确定</a></li>
+          </ul>
+        </li>
+        <li><a href="#短语层次恢复">短语层次恢复</a></li>
+        <li><a href="#lr语法分析中的错误分析">LR语法分析中的错误分析</a></li>
       </ul>
     </li>
   </ul>
@@ -606,7 +634,7 @@ $$A^\prime \rightarrow \alpha_1A^\prime ~ \vert ~ \cdots \vert ~ \alpha_m A^\pri
 <ul>
 <li>输入：串$\omega$，预测分析表M</li>
 <li>输出：如果$\omega$是句子，输出其最左推导，否则报错</li>
-<li>(1) 初始化：输入缓冲区$\omega$$,栈中为$S$$，ip指向$\omega$的第一个符号</li>
+<li>(1) 初始化：输入缓冲区$\omega\$ $,栈中为$S\$ $，ip指向$\omega$的第一个符号</li>
 <li>(2) 令X = 栈顶元素，ip指向输入符号a<br>
 if (X == a) X出栈，ip向前移动(与终结符号匹配成功)<br>
 else if (X是终结符号) error()(匹配失败)<br>
@@ -644,8 +672,8 @@ else if (M[X,a] = $X \rightarrow Y_1\cdots Y_k$){<br>
 <ul>
 <li>使用栈保存一如的符号</li>
 <li>栈中符号和待扫描符号组成一个最右句型</li>
-<li>开始：栈中只包含$$$，而输入为$w$$</li>
-<li>结束：栈中为$S$$,输入为$$$</li>
+<li>开始：栈中只包含$$ $，而输入为$w$ $</li>
+<li>结束：栈中为$S$ $,输入为$$ $</li>
 <li>分析过程：不断移入，识别句柄则归约</li>
 </ul>
 <a class="post-dummy-target" id="主要分析动作"></a><h3>主要分析动作</h3>
@@ -834,6 +862,73 @@ else if (M[X,a] = $X \rightarrow Y_1\cdots Y_k$){<br>
 <li>向前看LR方法(LALR方法)
 <ul>
 <li>在规范LR方法上压缩了状态，使得分析表和SLR分析表一样大但是分析能力更强。</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="lr1项"></a><h3>LR(1)项</h3>
+<ul>
+<li>形式： $[A \rightarrow \alpha \cdot \beta , \textcolor{red}{a}]$
+<ul>
+<li>a称为向前看符号，可以是终结符号或者$$ $.</li>
+<li>a表示如果将来要是按照$A\rightarrow \alpha\beta$归约，归约时下一个输入符号必须是a.</li>
+<li>$\beta$非空时，移入不考虑a，a传递到下一个状态。</li>
+</ul>
+</li>
+<li>构造：前面和LR(0)项相同，注意向前看符号的变化</li>
+</ul>
+<a class="post-dummy-target" id="lr1语法分析表的构造"></a><h3>LR(1)语法分析表的构造</h3>
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e7%bc%96%e8%af%91%e5%8e%9f%e7%90%86/LR%281%29%e8%af%ad%e6%b3%95%e5%88%86%e6%9e%90%e8%a1%a8%e6%9e%84%e9%80%a0.png" alt="" class="lazyload"></figure>
+</p>
+<a class="post-dummy-target" id="语法错误处理"></a><h2>语法错误处理</h2>
+<a class="post-dummy-target" id="预测分析中的错误恢复"></a><h3>预测分析中的错误恢复</h3>
+<ul>
+<li>两类错误恢复方法
+<ul>
+<li>恐慌模式</li>
+<li>短语层次的恢复</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="恐慌模式"></a><h3>恐慌模式</h3>
+<ul>
+<li>基本思想
+<ul>
+<li>语法分析器忽略输入中的一些符号，知道出现由设计者选定的某个同步词法单元。</li>
+<li>同步词法单元就是这个程序结构结束的标志</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="同步词法单元的确定"></a><h4>同步词法单元的确定</h4>
+<ul>
+<li>文法符号A的同步集合的启发式规则
+<ul>
+<li>非终结符
+<ul>
+<li>将$FOLLOW(A)$中所有符号放入A的同步集合中</li>
+<li>将高层次非终结符号对应串的开始符号加入到较低层次非终结符号的同步集合</li>
+<li>将$FIRST(A)$中的符号加入A的同步集合</li>
+</ul>
+</li>
+<li>终结符
+<ul>
+<li>在栈顶的终结符号出现匹配错误时，可直接弹出该符号，并且发出消息称已经插入了这个终结符号。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="短语层次恢复"></a><h3>短语层次恢复</h3>
+<ul>
+<li>在预测语法分析表中的空白条目中插入错误处理例程的函数指针。</li>
+</ul>
+<a class="post-dummy-target" id="lr语法分析中的错误分析"></a><h3>LR语法分析中的错误分析</h3>
+<ul>
+<li>查询$ACTION$表时可能发现报错条目</li>
+<li>恐慌模式的错误恢复策略
+<ul>
+<li>从栈顶向下扫描，找到状态s，s有一个对应于某个非终结符号A的GOTO目标(s之上的状态被丢弃)。</li>
+<li>在输入中丢弃一些符号，直到一个可以跟在A之后的符号b，并将$GOTO(s,A)$压栈，继续分析。</li>
+<li>基本思想：设法扫描完包含语法错误的A的子串，假装找到了一个A的实例。</li>
 </ul>
 </li>
 </ul>
