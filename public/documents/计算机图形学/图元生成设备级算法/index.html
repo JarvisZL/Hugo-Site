@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>图元生成设备级算法 | 浙语临湖</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszly.com/documents/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86/" /><link rel="canonical" href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/%E5%9B%BE%E5%85%83%E7%94%9F%E6%88%90%E8%AE%BE%E5%A4%87%E7%BA%A7%E7%AE%97%E6%B3%95/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="图元生成设备级算法" />
+<meta property="og:description" content="图元生成(设备级)算法 输出图元类型  输出图元：描述图形构成的基本几何结构的子程序。 输出图元的生成：图形的设备级算法。 输出图元两大类  线画图元：矢量表示的二维图形  扫描转换：图形表示的数学方程离散化为点阵表示。   填充图元：点阵表示的二维图形  图形填充：确定图形定义点阵区域的内部点表示。      图元生成的基本操作  图元生成：将图形的几何表示转化为适当的设备操作  画点：将单个坐标位置转换成设备输出操作。 画线：将线路经换为两个指定端点位置间的多个点。    线画图元生成算法 扫描转换  将数学方程(无限的数学点)映射到有限像素区域内的实际的点 扫描转换：按光栅扫描显示原理对数学表示的线段离散取样方法  数值差分分析(DDA)算法  直接利用直线在x或者y方向的增量的线段扫描转换算法 离散取样: 使用x或y方向的单位增量间隔($\Delta x = \pm 1$或者$\Delta y = \pm 1$) 取样方向取决于直线斜率绝对值，哪个轴可变化距离大，就从哪个轴取样。 要求对于每一个像素点位置都必须取整 优点：比直接使用直线方程快 缺点：像素位置计算需要取整。  所以导致累计误差。 取整操作和浮点运算耗时。    " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/%E5%9B%BE%E5%85%83%E7%94%9F%E6%88%90%E8%AE%BE%E5%A4%87%E7%BA%A7%E7%AE%97%E6%B3%95/" />
+<meta property="article:published_time" content="2020-03-16T16:01:04+08:00" />
+<meta property="article:modified_time" content="2020-03-16T16:01:04+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="图元生成设备级算法"/>
+<meta name="twitter:description" content="图元生成(设备级)算法 输出图元类型  输出图元：描述图形构成的基本几何结构的子程序。 输出图元的生成：图形的设备级算法。 输出图元两大类  线画图元：矢量表示的二维图形  扫描转换：图形表示的数学方程离散化为点阵表示。   填充图元：点阵表示的二维图形  图形填充：确定图形定义点阵区域的内部点表示。      图元生成的基本操作  图元生成：将图形的几何表示转化为适当的设备操作  画点：将单个坐标位置转换成设备输出操作。 画线：将线路经换为两个指定端点位置间的多个点。    线画图元生成算法 扫描转换  将数学方程(无限的数学点)映射到有限像素区域内的实际的点 扫描转换：按光栅扫描显示原理对数学表示的线段离散取样方法  数值差分分析(DDA)算法  直接利用直线在x或者y方向的增量的线段扫描转换算法 离散取样: 使用x或y方向的单位增量间隔($\Delta x = \pm 1$或者$\Delta y = \pm 1$) 取样方向取决于直线斜率绝对值，哪个轴可变化距离大，就从哪个轴取样。 要求对于每一个像素点位置都必须取整 优点：比直接使用直线方程快 缺点：像素位置计算需要取整。  所以导致累计误差。 取整操作和浮点运算耗时。    "/>
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "图元生成设备级算法",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/jarviszly.com\/documents\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6\/%E5%9B%BE%E5%85%83%E7%94%9F%E6%88%90%E8%AE%BE%E5%A4%87%E7%BA%A7%E7%AE%97%E6%B3%95\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszly.com\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "documents","keywords": "计算机图形学","wordcount":  35 ,
+        "url": "https:\/\/jarviszly.com\/documents\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6\/%E5%9B%BE%E5%85%83%E7%94%9F%E6%88%90%E8%AE%BE%E5%A4%87%E7%BA%A7%E7%AE%97%E6%B3%95\/","datePublished": "2020-03-16T16:01:04\x2b08:00","dateModified": "2020-03-16T16:01:04\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "JarvisZhang",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszly.com\/images\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/forkawesome/fork-awesome.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://jarviszly.com">浙语临湖</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://jarviszly.com">浙语临湖</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">图元生成设备级算法</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://jarviszly.com" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
+                </a>&nbsp;<span class="post-category">included in&nbsp;<i class="far fa-folder fa-fw"></i><a href="https://jarviszly.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">计算机图形学</a>&nbsp;</span></div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-03-16>2020-03-16</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 35 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>1 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#输出图元类型">输出图元类型</a></li>
+    <li><a href="#图元生成的基本操作">图元生成的基本操作</a></li>
+    <li><a href="#线画图元生成算法">线画图元生成算法</a>
+      <ul>
+        <li><a href="#扫描转换">扫描转换</a></li>
+        <li><a href="#数值差分分析dda算法">数值差分分析(DDA)算法</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#输出图元类型">输出图元类型</a></li>
+    <li><a href="#图元生成的基本操作">图元生成的基本操作</a></li>
+    <li><a href="#线画图元生成算法">线画图元生成算法</a>
+      <ul>
+        <li><a href="#扫描转换">扫描转换</a></li>
+        <li><a href="#数值差分分析dda算法">数值差分分析(DDA)算法</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><h1 id="图元生成设备级算法">图元生成(设备级)算法</h1>
+<a class="post-dummy-target" id="输出图元类型"></a><h2>输出图元类型</h2>
+<ul>
+<li>输出图元：描述图形构成的基本几何结构的子程序。</li>
+<li>输出图元的生成：图形的设备级算法。</li>
+<li>输出图元两大类
+<ul>
+<li>线画图元：矢量表示的二维图形
+<ul>
+<li>扫描转换：图形表示的数学方程离散化为点阵表示。</li>
+</ul>
+</li>
+<li>填充图元：点阵表示的二维图形
+<ul>
+<li>图形填充：确定图形定义点阵区域的内部点表示。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="图元生成的基本操作"></a><h2>图元生成的基本操作</h2>
+<ul>
+<li>图元生成：将图形的几何表示转化为适当的设备操作
+<ul>
+<li>画点：将单个坐标位置转换成设备输出操作。</li>
+<li>画线：将线路经换为两个指定端点位置间的多个点。</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="线画图元生成算法"></a><h2>线画图元生成算法</h2>
+<a class="post-dummy-target" id="扫描转换"></a><h3>扫描转换</h3>
+<ul>
+<li>将数学方程(无限的数学点)映射到有限像素区域内的实际的点</li>
+<li>扫描转换：按光栅扫描显示原理对数学表示的线段离散取样方法</li>
+</ul>
+<a class="post-dummy-target" id="数值差分分析dda算法"></a><h3>数值差分分析(DDA)算法</h3>
+<ul>
+<li>直接利用直线在x或者y方向的增量的线段扫描转换算法</li>
+<li><font color=blue size=3>离散取样</font>: 使用x或y方向的单位增量间隔($\Delta x = \pm 1$或者$\Delta y = \pm 1$)</li>
+<li>取样方向取决于<font color=red size=3>直线斜率绝对值</font>，哪个轴可变化距离大，就从哪个轴取样。</li>
+<li>要求对于每一个像素点位置都必须<font color=red size=3>取整</font></li>
+<li>优点：比直接使用直线方程快</li>
+<li>缺点：像素位置计算需要取整。
+<ul>
+<li>所以导致累计误差。</li>
+<li>取整操作和浮点运算耗时。</li>
+</ul>
+</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-03-16</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span><a href="//twitter.com/share?url=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E8%25AE%25A1%25E7%25AE%2597%25E6%259C%25BA%25E5%259B%25BE%25E5%25BD%25A2%25E5%25AD%25A6%2f%25E5%259B%25BE%25E5%2585%2583%25E7%2594%259F%25E6%2588%2590%25E8%25AE%25BE%25E5%25A4%2587%25E7%25BA%25A7%25E7%25AE%2597%25E6%25B3%2595%2f&amp;text=%e5%9b%be%e5%85%83%e7%94%9f%e6%88%90%e8%ae%be%e5%a4%87%e7%ba%a7%e7%ae%97%e6%b3%95&amp;via=" target="_blank" title="Share on Twitter">
+            <i class="fab fa-twitter fa-fw"></i>
+        </a><a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E8%25AE%25A1%25E7%25AE%2597%25E6%259C%25BA%25E5%259B%25BE%25E5%25BD%25A2%25E5%25AD%25A6%2f%25E5%259B%25BE%25E5%2585%2583%25E7%2594%259F%25E6%2588%2590%25E8%25AE%25BE%25E5%25A4%2587%25E7%25BA%25A7%25E7%25AE%2597%25E6%25B3%2595%2f" target="_blank" title="Share on Facebook">
+            <i class="fab fa-facebook-square fa-fw"></i>
+        </a><a href="//reddit.com/submit?url=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E8%25AE%25A1%25E7%25AE%2597%25E6%259C%25BA%25E5%259B%25BE%25E5%25BD%25A2%25E5%25AD%25A6%2f%25E5%259B%25BE%25E5%2585%2583%25E7%2594%259F%25E6%2588%2590%25E8%25AE%25BE%25E5%25A4%2587%25E7%25BA%25A7%25E7%25AE%2597%25E6%25B3%2595%2f&amp;title=%e5%9b%be%e5%85%83%e7%94%9f%e6%88%90%e8%ae%be%e5%a4%87%e7%ba%a7%e7%ae%97%e6%b3%95" target="_blank" title="Share on Reddit">
+            <i class="fab fa-reddit fa-fw"></i>
+        </a></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span class="tag">
+                        <a href="https://jarviszly.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><i class="fas fa-tag fa-fw"></i>&nbsp;计算机图形学</a>&nbsp;
+                    </span></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://jarviszly.com">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://jarviszly.com/documents/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86/" class="prev" rel="prev" title="第三部分"><i class="fas fa-angle-left fa-fw"></i>第三部分</a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright">
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://jarviszly.com/" target="_blank">Lingyu Zhang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.miit.gov.cn/">苏ICP备20008191号-1</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.gov.cn/portal/index"></i>苏公网安备 32011302320886号</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/js/lib/jquery/jquery.slim.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><script src="/js/lib/katex/katex.min.js"></script><script defer src="/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script defer src="/js/lib/katex/copy-tex.min.js"></script><script defer src="/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$$", right: "$$", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/js/blog.min.js"></script>
+</body>
+</html>

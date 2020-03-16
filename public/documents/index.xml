@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Wed, 11 Mar 2020 14:06:27 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 16 Mar 2020 16:01:04 +0800</lastBuildDate>
     
 	<atom:link href="https://jarviszly.com/documents/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>图元生成设备级算法</title>
+      <link>https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/%E5%9B%BE%E5%85%83%E7%94%9F%E6%88%90%E8%AE%BE%E5%A4%87%E7%BA%A7%E7%AE%97%E6%B3%95/</link>
+      <pubDate>Mon, 16 Mar 2020 16:01:04 +0800</pubDate>
+      
+      <guid>https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/%E5%9B%BE%E5%85%83%E7%94%9F%E6%88%90%E8%AE%BE%E5%A4%87%E7%BA%A7%E7%AE%97%E6%B3%95/</guid>
+      <description>图元生成(设备级)算法 输出图元类型  输出图元：描述图形构成的基本几何结构的子程序。 输出图元的生成：图形的设备级算法。 输出图元两大类  线画图元：矢量表示的二维图形  扫描转换：图形表示的数学方程离散化为点阵表示。   填充图元：点阵表示的二维图形  图形填充：确定图形定义点阵区域的内部点表示。      图元生成的基本操作  图元生成：将图形的几何表示转化为适当的设备操作  画点：将单个坐标位置转换成设备输出操作。 画线：将线路经换为两个指定端点位置间的多个点。    线画图元生成算法 扫描转换  将数学方程(无限的数学点)映射到有限像素区域内的实际的点 扫描转换：按光栅扫描显示原理对数学表示的线段离散取样方法  数值差分分析(DDA)算法  直接利用直线在x或者y方向的增量的线段扫描转换算法 离散取样: 使用x或y方向的单位增量间隔($\Delta x = \pm 1$或者$\Delta y = \pm 1$) 取样方向取决于直线斜率绝对值，哪个轴可变化距离大，就从哪个轴取样。 要求对于每一个像素点位置都必须取整 优点：比直接使用直线方程快 缺点：像素位置计算需要取整。  所以导致累计误差。 取整操作和浮点运算耗时。    </description>
+    </item>
     
     <item>
       <title>第三部分</title>

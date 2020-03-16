@@ -35,7 +35,7 @@
                 "url": "https:\/\/jarviszly.com\/cover.png",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "documents","keywords": "计算机图形学","wordcount":  239 ,
+            },"genre": "documents","keywords": "计算机图形学","wordcount":  306 ,
         "url": "https:\/\/jarviszly.com\/documents\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6\/%E5%9B%BE%E5%BD%A2%E8%AE%BE%E5%A4%87%E8%BE%93%E5%87%BA%E5%8E%9F%E7%90%86\/","datePublished": "2020-03-09T13:37:22\x2b08:00","dateModified": "2020-03-09T13:37:22\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "JarvisZhang",
@@ -79,7 +79,7 @@
                     <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
                 </a>&nbsp;<span class="post-category">included in&nbsp;<i class="far fa-folder fa-fw"></i><a href="https://jarviszly.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">计算机图形学</a>&nbsp;</span></div>
             <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-03-09>2020-03-09</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>about 239 words&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 306 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>2 min&nbsp;</div>
         </div><div class="post-toc" id="post-toc">
                 <h2 class="post-toc-title">Contents</h2>
@@ -123,6 +123,25 @@
             <li><a href="#彩色表结构">彩色表结构</a></li>
           </ul>
         </li>
+        <li><a href="#随机扫描图形显示原理">随机扫描图形显示原理</a></li>
+        <li><a href="#过程描述">过程描述</a></li>
+        <li><a href="#光栅扫描和随机扫描原理比较">光栅扫描和随机扫描原理比较</a></li>
+      </ul>
+    </li>
+    <li><a href="#图形显示结构机理">图形显示结构机理</a>
+      <ul>
+        <li><a href="#阴极射线管结构机理">阴极射线管结构机理</a>
+          <ul>
+            <li><a href="#色彩结构">色彩结构</a></li>
+          </ul>
+        </li>
+        <li><a href="#液晶显示器平板显示设备">液晶显示器(平板显示设备)</a>
+          <ul>
+            <li><a href="#刷新控制">刷新控制</a></li>
+          </ul>
+        </li>
+        <li><a href="#数字墨水">数字墨水</a></li>
+        <li><a href="#三维图形立体感显示器">三维图形立体感显示器</a></li>
       </ul>
     </li>
   </ul>
@@ -176,6 +195,25 @@
             <li><a href="#彩色表结构">彩色表结构</a></li>
           </ul>
         </li>
+        <li><a href="#随机扫描图形显示原理">随机扫描图形显示原理</a></li>
+        <li><a href="#过程描述">过程描述</a></li>
+        <li><a href="#光栅扫描和随机扫描原理比较">光栅扫描和随机扫描原理比较</a></li>
+      </ul>
+    </li>
+    <li><a href="#图形显示结构机理">图形显示结构机理</a>
+      <ul>
+        <li><a href="#阴极射线管结构机理">阴极射线管结构机理</a>
+          <ul>
+            <li><a href="#色彩结构">色彩结构</a></li>
+          </ul>
+        </li>
+        <li><a href="#液晶显示器平板显示设备">液晶显示器(平板显示设备)</a>
+          <ul>
+            <li><a href="#刷新控制">刷新控制</a></li>
+          </ul>
+        </li>
+        <li><a href="#数字墨水">数字墨水</a></li>
+        <li><a href="#三维图形立体感显示器">三维图形立体感显示器</a></li>
       </ul>
     </li>
   </ul>
@@ -540,6 +578,135 @@ $$X = \dfrac{x}{y}Y,\quad Y= Y,\quad Z = \dfrac{1-x-y}{y}Y$$</li>
 <figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e8%ae%a1%e7%ae%97%e6%9c%ba%e5%9b%be%e5%bd%a2%e5%ad%a6/%e5%bd%a9%e8%89%b2%e8%a1%a81.png" alt="" class="lazyload"></figure>
 </li>
 </ul>
+<a class="post-dummy-target" id="随机扫描图形显示原理"></a><h3>随机扫描图形显示原理</h3>
+<ul>
+<li>随机扫描：按图形定义逐条绘制线条
+<ul>
+<li>图形定义：一组画线命令</li>
+<li>扫描：显示处理器解释显示列表，并按次序绘制组成线条
+<ul>
+<li><font color=red size=3>只在屏幕的图形部分绘制</font>(和光栅扫描很大的一个区别)</li>
+<li>扫描过程随图形定义的不同而不同</li>
+</ul>
+</li>
+<li>刷新：刷新频率依赖于图形组成的线条数目</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="过程描述"></a><h3>过程描述</h3>
+<ul>
+<li>基本指令
+<ul>
+<li>$P(x,y)$定位在点$(x,y)$</li>
+<li>$S(z)$设置点$(x,y)$的亮度值为Z</li>
+</ul>
+</li>
+<li>图形定义：采用以线段或笔画为单位指令序列$S_i$来表示物体形状。
+<ul>
+<li>如$S_1,S_2,\cdots,S_n$循环序列</li>
+</ul>
+</li>
+<li>显示过程：不断执行循环序列，当某一个物体的笔画发生变化时，只需要改变对应的指令序列</li>
+</ul>
+<a class="post-dummy-target" id="光栅扫描和随机扫描原理比较"></a><h3>光栅扫描和随机扫描原理比较</h3>
+<ul>
+<li>随机扫描的图形定义是一组画线命令，直接按照路径画线，线条光滑。</li>
+<li>光栅扫描的图形定义是所有屏幕像素点的颜色值，通过离散点集成画线，线条呈锯齿状。</li>
+<li><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e8%ae%a1%e7%ae%97%e6%9c%ba%e5%9b%be%e5%bd%a2%e5%ad%a6/%e5%85%89%e6%a0%85%e5%92%8c%e9%9a%8f%e6%9c%ba%e6%af%94%e8%be%83.png" alt="" class="lazyload"></figure>
+</li>
+<li>扫描刷新过程
+<ul>
+<li>光栅扫描：刷新过程有固定程序，刷新频率和图形复杂度无关。</li>
+<li>随机扫描：依赖于图形构成定义</li>
+</ul>
+</li>
+<li>显示图形类型
+<ul>
+<li>光栅扫描：容易绘制填充图形，色彩丰富</li>
+<li>随机扫描：适合线条组成的图形</li>
+</ul>
+</li>
+<li>光栅扫描的主要缺点
+<ul>
+<li>几何表示图形显示时需要扫描转换，费时。</li>
+<li>存在直线段不直，图形边界阶梯状等</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="图形显示结构机理"></a><h2>图形显示结构机理</h2>
+<a class="post-dummy-target" id="阴极射线管结构机理"></a><h3>阴极射线管结构机理</h3>
+<ul>
+<li>过程
+<ul>
+<li>电子枪发出电子束</li>
+<li>聚焦系统聚焦和加速电极加速</li>
+<li>偏转系统控制射向涂覆荧光层的荧光屏的指定位置</li>
+<li>电子束冲击后产生一个亮点。</li>
+</ul>
+</li>
+<li>荧光粉层
+<ul>
+<li>其颜色提供色彩显示机制</li>
+<li>余辉时间决定产生稳定画面所需的刷新频率
+<ul>
+<li>短余辉时间用于动画</li>
+<li>长余辉时间用于高复杂静态图片</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>光点
+<ul>
+<li>强度呈高斯分布</li>
+<li>两相邻光点可区分条件：间隔大于中心强度约$60\%$ 处的点点直径</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="色彩结构"></a><h4>色彩结构</h4>
+<ul>
+<li>黑白CRT:荧光物质只有一种，只需要控制电压值就可以得到不同灰度值。</li>
+<li>彩色CRT:利用产生不同颜色光的荧光小点的颜色组合来显示。</li>
+<li>CRT产生彩色显示的结构有两种
+<ul>
+<li>随机扫描：电子束穿透法(红绿荧光粉层)
+<ul>
+<li>低速电子束：红光</li>
+<li>高速电子束：绿光</li>
+<li>中速电子束：两者组合</li>
+</ul>
+</li>
+<li>光栅扫描：荫罩法(RGB三基色模型)</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="液晶显示器平板显示设备"></a><h3>液晶显示器(平板显示设备)</h3>
+<ul>
+<li>发射显示器：将电能变成光，电子束以平行于屏幕的方向加速，而后偏转90°撞击屏幕</li>
+<li>非发射显示器：利用光学效应将太阳光或者其它光源的光转换为图形图案。</li>
+</ul>
+<a class="post-dummy-target" id="刷新控制"></a><h4>刷新控制</h4>
+<ul>
+<li>扭曲向列型(无源矩阵式)：液晶像素点由时序扫描信号直接驱动</li>
+<li>薄膜晶体管型TFT(激活矩阵式)：液晶像素点由集成在其后的薄膜晶体管驱动.</li>
+</ul>
+<a class="post-dummy-target" id="数字墨水"></a><h3>数字墨水</h3>
+<ul>
+<li>显示机理：双稳定态
+<ul>
+<li>负电场时白色颗粒漂浮到微小粒子顶部，表面呈现白光</li>
+<li>正电场时黑色颗粒漂浮到微小粒子顶部，表面呈现黑光</li>
+</ul>
+</li>
+<li>色彩机理：彩色滤光片+漂浮在屏幕上两类颗粒的数量</li>
+<li>特点和优势
+<ul>
+<li>极佳可读性</li>
+<li>极低能耗</li>
+<li>超便携性</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="三维图形立体感显示器"></a><h3>三维图形立体感显示器</h3>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
