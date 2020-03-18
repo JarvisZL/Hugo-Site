@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>主成分分析(PCA) | 浙语临湖</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/%E5%9B%BE%E5%85%83%E7%94%9F%E6%88%90%E8%AE%BE%E5%A4%87%E7%BA%A7%E7%AE%97%E6%B3%95/" /><link rel="canonical" href="https://jarviszly.com/documents/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/pca/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="主成分分析(PCA)" />
+<meta property="og:description" content="PCA基础 常见数据特点  数据各个维度之间不是相互独立的  数据的内在维度通常远低于其表面维度。 因此需要降低维度(dimensionality reduction),PCA在降维方法中(可能)是最常用的一种。    0阶表示  假设我们的数据实际上只有一个点，可能由于噪声的存在我们收集到的数据为$x_1,x_2,\cdots,x_n$.  当噪声不存在时$x_1 = x_2 = \cdots = x_n$   不允许使用任何维度，如何最佳表示这个数据点$x$  寻找某个固定的向量$m$使得(即到每个点的距离的平方和最小) $$J_1(m) = \mathop{min}\limits_m \sum_{i=1}^n \Vert x_i - m \Vert^2$$ 假设$m$是d维的，有n个数据，那么每个数据使用的维度: $\dfrac{d}{n} \mathop{=} \limits_{n \rightarrow 0} 0$   最优解(偏导等于0)： $$m^* = \mathop{argmin}\limits_m \sum_{i=1}^n \Vert x_i - m \Vert^2 = \dfrac{1}{n}\sum_{i=1}^n x_i = \bar{x}$$  一维表示：数据维度间的线性关系  数据是$d$维的，但是内在维度可能是$m(\ll d)$维的，PCA用线性来降低维度。 $y = w^T x &#43; b\qquad (x\in \reals^d, y\in \reals^m)$ 怎么选择方向  通过平移使得原点位于数据中心，则消除了b 第一种通过$J_1$推导即最小化误差方差的方法见教材 找方向使得方差尽可能大    形式化: 最大化方差  方差是衡量新特征包含信息多少的度量 优化目标函数 $J_2(w) = \dfrac{1}{n}\sum_{i=1}^{n} \Vert w^T(x_i-\bar{x})\Vert^2$ 问题: $J_2$可以无穷大或者无穷小(因为可以w全部乘以一个数) 解决办法：加上限制条件$\Vert w\Vert^2 = w^Tw = 1$ $$\mathop{argmax}\limits_w \dfrac{1}{n}\sum_{i=1}^{n} \Vert w^T(x_i-\bar{x})\Vert^2$$ $$s." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jarviszly.com/documents/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/pca/" />
+<meta property="article:published_time" content="2020-03-17T15:21:33+08:00" />
+<meta property="article:modified_time" content="2020-03-17T15:21:33+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="主成分分析(PCA)"/>
+<meta name="twitter:description" content="PCA基础 常见数据特点  数据各个维度之间不是相互独立的  数据的内在维度通常远低于其表面维度。 因此需要降低维度(dimensionality reduction),PCA在降维方法中(可能)是最常用的一种。    0阶表示  假设我们的数据实际上只有一个点，可能由于噪声的存在我们收集到的数据为$x_1,x_2,\cdots,x_n$.  当噪声不存在时$x_1 = x_2 = \cdots = x_n$   不允许使用任何维度，如何最佳表示这个数据点$x$  寻找某个固定的向量$m$使得(即到每个点的距离的平方和最小) $$J_1(m) = \mathop{min}\limits_m \sum_{i=1}^n \Vert x_i - m \Vert^2$$ 假设$m$是d维的，有n个数据，那么每个数据使用的维度: $\dfrac{d}{n} \mathop{=} \limits_{n \rightarrow 0} 0$   最优解(偏导等于0)： $$m^* = \mathop{argmin}\limits_m \sum_{i=1}^n \Vert x_i - m \Vert^2 = \dfrac{1}{n}\sum_{i=1}^n x_i = \bar{x}$$  一维表示：数据维度间的线性关系  数据是$d$维的，但是内在维度可能是$m(\ll d)$维的，PCA用线性来降低维度。 $y = w^T x &#43; b\qquad (x\in \reals^d, y\in \reals^m)$ 怎么选择方向  通过平移使得原点位于数据中心，则消除了b 第一种通过$J_1$推导即最小化误差方差的方法见教材 找方向使得方差尽可能大    形式化: 最大化方差  方差是衡量新特征包含信息多少的度量 优化目标函数 $J_2(w) = \dfrac{1}{n}\sum_{i=1}^{n} \Vert w^T(x_i-\bar{x})\Vert^2$ 问题: $J_2$可以无穷大或者无穷小(因为可以w全部乘以一个数) 解决办法：加上限制条件$\Vert w\Vert^2 = w^Tw = 1$ $$\mathop{argmax}\limits_w \dfrac{1}{n}\sum_{i=1}^{n} \Vert w^T(x_i-\bar{x})\Vert^2$$ $$s."/>
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "主成分分析(PCA)",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/jarviszly.com\/documents\/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB\/pca\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszly.com\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "documents","keywords": "模式识别","wordcount":  310 ,
+        "url": "https:\/\/jarviszly.com\/documents\/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB\/pca\/","datePublished": "2020-03-17T15:21:33\x2b08:00","dateModified": "2020-03-17T15:21:33\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "JarvisZhang",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszly.com\/images\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/forkawesome/fork-awesome.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://jarviszly.com">浙语临湖</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://jarviszly.com">浙语临湖</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">主成分分析(PCA)</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://jarviszly.com" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
+                </a>&nbsp;<span class="post-category">included in&nbsp;<i class="far fa-folder fa-fw"></i><a href="https://jarviszly.com/categories/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/">模式识别</a>&nbsp;</span></div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-03-17>2020-03-17</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 310 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>2 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#pca基础">PCA基础</a>
+      <ul>
+        <li><a href="#常见数据特点">常见数据特点</a></li>
+        <li><a href="#0阶表示">0阶表示</a></li>
+        <li><a href="#一维表示数据维度间的线性关系">一维表示：数据维度间的线性关系</a>
+          <ul>
+            <li><a href="#形式化-最大化方差">形式化: 最大化方差</a></li>
+            <li><a href="#化简">化简</a></li>
+            <li><a href="#优化">优化</a></li>
+            <li><a href="#重建数据与原来数据的关系">重建数据与原来数据的关系</a></li>
+            <li><a href="#降维">降维</a></li>
+          </ul>
+        </li>
+        <li><a href="#pca变换步骤">PCA变换步骤</a></li>
+      </ul>
+    </li>
+    <li><a href="#正态分布和pca">正态分布和PCA</a>
+      <ul>
+        <li><a href="#白化变换">白化变换</a></li>
+        <li><a href="#高斯假设">高斯假设</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#pca基础">PCA基础</a>
+      <ul>
+        <li><a href="#常见数据特点">常见数据特点</a></li>
+        <li><a href="#0阶表示">0阶表示</a></li>
+        <li><a href="#一维表示数据维度间的线性关系">一维表示：数据维度间的线性关系</a>
+          <ul>
+            <li><a href="#形式化-最大化方差">形式化: 最大化方差</a></li>
+            <li><a href="#化简">化简</a></li>
+            <li><a href="#优化">优化</a></li>
+            <li><a href="#重建数据与原来数据的关系">重建数据与原来数据的关系</a></li>
+            <li><a href="#降维">降维</a></li>
+          </ul>
+        </li>
+        <li><a href="#pca变换步骤">PCA变换步骤</a></li>
+      </ul>
+    </li>
+    <li><a href="#正态分布和pca">正态分布和PCA</a>
+      <ul>
+        <li><a href="#白化变换">白化变换</a></li>
+        <li><a href="#高斯假设">高斯假设</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><a class="post-dummy-target" id="pca基础"></a><h2>PCA基础</h2>
+<a class="post-dummy-target" id="常见数据特点"></a><h3>常见数据特点</h3>
+<ul>
+<li>数据各个维度之间不是相互独立的
+<ul>
+<li>数据的内在维度通常远低于其表面维度。</li>
+<li>因此需要降低维度(dimensionality reduction),PCA在降维方法中(可能)是最常用的一种。</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="0阶表示"></a><h3>0阶表示</h3>
+<ul>
+<li>假设我们的数据实际上只有一个点，可能由于噪声的存在我们收集到的数据为$x_1,x_2,\cdots,x_n$.
+<ul>
+<li>当噪声不存在时$x_1 = x_2 = \cdots = x_n$</li>
+</ul>
+</li>
+<li>不允许使用任何维度，如何最佳表示这个数据点$x$
+<ul>
+<li>寻找某个固定的向量$m$使得(即到每个点的距离的平方和最小)
+$$J_1(m) = \mathop{min}\limits_m \sum_{i=1}^n \Vert x_i - m \Vert^2$$</li>
+<li>假设$m$是d维的，有n个数据，那么每个数据使用的维度: $\dfrac{d}{n} \mathop{=} \limits_{n \rightarrow 0} 0$</li>
+</ul>
+</li>
+<li>最优解(偏导等于0)：
+$$m^* = \mathop{argmin}\limits_m \sum_{i=1}^n \Vert x_i - m \Vert^2 = \dfrac{1}{n}\sum_{i=1}^n x_i = \bar{x}$$</li>
+</ul>
+<a class="post-dummy-target" id="一维表示数据维度间的线性关系"></a><h3>一维表示：数据维度间的线性关系</h3>
+<ul>
+<li>数据是$d$维的，但是内在维度可能是$m(\ll d)$维的，PCA用线性来降低维度。</li>
+<li>$y = w^T x + b\qquad (x\in \reals^d, y\in \reals^m)$</li>
+<li>怎么选择方向
+<ul>
+<li>通过平移使得原点位于数据中心，则消除了b</li>
+<li>第一种通过$J_1$推导即最小化误差方差的方法见教材</li>
+<li>找方向使得方差尽可能大</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="形式化-最大化方差"></a><h4>形式化: 最大化方差</h4>
+<ul>
+<li>方差是衡量新特征包含信息多少的度量</li>
+<li>优化目标函数 $J_2(w) = \dfrac{1}{n}\sum_{i=1}^{n} \Vert w^T(x_i-\bar{x})\Vert^2$</li>
+<li>问题: $J_2$可以无穷大或者无穷小(因为可以w全部乘以一个数)</li>
+<li>解决办法：加上限制条件$\Vert w\Vert^2 = w^Tw = 1$
+$$\mathop{argmax}\limits_w \dfrac{1}{n}\sum_{i=1}^{n} \Vert w^T(x_i-\bar{x})\Vert^2$$
+$$s.t.\qquad\qquad w^Tw = 1$$</li>
+</ul>
+<a class="post-dummy-target" id="化简"></a><h4>化简</h4>
+<p>$$\Vert (x_i-\bar{x})^Tw\Vert^2 = ((x_i-\bar{x})^Tw)^T((x_i-\bar{x})^Tw) = w^T(x_i-\bar{x})(x_i-\bar{x})^Tw$$
+$$\dfrac{1}{n}\sum_{i=1}^{n} \Vert w^T(x_i-\bar{x})\Vert^2 = w^T\dfrac{1}{n}\sum_{i=1}^n (x_i-\bar{x})(x_i-\bar{x})^T w = w^TCov(x)w$$</p>
+<a class="post-dummy-target" id="优化"></a><h4>优化</h4>
+<ul>
+<li>拉格朗日乘子法：将有约束的优化问题转化为无约束的优化问题</li>
+<li>拉格朗日函数:
+$$f(w,\lambda) = w^TCov(x)w - \textcolor{red}{\lambda(w^Tw-1)}$$</li>
+<li>最优的必要条件: $\dfrac{\partial f}{\partial w} = 0,\quad \dfrac{\partial f}{\partial \lambda} = 0$
+<ul>
+<li>$\dfrac{\partial f}{\partial w} = 2Cov(x)w - 2\lambda w = 0$</li>
+<li>$Cov(x)w = \lambda w$,说明必要条件是w是$Cov(x)$的一个特征向量
+$$J_2(w) = w^TCov(x)w = w^T\lambda w = \lambda$$</li>
+</ul>
+</li>
+<li>即选取最大特征值最大时的特征向量作为w.</li>
+<li>用w来近似x
+<ul>
+<li>$\hat{x} \approx \bar{x} + (w^T(x-\bar{x}))w$</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="重建数据与原来数据的关系"></a><h4>重建数据与原来数据的关系</h4>
+<ul>
+<li>当$n &gt; d$(即数据比维数多)时，
+<ul>
+<li>我们可以进一步假设$Cov(x)$是一个$\textcolor{red}{可逆矩阵}$，也就是说其此时是$\textcolor{red}{满秩}$的。</li>
+<li>则$Cov(x)$有$d$个互相垂直的特征向量$\xi_i$,则有
+$$\forall x,\qquad x \textcolor{red}{=} \bar{x} + \sum_{i=1}^{\textcolor{red}{d}} (w_i^T(x-\bar{x}))w_i$$</li>
+<li>此时利用了所有的特征向量，所以没有误差损失。</li>
+<li>令$W = [w_1,\cdots,w_d]$，则$x = \bar{x} + WW^T(x-\bar{x})$</li>
+</ul>
+</li>
+<li>当$n &lt; d$时，则$Cov(x)$的秩最多为n，所以我们最多有n个相互垂直的特征向量，这就导致会出现一些误差损失。</li>
+</ul>
+<a class="post-dummy-target" id="降维"></a><h4>降维</h4>
+<ul>
+<li>为了降低维度，可以适当的容许一些损失，我们可以通过丢掉特征值小的那一部分来尽可能保证降维后数据的&quot;能量&rdquo;</li>
+<li>通常保持90%的能量
+$$\dfrac{\lambda_1 + \lambda_2 + \cdots + \lambda_T }{\lambda_1 + \lambda_2 + \cdots + \lambda_d} &gt; 0.9$$</li>
+<li>损失：
+<ul>
+<li>此时$\hat{W} = [w_1,w_2,\cdots,w_T](d\times T)$
+$$x - \hat{x} = \sum_{i = T+1}^d(w_j^T(x-\bar{x}))w_j \mathop{=}\limits_{(w_j^T(x-\bar{x}))w_j = e_j}  \sum_{i = T+1}^d e_j$$</li>
+<li>一些结论 $(1) e_j^Te_k = 0 (j\neq k)\quad (2)E(\Vert x-\hat{x}\Vert^2) = \sum_{i=T+1}^{d}E(\Vert e_j\Vert^2)\quad (3)E(\Vert e_j \Vert^2) = \lambda_j$</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="pca变换步骤"></a><h3>PCA变换步骤</h3>
+<ul>
+<li>训练样本：$x_1,x_2,\cdots,x_n$</li>
+<li>计算$\bar{x},Cov(x)$</li>
+<li>求得$Cov(x)$的特征值和特征向量</li>
+<li>根据特征值选择T,从而确定$\hat{W}$</li>
+<li>对于数据x，经过变换得到的特征为$\textcolor{red}{y = \hat{W}^T(x-\bar{x})}$</li>
+<li>重建后的数据$\textcolor{red}{\hat{x} = \bar{x} + \hat{W}y}$</li>
+</ul>
+<a class="post-dummy-target" id="正态分布和pca"></a><h2>正态分布和PCA</h2>
+<ul>
+<li>设x满足D维高斯分布
+$$p(x) = (2\pi)^{-\dfrac{D}{2}}\vert \Sigma \vert^{-\dfrac{1}{2}}exp\{ -\dfrac{1}{2} (x-\mu)^T \Sigma^{-1} (x-\mu)\}$$</li>
+<li>对其进行PCA，假设使用全部特征向量则 $y = W^T(x-\mu)$</li>
+<li>x的协方差矩阵$\Sigma = \sum_{i=1}^{d}\lambda_i\xi_i\xi_i^T = W\Lambda W^T$
+<ul>
+<li>$\Lambda_{ii} = \lambda_i$</li>
+</ul>
+</li>
+<li>可以计算$WW^T = W^TW = I$,$Ey = 0,Cov(y) = \Lambda$</li>
+<li>PCA相当于对x数据进行了旋转，是的新的特征y各个维度之间不相关(independent for gaussion)</li>
+</ul>
+<a class="post-dummy-target" id="白化变换"></a><h3>白化变换</h3>
+<ul>
+<li>PCA后$y = W^T(x-\mu)$,白化变化(Whitening transform)后$y = (W\Lambda^{-1/2})^T(x -\mu)$</li>
+<li>此时$y\sim N(0,I)$</li>
+</ul>
+<a class="post-dummy-target" id="高斯假设"></a><h3>高斯假设</h3>
+<ul>
+<li>PCA变换
+<ul>
+<li>PCA变换不一定要求x服从高斯分布I</li>
+<li>不服从时$E(y) = 0,Cov(y) = \Lambda$但是y不服从高斯分布</li>
+<li>不服从时，y的各个维度不相关，但不一定独立</li>
+</ul>
+</li>
+<li>白化变换
+<ul>
+<li>PCA变换不一定要求x服从高斯分布</li>
+<li>不服从时$E(y) = 0,Cov(y) = I$但是y不服从高斯分布</li>
+<li>不服从时，y的各个维度不相关，但不一定独立</li>
+</ul>
+</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-03-17</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span><a href="//twitter.com/share?url=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%25A8%25A1%25E5%25BC%258F%25E8%25AF%2586%25E5%2588%25AB%2fpca%2f&amp;text=%e4%b8%bb%e6%88%90%e5%88%86%e5%88%86%e6%9e%90%28PCA%29&amp;via=" target="_blank" title="Share on Twitter">
+            <i class="fab fa-twitter fa-fw"></i>
+        </a><a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%25A8%25A1%25E5%25BC%258F%25E8%25AF%2586%25E5%2588%25AB%2fpca%2f" target="_blank" title="Share on Facebook">
+            <i class="fab fa-facebook-square fa-fw"></i>
+        </a><a href="//reddit.com/submit?url=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%25A8%25A1%25E5%25BC%258F%25E8%25AF%2586%25E5%2588%25AB%2fpca%2f&amp;title=%e4%b8%bb%e6%88%90%e5%88%86%e5%88%86%e6%9e%90%28PCA%29" target="_blank" title="Share on Reddit">
+            <i class="fab fa-reddit fa-fw"></i>
+        </a></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span class="tag">
+                        <a href="https://jarviszly.com/tags/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/"><i class="fas fa-tag fa-fw"></i>&nbsp;模式识别</a>&nbsp;
+                    </span></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://jarviszly.com">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/%E5%9B%BE%E5%85%83%E7%94%9F%E6%88%90%E8%AE%BE%E5%A4%87%E7%BA%A7%E7%AE%97%E6%B3%95/" class="prev" rel="prev" title="图元生成设备级算法"><i class="fas fa-angle-left fa-fw"></i>图元生成设备级算法</a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright">
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://jarviszly.com/" target="_blank">Lingyu Zhang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.miit.gov.cn/">苏ICP备20008191号-1</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.gov.cn/portal/index"></i>苏公网安备 32011302320886号</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/js/lib/jquery/jquery.slim.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><script src="/js/lib/katex/katex.min.js"></script><script defer src="/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script defer src="/js/lib/katex/copy-tex.min.js"></script><script defer src="/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$$", right: "$$", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/js/blog.min.js"></script>
+</body>
+</html>
