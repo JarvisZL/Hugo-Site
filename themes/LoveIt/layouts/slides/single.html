@@ -1,13 +1,26 @@
-{{- define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end -}}
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>
+            {{- block "title" . }}{{ .Title }} | {{ .Site.Title }}{{ end -}}
+        </title>
+        {{- partial "head.html" . -}}
+    </head>
+    <body>
+    	<textarea id="source">
+		{{- .RawContent -}}
+		</textarea>
+		<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/remark-slide@0.14.0/out/remark.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/qrcode_js@1.0.0/qrcode.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+		<script>
+			var slideshow = remark.create();
+		</script>
+    </body>
+</html>
 
-<textarea id="source">
-{{- .RawContent -}}
-</textarea>
-	<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/remark-slide@0.14.0/out/remark.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/qrcode_js@1.0.0/qrcode.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
-	<script>
-  		var slideshow = remark.create();
-	</script>
+
