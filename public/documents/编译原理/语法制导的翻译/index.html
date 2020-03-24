@@ -14,14 +14,14 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff"><meta property="og:title" content="语法制导的翻译" />
-<meta property="og:description" content="" />
+<meta property="og:description" content="语法制导定义和语法制导翻译  语法制导定义(SDD)  将文法符号和某些属性相关联，并通过语义规则来描述如何计算属性的值。 如$E\rightarrow E_1 &#43; T\qquad E.code = E_1.code \Vert T.code \Vert &lsquo;&#43;&#39;$ 属性code表示表达式的逆波兰表达式(后缀表达式)。   语法制导翻译(SDT)  在产生式体中加入语义动作，并在适当的时候执行动作 如$E\rightarrow E_1 &#43; T\qquad \{ print &lsquo;&#43;&rsquo;;\}$    语法制导定义(SDD)  SDD(Syntax-Derected Definition)是上下文无关文法和属性/规则的结合  属性和文法符号相关联，规则和产生式相关联   对于文法符号$X$和属性$a$，我们用$X.a$表示分析树种某个标号为$X$的结点的值.  分析树和属性值     综合属性和继承属性  综合属性(Synthesized Attribute)  结点$N$的属性值由其产生式所关联的语义规则来定义 通过$N$的子结点或者$N$本身的属性值来定义   继承属性(Inherited Atrribute)  结点$N$的属性值由其父结点产生式所关联的语义规则来定义 依赖于$N$的父结点，$N$本身和$N$兄弟结点的属性值   约束  不允许$N$的继承属性通过其子结点上的属性来定义，但允许$N$的综合属性依赖于其自身的继承属性 终结符号只有综合属性    S属性的SDD  只包含综合属性的SDD称为S属性的SDD  每个语义规则都根据产生式体的属性值来计算头部的属性值   S属性的SDD可以和LR分析器一起实现 语义规则不应该有复杂的副作用  副作用不能影响其他属性的求值 没有副作用的SDD称为属性文法    语法分析树上的SDD求值  注释语法分析树：包含了各个结点的各个属性值的语法分析树，也叫标记语法分析树。 计算顺序  如果要计算某个结点的属性a为$f(N_1." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://jarviszly.com/documents/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E8%AF%AD%E6%B3%95%E5%88%B6%E5%AF%BC%E7%9A%84%E7%BF%BB%E8%AF%91/" />
 <meta property="article:published_time" content="2020-03-19T10:23:12+08:00" />
 <meta property="article:modified_time" content="2020-03-19T10:23:12+08:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="语法制导的翻译"/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:description" content="语法制导定义和语法制导翻译  语法制导定义(SDD)  将文法符号和某些属性相关联，并通过语义规则来描述如何计算属性的值。 如$E\rightarrow E_1 &#43; T\qquad E.code = E_1.code \Vert T.code \Vert &lsquo;&#43;&#39;$ 属性code表示表达式的逆波兰表达式(后缀表达式)。   语法制导翻译(SDT)  在产生式体中加入语义动作，并在适当的时候执行动作 如$E\rightarrow E_1 &#43; T\qquad \{ print &lsquo;&#43;&rsquo;;\}$    语法制导定义(SDD)  SDD(Syntax-Derected Definition)是上下文无关文法和属性/规则的结合  属性和文法符号相关联，规则和产生式相关联   对于文法符号$X$和属性$a$，我们用$X.a$表示分析树种某个标号为$X$的结点的值.  分析树和属性值     综合属性和继承属性  综合属性(Synthesized Attribute)  结点$N$的属性值由其产生式所关联的语义规则来定义 通过$N$的子结点或者$N$本身的属性值来定义   继承属性(Inherited Atrribute)  结点$N$的属性值由其父结点产生式所关联的语义规则来定义 依赖于$N$的父结点，$N$本身和$N$兄弟结点的属性值   约束  不允许$N$的继承属性通过其子结点上的属性来定义，但允许$N$的综合属性依赖于其自身的继承属性 终结符号只有综合属性    S属性的SDD  只包含综合属性的SDD称为S属性的SDD  每个语义规则都根据产生式体的属性值来计算头部的属性值   S属性的SDD可以和LR分析器一起实现 语义规则不应该有复杂的副作用  副作用不能影响其他属性的求值 没有副作用的SDD称为属性文法    语法分析树上的SDD求值  注释语法分析树：包含了各个结点的各个属性值的语法分析树，也叫标记语法分析树。 计算顺序  如果要计算某个结点的属性a为$f(N_1."/>
 <script type="application/ld+json">
     {
         "@context": "http://schema.org",
@@ -35,7 +35,7 @@
                 "url": "https:\/\/jarviszly.com\/cover.png",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "documents","keywords": "编译原理","wordcount":  0 ,
+            },"genre": "documents","keywords": "编译原理","wordcount":  137 ,
         "url": "https:\/\/jarviszly.com\/documents\/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86\/%E8%AF%AD%E6%B3%95%E5%88%B6%E5%AF%BC%E7%9A%84%E7%BF%BB%E8%AF%91\/","datePublished": "2020-03-19T10:23:12\x2b08:00","dateModified": "2020-03-19T10:23:12\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "JarvisZhang",
@@ -79,11 +79,40 @@
                     <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
                 </a>&nbsp;<span class="post-category">included in&nbsp;<i class="far fa-folder fa-fw"></i><a href="https://jarviszly.com/categories/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>&nbsp;</span></div>
             <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-03-19>2020-03-19</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>about 0 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>0 min&nbsp;</div>
+                <i class="fas fa-pencil-alt fa-fw"></i>about 137 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>1 min&nbsp;</div>
         </div><div class="post-toc" id="post-toc">
                 <h2 class="post-toc-title">Contents</h2>
-                <div class="post-toc-content"><nav id="TableOfContents"></nav></div>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#语法制导定义和语法制导翻译">语法制导定义和语法制导翻译</a></li>
+    <li><a href="#语法制导定义sdd">语法制导定义(SDD)</a>
+      <ul>
+        <li><a href="#分析树和属性值">分析树和属性值</a></li>
+        <li><a href="#综合属性和继承属性">综合属性和继承属性</a></li>
+        <li><a href="#s属性的sdd">S属性的SDD</a></li>
+        <li><a href="#语法分析树上的sdd求值">语法分析树上的SDD求值</a></li>
+        <li><a href="#适用于自顶向下分析的sdd">适用于自顶向下分析的SDD</a></li>
+        <li><a href="#sdd的求值顺序">SDD的求值顺序</a></li>
+        <li><a href="#依赖图">依赖图</a></li>
+        <li><a href="#s属性的sdd-1">S属性的SDD</a></li>
+        <li><a href="#l属性的sdd">L属性的SDD</a>
+          <ul>
+            <li><a href="#l属性的ssd和自顶向下的语法分析">L属性的SSD和自顶向下的语法分析</a></li>
+          </ul>
+        </li>
+        <li><a href="#具有受控副作用的语义规则">具有受控副作用的语义规则</a></li>
+        <li><a href="#sdd的应用例子">SDD的应用例子</a>
+          <ul>
+            <li><a href="#抽象语法树的构造">抽象语法树的构造</a></li>
+            <li><a href="#s属性sdd抽象语法树">S属性SDD抽象语法树</a></li>
+            <li><a href="#自顶向下处理l属性sdd">自顶向下处理L属性SDD</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
             </div>
             <div class="post-toc-mobile" id="post-toc-mobile">
                 <details>
@@ -93,9 +122,290 @@
                             <span><i class="details icon fas fa-angle-down"></i></span>
                         </div>
                     </summary>
-                    <div class="post-toc-content"><nav id="TableOfContentsMobile"></nav></div>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#语法制导定义和语法制导翻译">语法制导定义和语法制导翻译</a></li>
+    <li><a href="#语法制导定义sdd">语法制导定义(SDD)</a>
+      <ul>
+        <li><a href="#分析树和属性值">分析树和属性值</a></li>
+        <li><a href="#综合属性和继承属性">综合属性和继承属性</a></li>
+        <li><a href="#s属性的sdd">S属性的SDD</a></li>
+        <li><a href="#语法分析树上的sdd求值">语法分析树上的SDD求值</a></li>
+        <li><a href="#适用于自顶向下分析的sdd">适用于自顶向下分析的SDD</a></li>
+        <li><a href="#sdd的求值顺序">SDD的求值顺序</a></li>
+        <li><a href="#依赖图">依赖图</a></li>
+        <li><a href="#s属性的sdd-1">S属性的SDD</a></li>
+        <li><a href="#l属性的sdd">L属性的SDD</a>
+          <ul>
+            <li><a href="#l属性的ssd和自顶向下的语法分析">L属性的SSD和自顶向下的语法分析</a></li>
+          </ul>
+        </li>
+        <li><a href="#具有受控副作用的语义规则">具有受控副作用的语义规则</a></li>
+        <li><a href="#sdd的应用例子">SDD的应用例子</a>
+          <ul>
+            <li><a href="#抽象语法树的构造">抽象语法树的构造</a></li>
+            <li><a href="#s属性sdd抽象语法树">S属性SDD抽象语法树</a></li>
+            <li><a href="#自顶向下处理l属性sdd">自顶向下处理L属性SDD</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
                 </details>
-            </div><div class="post-content"></div><div class="post-footer" id="post-footer">
+            </div><div class="post-content"><a class="post-dummy-target" id="语法制导定义和语法制导翻译"></a><h2>语法制导定义和语法制导翻译</h2>
+<ul>
+<li><strong>语法制导定义(SDD)</strong>
+<ul>
+<li>将文法符号和某些属性相关联，并通过语义规则来描述如何计算属性的值。</li>
+<li>如$E\rightarrow E_1 + T\qquad E.code = E_1.code \Vert T.code \Vert &lsquo;+'$</li>
+<li>属性code表示表达式的逆波兰表达式(后缀表达式)。</li>
+</ul>
+</li>
+<li><strong>语法制导翻译(SDT)</strong>
+<ul>
+<li>在产生式体中加入语义动作，并在适当的时候执行动作</li>
+<li>如$E\rightarrow E_1 + T\qquad \{ print &lsquo;+&rsquo;;\}$</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="语法制导定义sdd"></a><h2>语法制导定义(SDD)</h2>
+<ul>
+<li>SDD(Syntax-Derected Definition)是上下文无关文法和属性/规则的结合
+<ul>
+<li>属性和文法符号相关联，规则和产生式相关联</li>
+</ul>
+</li>
+<li>对于文法符号$X$和属性$a$，我们用$X.a$表示分析树种某个标号为$X$的结点的值.</li>
+</ul>
+<a class="post-dummy-target" id="分析树和属性值"></a><h3>分析树和属性值</h3>
+<ul>
+<li><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e7%bc%96%e8%af%91%e5%8e%9f%e7%90%86/%e5%88%86%e6%9e%90%e6%a0%91%e5%92%8c%e5%b1%9e%e6%80%a7%e5%80%bc.png" alt="" class="lazyload"></figure>
+</li>
+</ul>
+<a class="post-dummy-target" id="综合属性和继承属性"></a><h3>综合属性和继承属性</h3>
+<ul>
+<li><strong>综合属性(Synthesized Attribute)</strong>
+<ul>
+<li>结点$N$的属性值由其产生式所关联的语义规则来定义</li>
+<li>通过$N$的<font color=red size=3>子结点</font>或者$N$<font color=red size=3>本身</font>的属性值来定义</li>
+</ul>
+</li>
+<li><strong>继承属性(Inherited Atrribute)</strong>
+<ul>
+<li>结点$N$的属性值由其父结点产生式所关联的语义规则来定义</li>
+<li>依赖于$N$的<font color=red size=3>父结点</font>，$N$<font color=red size=3>本身</font>和$N$<font color=red size=3>兄弟结点</font>的属性值</li>
+</ul>
+</li>
+<li>约束
+<ul>
+<li>不允许$N$的继承属性通过其子结点上的属性来定义，但允许$N$的综合属性依赖于其自身的继承属性</li>
+<li>终结符号只有综合属性</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="s属性的sdd"></a><h3>S属性的SDD</h3>
+<ul>
+<li>只包含综合属性的SDD称为S属性的SDD
+<ul>
+<li>每个语义规则都根据产生式体的属性值来计算头部的属性值</li>
+</ul>
+</li>
+<li>S属性的SDD可以和LR分析器一起实现</li>
+<li>语义规则不应该有复杂的副作用
+<ul>
+<li>副作用不能影响其他属性的求值</li>
+<li>没有副作用的SDD称为<strong>属性文法</strong></li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="语法分析树上的sdd求值"></a><h3>语法分析树上的SDD求值</h3>
+<ul>
+<li><strong>注释语法分析树</strong>：包含了各个结点的各个属性值的语法分析树，也叫标记语法分析树。</li>
+<li>计算顺序
+<ul>
+<li>如果要计算某个结点的属性a为$f(N_1.b_1,\cdots,N_k.b_k)$那么首先需要计算所有自变量的值。</li>
+<li>S属性的SDD一定可以<font color=red size=3>按照自底向上</font>的方式求值</li>
+</ul>
+</li>
+<li>例子
+<ul>
+<li><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e7%bc%96%e8%af%91%e5%8e%9f%e7%90%86/S%e5%b1%9e%e6%80%a7SDD%e6%b3%a8%e9%87%8a%e8%af%ad%e6%b3%95%e5%88%86%e6%9e%90%e6%a0%91.png" alt="" class="lazyload"></figure>
+</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="适用于自顶向下分析的sdd"></a><h3>适用于自顶向下分析的SDD</h3>
+<ul>
+<li>对于存在左递归的文法我们消除左递归后需要引入<font color=red size=3>继承属性</font>来完成分析。</li>
+<li><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e7%bc%96%e8%af%91%e5%8e%9f%e7%90%86/%e7%bb%a7%e6%89%bf%e5%b1%9e%e6%80%a7%e8%a1%a8.png" alt="" class="lazyload"></figure>
+</li>
+<li><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e7%bc%96%e8%af%91%e5%8e%9f%e7%90%86/%e7%bb%a7%e6%89%bf%e5%b1%9e%e6%80%a7%e6%b3%a8%e9%87%8a%e5%88%86%e6%9e%90%e6%a0%91.png" alt="" class="lazyload"></figure>
+</li>
+</ul>
+<a class="post-dummy-target" id="sdd的求值顺序"></a><h3>SDD的求值顺序</h3>
+<ul>
+<li>使用<strong>依赖图</strong>来表示计算顺序
+<ul>
+<li>这些值的计算顺序形成了一个偏序关系，如果图中出现了环，则属性值无法计算。</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="依赖图"></a><h3>依赖图</h3>
+<ul>
+<li>描述了某棵特定的分析树上各个属性之间的信息流(计算顺序)
+<ul>
+<li>从$a_1$到$a_2$的有向边表示计算$a_2$时需要$a_1$的值，也可以理解为信息从$a_1$流向$a_2$</li>
+</ul>
+</li>
+<li>对于分析树结点$N$，其每一个属性$a$都对应一个依赖图结点$N.a$</li>
+<li><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e7%bc%96%e8%af%91%e5%8e%9f%e7%90%86/%e4%be%9d%e8%b5%96%e5%9b%be.png" alt="" class="lazyload"></figure>
+</li>
+<li>属性值的计算顺序
+<ul>
+<li>给定一个SDD很难判断是否存在一棵分析树，其对应的依赖图包含环</li>
+<li>但是特定的SSD一定不包含环且有固定的计算顺序</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="s属性的sdd-1"></a><h3>S属性的SDD</h3>
+<ul>
+<li>只有综合属性，在依赖图中总是通过子结点的属性值来计算父结点的属性值。
+<ul>
+<li>自底向上
+<ul>
+<li>在构造分析树结点的同时计算相关属性</li>
+</ul>
+</li>
+<li>自顶向下
+<ul>
+<li>调用递归子程序</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>在分析树上计算SDD
+<ul>
+<li>按照后序遍历的顺序计算</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="n">postorder</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="p">{</span>
+    <span class="k">for</span><span class="p">(</span><span class="err">从</span><span class="err">左</span><span class="err">边</span><span class="err">开</span><span class="err">始</span><span class="n">N的每个子结点C</span><span class="p">)</span>
+         <span class="n">postorder</span><span class="p">(</span><span class="n">C</span><span class="p">)</span><span class="p">;</span>
+    <span class="n">N的各个属性求值</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<a class="post-dummy-target" id="l属性的sdd"></a><h3>L属性的SDD</h3>
+<ul>
+<li>每个属性
+<ul>
+<li>综合属性</li>
+<li>继承属性且$A\rightarrow X_1X_2\cdots X_n$中计算$X_i.a$的规则只用
+<ul>
+<li>A的继承属性</li>
+<li>$X_i$左边的文法符号$X_j$的继承属性或者综合属性</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>特点
+<ul>
+<li>依赖图的边
+<ul>
+<li>综合属性从下到上。</li>
+<li>继承属性从上到下，或者从左到右。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="l属性的ssd和自顶向下的语法分析"></a><h4>L属性的SSD和自顶向下的语法分析</h4>
+<ul>
+<li>对于灭个非终结符号A，其所对应过程的参数为继承属性，返回值为综合属性。
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="n">L_dfvisit</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="p">{</span>
+    <span class="k">for</span><span class="p">(</span><span class="n">m</span> <span class="o">=</span> <span class="err">从</span><span class="err">左</span><span class="err">到</span><span class="err">右</span><span class="n">n的每个子结点</span><span class="p">)</span><span class="p">{</span>
+        <span class="err">计</span><span class="err">算</span><span class="n">m</span><span class="p">.</span><span class="n">inh</span><span class="p">;</span>
+        <span class="n">L_dfvisit</span><span class="p">(</span><span class="n">m</span><span class="p">)</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="err">计</span><span class="err">算</span><span class="n">m</span><span class="p">.</span><span class="n">syn</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<a class="post-dummy-target" id="具有受控副作用的语义规则"></a><h3>具有受控副作用的语义规则</h3>
+<ul>
+<li>属性文法没有副作用，但是增加了描述的复杂度。
+<ul>
+<li>如果没有副作用，标识符表就需要作为属性传递。</li>
+</ul>
+</li>
+<li>受控的副作用
+<ul>
+<li>不会对属性求值产生约束，即可以按照任意拓扑顺序求值，不会影响最终结果。</li>
+<li>或者对求值过程添加简单的约束。</li>
+<li>例子
+<ul>
+<li>$L\rightarrow En\quad \{print(E.val);\}$，通过副作用打印E的值。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="sdd的应用例子"></a><h3>SDD的应用例子</h3>
+<a class="post-dummy-target" id="抽象语法树的构造"></a><h4>抽象语法树的构造</h4>
+<ul>
+<li>抽象语法树
+<ul>
+<li>每个结点表示一个语法结构，对应于运算符</li>
+<li>结点的每个子结点代表其子结构，对应于运算分量</li>
+</ul>
+</li>
+<li>表示方法
+<ul>
+<li>每个结点用一个对象表示。</li>
+<li>对象有多个域
+<ul>
+<li>叶子结点中只存放词法值。</li>
+<li>内部结点中存放了op值和参数(通常指向其他结点)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="s属性sdd抽象语法树"></a><h4>S属性SDD抽象语法树</h4>
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e7%bc%96%e8%af%91%e5%8e%9f%e7%90%86/S%e5%b1%9e%e6%80%a7SDD%e6%8a%bd%e8%b1%a1%e8%af%ad%e6%b3%95%e6%a0%91%e8%a1%a8.png" alt="" class="lazyload"></figure>
+
+<figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e7%bc%96%e8%af%91%e5%8e%9f%e7%90%86/S%e5%b1%9e%e6%80%a7SDD%e6%8a%bd%e8%b1%a1%e8%af%ad%e6%b3%95%e6%a0%91.png" alt="" class="lazyload"></figure>
+</p>
+<a class="post-dummy-target" id="自顶向下处理l属性sdd"></a><h4>自顶向下处理L属性SDD</h4>
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e7%bc%96%e8%af%91%e5%8e%9f%e7%90%86/L%e5%b1%9e%e6%80%a7SDD%e6%8a%bd%e8%b1%a1%e8%af%ad%e6%b3%95%e6%a0%91%e8%a1%a8.png" alt="" class="lazyload"></figure>
+
+<figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e7%bc%96%e8%af%91%e5%8e%9f%e7%90%86/L%e5%b1%9e%e6%80%a7SDD%e6%8a%bd%e8%b1%a1%e8%af%ad%e6%b3%95%e6%a0%91.png" alt="" class="lazyload"></figure>
+</p>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
