@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>归一化 FLD 人脸识别 | 浙语临湖</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszly.com/documents/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E8%AF%AD%E6%B3%95%E5%88%B6%E5%AF%BC%E7%9A%84%E7%BF%BB%E8%AF%91/" /><link rel="canonical" href="https://jarviszly.com/documents/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/%E5%BD%92%E4%B8%80%E5%8C%96-fld-%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="归一化 FLD 人脸识别" />
+<meta property="og:description" content="特征归一化(normalization) 每维度归一  很多时候，不同维度需要统一到同样的取值范围。 训练集$x_1,\cdots ,x_n$,$x_i = (x_{i1},\cdots,x_{id})$  对于每一维数据为$x_{1j},\cdots, x_{nj}$ 取其最小值和最大值$x_{min,j},x_{max,j}$ 对于该维度的任何数据$x_{ij} = \dfrac{x_{ij} - x_{min,j}}{x_{max,j} - x_{min,j}}$    稀疏数据  每一维度归一存在的问题  如果某一维度$max = min$即出现分母为0，此时说明该维度没有什么作用，直接删去。 是否可以统一到别的区间  如[-1,1]: $x_{ij} \leftarrow 2\times (\dfrac{x_{ij} - x_{min,j}}{x_{max,j}-x_{min,j}} - 0.5)$     稀疏数据(sparse data):数据中很多纬度值为0，这在归一化中会带来问题。 维度值为零有两种可能  该维度无意义(没有采样，对该任务无影响等)，设置为0 该维度的值为0   那么对于上面两种情况，在归一化时需要分开考虑  无意义情况：仍然设置为0 值为0的情况：按照正常的归一化    $l_2$或者$l_1$归一化  有的时候各个维度之间取值范围不同是有意义的，但是不同的数据点之间的大小(如向量长度)应保持一致，即对每一个数据点进行归一化 $l_2$归一化：对于数据$x_i = (x_{i1},\cdots,x_{id})$  $x_{ij} \leftarrow \dfrac{x_{ij}}{\Vert x_i \Vert_{l_2}},\qquad \Vert x_i \Vert_{l_2} = \sqrt{x_i^Tx_i}$   $l_1$归一化：适用于非负特征，对于数据$x_i = (x_{i1},\cdots,x_{id})$  如果数据是直方图，效果最佳 $x_{ij} \leftarrow \dfrac{x_{ij}}{\Vert x_i \Vert_{l_1}},\qquad \Vert x_i \Vert_{l_1} = \sum_{j=1}^d \vert x_{ij} \vert$    服从高斯分布的归一化  有时候可以确信每一个维度都是服从高斯分布 对于每一维j,数据为$x_{1j},\cdots,x_{nj}$  计算其均值$\hat{\mu}_j$和方差$\hat{\sigma}_j^2$ 对于每一个特征值$x_{ij}\leftarrow \dfrac{x_{ij} - \hat{\mu}_j}{\hat{\sigma}_j}$    归一化测试数据  在归一化测试数据的时候，我们不能像对待训练集一样，从中取得最大值最小值平均值之类的。 需要用训练集归一化时得到的归一化模型(比如参数$x_{max,j}$)，来归一化测试集。  Fisher线性判别分析(FLD)  PCA在数据是单个高斯分布是最佳的，其有利于表示数据，但是和分类无关 在分类问题中，不同类别的分布$p(\bm{x}\vert y=i)$不能相同，所以FLD用来提取利于分类的特征。    形式化表示(二类问题)  希望找到一个投影方向，使得被投影后，两个类别的数据容易被分开。 两个类的均值 $$\bm{\mu_1} = \dfrac{1}{N_1}\sum_{y_i = 1}\bm{x_i}, \bm{\mu_2} = \dfrac{1}{N_2}\sum_{y_i = 2}\bm{x_i}$$ 投影后均值为$\bm{m_1} = \bm{w}^T\bm{\mu_1},\quad \bm{m_2} = \bm{w}^T\bm{\mu_2}$ 描述分开的程度-Fisher准则  在要求$\vert \bm{m}_2 - \bm{m}_1 \vert$尽可能大的同时，要求两个在投影后尽可能集中(不分散)." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jarviszly.com/documents/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/%E5%BD%92%E4%B8%80%E5%8C%96-fld-%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB/" />
+<meta property="article:published_time" content="2020-03-26T08:02:36+08:00" />
+<meta property="article:modified_time" content="2020-03-26T08:02:36+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="归一化 FLD 人脸识别"/>
+<meta name="twitter:description" content="特征归一化(normalization) 每维度归一  很多时候，不同维度需要统一到同样的取值范围。 训练集$x_1,\cdots ,x_n$,$x_i = (x_{i1},\cdots,x_{id})$  对于每一维数据为$x_{1j},\cdots, x_{nj}$ 取其最小值和最大值$x_{min,j},x_{max,j}$ 对于该维度的任何数据$x_{ij} = \dfrac{x_{ij} - x_{min,j}}{x_{max,j} - x_{min,j}}$    稀疏数据  每一维度归一存在的问题  如果某一维度$max = min$即出现分母为0，此时说明该维度没有什么作用，直接删去。 是否可以统一到别的区间  如[-1,1]: $x_{ij} \leftarrow 2\times (\dfrac{x_{ij} - x_{min,j}}{x_{max,j}-x_{min,j}} - 0.5)$     稀疏数据(sparse data):数据中很多纬度值为0，这在归一化中会带来问题。 维度值为零有两种可能  该维度无意义(没有采样，对该任务无影响等)，设置为0 该维度的值为0   那么对于上面两种情况，在归一化时需要分开考虑  无意义情况：仍然设置为0 值为0的情况：按照正常的归一化    $l_2$或者$l_1$归一化  有的时候各个维度之间取值范围不同是有意义的，但是不同的数据点之间的大小(如向量长度)应保持一致，即对每一个数据点进行归一化 $l_2$归一化：对于数据$x_i = (x_{i1},\cdots,x_{id})$  $x_{ij} \leftarrow \dfrac{x_{ij}}{\Vert x_i \Vert_{l_2}},\qquad \Vert x_i \Vert_{l_2} = \sqrt{x_i^Tx_i}$   $l_1$归一化：适用于非负特征，对于数据$x_i = (x_{i1},\cdots,x_{id})$  如果数据是直方图，效果最佳 $x_{ij} \leftarrow \dfrac{x_{ij}}{\Vert x_i \Vert_{l_1}},\qquad \Vert x_i \Vert_{l_1} = \sum_{j=1}^d \vert x_{ij} \vert$    服从高斯分布的归一化  有时候可以确信每一个维度都是服从高斯分布 对于每一维j,数据为$x_{1j},\cdots,x_{nj}$  计算其均值$\hat{\mu}_j$和方差$\hat{\sigma}_j^2$ 对于每一个特征值$x_{ij}\leftarrow \dfrac{x_{ij} - \hat{\mu}_j}{\hat{\sigma}_j}$    归一化测试数据  在归一化测试数据的时候，我们不能像对待训练集一样，从中取得最大值最小值平均值之类的。 需要用训练集归一化时得到的归一化模型(比如参数$x_{max,j}$)，来归一化测试集。  Fisher线性判别分析(FLD)  PCA在数据是单个高斯分布是最佳的，其有利于表示数据，但是和分类无关 在分类问题中，不同类别的分布$p(\bm{x}\vert y=i)$不能相同，所以FLD用来提取利于分类的特征。    形式化表示(二类问题)  希望找到一个投影方向，使得被投影后，两个类别的数据容易被分开。 两个类的均值 $$\bm{\mu_1} = \dfrac{1}{N_1}\sum_{y_i = 1}\bm{x_i}, \bm{\mu_2} = \dfrac{1}{N_2}\sum_{y_i = 2}\bm{x_i}$$ 投影后均值为$\bm{m_1} = \bm{w}^T\bm{\mu_1},\quad \bm{m_2} = \bm{w}^T\bm{\mu_2}$ 描述分开的程度-Fisher准则  在要求$\vert \bm{m}_2 - \bm{m}_1 \vert$尽可能大的同时，要求两个在投影后尽可能集中(不分散)."/>
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "归一化 FLD 人脸识别",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/jarviszly.com\/documents\/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB\/%E5%BD%92%E4%B8%80%E5%8C%96-fld-%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszly.com\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "documents","keywords": "模式识别","wordcount":  285 ,
+        "url": "https:\/\/jarviszly.com\/documents\/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB\/%E5%BD%92%E4%B8%80%E5%8C%96-fld-%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB\/","datePublished": "2020-03-26T08:02:36\x2b08:00","dateModified": "2020-03-26T08:02:36\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "JarvisZhang",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszly.com\/images\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/forkawesome/fork-awesome.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://jarviszly.com">浙语临湖</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://jarviszly.com">浙语临湖</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">归一化 FLD 人脸识别</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://jarviszly.com" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
+                </a>&nbsp;<span class="post-category">included in&nbsp;<i class="far fa-folder fa-fw"></i><a href="https://jarviszly.com/categories/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/">模式识别</a>&nbsp;</span></div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-03-26>2020-03-26</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 285 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>2 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#特征归一化normalization">特征归一化(normalization)</a>
+      <ul>
+        <li><a href="#每维度归一">每维度归一</a></li>
+        <li><a href="#稀疏数据">稀疏数据</a></li>
+        <li><a href="#l_2或者l_1归一化">$l_2$或者$l_1$归一化</a></li>
+        <li><a href="#服从高斯分布的归一化">服从高斯分布的归一化</a></li>
+        <li><a href="#归一化测试数据">归一化测试数据</a></li>
+      </ul>
+    </li>
+    <li><a href="#fisher线性判别分析fld">Fisher线性判别分析(FLD)</a>
+      <ul>
+        <li><a href="#形式化表示二类问题">形式化表示(二类问题)</a></li>
+        <li><a href="#求解">求解</a></li>
+        <li><a href="#不可逆求解">不可逆求解</a></li>
+        <li><a href="#多c类问题">多(C)类问题</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#特征归一化normalization">特征归一化(normalization)</a>
+      <ul>
+        <li><a href="#每维度归一">每维度归一</a></li>
+        <li><a href="#稀疏数据">稀疏数据</a></li>
+        <li><a href="#l_2或者l_1归一化">$l_2$或者$l_1$归一化</a></li>
+        <li><a href="#服从高斯分布的归一化">服从高斯分布的归一化</a></li>
+        <li><a href="#归一化测试数据">归一化测试数据</a></li>
+      </ul>
+    </li>
+    <li><a href="#fisher线性判别分析fld">Fisher线性判别分析(FLD)</a>
+      <ul>
+        <li><a href="#形式化表示二类问题">形式化表示(二类问题)</a></li>
+        <li><a href="#求解">求解</a></li>
+        <li><a href="#不可逆求解">不可逆求解</a></li>
+        <li><a href="#多c类问题">多(C)类问题</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><a class="post-dummy-target" id="特征归一化normalization"></a><h2>特征归一化(normalization)</h2>
+<a class="post-dummy-target" id="每维度归一"></a><h3>每维度归一</h3>
+<ul>
+<li>很多时候，不同维度需要统一到同样的取值范围。</li>
+<li>训练集$x_1,\cdots ,x_n$,$x_i = (x_{i1},\cdots,x_{id})$
+<ul>
+<li>对于每一维数据为$x_{1j},\cdots, x_{nj}$</li>
+<li>取其最小值和最大值$x_{min,j},x_{max,j}$</li>
+<li>对于该维度的任何数据$x_{ij} = \dfrac{x_{ij} - x_{min,j}}{x_{max,j} - x_{min,j}}$</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="稀疏数据"></a><h3>稀疏数据</h3>
+<ul>
+<li>每一维度归一存在的问题
+<ul>
+<li>如果某一维度$max = min$即出现分母为0，此时说明该维度没有什么作用，直接删去。</li>
+<li>是否可以统一到别的区间
+<ul>
+<li>如[-1,1]: $x_{ij} \leftarrow 2\times (\dfrac{x_{ij} - x_{min,j}}{x_{max,j}-x_{min,j}} - 0.5)$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>稀疏数据(sparse data):数据中很多纬度值为0，这在归一化中会带来问题。</li>
+<li>维度值为零有两种可能
+<ul>
+<li>该维度无意义(没有采样，对该任务无影响等)，设置为0</li>
+<li>该维度的值为0</li>
+</ul>
+</li>
+<li>那么对于上面两种情况，在归一化时需要分开考虑
+<ul>
+<li>无意义情况：仍然设置为0</li>
+<li>值为0的情况：按照正常的归一化</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="l_2或者l_1归一化"></a><h3>$l_2$或者$l_1$归一化</h3>
+<ul>
+<li>有的时候各个维度之间取值范围不同是有意义的，但是不同的数据点之间的大小(如向量长度)应保持一致，即对每一个数据点进行归一化</li>
+<li>$l_2$归一化：对于数据$x_i = (x_{i1},\cdots,x_{id})$
+<ul>
+<li>$x_{ij} \leftarrow \dfrac{x_{ij}}{\Vert x_i \Vert_{l_2}},\qquad \Vert x_i \Vert_{l_2} = \sqrt{x_i^Tx_i}$</li>
+</ul>
+</li>
+<li>$l_1$归一化：适用于非负特征，对于数据$x_i = (x_{i1},\cdots,x_{id})$
+<ul>
+<li>如果数据是直方图，效果最佳</li>
+<li>$x_{ij} \leftarrow \dfrac{x_{ij}}{\Vert x_i \Vert_{l_1}},\qquad \Vert x_i \Vert_{l_1} = \sum_{j=1}^d \vert x_{ij} \vert$</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="服从高斯分布的归一化"></a><h3>服从高斯分布的归一化</h3>
+<ul>
+<li>有时候可以确信每一个维度都是服从高斯分布</li>
+<li>对于每一维j,数据为$x_{1j},\cdots,x_{nj}$
+<ul>
+<li>计算其均值$\hat{\mu}_j$和方差$\hat{\sigma}_j^2$</li>
+<li>对于每一个特征值$x_{ij}\leftarrow \dfrac{x_{ij} - \hat{\mu}_j}{\hat{\sigma}_j}$</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="归一化测试数据"></a><h3>归一化测试数据</h3>
+<ul>
+<li>在归一化测试数据的时候，我们不能像对待训练集一样，从中取得最大值最小值平均值之类的。</li>
+<li>需要用训练集归一化时得到的归一化模型(比如参数$x_{max,j}$)，来归一化测试集。</li>
+</ul>
+<a class="post-dummy-target" id="fisher线性判别分析fld"></a><h2>Fisher线性判别分析(FLD)</h2>
+<ul>
+<li>PCA在数据是单个高斯分布是最佳的，其有利于表示数据，但是和分类无关</li>
+<li>在分类问题中，不同类别的分布$p(\bm{x}\vert y=i)$不能相同，所以FLD用来提取利于分类的特征。
+<figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab/FLD%e5%8a%a8%e6%9c%ba.png" alt="" class="lazyload"></figure>
+</li>
+</ul>
+<a class="post-dummy-target" id="形式化表示二类问题"></a><h3>形式化表示(二类问题)</h3>
+<ul>
+<li>希望找到一个投影方向，使得被投影后，两个类别的数据容易被分开。</li>
+<li>两个类的均值
+$$\bm{\mu_1} = \dfrac{1}{N_1}\sum_{y_i = 1}\bm{x_i}, \bm{\mu_2} = \dfrac{1}{N_2}\sum_{y_i = 2}\bm{x_i}$$</li>
+<li>投影后均值为$\bm{m_1} = \bm{w}^T\bm{\mu_1},\quad \bm{m_2} = \bm{w}^T\bm{\mu_2}$</li>
+<li>描述分开的程度-<font color=red size=3>Fisher准则</font>
+<ul>
+<li>在要求$\vert \bm{m}_2 - \bm{m}_1 \vert$尽可能大的同时，要求两个在投影后尽可能集中(不分散).
+$$J(\bm{w}) = \dfrac{(\bm{m_2} - \bm{m_1})^2}{s_1^2+s_2^2}$$</li>
+</ul>
+</li>
+<li>描述分散程度-<font color=red size=3>散度</font>
+$$s_k^2 = \sum_{y_i = k}(\bm{\mu_i} - \bm{m_k})^2\qquad k = 1,2$$</li>
+<li>上式称为类内散度。
+$$s_k^2 = \sum_{y_i = k}(\bm{\mu_i} - \bm{m_k})^2 = \sum_{y_i = k}(\bm{w}^T(\bm{x_i} - \bm{\mu_k}))^2 = \bm{w}^T\sum_{y_i = i}(\bm{x_i} - \mu_k)(\bm{x_i} - \mu_k)^T\bm{w}$$
+$$(\bm{m_2} - \bm{m_1})^2 = \bm{w}^T(\bm{\mu_2} - \bm{\mu_1})(\bm{\mu_2} - \bm{\mu_1})^T\bm{w}$$</li>
+<li>令$S_W = S_1+S_2,\qquad S_B = (\bm{\mu_2} - \bm{\mu_1})(\bm{\mu_2} - \bm{\mu_1})^T$
+$$maxJ(\bm{w}) = \dfrac{\bm{w}^TS_B\bm{w}}{\bm{w}^TS_W\bm{w}},s.t.\bm{w}^T\bm{w} = 1(广义瑞利商)$$</li>
+</ul>
+<a class="post-dummy-target" id="求解"></a><h3>求解</h3>
+<ul>
+<li>利用拉格朗日乘子法可以证明最优解时满足$S_B\bm{w} = \lambda S_W\bm{w}$</li>
+<li>上述问题为广义特征值问题，但在二类问题上有简单解法。
+$$S_B \bm{w} = (\bm{\mu_2} - \bm{\mu_1})( \bm{\mu_2} - \bm{\mu_1})^T \bm{w} \propto (\bm{\mu_2} - \bm{\mu_1})$$</li>
+<li>因为后面两项可以看成内积为一个实数，我们把实数放入等号右边的$\lambda$中
+$$(\bm{\mu_2} - \bm{\mu_1}) = \lambda^\prime S_W\bm{w}$$</li>
+<li>变成了一个简单的问题，求解步骤为
+<ul>
+<li>计算$\mu_2,\mu_1$</li>
+<li>计算$S_W$</li>
+<li>计算$\bm{w} = {S_W}^{-1}(\bm{\mu_2} - \bm{\mu_1})$</li>
+<li>归一化$\bm{w} \leftarrow \dfrac{\bm{w}}{\Vert \bm{w} \Vert}$</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="不可逆求解"></a><h3>不可逆求解</h3>
+<ul>
+<li>如果$S_W$矩阵不可逆，则我们可以使用其广义逆矩阵。</li>
+<li>$S_W$是实对称的，且至少是半正定的(外积性质)
+<ul>
+<li>$S_W = E\Lambda E^T,\lambda_{ii} \geq 0$</li>
+</ul>
+</li>
+<li>定义Moore-Perose伪逆矩阵
+<ul>
+<li>如果$\lambda_{ii} &gt; 0$,定义$\lambda_{ii}^+ = \dfrac{1}{\lambda_{ii}}$,否则定义$\lambda_{ii}^+ = 0$</li>
+<li>则$S_W^+ = E\Lambda^+E^T$</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="多c类问题"></a><h3>多(C)类问题</h3>
+<ul>
+<li>$S_W = \sum_{i=1}^C S_i$,定义总的均值$\bm{\mu} = \dfrac{1}{N} = \sum_x \bm{x}$</li>
+<li>总的散布矩阵
+$$S_T = \sum_x (\bm{x} - \bm{\mu})(\bm{x} - \bm{\mu})^T$$
+$$S_T = S_W + \sum_{i=1}^C N_i(\bm{\mu_i} - \bm{\mu})(\bm{\mu_i} - \bm{\mu})^T = S_W + S_B$$</li>
+<li>定义$S_B = \sum_{i=1}^C N_i(\bm{\mu_i} - \bm{\mu})(\bm{\mu_i} - \bm{\mu})^T$</li>
+<li>广义瑞利商
+$$maxJ(\bm{w}) = \dfrac{\bm{w}^TS_B\bm{w}}{\bm{w}^TS_W\bm{w}}$$</li>
+<li>拉格朗日乘子法得到$S_B\bm{w_i} = \lambda_i S_W \bm{w_i}$,求解广义特征值问题</li>
+<li>最多可以得到<font color=red size=3>C-1</font>个有效投影方向</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-03-26</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span><a href="//twitter.com/share?url=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%25A8%25A1%25E5%25BC%258F%25E8%25AF%2586%25E5%2588%25AB%2f%25E5%25BD%2592%25E4%25B8%2580%25E5%258C%2596-fld-%25E4%25BA%25BA%25E8%2584%25B8%25E8%25AF%2586%25E5%2588%25AB%2f&amp;text=%e5%bd%92%e4%b8%80%e5%8c%96%20FLD%20%e4%ba%ba%e8%84%b8%e8%af%86%e5%88%ab&amp;via=" target="_blank" title="Share on Twitter">
+            <i class="fab fa-twitter fa-fw"></i>
+        </a><a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%25A8%25A1%25E5%25BC%258F%25E8%25AF%2586%25E5%2588%25AB%2f%25E5%25BD%2592%25E4%25B8%2580%25E5%258C%2596-fld-%25E4%25BA%25BA%25E8%2584%25B8%25E8%25AF%2586%25E5%2588%25AB%2f" target="_blank" title="Share on Facebook">
+            <i class="fab fa-facebook-square fa-fw"></i>
+        </a><a href="//reddit.com/submit?url=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%25A8%25A1%25E5%25BC%258F%25E8%25AF%2586%25E5%2588%25AB%2f%25E5%25BD%2592%25E4%25B8%2580%25E5%258C%2596-fld-%25E4%25BA%25BA%25E8%2584%25B8%25E8%25AF%2586%25E5%2588%25AB%2f&amp;title=%e5%bd%92%e4%b8%80%e5%8c%96%20FLD%20%e4%ba%ba%e8%84%b8%e8%af%86%e5%88%ab" target="_blank" title="Share on Reddit">
+            <i class="fab fa-reddit fa-fw"></i>
+        </a></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span class="tag">
+                        <a href="https://jarviszly.com/tags/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/"><i class="fas fa-tag fa-fw"></i>&nbsp;模式识别</a>&nbsp;
+                    </span></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://jarviszly.com">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://jarviszly.com/documents/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E8%AF%AD%E6%B3%95%E5%88%B6%E5%AF%BC%E7%9A%84%E7%BF%BB%E8%AF%91/" class="prev" rel="prev" title="语法制导的翻译"><i class="fas fa-angle-left fa-fw"></i>语法制导的翻译</a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright">
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://jarviszly.com/" target="_blank">Lingyu Zhang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.miit.gov.cn/">苏ICP备20008191号-1</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.gov.cn/portal/index"></i>苏公网安备 32011302320886号</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/js/lib/jquery/jquery.slim.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><script src="/js/lib/katex/katex.min.js"></script><script defer src="/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script defer src="/js/lib/katex/copy-tex.min.js"></script><script defer src="/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$$", right: "$$", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/js/blog.min.js"></script>
+</body>
+</html>

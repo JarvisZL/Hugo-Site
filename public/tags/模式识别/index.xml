@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Tue, 17 Mar 2020 15:21:33 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 26 Mar 2020 08:02:36 +0800</lastBuildDate>
     
 	<atom:link href="https://jarviszly.com/tags/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>归一化 FLD 人脸识别</title>
+      <link>https://jarviszly.com/documents/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/%E5%BD%92%E4%B8%80%E5%8C%96-fld-%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB/</link>
+      <pubDate>Thu, 26 Mar 2020 08:02:36 +0800</pubDate>
+      
+      <guid>https://jarviszly.com/documents/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/%E5%BD%92%E4%B8%80%E5%8C%96-fld-%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB/</guid>
+      <description>特征归一化(normalization) 每维度归一  很多时候，不同维度需要统一到同样的取值范围。 训练集$x_1,\cdots ,x_n$,$x_i = (x_{i1},\cdots,x_{id})$  对于每一维数据为$x_{1j},\cdots, x_{nj}$ 取其最小值和最大值$x_{min,j},x_{max,j}$ 对于该维度的任何数据$x_{ij} = \dfrac{x_{ij} - x_{min,j}}{x_{max,j} - x_{min,j}}$    稀疏数据  每一维度归一存在的问题  如果某一维度$max = min$即出现分母为0，此时说明该维度没有什么作用，直接删去。 是否可以统一到别的区间  如[-1,1]: $x_{ij} \leftarrow 2\times (\dfrac{x_{ij} - x_{min,j}}{x_{max,j}-x_{min,j}} - 0.5)$     稀疏数据(sparse data):数据中很多纬度值为0，这在归一化中会带来问题。 维度值为零有两种可能  该维度无意义(没有采样，对该任务无影响等)，设置为0 该维度的值为0   那么对于上面两种情况，在归一化时需要分开考虑  无意义情况：仍然设置为0 值为0的情况：按照正常的归一化    $l_2$或者$l_1$归一化  有的时候各个维度之间取值范围不同是有意义的，但是不同的数据点之间的大小(如向量长度)应保持一致，即对每一个数据点进行归一化 $l_2$归一化：对于数据$x_i = (x_{i1},\cdots,x_{id})$  $x_{ij} \leftarrow \dfrac{x_{ij}}{\Vert x_i \Vert_{l_2}},\qquad \Vert x_i \Vert_{l_2} = \sqrt{x_i^Tx_i}$   $l_1$归一化：适用于非负特征，对于数据$x_i = (x_{i1},\cdots,x_{id})$  如果数据是直方图，效果最佳 $x_{ij} \leftarrow \dfrac{x_{ij}}{\Vert x_i \Vert_{l_1}},\qquad \Vert x_i \Vert_{l_1} = \sum_{j=1}^d \vert x_{ij} \vert$    服从高斯分布的归一化  有时候可以确信每一个维度都是服从高斯分布 对于每一维j,数据为$x_{1j},\cdots,x_{nj}$  计算其均值$\hat{\mu}_j$和方差$\hat{\sigma}_j^2$ 对于每一个特征值$x_{ij}\leftarrow \dfrac{x_{ij} - \hat{\mu}_j}{\hat{\sigma}_j}$    归一化测试数据  在归一化测试数据的时候，我们不能像对待训练集一样，从中取得最大值最小值平均值之类的。 需要用训练集归一化时得到的归一化模型(比如参数$x_{max,j}$)，来归一化测试集。  Fisher线性判别分析(FLD)  PCA在数据是单个高斯分布是最佳的，其有利于表示数据，但是和分类无关 在分类问题中，不同类别的分布$p(\bm{x}\vert y=i)$不能相同，所以FLD用来提取利于分类的特征。    形式化表示(二类问题)  希望找到一个投影方向，使得被投影后，两个类别的数据容易被分开。 两个类的均值 $$\bm{\mu_1} = \dfrac{1}{N_1}\sum_{y_i = 1}\bm{x_i}, \bm{\mu_2} = \dfrac{1}{N_2}\sum_{y_i = 2}\bm{x_i}$$ 投影后均值为$\bm{m_1} = \bm{w}^T\bm{\mu_1},\quad \bm{m_2} = \bm{w}^T\bm{\mu_2}$ 描述分开的程度-Fisher准则  在要求$\vert \bm{m}_2 - \bm{m}_1 \vert$尽可能大的同时，要求两个在投影后尽可能集中(不分散).</description>
+    </item>
     
     <item>
       <title>主成分分析(PCA)</title>
