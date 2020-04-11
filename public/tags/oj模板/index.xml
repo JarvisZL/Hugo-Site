@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>OJ模板 on 浙语临湖</title>
+    <link>https://jarviszly.com/tags/oj%E6%A8%A1%E6%9D%BF/</link>
+    <description>Recent content in OJ模板 on 浙语临湖</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Sat, 11 Apr 2020 21:13:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://jarviszly.com/tags/oj%E6%A8%A1%E6%9D%BF/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>OJtemplate</title>
+      <link>https://jarviszly.com/blogs/ojtemplate/</link>
+      <pubDate>Sat, 11 Apr 2020 21:13:31 +0800</pubDate>
+      
+      <guid>https://jarviszly.com/blogs/ojtemplate/</guid>
+      <description>&lt;p&gt;一些常用算法的模板&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Wed, 25 Mar 2020 10:45:04 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 11 Apr 2020 21:13:31 +0800</lastBuildDate>
     
 	<atom:link href="https://jarviszly.com/blogs/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>OJtemplate</title>
+      <link>https://jarviszly.com/blogs/ojtemplate/</link>
+      <pubDate>Sat, 11 Apr 2020 21:13:31 +0800</pubDate>
+      
+      <guid>https://jarviszly.com/blogs/ojtemplate/</guid>
+      <description>&lt;p&gt;一些常用算法的模板&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Pair In Android And Java</title>
