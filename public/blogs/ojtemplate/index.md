@@ -61,3 +61,54 @@ int main(){
     }
 }
 ```
+
+### 最小生成树-prim算法
+```C++
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+#include <queue>
+using namespace std;
+
+int T,N;
+
+int main(){
+    cin >> T;
+    while(T--){
+        cin >> N;
+        vector<int> matrix[502];
+        bool visit[502];
+        memset(visit,0,sizeof(visit));
+        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>> > que;
+        int ans = 0;
+        for(int i = 0; i < N; ++i){
+            for(int j = 0; j < N; ++j){
+                int tmp; cin >> tmp;
+                matrix[i].push_back(tmp);
+            }
+        }
+        for(int i = 1; i < N; ++i){
+            //默认根据first排序
+            que.push(make_pair(matrix[0][i],i));
+        }
+        visit[0] = true;
+        while(!que.empty()){
+            int dis = que.top().first;
+            int u = que.top().second;
+            que.pop();
+            //cout << u << " " << dis << endl;
+            if(visit[u]) continue;
+            visit[u] = true;
+            ans = max(ans,dis);
+            for(int i = 0; i < N; ++i){
+                if(visit[i]) continue;
+                //cout << "push: " << i << " " << matrix[u][i] << endl;
+                que.push(make_pair(matrix[u][i],i));
+            }
+        }
+        cout << ans << endl;
+    }
+    return 0;
+}
+```
