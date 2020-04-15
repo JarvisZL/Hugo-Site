@@ -35,7 +35,7 @@
                 "url": "https:\/\/jarviszly.com\/cover.png",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "blogs","keywords": "OJ模板","wordcount":  393 ,
+            },"genre": "blogs","keywords": "OJ模板","wordcount":  518 ,
         "url": "https:\/\/jarviszly.com\/blogs\/ojtemplate\/","datePublished": "2020-04-11T21:13:31\x2b08:00","dateModified": "2020-04-11T21:13:31\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "JarvisZhang",
@@ -79,8 +79,8 @@
                     <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
                 </a>&nbsp;</div>
             <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-04-11>2020-04-11</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>about 393 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>2 min&nbsp;</div>
+                <i class="fas fa-pencil-alt fa-fw"></i>about 518 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>3 min&nbsp;</div>
         </div><div class="post-toc" id="post-toc">
                 <h2 class="post-toc-title">Contents</h2>
                 <div class="post-toc-content"><nav id="TableOfContents">
@@ -89,6 +89,7 @@
       <ul>
         <li><a href="#最小生成树-kruscal">最小生成树-kruscal</a></li>
         <li><a href="#最小生成树-prim算法">最小生成树-prim算法</a></li>
+        <li><a href="#单源最短路-bellman_ford">单源最短路-Bellman_Ford</a></li>
       </ul>
     </li>
   </ul>
@@ -108,6 +109,7 @@
       <ul>
         <li><a href="#最小生成树-kruscal">最小生成树-kruscal</a></li>
         <li><a href="#最小生成树-prim算法">最小生成树-prim算法</a></li>
+        <li><a href="#单源最短路-bellman_ford">单源最短路-Bellman_Ford</a></li>
       </ul>
     </li>
   </ul>
@@ -165,21 +167,9 @@
 </span><span class="lnt">46
 </span><span class="lnt">47
 </span><span class="lnt">48
-</span><span class="lnt">49
-</span><span class="lnt">50
-</span><span class="lnt">51
-</span><span class="lnt">52
-</span><span class="lnt">53
-</span><span class="lnt">54
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-C++" data-lang="C++"><span class="cp">#</span><span class="cp">include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span><span class="cp"></span><span class="cp">#</span><span class="cp">include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
-</span><span class="cp"></span><span class="cp">#</span><span class="cp">include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp">
-</span><span class="cp"></span>
-<span class="k">using</span>  <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-
-<span class="kt">int</span> <span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="p">;</span>
+<pre class="chroma"><code class="language-C++" data-lang="C++"><span class="kt">int</span> <span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="p">;</span>
 <span class="k">struct</span> <span class="nc">Node</span><span class="p">{</span>
     <span class="kt">int</span> <span class="n">u</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">w</span><span class="p">;</span>
     <span class="kt">bool</span> <span class="k">operator</span> <span class="o">&lt;</span> <span class="p">(</span><span class="k">const</span> <span class="k">struct</span> <span class="nc">Node</span><span class="o">&amp;</span> <span class="n">tmp</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
@@ -271,25 +261,9 @@
 </span><span class="lnt">37
 </span><span class="lnt">38
 </span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-C++" data-lang="C++"><span class="cp">#</span><span class="cp">include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span><span class="cp"></span><span class="cp">#</span><span class="cp">include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
-</span><span class="cp"></span><span class="cp">#</span><span class="cp">include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp">
-</span><span class="cp"></span><span class="cp">#</span><span class="cp">include</span> <span class="cpf">&lt;cstring&gt;</span><span class="cp">
-</span><span class="cp"></span><span class="cp">#</span><span class="cp">include</span> <span class="cpf">&lt;queue&gt;</span><span class="cp">
-</span><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-
-<span class="kt">int</span> <span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="p">;</span>
-
+<pre class="chroma"><code class="language-C++" data-lang="C++"><span class="kt">int</span> <span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="p">;</span>
 <span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="p">)</span><span class="p">{</span>
     <span class="n">cin</span> <span class="o">&gt;</span><span class="o">&gt;</span> <span class="n">T</span><span class="p">;</span>
     <span class="k">while</span><span class="p">(</span><span class="n">T</span><span class="o">-</span><span class="o">-</span><span class="p">)</span><span class="p">{</span>
@@ -326,6 +300,83 @@
         <span class="p">}</span>
         <span class="n">cout</span> <span class="o">&lt;</span><span class="o">&lt;</span> <span class="n">ans</span> <span class="o">&lt;</span><span class="o">&lt;</span> <span class="n">endl</span><span class="p">;</span>
     <span class="p">}</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="单源最短路-bellman_ford"></a><h3>单源最短路-Bellman_Ford</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C++" data-lang="C++"><span class="cp">#</span><span class="cp">define INF 0x3f3f3f3f</span><span class="cp">
+</span><span class="cp"></span><span class="cp">#</span><span class="cp">define MAXM 105</span><span class="cp">
+</span><span class="cp"></span><span class="k">struct</span> <span class="nc">E</span><span class="p">{</span>
+    <span class="kt">int</span> <span class="n">u</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">w</span><span class="p">;</span>
+<span class="p">}</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">d</span><span class="p">[</span><span class="n">MAXM</span><span class="p">]</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">;</span><span class="p">;</span>
+<span class="n">vector</span><span class="o">&lt;</span><span class="k">struct</span> <span class="nc">E</span><span class="o">&gt;</span> <span class="n">G</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">Bellman_Ford</span><span class="p">(</span><span class="p">)</span><span class="p">{</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="o">+</span><span class="o">+</span><span class="n">i</span><span class="p">)</span><span class="p">{</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">G</span><span class="p">.</span><span class="n">size</span><span class="p">(</span><span class="p">)</span><span class="p">;</span> <span class="o">+</span><span class="o">+</span><span class="n">j</span><span class="p">)</span><span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">G</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="p">.</span><span class="n">v</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">d</span><span class="p">[</span><span class="n">G</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="p">.</span><span class="n">u</span><span class="p">]</span> <span class="o">+</span> <span class="n">G</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="p">.</span><span class="n">w</span><span class="p">)</span><span class="p">{</span>
+                <span class="n">d</span><span class="p">[</span><span class="n">G</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="p">.</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">G</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="p">.</span><span class="n">u</span><span class="p">]</span> <span class="o">+</span> <span class="n">G</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="p">.</span><span class="n">w</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">cout</span> <span class="o">&lt;</span><span class="o">&lt;</span> <span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">B</span><span class="p">]</span> <span class="o">=</span><span class="o">=</span> <span class="n">INF</span> <span class="o">?</span> <span class="o">-</span><span class="mi">1</span> <span class="o">:</span> <span class="n">d</span><span class="p">[</span><span class="n">B</span><span class="p">]</span><span class="p">)</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="p">)</span><span class="p">{</span>
+    <span class="n">cin</span> <span class="o">&gt;</span><span class="o">&gt;</span> <span class="n">N</span> <span class="o">&gt;</span><span class="o">&gt;</span> <span class="n">A</span> <span class="o">&gt;</span><span class="o">&gt;</span> <span class="n">B</span><span class="p">;</span>
+    <span class="n">memset</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="n">INF</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="p">)</span><span class="p">;</span>
+    <span class="n">d</span><span class="p">[</span><span class="n">A</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span><span class="o">=</span> <span class="n">N</span><span class="p">;</span> <span class="o">+</span><span class="o">+</span><span class="n">i</span><span class="p">)</span><span class="p">{</span>
+        <span class="kt">int</span> <span class="n">K</span><span class="p">;</span> <span class="n">cin</span> <span class="o">&gt;</span><span class="o">&gt;</span> <span class="n">K</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">K</span><span class="p">;</span> <span class="o">+</span><span class="o">+</span><span class="n">j</span><span class="p">)</span><span class="p">{</span>
+            <span class="kt">int</span> <span class="n">t</span><span class="p">;</span> <span class="n">cin</span> <span class="o">&gt;</span><span class="o">&gt;</span> <span class="n">t</span><span class="p">;</span>
+            <span class="k">struct</span> <span class="nc">E</span> <span class="n">e</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="mi">0</span><span class="p">}</span><span class="p">;</span>
+            <span class="n">e</span><span class="p">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">j</span> <span class="o">=</span><span class="o">=</span> <span class="mi">0</span> <span class="o">?</span> <span class="mi">0</span> <span class="o">:</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="n">G</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">Bellman_Ford</span><span class="p">(</span><span class="p">)</span><span class="p">;</span>
     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>

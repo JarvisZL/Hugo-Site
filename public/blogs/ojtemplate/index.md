@@ -6,12 +6,6 @@
 
 ### 最小生成树-kruscal
 ```C++
-#include <iostream>
-#include <vector>
-#include <algorithm>
-
-using  namespace std;
-
 int T,N;
 struct Node{
     int u,v,w;
@@ -64,15 +58,7 @@ int main(){
 
 ### 最小生成树-prim算法
 ```C++
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <cstring>
-#include <queue>
-using namespace std;
-
 int T,N;
-
 int main(){
     cin >> T;
     while(T--){
@@ -109,6 +95,45 @@ int main(){
         }
         cout << ans << endl;
     }
+    return 0;
+}
+```
+
+### 单源最短路-Bellman_Ford
+```C++
+#define INF 0x3f3f3f3f
+#define MAXM 105
+struct E{
+    int u,v,w;
+};
+int d[MAXM], N,A,B;;
+vector<struct E> G;
+
+void Bellman_Ford(){
+    for(int i = 0; i < N - 1; ++i){
+        for(int j = 0; j < G.size(); ++j){
+            if(d[G[j].v] > d[G[j].u] + G[j].w){
+                d[G[j].v] = d[G[j].u] + G[j].w;
+            }
+        }
+    }
+    cout << (d[B] == INF ? -1 : d[B]);
+}
+int main(){
+    cin >> N >> A >> B;
+    memset(d,INF,sizeof(d));
+    d[A] = 0;
+    for(int i = 1; i <= N; ++i){
+        int K; cin >> K;
+        for(int j = 0; j < K; ++j){
+            int t; cin >> t;
+            struct E e = {i,t,0};
+            e.w = j == 0 ? 0 : 1;
+            G.push_back(e);
+        }
+    }
+
+    Bellman_Ford();
     return 0;
 }
 ```
