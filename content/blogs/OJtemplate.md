@@ -158,3 +158,129 @@ int main(){
     return 0;
 }
 ```
+
+### 单源最短路-Dijkstra
+```C++
+#define MAXM 105
+#define INF 0x3f3f3f3f
+int d[MAXM], N,A,B;;
+vector<int> G[MAXM];
+bool visit[MAXM];
+
+void Dijkstra(){
+    priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>> > que;
+    que.push(make_pair(d[A],A));
+    while(!que.empty()){
+        int dis = que.top().first;
+        int from = que.top().second;
+        que.pop();
+        if(visit[from]) continue;
+        visit[from] = true;
+        for(int i = 1; i <= N; ++i){
+            if(G[from][i] != -1 && !visit[i]){
+                if(d[i] > dis + G[from][i]){
+                    d[i] = dis + G[from][i];
+                    que.push(make_pair(d[i],i));
+                }
+            }
+        }
+    }
+    cout << (d[B] == INF ? -1 : d[B]);
+}
+
+int main(){
+    cin >> N >> A >> B;
+    memset(d,INF,sizeof(d));
+    memset(visit,0,sizeof(visit));
+    d[A] = 0;
+    for(int i = 1; i <= N; ++i){
+        int K; cin >> K;
+        G[i] = vector<int>(N+1, -1);
+        for(int j = 0; j < K; ++j){
+            int t; cin >> t;
+            G[i][t] = j == 0 ? 0 : 1;
+        }
+    }
+
+    Dijkstra();
+    return 0;
+}
+```
+
+### 最短路-Floyd-Warshall
+```C++
+//leetcode 网络延迟时间
+ int networkDelayTime(vector<vector<int>>& times, int N, int K) {
+        int G[101][101];
+        memset(G,0x3f3f3f3f,sizeof(G));
+        for(int i = 1; i <= N; ++i){
+            G[i][i] = 0;
+        }
+        for(int i = 0; i < times.size(); ++i){
+            //有向图
+            G[times[i][0]][times[i][1]] = times[i][2];
+        }
+        for(int k = 1; k <= N; ++k){
+            for(int i = 1; i <= N; ++i){
+                for(int j = 1; j <= N; ++j){
+                    G[i][j] = min(G[i][j],G[i][k]+G[k][j]);
+                }
+            }
+        }
+        int ans = 0;
+        for(int i = 1; i <= N; ++i){
+            ans = max(ans, G[K][i]);
+        }
+        
+        return (ans == 0x3f3f3f3f ? -1 : ans);
+    }
+```
+
+### 最大匹配-匈牙利算法
+```C++
+//leetcode LCP4
+//MaxmNode = 64
+vector<int> G[64];
+int match[64];
+bool check[64];
+int dx[4] = {0,0,1,-1},dy[4] = {1,-1,0,0};
+bool dfs(int u){
+    for(int i = 0; i < G[u].size(); ++i){
+        if(!check[G[u][i]]){
+            check[G[u][i]] = true;
+            if(match[G[u][i]] == -1 || dfs(match[G[u][i]])){
+                match[u] = G[u][i];
+                match[G[u][i]] = u;
+                return true;
+            }
+        }
+    }
+    return false;
+}
+int domino(int n, int m, vector<vector<int>>& broken) {
+    for(int i = 0; i < n; ++i){
+        for(int j = 0; j < m; ++j){
+            vector<int> tmp = {i, j};
+            //函数find属于namespace std
+            if((find(broken.begin(),broken.end(),tmp)) != broken.end()) continue;
+            for(int k = 0; k < 4; ++k){
+                int x = i + dx[k], y = j + dy[k];
+                if(x < 0 || x >= n || y < 0 || y >= m) continue;
+                tmp = {x, y};
+                if((find(broken.begin(),broken.end(),tmp)) != broken.end()) continue;
+                G[i*m+j].push_back(x*m+y);
+            }
+        }
+    }
+    memset(match,-1,sizeof(match));
+    int ans = 0;
+    for(int i = 0; i < n*m; ++i){
+        if(match[i] == -1){
+            memset(check,0,sizeof(check));
+            if(dfs(i))
+                ans++;
+        }
+    }
+    return ans;
+}  
+```
