@@ -25,6 +25,44 @@ math: true
 一些常用算法的模板
 <!--more-->
 
+### 队列版拓扑排序
+```C++
+//统计每个点的入度，压入入度为0。
+//弹出后相当于删除这个点，所以其连接的点的入度-1，然后重复。
+//拓扑排序就是弹出顺序，弹出的结点数量==总结点数量，没有环路，反之有环路。
+class Solution {
+public:
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<int> degree(numCourses,0);
+        for(int i = 0; i < prerequisites.size(); ++i){
+            degree[prerequisites[i][1]]++;
+        }
+        queue<int> que;
+        for(int i = 0; i < degree.size(); ++i){
+            if(degree[i] == 0){
+                que.push(i);
+            }
+        }
+        int cnt = 0;
+        while(!que.empty()){
+            int tmp = que.front();
+            que.pop();
+            cnt++;
+            for(int i = 0; i < prerequisites.size(); ++i){
+                if(prerequisites[i][0] == tmp){
+                    degree[prerequisites[i][1]]--;
+                    if(degree[prerequisites[i][1]] == 0){
+                        que.push(prerequisites[i][1]);
+                    }
+                }
+            }
+        }
+        return cnt == numCourses;
+    }
+};
+``
+
+
 ### 最小生成树-kruscal
 ```C++
 int T,N;
@@ -283,4 +321,41 @@ int domino(int n, int m, vector<vector<int>>& broken) {
     }
     return ans;
 }  
+```
+
+### 归并排序求逆序对
+```C++
+class Solution {
+    int mergesort(vector<int>& nums, vector<int>& tmp,int l, int r){
+        if(l >= r)
+            return 0;
+        int mid = (l+r)/2;
+        int ret = 0;
+        ret += mergesort(nums,tmp,l,mid) + mergesort(nums,tmp,mid+1,r);
+        int li = l, ri = mid + 1;
+        tmp.clear();
+        while(li <= mid && ri <= r){
+            if(nums[li] <= nums[ri]){
+                tmp.push_back(nums[li++]);
+            }
+            else{
+                tmp.push_back(nums[ri++]);
+                ret += mid - li + 1;
+            }
+        }
+        while(li <= mid){
+            tmp.push_back(nums[li++]);
+        }
+        while(ri <= r){
+            tmp.push_back(nums[ri++]);
+        }
+        copy(tmp.begin(), tmp.end(),nums.begin()+l);
+        return ret;
+    }
+public:
+    int reversePairs(vector<int>& nums) {
+        vector<int> tmp;
+        return mergesort(nums,tmp,0,nums.size()-1);
+    }
+};
 ```

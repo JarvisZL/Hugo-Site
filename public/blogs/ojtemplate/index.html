@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>OJtemplate | 浙语临湖</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noodp" />
-<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszly.com/blogs/pairinandroidandjava/" /><link rel="canonical" href="https://jarviszly.com/blogs/ojtemplate/" />
+<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszly.com/blogs/pairinandroidandjava/" /><link rel="next" href="https://jarviszly.com/blogs/%E5%8D%95%E8%AF%8D%E8%BD%AC%E6%8D%A2%E7%B1%BB%E9%A2%98%E7%9B%AE/" /><link rel="canonical" href="https://jarviszly.com/blogs/ojtemplate/" />
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -35,7 +35,7 @@
                 "url": "https:\/\/jarviszly.com\/cover.png",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "blogs","keywords": "OJ模板","wordcount":  1017 ,
+            },"genre": "blogs","keywords": "OJ模板","wordcount":  1258 ,
         "url": "https:\/\/jarviszly.com\/blogs\/ojtemplate\/","datePublished": "2020-04-11T21:13:31\x2b08:00","dateModified": "2020-04-11T21:13:31\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "JarvisZhang",
@@ -79,20 +79,21 @@
                     <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
                 </a>&nbsp;</div>
             <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-04-11>2020-04-11</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>about 1017 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>5 min&nbsp;</div>
+                <i class="fas fa-pencil-alt fa-fw"></i>about 1258 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>6 min&nbsp;</div>
         </div><div class="post-toc" id="post-toc">
                 <h2 class="post-toc-title">Contents</h2>
                 <div class="post-toc-content"><nav id="TableOfContents">
   <ul>
     <li>
       <ul>
-        <li><a href="#最小生成树-kruscal">最小生成树-kruscal</a></li>
+        <li><a href="#队列版拓扑排序">队列版拓扑排序</a></li>
         <li><a href="#最小生成树-prim算法">最小生成树-prim算法</a></li>
         <li><a href="#单源最短路-bellman_ford">单源最短路-Bellman_Ford</a></li>
         <li><a href="#单源最短路-dijkstra">单源最短路-Dijkstra</a></li>
         <li><a href="#最短路-floyd-warshall">最短路-Floyd-Warshall</a></li>
         <li><a href="#最大匹配-匈牙利算法">最大匹配-匈牙利算法</a></li>
+        <li><a href="#归并排序求逆序对">归并排序求逆序对</a></li>
       </ul>
     </li>
   </ul>
@@ -110,19 +111,20 @@
   <ul>
     <li>
       <ul>
-        <li><a href="#最小生成树-kruscal">最小生成树-kruscal</a></li>
+        <li><a href="#队列版拓扑排序">队列版拓扑排序</a></li>
         <li><a href="#最小生成树-prim算法">最小生成树-prim算法</a></li>
         <li><a href="#单源最短路-bellman_ford">单源最短路-Bellman_Ford</a></li>
         <li><a href="#单源最短路-dijkstra">单源最短路-Dijkstra</a></li>
         <li><a href="#最短路-floyd-warshall">最短路-Floyd-Warshall</a></li>
         <li><a href="#最大匹配-匈牙利算法">最大匹配-匈牙利算法</a></li>
+        <li><a href="#归并排序求逆序对">归并排序求逆序对</a></li>
       </ul>
     </li>
   </ul>
 </nav></div>
                 </details>
             </div><div class="post-content"><p>一些常用算法的模板</p>
-<a class="post-dummy-target" id="最小生成树-kruscal"></a><h3>最小生成树-kruscal</h3>
+<a class="post-dummy-target" id="队列版拓扑排序"></a><h3>队列版拓扑排序</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -173,9 +175,85 @@
 </span><span class="lnt">46
 </span><span class="lnt">47
 </span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-C++" data-lang="C++"><span class="kt">int</span> <span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="p">;</span>
+<pre class="chroma"><code class="language-C++" data-lang="C++"><span class="c1">//统计每个点的入度，压入入度为0。
+</span><span class="c1"></span><span class="c1">//弹出后相当于删除这个点，所以其连接的点的入度-1，然后重复。
+</span><span class="c1"></span><span class="c1">//拓扑排序就是弹出顺序，弹出的结点数量==总结点数量，没有环路，反之有环路。
+</span><span class="c1"></span><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">bool</span> <span class="n">canFinish</span><span class="p">(</span><span class="kt">int</span> <span class="n">numCourses</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="o">&gt;</span><span class="o">&amp;</span> <span class="n">prerequisites</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">degree</span><span class="p">(</span><span class="n">numCourses</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">prerequisites</span><span class="p">.</span><span class="n">size</span><span class="p">(</span><span class="p">)</span><span class="p">;</span> <span class="o">+</span><span class="o">+</span><span class="n">i</span><span class="p">)</span><span class="p">{</span>
+            <span class="n">degree</span><span class="p">[</span><span class="n">prerequisites</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="p">]</span><span class="o">+</span><span class="o">+</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">queue</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">que</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">degree</span><span class="p">.</span><span class="n">size</span><span class="p">(</span><span class="p">)</span><span class="p">;</span> <span class="o">+</span><span class="o">+</span><span class="n">i</span><span class="p">)</span><span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">degree</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span><span class="o">=</span> <span class="mi">0</span><span class="p">)</span><span class="p">{</span>
+                <span class="n">que</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="kt">int</span> <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="n">que</span><span class="p">.</span><span class="n">empty</span><span class="p">(</span><span class="p">)</span><span class="p">)</span><span class="p">{</span>
+            <span class="kt">int</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">que</span><span class="p">.</span><span class="n">front</span><span class="p">(</span><span class="p">)</span><span class="p">;</span>
+            <span class="n">que</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="p">)</span><span class="p">;</span>
+            <span class="n">cnt</span><span class="o">+</span><span class="o">+</span><span class="p">;</span>
+            <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">prerequisites</span><span class="p">.</span><span class="n">size</span><span class="p">(</span><span class="p">)</span><span class="p">;</span> <span class="o">+</span><span class="o">+</span><span class="n">i</span><span class="p">)</span><span class="p">{</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">prerequisites</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span><span class="o">=</span> <span class="n">tmp</span><span class="p">)</span><span class="p">{</span>
+                    <span class="n">degree</span><span class="p">[</span><span class="n">prerequisites</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="p">]</span><span class="o">-</span><span class="o">-</span><span class="p">;</span>
+                    <span class="k">if</span><span class="p">(</span><span class="n">degree</span><span class="p">[</span><span class="n">prerequisites</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="p">]</span> <span class="o">=</span><span class="o">=</span> <span class="mi">0</span><span class="p">)</span><span class="p">{</span>
+                        <span class="n">que</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">prerequisites</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="p">)</span><span class="p">;</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">cnt</span> <span class="o">=</span><span class="o">=</span> <span class="n">numCourses</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span><span class="p">;</span>
+<span class="err">`</span><span class="err">`</span>
+
+
+<span class="cp">#</span><span class="cp">## 最小生成树-kruscal</span><span class="cp">
+</span><span class="cp"></span><span class="err">`</span><span class="err">`</span><span class="err">`</span><span class="n">C</span><span class="o">+</span><span class="o">+</span>
+<span class="kt">int</span> <span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="p">;</span>
 <span class="k">struct</span> <span class="nc">Node</span><span class="p">{</span>
     <span class="kt">int</span> <span class="n">u</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">w</span><span class="p">;</span>
     <span class="kt">bool</span> <span class="k">operator</span> <span class="o">&lt;</span> <span class="p">(</span><span class="k">const</span> <span class="k">struct</span> <span class="nc">Node</span><span class="o">&amp;</span> <span class="n">tmp</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
@@ -636,6 +714,79 @@
 <span class="p">}</span>  
 </code></pre></td></tr></table>
 </div>
+</div><a class="post-dummy-target" id="归并排序求逆序对"></a><h3>归并排序求逆序对</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C++" data-lang="C++"><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="nf">mergesort</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="o">&amp;</span> <span class="n">nums</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="o">&amp;</span> <span class="n">tmp</span><span class="p">,</span><span class="kt">int</span> <span class="n">l</span><span class="p">,</span> <span class="kt">int</span> <span class="n">r</span><span class="p">)</span><span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">l</span> <span class="o">&gt;</span><span class="o">=</span> <span class="n">r</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">l</span><span class="o">+</span><span class="n">r</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">ret</span> <span class="o">+</span><span class="o">=</span> <span class="n">mergesort</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span><span class="n">tmp</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">mid</span><span class="p">)</span> <span class="o">+</span> <span class="n">mergesort</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span><span class="n">tmp</span><span class="p">,</span><span class="n">mid</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">r</span><span class="p">)</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">li</span> <span class="o">=</span> <span class="n">l</span><span class="p">,</span> <span class="n">ri</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">tmp</span><span class="p">.</span><span class="n">clear</span><span class="p">(</span><span class="p">)</span><span class="p">;</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">li</span> <span class="o">&lt;</span><span class="o">=</span> <span class="n">mid</span> <span class="o">&amp;</span><span class="o">&amp;</span> <span class="n">ri</span> <span class="o">&lt;</span><span class="o">=</span> <span class="n">r</span><span class="p">)</span><span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">li</span><span class="p">]</span> <span class="o">&lt;</span><span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">ri</span><span class="p">]</span><span class="p">)</span><span class="p">{</span>
+                <span class="n">tmp</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">li</span><span class="o">+</span><span class="o">+</span><span class="p">]</span><span class="p">)</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">else</span><span class="p">{</span>
+                <span class="n">tmp</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">ri</span><span class="o">+</span><span class="o">+</span><span class="p">]</span><span class="p">)</span><span class="p">;</span>
+                <span class="n">ret</span> <span class="o">+</span><span class="o">=</span> <span class="n">mid</span> <span class="o">-</span> <span class="n">li</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">li</span> <span class="o">&lt;</span><span class="o">=</span> <span class="n">mid</span><span class="p">)</span><span class="p">{</span>
+            <span class="n">tmp</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">li</span><span class="o">+</span><span class="o">+</span><span class="p">]</span><span class="p">)</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">ri</span> <span class="o">&lt;</span><span class="o">=</span> <span class="n">r</span><span class="p">)</span><span class="p">{</span>
+            <span class="n">tmp</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">ri</span><span class="o">+</span><span class="o">+</span><span class="p">]</span><span class="p">)</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">copy</span><span class="p">(</span><span class="n">tmp</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="p">)</span><span class="p">,</span> <span class="n">tmp</span><span class="p">.</span><span class="n">end</span><span class="p">(</span><span class="p">)</span><span class="p">,</span><span class="n">nums</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="p">)</span><span class="o">+</span><span class="n">l</span><span class="p">)</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">reversePairs</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="o">&amp;</span> <span class="n">nums</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">tmp</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nf">mergesort</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span><span class="n">tmp</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">(</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
 </div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
@@ -665,7 +816,8 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="https://jarviszly.com/blogs/pairinandroidandjava/" class="prev" rel="prev" title="Pair In Android And Java"><i class="fas fa-angle-left fa-fw"></i>Pair In Android And Java</a></div>
+    <div class="post-nav"><a href="https://jarviszly.com/blogs/pairinandroidandjava/" class="prev" rel="prev" title="Pair In Android And Java"><i class="fas fa-angle-left fa-fw"></i>Pair In Android And Java</a>
+            <a href="https://jarviszly.com/blogs/%E5%8D%95%E8%AF%8D%E8%BD%AC%E6%8D%A2%E7%B1%BB%E9%A2%98%E7%9B%AE/" class="next" rel="next" title="单词转换类题目">单词转换类题目<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div class="post-comment"></div>
     </article></div>
