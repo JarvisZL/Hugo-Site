@@ -35,7 +35,7 @@
                 "url": "https:\/\/jarviszly.com\/cover.png",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "blogs","keywords": "OJ模板","wordcount":  1258 ,
+            },"genre": "blogs","keywords": "OJ模板","wordcount":  1365 ,
         "url": "https:\/\/jarviszly.com\/blogs\/ojtemplate\/","datePublished": "2020-04-11T21:13:31\x2b08:00","dateModified": "2020-04-11T21:13:31\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "JarvisZhang",
@@ -79,8 +79,8 @@
                     <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
                 </a>&nbsp;</div>
             <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-04-11>2020-04-11</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>about 1258 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>6 min&nbsp;</div>
+                <i class="fas fa-pencil-alt fa-fw"></i>about 1365 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>7 min&nbsp;</div>
         </div><div class="post-toc" id="post-toc">
                 <h2 class="post-toc-title">Contents</h2>
                 <div class="post-toc-content"><nav id="TableOfContents">
@@ -94,6 +94,7 @@
         <li><a href="#最短路-floyd-warshall">最短路-Floyd-Warshall</a></li>
         <li><a href="#最大匹配-匈牙利算法">最大匹配-匈牙利算法</a></li>
         <li><a href="#归并排序求逆序对">归并排序求逆序对</a></li>
+        <li><a href="#tarjan-lca离线算法最近公共子结点">tarjan LCA离线算法(最近公共子结点)</a></li>
       </ul>
     </li>
   </ul>
@@ -118,6 +119,7 @@
         <li><a href="#最短路-floyd-warshall">最短路-Floyd-Warshall</a></li>
         <li><a href="#最大匹配-匈牙利算法">最大匹配-匈牙利算法</a></li>
         <li><a href="#归并排序求逆序对">归并排序求逆序对</a></li>
+        <li><a href="#tarjan-lca离线算法最近公共子结点">tarjan LCA离线算法(最近公共子结点)</a></li>
       </ul>
     </li>
   </ul>
@@ -785,6 +787,73 @@
         <span class="k">return</span> <span class="nf">mergesort</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span><span class="n">tmp</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">(</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="tarjan-lca离线算法最近公共子结点"></a><h3>tarjan LCA离线算法(最近公共子结点)</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C++" data-lang="C++"><span class="c1">//该算法使用DFS+并查集的方式
+</span><span class="c1"></span><span class="kt">int</span> <span class="nf">find</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span><span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">x</span> <span class="o">!</span><span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="p">)</span>
+        <span class="n">f</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">find</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="p">)</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">f</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="nf">join</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">)</span><span class="p">{</span>
+    <span class="kt">int</span> <span class="n">px</span> <span class="o">=</span> <span class="n">find</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">py</span> <span class="o">=</span> <span class="n">find</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">px</span> <span class="o">!</span><span class="o">=</span> <span class="n">py</span><span class="p">)</span>
+        <span class="n">f</span><span class="p">[</span><span class="n">py</span><span class="p">]</span> <span class="o">=</span> <span class="n">px</span><span class="p">;</span><span class="c1">//此处应该跟调用时对应
+</span><span class="c1"></span><span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">tarjan</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span><span class="p">{</span>
+    <span class="n">visit</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="c1">//vector&lt;int&gt; G[MAXM];
+</span><span class="c1"></span>    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">G</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="p">.</span><span class="n">size</span><span class="p">(</span><span class="p">)</span><span class="p">;</span> <span class="o">+</span><span class="o">+</span><span class="n">i</span><span class="p">)</span><span class="p">{</span>
+        <span class="n">tarjan</span><span class="p">(</span><span class="n">G</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">)</span><span class="p">;</span>
+        <span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">G</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">)</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">//查询
+</span><span class="c1"></span>    <span class="c1">//vector&lt;int&gt; Q[MAXM]表示其中一个查询点是x时另一个查询点的集合
+</span><span class="c1"></span>    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">Q</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="p">.</span><span class="n">size</span><span class="p">(</span><span class="p">)</span><span class="p">;</span> <span class="o">+</span><span class="o">+</span><span class="n">i</span><span class="p">)</span><span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">visit</span><span class="p">[</span><span class="n">Q</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">]</span> <span class="o">=</span><span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="c1">//ans is the set of answers
+</span><span class="c1"></span>            <span class="n">ans</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">find</span><span class="p">(</span><span class="n">Q</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">)</span><span class="p">)</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
 </code></pre></td></tr></table>
 </div>
 </div></div><div class="post-footer" id="post-footer">

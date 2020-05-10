@@ -338,3 +338,37 @@ public:
     }
 };
 ```
+
+### tarjan LCA离线算法(最近公共子结点)
+```C++
+//该算法使用DFS+并查集的方式
+int find(int x){
+    if(x != f[x])
+        f[x] = find(f[x]);
+    return f[x];
+}
+void join(int x, int y){
+    int px = find(x);
+    int py = find(y);
+    if(px != py)
+        f[py] = px;//此处应该跟调用时对应
+}
+
+void tarjan(int x){
+    visit[x] = 1;
+    //vector<int> G[MAXM];
+    for(int i = 0; i < G[x].size(); ++i){
+        tarjan(G[x][i]);
+        join(x,G[x][i]);
+    }
+
+    //查询
+    //vector<int> Q[MAXM]表示其中一个查询点是x时另一个查询点的集合
+    for(int i = 0; i < Q[x].size(); ++i){
+        if(visit[Q[x][i]] == 1)
+            //ans is the set of answers
+            ans.insert(find(Q[x][i]));
+    }
+}
+
+```
