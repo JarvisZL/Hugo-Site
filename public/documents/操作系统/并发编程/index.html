@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>并发编程 | 浙语临湖</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszly.com/documents/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/%E5%BD%92%E4%B8%80%E5%8C%96-fld-%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB/" /><link rel="canonical" href="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="并发编程" />
+<meta property="og:description" content="并发编程 并发和并行  并发(Concurrent): 多个执行流可以不按照一定的顺序执行 并行(Parallel): 多个执行流可以同时执行(多个处理器)  线程共享  线程之间共享所有代码和全局变量。 每个线程拥有自己的堆栈，独享寄存器。  C语言多线程编程之入门  POSIX Threads, man 7 pthreads, 需要gcc -lpthread gcc -I 选项增加include path(效果等价于 #include &ldquo;&quot;)  多线程编程之放弃 放弃原子性  由于 中断/异常 的机制，导致一个线程的代码(指令)不会按照其顺序执行。 例子：山寨支付宝(有钱人的生活就是这般枯燥无味)  1 2 3 4 5 6 7 8 9  int money bool pay(int cost){ if(money &gt;= cost){ money -= cost; return true; } else return false; }   放弃顺序性  由于 编译器的优化 指令的顺序可能和程序的顺序不一致。 例子：不同优化等级的for循环累加  1 2 3 4  #define n 100000int sum = 0; for(int i = 0; i &lt; n; &#43;&#43;i) sum&#43;&#43;;    可以使用objdump -d 查看不同优化等级下的汇编代码。  放弃可见性  由于 CPU 的加速，导致指令不一定按照其显示的顺序执行。 例子：两个线程分别对x，y赋值并打印  1 2 3 4 5 6 7 8 9 10 11  int x = 0, y = 0; void thread_1(){ [1] x = 1; [2] printf(&#34;y = %d\n&#34;,y); } void thread_2(){ [3] y = 1; [4] printf(&#34;x = %d\n&#34;,x); }      x y 概率 调度顺序     0 0 0." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" />
+<meta property="article:published_time" content="2020-05-10T21:48:04+08:00" />
+<meta property="article:modified_time" content="2020-05-10T21:48:04+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="并发编程"/>
+<meta name="twitter:description" content="并发编程 并发和并行  并发(Concurrent): 多个执行流可以不按照一定的顺序执行 并行(Parallel): 多个执行流可以同时执行(多个处理器)  线程共享  线程之间共享所有代码和全局变量。 每个线程拥有自己的堆栈，独享寄存器。  C语言多线程编程之入门  POSIX Threads, man 7 pthreads, 需要gcc -lpthread gcc -I 选项增加include path(效果等价于 #include &ldquo;&quot;)  多线程编程之放弃 放弃原子性  由于 中断/异常 的机制，导致一个线程的代码(指令)不会按照其顺序执行。 例子：山寨支付宝(有钱人的生活就是这般枯燥无味)  1 2 3 4 5 6 7 8 9  int money bool pay(int cost){ if(money &gt;= cost){ money -= cost; return true; } else return false; }   放弃顺序性  由于 编译器的优化 指令的顺序可能和程序的顺序不一致。 例子：不同优化等级的for循环累加  1 2 3 4  #define n 100000int sum = 0; for(int i = 0; i &lt; n; &#43;&#43;i) sum&#43;&#43;;    可以使用objdump -d 查看不同优化等级下的汇编代码。  放弃可见性  由于 CPU 的加速，导致指令不一定按照其显示的顺序执行。 例子：两个线程分别对x，y赋值并打印  1 2 3 4 5 6 7 8 9 10 11  int x = 0, y = 0; void thread_1(){ [1] x = 1; [2] printf(&#34;y = %d\n&#34;,y); } void thread_2(){ [3] y = 1; [4] printf(&#34;x = %d\n&#34;,x); }      x y 概率 调度顺序     0 0 0."/>
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "并发编程",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/jarviszly.com\/documents\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszly.com\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "documents","wordcount":  206 ,
+        "url": "https:\/\/jarviszly.com\/documents\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B\/","datePublished": "2020-05-10T21:48:04\x2b08:00","dateModified": "2020-05-10T21:48:04\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "JarvisZhang",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszly.com\/images\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/forkawesome/fork-awesome.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://jarviszly.com">浙语临湖</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://jarviszly.com">浙语临湖</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">并发编程</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://jarviszly.com" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
+                </a>&nbsp;<span class="post-category">included in&nbsp;<i class="far fa-folder fa-fw"></i><a href="https://jarviszly.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;</span></div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-05-10>2020-05-10</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 206 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>1 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#并发编程">并发编程</a>
+      <ul>
+        <li><a href="#并发和并行">并发和并行</a></li>
+        <li><a href="#线程共享">线程共享</a></li>
+        <li><a href="#c语言多线程编程之入门">C语言多线程编程之入门</a></li>
+        <li><a href="#多线程编程之放弃">多线程编程之放弃</a>
+          <ul>
+            <li><a href="#放弃原子性">放弃原子性</a></li>
+            <li><a href="#放弃顺序性">放弃顺序性</a></li>
+            <li><a href="#放弃可见性">放弃可见性</a></li>
+            <li><a href="#保证顺序性">保证顺序性</a></li>
+            <li><a href="#保证原子性">保证原子性</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#并发编程">并发编程</a>
+      <ul>
+        <li><a href="#并发和并行">并发和并行</a></li>
+        <li><a href="#线程共享">线程共享</a></li>
+        <li><a href="#c语言多线程编程之入门">C语言多线程编程之入门</a></li>
+        <li><a href="#多线程编程之放弃">多线程编程之放弃</a>
+          <ul>
+            <li><a href="#放弃原子性">放弃原子性</a></li>
+            <li><a href="#放弃顺序性">放弃顺序性</a></li>
+            <li><a href="#放弃可见性">放弃可见性</a></li>
+            <li><a href="#保证顺序性">保证顺序性</a></li>
+            <li><a href="#保证原子性">保证原子性</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><a class="post-dummy-target" id="并发编程"></a><h2>并发编程</h2>
+<a class="post-dummy-target" id="并发和并行"></a><h3>并发和并行</h3>
+<ul>
+<li>并发(Concurrent): 多个执行流可以不按照一定的顺序执行</li>
+<li>并行(Parallel): 多个执行流可以同时执行(多个处理器)</li>
+</ul>
+<a class="post-dummy-target" id="线程共享"></a><h3>线程共享</h3>
+<ul>
+<li>线程之间共享所有代码和全局变量。</li>
+<li>每个线程拥有自己的堆栈，独享寄存器。</li>
+</ul>
+<a class="post-dummy-target" id="c语言多线程编程之入门"></a><h3>C语言多线程编程之入门</h3>
+<ul>
+<li>POSIX Threads, man 7 pthreads, 需要gcc -lpthread</li>
+<li>gcc -I 选项增加include path(效果等价于 #include &ldquo;&quot;)</li>
+</ul>
+<a class="post-dummy-target" id="多线程编程之放弃"></a><h3>多线程编程之放弃</h3>
+<a class="post-dummy-target" id="放弃原子性"></a><h4>放弃原子性</h4>
+<ul>
+<li>由于 <strong>中断/异常</strong> 的机制，导致一个线程的代码(指令)不会按照其顺序执行。</li>
+<li>例子：山寨支付宝(<del>有钱人的生活就是这般枯燥无味</del>)</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="n">money</span>
+<span class="kt">bool</span> <span class="nf">pay</span><span class="p">(</span><span class="kt">int</span> <span class="n">cost</span><span class="p">)</span><span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">money</span> <span class="o">&gt;</span><span class="o">=</span> <span class="n">cost</span><span class="p">)</span><span class="p">{</span>
+        <span class="n">money</span> <span class="o">-</span><span class="o">=</span> <span class="n">cost</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="放弃顺序性"></a><h4>放弃顺序性</h4>
+<ul>
+<li>由于 <strong>编译器的优化</strong> 指令的顺序可能和程序的顺序不一致。</li>
+<li>例子：不同优化等级的for循环累加</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#</span><span class="cp">define n 100000</span><span class="cp">
+</span><span class="cp"></span><span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">+</span><span class="o">+</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">sum</span><span class="o">+</span><span class="o">+</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>可以使用objdump -d 查看不同优化等级下的汇编代码。</li>
+</ul>
+<a class="post-dummy-target" id="放弃可见性"></a><h4>放弃可见性</h4>
+<ul>
+<li>由于 <strong>CPU</strong> 的加速，导致指令不一定按照其显示的顺序执行。</li>
+<li>例子：两个线程分别对x，y赋值并打印</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">thread_1</span><span class="p">(</span><span class="p">)</span><span class="p">{</span>
+  <span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="n">printf</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;</span><span class="s">y = %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">thread_2</span><span class="p">(</span><span class="p">)</span><span class="p">{</span>
+  <span class="p">[</span><span class="mi">3</span><span class="p">]</span>  <span class="n">y</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="p">[</span><span class="mi">4</span><span class="p">]</span>  <span class="n">printf</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;</span><span class="s">x = %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><table>
+<thead>
+<tr>
+<th align="center">x</th>
+<th align="center">y</th>
+<th align="center">概率</th>
+<th align="center">调度顺序</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0.2%</td>
+<td align="center">???</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">17.5%</td>
+<td align="center">1-&gt;2-&gt;3-&gt;4</td>
+</tr>
+<tr>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">82.3%</td>
+<td align="center">3-&gt;4-&gt;1-&gt;2</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">0%</td>
+<td align="center">1-&gt;3-&gt;4-&gt;2</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>结果如上表，十分出乎意料，为什么 x = 0, y = 0 会出现而 x = 1, y = 1 不出现。</li>
+<li>其汇编代码如下</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">movl $1 (x) //该指令执行时间长，而后面一条指令与x没有关系，所以CPU会执行后一条指令
+movl (y) %eax
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="保证顺序性"></a><h4>保证顺序性</h4>
+<ul>
+<li>C语言使用volatile关键字修饰变量，该关键字告诉编译器，对于该变量的读写操作都不能被优化</li>
+<li>可以使用内嵌汇编指令来保证内存访问的顺序</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="k">extern</span> <span class="n">x</span><span class="p">;</span>
+
+<span class="cp">#</span><span class="cp">define barrier() asm volatile (&#34;&#34;:::&#34;memory&#34;)</span><span class="cp">
+</span><span class="cp"></span>
+<span class="kt">void</span> <span class="nf">fool</span><span class="p">(</span><span class="p">)</span><span class="p">{</span>
+    <span class="n">x</span><span class="o">+</span><span class="o">+</span><span class="p">;</span>
+    <span class="n">barrier</span><span class="p">(</span><span class="p">)</span><span class="p">;</span><span class="c1">//组织编译器讲两个x++变为x = x + 2
+</span><span class="c1"></span>    <span class="n">x</span><span class="o">+</span><span class="o">+</span><span class="p">;</span>
+    <span class="n">y</span><span class="o">+</span><span class="o">+</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="保证原子性"></a><h4>保证原子性</h4>
+<ul>
+<li><strong>互斥(锁)</strong></li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-05-10</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span><a href="//twitter.com/share?url=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%2593%258D%25E4%25BD%259C%25E7%25B3%25BB%25E7%25BB%259F%2f%25E5%25B9%25B6%25E5%258F%2591%25E7%25BC%2596%25E7%25A8%258B%2f&amp;text=%e5%b9%b6%e5%8f%91%e7%bc%96%e7%a8%8b&amp;via=" target="_blank" title="Share on Twitter">
+            <i class="fab fa-twitter fa-fw"></i>
+        </a><a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%2593%258D%25E4%25BD%259C%25E7%25B3%25BB%25E7%25BB%259F%2f%25E5%25B9%25B6%25E5%258F%2591%25E7%25BC%2596%25E7%25A8%258B%2f" target="_blank" title="Share on Facebook">
+            <i class="fab fa-facebook-square fa-fw"></i>
+        </a><a href="//reddit.com/submit?url=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%2593%258D%25E4%25BD%259C%25E7%25B3%25BB%25E7%25BB%259F%2f%25E5%25B9%25B6%25E5%258F%2591%25E7%25BC%2596%25E7%25A8%258B%2f&amp;title=%e5%b9%b6%e5%8f%91%e7%bc%96%e7%a8%8b" target="_blank" title="Share on Reddit">
+            <i class="fab fa-reddit fa-fw"></i>
+        </a></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://jarviszly.com">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://jarviszly.com/documents/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/%E5%BD%92%E4%B8%80%E5%8C%96-fld-%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB/" class="prev" rel="prev" title="归一化 FLD 人脸识别"><i class="fas fa-angle-left fa-fw"></i>归一化 FLD 人脸识别</a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright">
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://jarviszly.com/" target="_blank">Lingyu Zhang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.miit.gov.cn/">苏ICP备20008191号-1</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.gov.cn/portal/index"></i>苏公网安备 32011302320886号</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/js/lib/jquery/jquery.slim.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><script src="/js/lib/katex/katex.min.js"></script><script defer src="/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script defer src="/js/lib/katex/copy-tex.min.js"></script><script defer src="/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$$", right: "$$", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/js/blog.min.js"></script>
+</body>
+</html>
