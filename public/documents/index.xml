@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Sun, 10 May 2020 21:48:04 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 14 May 2020 20:30:58 +0800</lastBuildDate>
     
 	<atom:link href="https://jarviszly.com/documents/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>状态机模型理解程序执行</title>
+      <link>https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%8A%B6%E6%80%81%E6%9C%BA%E6%A8%A1%E5%9E%8B%E7%90%86%E8%A7%A3%E7%A8%8B%E5%BA%8F%E6%89%A7%E8%A1%8C/</link>
+      <pubDate>Thu, 14 May 2020 20:30:58 +0800</pubDate>
+      
+      <guid>https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%8A%B6%E6%80%81%E6%9C%BA%E6%A8%A1%E5%9E%8B%E7%90%86%E8%A7%A3%E7%A8%8B%E5%BA%8F%E6%89%A7%E8%A1%8C/</guid>
+      <description>单线程程序的状态机模型  不同内存和寄存器状态对应了状态机的不同节点。 大部分状态s有唯一的后继状态，存在一些指令，其有后续状态，如rdtsc(获取处理器时间戳)，rdrand(真随机数),syscall(系统调用) 状态机模型是一种理解程序和分析程序的工具  模型的应用 Time travel debugging  程序运行都是从初始结点向后跳转，那么能否从前往后？ 如果能把状态全部记下来是不合理的，但是一条指令只改变很少的寄存器和内存，所以只需要记录两个状态之间的diff就行。 gdb  target record-full 开始记录(此是需要程序已经开始执行) record stop 结束记录 reverse-step(rs)/reverse-stepi(rsi) 向前跳转    Record and Replay  记录程序执行的信息，重现某次程序执行结果。 对于确定性的指令，只需要记录下开始位置和执行了多少条指令。 对于不确定性的指令，则需要记录额外的信息，比如read系统调用，需要记录read的返回值，其读入的具体数据等。  多线程(并发)程序的状态机模型  确定了每一个线程的寄存器状态和共享内存的状态就唯一确定了一个状态机状态，多线程程序的状态机模型本身一个状态的后继状态就是多样的。 因为多线程状态机状态太多了，所以之前的应用需要重新设计。  Peterson算法：实现2个线程的互斥  两个人(P1,P2)分别有一个棋子(F1,F2)并分别可以向卫生间门上的板子上写上对方的名字。 代码如下  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15  //假设及其每次原子地执行每一行代码，内存访问立即可见 int f1 = 0, f2 = 0;//棋子 int turn = P1;//厕所上的牌子 void thread_1(){ f1 = 1;//举起自己的棋子  turn = P2;//优先让别人先去  while(f2 &amp;amp;&amp;amp; turn == P2); //对方举了棋子并且还未去  //临界区  f1 = 0;//放下棋子 } void thread_2(){ f2 = 1; turn = P1; while(f1 &amp;amp;&amp;amp; turn == P1); f2 = 0; }    可以枚举出这两个线程执行顺序的所有可能来证明该算法的正确性。  </description>
+    </item>
     
     <item>
       <title>并发编程</title>
