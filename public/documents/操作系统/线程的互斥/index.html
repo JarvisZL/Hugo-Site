@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>线程的互斥 | 浙语临湖</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%8A%B6%E6%80%81%E6%9C%BA%E6%A8%A1%E5%9E%8B%E7%90%86%E8%A7%A3%E7%A8%8B%E5%BA%8F%E6%89%A7%E8%A1%8C/" /><link rel="canonical" href="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%BA%92%E6%96%A5/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="线程的互斥" />
+<meta property="og:description" content="在现代处理器上Peterson算法的问题  Peterson算法中的，x = 1; turn = T2; 在处理器上会变成指令store(x, 1) store(turn, T2).而因为store指令都比较耗费时间，所以在现代处理器的优化下，处理器会指令后面的指令从而导致两个线程都进入临界区。 很大的问题在于在计算机世界中，我们无法同时&quot;看&quot;和&quot;做&quot;即不能同时load 和 store.  共享内存带来更多的问题  由于不能同时load和store所以当线程共享内存时，会引发其他问题，比如多线程求sum. 四个线程求和放入同一个变量，加法对应的指令只有一条add，如果按照状态机的假设，每次只执行一条指令且指令是原子性的，那么答案应该正确。 而实际上，一条add指令可以被看成三条更小的指令：load, &#43;&#43;, store.而这三条指令之间的原子性等没有得到保证，所以出现错误。  x86的解决方法-增加原子性操作  x86架构提供了一些原子性操作来使得软件能够完成锁的实现，比如 lock add(一条原子性的add指令)，xchg(一条原子性的交换内存和变量的值的指令)等。 使用xchg指令可以很简单地实现自旋锁  1 2 3 4 5 6 7 8 9  int table = key; void lock(){ while(1){ int got = xchg(&amp;table,NOTE); if(got == key) break; } } void unlock(){ xchg(&amp;table,key);   RISC-V和Mips的解决办法-提供满足原子性的load和store  LoadReserved/Store-Conditional(LR/SC)  LR: 正常的读取某一个变量，并在相应变量上标记哪个线程所标记。 SC: 储存之前，检查标记是否对应，如果对应则正常存储，否则重做之前的指令。   LR/SC  实际上就是当LR和SC之间的操作都没有被破坏原子性等，自然这些指令就保证了原子性。  数据竞争  并不是加上了锁就能保证多线程的正确运行，比如两个线程用两把锁对同一个变量修改。 实质是 当有两个线程有两个操作访问同一段内存，且这两个操作之间没有原子性的指令(也就是不能保证两个操作执行的顺序)，就会出现数据竞争。 解决办法：对于多线程共享的内存用同一把锁。  " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%BA%92%E6%96%A5/" />
+<meta property="article:published_time" content="2020-05-16T23:23:18+08:00" />
+<meta property="article:modified_time" content="2020-05-16T23:23:18+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="线程的互斥"/>
+<meta name="twitter:description" content="在现代处理器上Peterson算法的问题  Peterson算法中的，x = 1; turn = T2; 在处理器上会变成指令store(x, 1) store(turn, T2).而因为store指令都比较耗费时间，所以在现代处理器的优化下，处理器会指令后面的指令从而导致两个线程都进入临界区。 很大的问题在于在计算机世界中，我们无法同时&quot;看&quot;和&quot;做&quot;即不能同时load 和 store.  共享内存带来更多的问题  由于不能同时load和store所以当线程共享内存时，会引发其他问题，比如多线程求sum. 四个线程求和放入同一个变量，加法对应的指令只有一条add，如果按照状态机的假设，每次只执行一条指令且指令是原子性的，那么答案应该正确。 而实际上，一条add指令可以被看成三条更小的指令：load, &#43;&#43;, store.而这三条指令之间的原子性等没有得到保证，所以出现错误。  x86的解决方法-增加原子性操作  x86架构提供了一些原子性操作来使得软件能够完成锁的实现，比如 lock add(一条原子性的add指令)，xchg(一条原子性的交换内存和变量的值的指令)等。 使用xchg指令可以很简单地实现自旋锁  1 2 3 4 5 6 7 8 9  int table = key; void lock(){ while(1){ int got = xchg(&amp;table,NOTE); if(got == key) break; } } void unlock(){ xchg(&amp;table,key);   RISC-V和Mips的解决办法-提供满足原子性的load和store  LoadReserved/Store-Conditional(LR/SC)  LR: 正常的读取某一个变量，并在相应变量上标记哪个线程所标记。 SC: 储存之前，检查标记是否对应，如果对应则正常存储，否则重做之前的指令。   LR/SC  实际上就是当LR和SC之间的操作都没有被破坏原子性等，自然这些指令就保证了原子性。  数据竞争  并不是加上了锁就能保证多线程的正确运行，比如两个线程用两把锁对同一个变量修改。 实质是 当有两个线程有两个操作访问同一段内存，且这两个操作之间没有原子性的指令(也就是不能保证两个操作执行的顺序)，就会出现数据竞争。 解决办法：对于多线程共享的内存用同一把锁。  "/>
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "线程的互斥",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/jarviszly.com\/documents\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%BA%92%E6%96%A5\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszly.com\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "documents","wordcount":  67 ,
+        "url": "https:\/\/jarviszly.com\/documents\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%BA%92%E6%96%A5\/","datePublished": "2020-05-16T23:23:18\x2b08:00","dateModified": "2020-05-16T23:23:18\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "JarvisZhang",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszly.com\/images\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/forkawesome/fork-awesome.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://jarviszly.com">浙语临湖</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://jarviszly.com">浙语临湖</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">线程的互斥</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://jarviszly.com" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
+                </a>&nbsp;<span class="post-category">included in&nbsp;<i class="far fa-folder fa-fw"></i><a href="https://jarviszly.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;</span></div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-05-16>2020-05-16</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 67 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>1 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#在现代处理器上peterson算法的问题">在现代处理器上Peterson算法的问题</a></li>
+    <li><a href="#共享内存带来更多的问题">共享内存带来更多的问题</a></li>
+    <li><a href="#x86的解决方法-增加原子性操作">x86的解决方法-增加原子性操作</a></li>
+    <li><a href="#risc-v和mips的解决办法-提供满足原子性的load和store">RISC-V和Mips的解决办法-提供满足原子性的load和store</a></li>
+    <li><a href="#数据竞争">数据竞争</a></li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#在现代处理器上peterson算法的问题">在现代处理器上Peterson算法的问题</a></li>
+    <li><a href="#共享内存带来更多的问题">共享内存带来更多的问题</a></li>
+    <li><a href="#x86的解决方法-增加原子性操作">x86的解决方法-增加原子性操作</a></li>
+    <li><a href="#risc-v和mips的解决办法-提供满足原子性的load和store">RISC-V和Mips的解决办法-提供满足原子性的load和store</a></li>
+    <li><a href="#数据竞争">数据竞争</a></li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><a class="post-dummy-target" id="在现代处理器上peterson算法的问题"></a><h2>在现代处理器上Peterson算法的问题</h2>
+<ul>
+<li>Peterson算法中的，x = 1; turn = T2; 在处理器上会变成指令store(x, 1) store(turn, T2).而因为store指令都比较耗费时间，所以在现代处理器的优化下，处理器会指令后面的指令从而导致两个线程都进入临界区。</li>
+<li>很大的问题在于在计算机世界中，我们无法同时&quot;看&quot;和&quot;做&quot;即不能同时load 和 store.</li>
+</ul>
+<a class="post-dummy-target" id="共享内存带来更多的问题"></a><h2>共享内存带来更多的问题</h2>
+<ul>
+<li>由于不能同时load和store所以当线程共享内存时，会引发其他问题，比如多线程求sum.</li>
+<li>四个线程求和放入同一个变量，加法对应的指令只有一条add，如果按照状态机的假设，每次只执行一条指令且指令是原子性的，那么答案应该正确。</li>
+<li>而实际上，一条add指令可以被看成三条更小的指令：load, ++, store.而这三条指令之间的原子性等没有得到保证，所以出现错误。</li>
+</ul>
+<a class="post-dummy-target" id="x86的解决方法-增加原子性操作"></a><h2>x86的解决方法-增加原子性操作</h2>
+<ul>
+<li>x86架构提供了一些原子性操作来使得软件能够完成锁的实现，比如 lock add(一条原子性的add指令)，xchg(一条原子性的交换内存和变量的值的指令)等。</li>
+<li>使用xchg指令可以很简单地实现<font color=red size=3>自旋锁</font></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="n">table</span> <span class="o">=</span> <span class="n">key</span><span class="p">;</span>
+<span class="kt">void</span> <span class="nf">lock</span><span class="p">(</span><span class="p">)</span><span class="p">{</span>
+    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="p">{</span>
+        <span class="kt">int</span> <span class="n">got</span> <span class="o">=</span> <span class="n">xchg</span><span class="p">(</span><span class="o">&amp;</span><span class="n">table</span><span class="p">,</span><span class="n">NOTE</span><span class="p">)</span><span class="p">;</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">got</span> <span class="o">=</span><span class="o">=</span> <span class="n">key</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="nf">unlock</span><span class="p">(</span><span class="p">)</span><span class="p">{</span>
+    <span class="n">xchg</span><span class="p">(</span><span class="o">&amp;</span><span class="n">table</span><span class="p">,</span><span class="n">key</span><span class="p">)</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="risc-v和mips的解决办法-提供满足原子性的load和store"></a><h2>RISC-V和Mips的解决办法-提供满足原子性的load和store</h2>
+<ul>
+<li>LoadReserved/Store-Conditional(LR/SC)
+<ul>
+<li>LR: 正常的读取某一个变量，并在相应变量上标记哪个线程所标记。</li>
+<li>SC: 储存之前，检查标记是否对应，如果对应则正常存储，否则重做之前的指令。</li>
+</ul>
+</li>
+<li><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/imgs/%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f/3-1.png" alt="LR/SC" class="lazyload"><figcaption class="image-caption">LR/SC</figcaption></figure>
+</li>
+<li>实际上就是当LR和SC之间的操作都没有被破坏原子性等，自然这些指令就保证了原子性。</li>
+</ul>
+<a class="post-dummy-target" id="数据竞争"></a><h2>数据竞争</h2>
+<ul>
+<li>并不是加上了锁就能保证多线程的正确运行，比如两个线程用两把锁对同一个变量修改。</li>
+<li>实质是 当有两个线程有两个操作访问同一段内存，且这两个操作之间没有原子性的指令(也就是不能保证两个操作执行的顺序)，就会出现数据竞争。</li>
+<li>解决办法：对于多线程共享的内存用同一把锁。</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-05-16</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span><a href="//twitter.com/share?url=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%2593%258D%25E4%25BD%259C%25E7%25B3%25BB%25E7%25BB%259F%2f%25E7%25BA%25BF%25E7%25A8%258B%25E7%259A%2584%25E4%25BA%2592%25E6%2596%25A5%2f&amp;text=%e7%ba%bf%e7%a8%8b%e7%9a%84%e4%ba%92%e6%96%a5&amp;via=" target="_blank" title="Share on Twitter">
+            <i class="fab fa-twitter fa-fw"></i>
+        </a><a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%2593%258D%25E4%25BD%259C%25E7%25B3%25BB%25E7%25BB%259F%2f%25E7%25BA%25BF%25E7%25A8%258B%25E7%259A%2584%25E4%25BA%2592%25E6%2596%25A5%2f" target="_blank" title="Share on Facebook">
+            <i class="fab fa-facebook-square fa-fw"></i>
+        </a><a href="//reddit.com/submit?url=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%2593%258D%25E4%25BD%259C%25E7%25B3%25BB%25E7%25BB%259F%2f%25E7%25BA%25BF%25E7%25A8%258B%25E7%259A%2584%25E4%25BA%2592%25E6%2596%25A5%2f&amp;title=%e7%ba%bf%e7%a8%8b%e7%9a%84%e4%ba%92%e6%96%a5" target="_blank" title="Share on Reddit">
+            <i class="fab fa-reddit fa-fw"></i>
+        </a></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://jarviszly.com">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%8A%B6%E6%80%81%E6%9C%BA%E6%A8%A1%E5%9E%8B%E7%90%86%E8%A7%A3%E7%A8%8B%E5%BA%8F%E6%89%A7%E8%A1%8C/" class="prev" rel="prev" title="状态机模型理解程序执行"><i class="fas fa-angle-left fa-fw"></i>状态机模型理解程序执行</a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright">
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://jarviszly.com/" target="_blank">Lingyu Zhang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.miit.gov.cn/">苏ICP备20008191号-1</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.gov.cn/portal/index"></i>苏公网安备 32011302320886号</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/js/lib/jquery/jquery.slim.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><script src="/js/lib/katex/katex.min.js"></script><script defer src="/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script defer src="/js/lib/katex/copy-tex.min.js"></script><script defer src="/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$$", right: "$$", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/js/blog.min.js"></script>
+</body>
+</html>

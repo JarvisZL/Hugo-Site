@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Thu, 14 May 2020 20:30:58 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 16 May 2020 23:23:18 +0800</lastBuildDate>
     
 	<atom:link href="https://jarviszly.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>线程的互斥</title>
+      <link>https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%BA%92%E6%96%A5/</link>
+      <pubDate>Sat, 16 May 2020 23:23:18 +0800</pubDate>
+      
+      <guid>https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%BA%92%E6%96%A5/</guid>
+      <description>在现代处理器上Peterson算法的问题  Peterson算法中的，x = 1; turn = T2; 在处理器上会变成指令store(x, 1) store(turn, T2).而因为store指令都比较耗费时间，所以在现代处理器的优化下，处理器会指令后面的指令从而导致两个线程都进入临界区。 很大的问题在于在计算机世界中，我们无法同时&amp;quot;看&amp;quot;和&amp;quot;做&amp;quot;即不能同时load 和 store.  共享内存带来更多的问题  由于不能同时load和store所以当线程共享内存时，会引发其他问题，比如多线程求sum. 四个线程求和放入同一个变量，加法对应的指令只有一条add，如果按照状态机的假设，每次只执行一条指令且指令是原子性的，那么答案应该正确。 而实际上，一条add指令可以被看成三条更小的指令：load, ++, store.而这三条指令之间的原子性等没有得到保证，所以出现错误。  x86的解决方法-增加原子性操作  x86架构提供了一些原子性操作来使得软件能够完成锁的实现，比如 lock add(一条原子性的add指令)，xchg(一条原子性的交换内存和变量的值的指令)等。 使用xchg指令可以很简单地实现自旋锁  1 2 3 4 5 6 7 8 9  int table = key; void lock(){ while(1){ int got = xchg(&amp;amp;table,NOTE); if(got == key) break; } } void unlock(){ xchg(&amp;amp;table,key);   RISC-V和Mips的解决办法-提供满足原子性的load和store  LoadReserved/Store-Conditional(LR/SC)  LR: 正常的读取某一个变量，并在相应变量上标记哪个线程所标记。 SC: 储存之前，检查标记是否对应，如果对应则正常存储，否则重做之前的指令。   LR/SC  实际上就是当LR和SC之间的操作都没有被破坏原子性等，自然这些指令就保证了原子性。  数据竞争  并不是加上了锁就能保证多线程的正确运行，比如两个线程用两把锁对同一个变量修改。 实质是 当有两个线程有两个操作访问同一段内存，且这两个操作之间没有原子性的指令(也就是不能保证两个操作执行的顺序)，就会出现数据竞争。 解决办法：对于多线程共享的内存用同一把锁。  </description>
+    </item>
     
     <item>
       <title>状态机模型理解程序执行</title>
