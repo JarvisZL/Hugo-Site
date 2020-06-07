@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>OJ on 浙语临湖</title>
-    <link>https://jarviszly.com/tags/oj/</link>
-    <description>Recent content in OJ on 浙语临湖</description>
+    <title>DP on 浙语临湖</title>
+    <link>https://jarviszly.com/tags/dp/</link>
+    <description>Recent content in DP on 浙语临湖</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Sun, 07 Jun 2020 13:38:18 +0800</lastBuildDate>
     
-	<atom:link href="https://jarviszly.com/tags/oj/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://jarviszly.com/tags/dp/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -19,15 +19,6 @@
       
       <guid>https://jarviszly.com/blogs/%E4%B9%B0%E8%82%A1%E7%A5%A8%E6%9C%80%E5%A4%A7%E5%88%A9%E6%B6%A6dp/</guid>
       <description>彩票类题目描述  给定一个数组prices,第i项表示第i天买入或卖出彩票的价格，买入之前必须将当前手里的彩票卖出，一个买入卖出组合被称作一次交易，一共可以进行K次交易，最大利润是多少？  状态表示和转移  每天有买入，卖出，不操作三种情况，并且其中买入次数收到K的限制，所以需要确定下来天数i,当前剩余的买入次数k，和当日操作结束后是否拥有股票来确定唯一一个状态。  1 2 3 4 5  /* 状态表示 */ // 表示前i天共拥有k次交易次数且第i天操作结束后没有拥有股票时的最大利润。 dp[i][k][0]; // 表示前i天共拥有k次交易次数且第i天操作结束后拥有股票时的最大利润。 dp[i][k][1];    而对于第i天，其操作结束后是否拥有股票和第i-1天有关。  1 2 3 4 5 6 7 8 9 10 11 12 13 14  /* 状态转移 */ /* 第i天操作后不拥有股票： 第i-1天操作后不拥有股票，且第i天没有操作 第i-1天拥有股票且第i天卖出 */ dp[i][k][0] = max(dp[i-1][k][0], dp[i-1][k][1] + prices[i]); /* 第i天操作后拥有股票： 第i-1天操作后拥有股票，且第i天没有操作 第i-1天不拥有股票且第i天买入 */ dp[i][k][1] = max(dp[i-1][k][1], dp[i-1][k-1][0] - prices[i]); //此处用k表示剩余买入的次数，表示剩余卖出的次数结果一样。    考虑初始化状态，第0天的时候，如果操作后不拥有股票，说明没有操作，利润位0，反之如果第0天时还剩余交易次数，且操作后拥有股票则说明第0天买入，利润为0 - prices[0]。  1 2 3 4 5  for(int i = 0; i &amp;lt;= k; ++i){ dp[0][i][0] = 0; dp[0][i][1] = 0 - prices[0]; } dp[0][0][1] = INT_MIN; //(用INT_MIN表示不可能)   </description>
-    </item>
-    
-    <item>
-      <title>单词转换类题目</title>
-      <link>https://jarviszly.com/blogs/%E5%8D%95%E8%AF%8D%E8%BD%AC%E6%8D%A2%E7%B1%BB%E9%A2%98%E7%9B%AE/</link>
-      <pubDate>Wed, 06 May 2020 10:41:36 +0800</pubDate>
-      
-      <guid>https://jarviszly.com/blogs/%E5%8D%95%E8%AF%8D%E8%BD%AC%E6%8D%A2%E7%B1%BB%E9%A2%98%E7%9B%AE/</guid>
-      <description>&lt;p&gt;leetcode 127 和 leetcode (51)433，大致题意就是给你一个开始字符串start，一个目标字符串end，以及一个字符串数组bank，需要找到一条最短的由start经过bank中的字符串到达end的转换路经，每次转换只能改变一个字符。&lt;/p&gt;</description>
     </item>
     
   </channel>

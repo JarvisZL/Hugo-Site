@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>买股票最大利润DP | 浙语临湖</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszly.com/blogs/%E5%8D%95%E8%AF%8D%E8%BD%AC%E6%8D%A2%E7%B1%BB%E9%A2%98%E7%9B%AE/" /><link rel="canonical" href="https://jarviszly.com/blogs/%E4%B9%B0%E8%82%A1%E7%A5%A8%E6%9C%80%E5%A4%A7%E5%88%A9%E6%B6%A6dp/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="买股票最大利润DP" />
+<meta property="og:description" content="彩票类题目描述  给定一个数组prices,第i项表示第i天买入或卖出彩票的价格，买入之前必须将当前手里的彩票卖出，一个买入卖出组合被称作一次交易，一共可以进行K次交易，最大利润是多少？  状态表示和转移  每天有买入，卖出，不操作三种情况，并且其中买入次数收到K的限制，所以需要确定下来天数i,当前剩余的买入次数k，和当日操作结束后是否拥有股票来确定唯一一个状态。  1 2 3 4 5  /* 状态表示 */ // 表示前i天共拥有k次交易次数且第i天操作结束后没有拥有股票时的最大利润。 dp[i][k][0]; // 表示前i天共拥有k次交易次数且第i天操作结束后拥有股票时的最大利润。 dp[i][k][1];    而对于第i天，其操作结束后是否拥有股票和第i-1天有关。  1 2 3 4 5 6 7 8 9 10 11 12 13 14  /* 状态转移 */ /* 第i天操作后不拥有股票： 第i-1天操作后不拥有股票，且第i天没有操作 第i-1天拥有股票且第i天卖出 */ dp[i][k][0] = max(dp[i-1][k][0], dp[i-1][k][1] &#43; prices[i]); /* 第i天操作后拥有股票： 第i-1天操作后拥有股票，且第i天没有操作 第i-1天不拥有股票且第i天买入 */ dp[i][k][1] = max(dp[i-1][k][1], dp[i-1][k-1][0] - prices[i]); //此处用k表示剩余买入的次数，表示剩余卖出的次数结果一样。    考虑初始化状态，第0天的时候，如果操作后不拥有股票，说明没有操作，利润位0，反之如果第0天时还剩余交易次数，且操作后拥有股票则说明第0天买入，利润为0 - prices[0]。  1 2 3 4 5  for(int i = 0; i &lt;= k; &#43;&#43;i){ dp[0][i][0] = 0; dp[0][i][1] = 0 - prices[0]; } dp[0][0][1] = INT_MIN; //(用INT_MIN表示不可能)   " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jarviszly.com/blogs/%E4%B9%B0%E8%82%A1%E7%A5%A8%E6%9C%80%E5%A4%A7%E5%88%A9%E6%B6%A6dp/" />
+<meta property="article:published_time" content="2020-06-07T13:38:18+08:00" />
+<meta property="article:modified_time" content="2020-06-07T13:38:18+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="买股票最大利润DP"/>
+<meta name="twitter:description" content="彩票类题目描述  给定一个数组prices,第i项表示第i天买入或卖出彩票的价格，买入之前必须将当前手里的彩票卖出，一个买入卖出组合被称作一次交易，一共可以进行K次交易，最大利润是多少？  状态表示和转移  每天有买入，卖出，不操作三种情况，并且其中买入次数收到K的限制，所以需要确定下来天数i,当前剩余的买入次数k，和当日操作结束后是否拥有股票来确定唯一一个状态。  1 2 3 4 5  /* 状态表示 */ // 表示前i天共拥有k次交易次数且第i天操作结束后没有拥有股票时的最大利润。 dp[i][k][0]; // 表示前i天共拥有k次交易次数且第i天操作结束后拥有股票时的最大利润。 dp[i][k][1];    而对于第i天，其操作结束后是否拥有股票和第i-1天有关。  1 2 3 4 5 6 7 8 9 10 11 12 13 14  /* 状态转移 */ /* 第i天操作后不拥有股票： 第i-1天操作后不拥有股票，且第i天没有操作 第i-1天拥有股票且第i天卖出 */ dp[i][k][0] = max(dp[i-1][k][0], dp[i-1][k][1] &#43; prices[i]); /* 第i天操作后拥有股票： 第i-1天操作后拥有股票，且第i天没有操作 第i-1天不拥有股票且第i天买入 */ dp[i][k][1] = max(dp[i-1][k][1], dp[i-1][k-1][0] - prices[i]); //此处用k表示剩余买入的次数，表示剩余卖出的次数结果一样。    考虑初始化状态，第0天的时候，如果操作后不拥有股票，说明没有操作，利润位0，反之如果第0天时还剩余交易次数，且操作后拥有股票则说明第0天买入，利润为0 - prices[0]。  1 2 3 4 5  for(int i = 0; i &lt;= k; &#43;&#43;i){ dp[0][i][0] = 0; dp[0][i][1] = 0 - prices[0]; } dp[0][0][1] = INT_MIN; //(用INT_MIN表示不可能)   "/>
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "买股票最大利润DP",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/jarviszly.com\/blogs\/%E4%B9%B0%E8%82%A1%E7%A5%A8%E6%9C%80%E5%A4%A7%E5%88%A9%E6%B6%A6dp\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszly.com\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "blogs","keywords": "OJ, DP","wordcount":  88 ,
+        "url": "https:\/\/jarviszly.com\/blogs\/%E4%B9%B0%E8%82%A1%E7%A5%A8%E6%9C%80%E5%A4%A7%E5%88%A9%E6%B6%A6dp\/","datePublished": "2020-06-07T13:38:18\x2b08:00","dateModified": "2020-06-07T13:38:18\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "JarvisZhang",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszly.com\/images\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/forkawesome/fork-awesome.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://jarviszly.com">浙语临湖</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://jarviszly.com">浙语临湖</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">买股票最大利润DP</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://jarviszly.com" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
+                </a>&nbsp;</div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-06-07>2020-06-07</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 88 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>1 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#彩票类题目描述">彩票类题目描述</a></li>
+    <li><a href="#状态表示和转移">状态表示和转移</a></li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#彩票类题目描述">彩票类题目描述</a></li>
+    <li><a href="#状态表示和转移">状态表示和转移</a></li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><a class="post-dummy-target" id="彩票类题目描述"></a><h2>彩票类题目描述</h2>
+<ul>
+<li>给定一个数组prices,第i项表示第i天买入或卖出彩票的价格，买入之前必须将当前手里的彩票卖出，一个买入卖出组合被称作一次交易，一共可以进行K次交易，最大利润是多少？</li>
+</ul>
+<a class="post-dummy-target" id="状态表示和转移"></a><h2>状态表示和转移</h2>
+<ul>
+<li>每天有买入，卖出，不操作三种情况，并且其中买入次数收到K的限制，所以需要确定下来天数i,当前剩余的买入次数k，和当日操作结束后是否拥有股票来确定唯一一个状态。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="cm">/* 状态表示 */</span>
+<span class="c1">// 表示前i天共拥有k次交易次数且第i天操作结束后没有拥有股票时的最大利润。
+</span><span class="c1"></span><span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="p">;</span>  
+<span class="c1">// 表示前i天共拥有k次交易次数且第i天操作结束后拥有股票时的最大利润。
+</span><span class="c1"></span><span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>而对于第i天，其操作结束后是否拥有股票和第i-1天有关。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="cm">/* 状态转移 */</span>
+<span class="cm">/* 
+</span><span class="cm">    第i天操作后不拥有股票：
+</span><span class="cm">        第i-1天操作后不拥有股票，且第i天没有操作
+</span><span class="cm">        第i-1天拥有股票且第i天卖出
+</span><span class="cm">*/</span>
+<span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="p">,</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">)</span><span class="p">;</span>
+<span class="cm">/* 
+</span><span class="cm">    第i天操作后拥有股票：
+</span><span class="cm">        第i-1天操作后拥有股票，且第i天没有操作
+</span><span class="cm">        第i-1天不拥有股票且第i天买入
+</span><span class="cm">*/</span>
+<span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="p">,</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="p">[</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">)</span><span class="p">;</span>
+<span class="c1">//此处用k表示剩余买入的次数，表示剩余卖出的次数结果一样。
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>考虑初始化状态，第0天的时候，如果操作后不拥有股票，说明没有操作，利润位0，反之如果第0天时还剩余交易次数，且操作后拥有股票则说明第0天买入，利润为<strong>0 - prices[0]</strong>。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span><span class="o">=</span> <span class="n">k</span><span class="p">;</span> <span class="o">+</span><span class="o">+</span><span class="n">i</span><span class="p">)</span><span class="p">{</span>
+    <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">-</span> <span class="n">prices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">INT_MIN</span><span class="p">;</span> <span class="c1">//(用INT_MIN表示不可能)
+</span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-06-07</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span><a href="//twitter.com/share?url=https%3a%2f%2fjarviszly.com%2fblogs%2f%25E4%25B9%25B0%25E8%2582%25A1%25E7%25A5%25A8%25E6%259C%2580%25E5%25A4%25A7%25E5%2588%25A9%25E6%25B6%25A6dp%2f&amp;text=%e4%b9%b0%e8%82%a1%e7%a5%a8%e6%9c%80%e5%a4%a7%e5%88%a9%e6%b6%a6DP&amp;via=" target="_blank" title="Share on Twitter">
+            <i class="fab fa-twitter fa-fw"></i>
+        </a><a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fjarviszly.com%2fblogs%2f%25E4%25B9%25B0%25E8%2582%25A1%25E7%25A5%25A8%25E6%259C%2580%25E5%25A4%25A7%25E5%2588%25A9%25E6%25B6%25A6dp%2f" target="_blank" title="Share on Facebook">
+            <i class="fab fa-facebook-square fa-fw"></i>
+        </a><a href="//reddit.com/submit?url=https%3a%2f%2fjarviszly.com%2fblogs%2f%25E4%25B9%25B0%25E8%2582%25A1%25E7%25A5%25A8%25E6%259C%2580%25E5%25A4%25A7%25E5%2588%25A9%25E6%25B6%25A6dp%2f&amp;title=%e4%b9%b0%e8%82%a1%e7%a5%a8%e6%9c%80%e5%a4%a7%e5%88%a9%e6%b6%a6DP" target="_blank" title="Share on Reddit">
+            <i class="fab fa-reddit fa-fw"></i>
+        </a></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span class="tag">
+                        <a href="https://jarviszly.com/tags/oj/"><i class="fas fa-tag fa-fw"></i>&nbsp;OJ</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="https://jarviszly.com/tags/dp/"><i class="fas fa-tag fa-fw"></i>&nbsp;DP</a>&nbsp;
+                    </span></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://jarviszly.com">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://jarviszly.com/blogs/%E5%8D%95%E8%AF%8D%E8%BD%AC%E6%8D%A2%E7%B1%BB%E9%A2%98%E7%9B%AE/" class="prev" rel="prev" title="单词转换类题目"><i class="fas fa-angle-left fa-fw"></i>单词转换类题目</a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright">
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://jarviszly.com/" target="_blank">Lingyu Zhang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.miit.gov.cn/">苏ICP备20008191号-1</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.gov.cn/portal/index"></i>苏公网安备 32011302320886号</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/js/lib/jquery/jquery.slim.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><script src="/js/lib/katex/katex.min.js"></script><script defer src="/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script defer src="/js/lib/katex/copy-tex.min.js"></script><script defer src="/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$$", right: "$$", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/js/blog.min.js"></script>
+</body>
+</html>

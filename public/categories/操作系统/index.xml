@@ -7,10 +7,28 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Wed, 20 May 2020 21:52:55 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2020 21:37:09 +0800</lastBuildDate>
     
 	<atom:link href="https://jarviszly.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>并发数据结构malloc Free算法</title>
+      <link>https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B9%B6%E5%8F%91%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84malloc-free%E7%AE%97%E6%B3%95/</link>
+      <pubDate>Sat, 30 May 2020 21:37:09 +0800</pubDate>
+      
+      <guid>https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B9%B6%E5%8F%91%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84malloc-free%E7%AE%97%E6%B3%95/</guid>
+      <description>并发数据结构-并发链表  在要使用很多次链表的场合，定义链表头时应该直接定义为一个链表结点，而不是一个指针。  当链表头是一个指针时，在操作时就需要考虑指针是否为空的情况。 当链表头是一个结点时，就不需要考虑这个情况，此时链表头不存储任何数据 。    </description>
+    </item>
+    
+    <item>
+      <title>操作系统中的互斥</title>
+      <link>https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E4%BA%92%E6%96%A5/</link>
+      <pubDate>Sat, 30 May 2020 20:56:25 +0800</pubDate>
+      
+      <guid>https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E4%BA%92%E6%96%A5/</guid>
+      <description>操作系统上的互斥(多处理器多线程) 1 2 3 4 5 6 7  void func(void* arg){ while(1){ lock(&amp;amp;biglock); printf(&amp;#34;Thread-%s on CPU #%d acuquired the lock\n&amp;#34;,arg,_cpu()); unlock(&amp;amp;biglock); } }    上述代码在多处理器上多线程运行时会发现一段时间后，总是一个线程在一个处理器上获得锁。safety和liveness都没问题而,fairness出现了问题。 使用状态机来理解发现：对于持有了锁的线程，其中断大概率出现在printf，而此时其他CPU上的其他线程都处于自旋状态，结果绕一圈回到自己继续执行。 这说明：获得自选锁的线程(处理器)不应该被中断，否则会因为其他线程的自旋浪费时间，所以可以在lock函数中加入关中断，在unlock中加入开中断  1 2 3 4 5 6 7 8 9  void spin_lock(spinlock_t &amp;amp;lk){ cli(); while(atomic_xchg(&amp;amp;lk-&amp;gt;locked,1)); } void spin_unlock(spinlock_t &amp;amp;lk){ atomic_xchg(&amp;amp;lk-&amp;gt;locked,0); sti(); }    而上述代码又面临一个问题，如果一个线程多次获得不同的锁，之后又依次释放锁，则结果第一次释放锁就导致开中断，因此需要保存第一次获得锁的时候线程(CPU)中断状态，在最后一次释放锁的时候还原状态。 所以需要在CPU的结构中加上记录当前CPU关中断计数以及首次关中断时 %eflags &amp;amp; FL_IF的值  互斥锁  自旋锁由于可能导致浪费很多资源，所以其只适用于很短并且希望能立即执行的临界区。而有的时候，只有互斥的需求但不介意被打断或者自身等待。 比如在读写磁盘时，此时如果使用自旋锁，会导致浪费很多时间，并且在这段时间内可能有很多中断，但由于关中断的原因无法到达CPU. 互斥锁的需求分析  持有锁的线程  允许处理器相应中断。 允许切换到其他线程。   等待锁的线程  不要占用处理器资源自旋。     一个很简单的想法就是当我发现自身无法得到锁，需要自旋时就让另一个线程执行。  1 2 3 4 5  void mutex_lock(mutexlock_t &amp;amp;lk){ while(atomic_xchg(&amp;amp;lk-&amp;gt;locked, 1)){ let_another_thread_to_execute(); } }    上述方法值得优化的点在于：可能等待锁的线程有很多，前面需要空转很多线程(每个线程都会atomic_xchg)才能让真正可以执行的线程执行。 所以可以加上一个调度者，每当线程无法获得锁时就直接放弃对CPU的占有，陷入等待，等待调度者的调度。 添加一个等待队列这样的并发数据结构，由调度者控制  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27  void mutex_lock(mutexlock_t &amp;amp;lk){ int acquired = 0; spin_lock(&amp;amp;lk-&amp;gt;spinlock);//保护等待队列  if(lk-&amp;gt;locked !</description>
+    </item>
     
     <item>
       <title>硬件初始化与操作系统加载</title>

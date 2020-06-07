@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Contents on 浙语临湖</title>
+    <link>https://jarviszly.com/content/</link>
+    <description>Recent content in Contents on 浙语临湖</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Sat, 30 May 2020 21:32:38 +0800</lastBuildDate>
+    
+	<atom:link href="https://jarviszly.com/content/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Free算法</title>
+      <link>https://jarviszly.com/content/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B9%B6%E5%8F%91%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84malloc/free%E7%AE%97%E6%B3%95/</link>
+      <pubDate>Sat, 30 May 2020 21:32:38 +0800</pubDate>
+      
+      <guid>https://jarviszly.com/content/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B9%B6%E5%8F%91%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84malloc/free%E7%AE%97%E6%B3%95/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
