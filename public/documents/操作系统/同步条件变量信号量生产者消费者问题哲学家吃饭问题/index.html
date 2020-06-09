@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>同步{条件变量，信号量，生产者消费者问题，哲学家吃饭问题} | 浙语临湖</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B9%B6%E5%8F%91%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84malloc-free%E7%AE%97%E6%B3%95/" /><link rel="canonical" href="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%90%8C%E6%AD%A5%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E4%BF%A1%E5%8F%B7%E9%87%8F%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98%E5%93%B2%E5%AD%A6%E5%AE%B6%E5%90%83%E9%A5%AD%E9%97%AE%E9%A2%98/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="同步{条件变量，信号量，生产者消费者问题，哲学家吃饭问题}" />
+<meta property="og:description" content="同步  两个(或多个)线程在一定时间内保持一定的关联。 直白的来说：  互斥：各个线程单独完成自己的事情。 同步：多个线程协作完成一件事情，所以在某些时候线程之间需要知道彼此的状态。    实现同步 条件变量(极其重要)  同步的本质: 当一个条件满足时，线程继续执行，否则等待。 则用一个条件变量(对象)对应表示该条件。  当条件不满足时，在该对象处等待。 当一个线程发现某个条件满足时，唤醒该条件变量对应的线程(一个或者所有)   条件变量API  1 2 3  wait(&amp;cv); //在cv条件变量处等在。 signal(&amp;cv)/notify(&amp;cv); //唤醒一个cv条件变量对应线程。 broadcast(&amp;cv)/notifyall(&amp;cv); //唤醒cv条件变量对应的所有线程。    在使用条件变量时，常常需要使用某个变量来表示条件，而该变量是所有线程共享的，所以在访问时需要使用锁(互斥锁)来保护，所以条件变量搭配互斥锁一起完成同步  1 2 3 4 5 6 7  mutex_lock(&amp;mutex); // do some things wait(&amp;cv,&amp;mutex); //在wait中会先释放掉该互斥锁，再等待，被唤醒时会先尝试重新获得该互斥锁。 // do some things mutex_unlock(&amp;mutex); //signal不需要用mutexlock保护    需要注意的是使用条件变量是一定一个条件对应一个条件变量。  信号量  信号量 = 带计数条件变量(相当于条件变量和控制条件的变量综合) &#43; 互斥锁。 通俗理解：将信号量看作更衣室的手环，拿到手环才可以进入更衣室否则等待。 当手环数量为1时，信号量的作用和互斥锁一致。 信号量API  1 2  P(&amp;semv); //申请一个手环，如果拿到就返回否则等待。 V(&amp;semv); //用户生成一个手环，交给等待用户或者管理者。   经典同步问题 生产者消费者问题   问题描述：" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%90%8C%E6%AD%A5%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E4%BF%A1%E5%8F%B7%E9%87%8F%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98%E5%93%B2%E5%AD%A6%E5%AE%B6%E5%90%83%E9%A5%AD%E9%97%AE%E9%A2%98/" />
+<meta property="article:published_time" content="2020-06-09T22:29:06+08:00" />
+<meta property="article:modified_time" content="2020-06-09T22:29:06+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="同步{条件变量，信号量，生产者消费者问题，哲学家吃饭问题}"/>
+<meta name="twitter:description" content="同步  两个(或多个)线程在一定时间内保持一定的关联。 直白的来说：  互斥：各个线程单独完成自己的事情。 同步：多个线程协作完成一件事情，所以在某些时候线程之间需要知道彼此的状态。    实现同步 条件变量(极其重要)  同步的本质: 当一个条件满足时，线程继续执行，否则等待。 则用一个条件变量(对象)对应表示该条件。  当条件不满足时，在该对象处等待。 当一个线程发现某个条件满足时，唤醒该条件变量对应的线程(一个或者所有)   条件变量API  1 2 3  wait(&amp;cv); //在cv条件变量处等在。 signal(&amp;cv)/notify(&amp;cv); //唤醒一个cv条件变量对应线程。 broadcast(&amp;cv)/notifyall(&amp;cv); //唤醒cv条件变量对应的所有线程。    在使用条件变量时，常常需要使用某个变量来表示条件，而该变量是所有线程共享的，所以在访问时需要使用锁(互斥锁)来保护，所以条件变量搭配互斥锁一起完成同步  1 2 3 4 5 6 7  mutex_lock(&amp;mutex); // do some things wait(&amp;cv,&amp;mutex); //在wait中会先释放掉该互斥锁，再等待，被唤醒时会先尝试重新获得该互斥锁。 // do some things mutex_unlock(&amp;mutex); //signal不需要用mutexlock保护    需要注意的是使用条件变量是一定一个条件对应一个条件变量。  信号量  信号量 = 带计数条件变量(相当于条件变量和控制条件的变量综合) &#43; 互斥锁。 通俗理解：将信号量看作更衣室的手环，拿到手环才可以进入更衣室否则等待。 当手环数量为1时，信号量的作用和互斥锁一致。 信号量API  1 2  P(&amp;semv); //申请一个手环，如果拿到就返回否则等待。 V(&amp;semv); //用户生成一个手环，交给等待用户或者管理者。   经典同步问题 生产者消费者问题   问题描述："/>
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "同步{条件变量，信号量，生产者消费者问题，哲学家吃饭问题}",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/jarviszly.com\/documents\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E5%90%8C%E6%AD%A5%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E4%BF%A1%E5%8F%B7%E9%87%8F%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98%E5%93%B2%E5%AD%A6%E5%AE%B6%E5%90%83%E9%A5%AD%E9%97%AE%E9%A2%98\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszly.com\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "documents","wordcount":  220 ,
+        "url": "https:\/\/jarviszly.com\/documents\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E5%90%8C%E6%AD%A5%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E4%BF%A1%E5%8F%B7%E9%87%8F%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98%E5%93%B2%E5%AD%A6%E5%AE%B6%E5%90%83%E9%A5%AD%E9%97%AE%E9%A2%98\/","datePublished": "2020-06-09T22:29:06\x2b08:00","dateModified": "2020-06-09T22:29:06\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "JarvisZhang",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszly.com\/images\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/forkawesome/fork-awesome.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://jarviszly.com">浙语临湖</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://jarviszly.com">浙语临湖</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">同步{条件变量，信号量，生产者消费者问题，哲学家吃饭问题}</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://jarviszly.com" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
+                </a>&nbsp;<span class="post-category">included in&nbsp;<i class="far fa-folder fa-fw"></i><a href="https://jarviszly.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;</span></div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-06-09>2020-06-09</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 220 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>2 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#同步">同步</a></li>
+    <li><a href="#实现同步">实现同步</a>
+      <ul>
+        <li><a href="#条件变量极其重要">条件变量(极其重要)</a></li>
+        <li><a href="#信号量">信号量</a></li>
+      </ul>
+    </li>
+    <li><a href="#经典同步问题">经典同步问题</a>
+      <ul>
+        <li><a href="#生产者消费者问题">生产者消费者问题</a></li>
+        <li><a href="#哲学家吃饭问题">哲学家吃饭问题</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#同步">同步</a></li>
+    <li><a href="#实现同步">实现同步</a>
+      <ul>
+        <li><a href="#条件变量极其重要">条件变量(极其重要)</a></li>
+        <li><a href="#信号量">信号量</a></li>
+      </ul>
+    </li>
+    <li><a href="#经典同步问题">经典同步问题</a>
+      <ul>
+        <li><a href="#生产者消费者问题">生产者消费者问题</a></li>
+        <li><a href="#哲学家吃饭问题">哲学家吃饭问题</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><a class="post-dummy-target" id="同步"></a><h2>同步</h2>
+<ul>
+<li>两个(或多个)线程在一定时间内保持一定的关联。</li>
+<li>直白的来说：
+<ul>
+<li>互斥：各个线程单独完成自己的事情。</li>
+<li>同步：多个线程协作完成一件事情，所以在某些时候线程之间需要知道彼此的状态。</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="实现同步"></a><h2>实现同步</h2>
+<a class="post-dummy-target" id="条件变量极其重要"></a><h3>条件变量(极其重要)</h3>
+<ul>
+<li>同步的本质: 当一个条件满足时，线程继续执行，否则等待。</li>
+<li>则用一个条件变量(对象)对应表示该条件。
+<ul>
+<li>当条件不满足时，在该对象处等待。</li>
+<li>当一个线程发现某个条件满足时，唤醒该条件变量对应的线程(一个或者所有)</li>
+</ul>
+</li>
+<li>条件变量API</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="n">wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cv</span><span class="p">)</span><span class="p">;</span> <span class="c1">//在cv条件变量处等在。
+</span><span class="c1"></span><span class="n">signal</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cv</span><span class="p">)</span><span class="o">/</span><span class="n">notify</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cv</span><span class="p">)</span><span class="p">;</span> <span class="c1">//唤醒一个cv条件变量对应线程。
+</span><span class="c1"></span><span class="n">broadcast</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cv</span><span class="p">)</span><span class="o">/</span><span class="n">notifyall</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cv</span><span class="p">)</span><span class="p">;</span> <span class="c1">//唤醒cv条件变量对应的所有线程。
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>在使用条件变量时，常常需要使用某个变量来表示条件，而该变量<font color=red size=3>是所有线程共享的</font>，所以在访问时需要使用锁(互斥锁)来保护，所以<font color=red size=3>条件变量搭配互斥锁一起完成同步</font></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="n">mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span>
+<span class="c1">// do some things
+</span><span class="c1"></span><span class="n">wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cv</span><span class="p">,</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span> <span class="c1">//在wait中会先释放掉该互斥锁，再等待，被唤醒时会先尝试重新获得该互斥锁。
+</span><span class="c1"></span><span class="c1">// do some things
+</span><span class="c1"></span><span class="n">mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span>
+
+<span class="c1">//signal不需要用mutexlock保护
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>需要注意的是使用条件变量是一定<font color=red size=3>一个条件对应一个条件变量。</font></li>
+</ul>
+<a class="post-dummy-target" id="信号量"></a><h3>信号量</h3>
+<ul>
+<li>信号量 = 带计数条件变量(相当于条件变量和控制条件的变量综合) + 互斥锁。</li>
+<li>通俗理解：将信号量看作更衣室的手环，拿到手环才可以进入更衣室否则等待。</li>
+<li>当手环数量为1时，信号量的作用和互斥锁一致。</li>
+<li>信号量API</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="n">P</span><span class="p">(</span><span class="o">&amp;</span><span class="n">semv</span><span class="p">)</span><span class="p">;</span> <span class="c1">//申请一个手环，如果拿到就返回否则等待。
+</span><span class="c1"></span><span class="n">V</span><span class="p">(</span><span class="o">&amp;</span><span class="n">semv</span><span class="p">)</span><span class="p">;</span> <span class="c1">//用户生成一个手环，交给等待用户或者管理者。
+</span></code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="经典同步问题"></a><h2>经典同步问题</h2>
+<a class="post-dummy-target" id="生产者消费者问题"></a><h3>生产者消费者问题</h3>
+<ul>
+<li>
+<p>问题描述：</p>
+<ul>
+<li>生产者：不断向队列中Push对象。</li>
+<li>消费者：不断从队列中Pop对象。</li>
+<li>队列有一定的容量限制。</li>
+</ul>
+</li>
+<li>
+<p>简化问题：</p>
+<ul>
+<li>生产者：打印左括号(。</li>
+<li>消费者：打印右括号)。</li>
+<li>打印的左右括号需要相互匹配，括号嵌套深度为N。</li>
+</ul>
+</li>
+<li>
+<p>条件变量解决</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#</span><span class="cp">define N 6</span><span class="cp">
+</span><span class="cp"></span>
+<span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">void</span> <span class="nf">producer</span><span class="p">(</span><span class="p">)</span><span class="p">{</span>
+    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="p">{</span>
+        <span class="n">mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">count</span> <span class="o">=</span><span class="o">=</span> <span class="n">N</span><span class="p">)</span><span class="p">{</span><span class="c1">//或者改用if,但while更好。
+</span><span class="c1"></span>            <span class="n">wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">empty</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">print</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;</span><span class="s">(</span><span class="s">&#34;</span><span class="p">)</span><span class="p">;</span> 
+        <span class="n">count</span><span class="o">+</span><span class="o">+</span><span class="p">;</span>
+        <span class="n">broadcast</span><span class="p">(</span><span class="o">&amp;</span><span class="n">fill</span><span class="p">)</span><span class="p">;</span> <span class="c1">//用signal对应if.
+</span><span class="c1"></span>        <span class="n">mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">consumer</span><span class="p">(</span><span class="p">)</span><span class="p">{</span>
+    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="p">{</span>
+        <span class="n">mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">count</span> <span class="o">=</span><span class="o">=</span> <span class="mi">0</span><span class="p">)</span><span class="p">{</span> <span class="c1">//或者改用if,但while更好。
+</span><span class="c1"></span>            <span class="n">wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">fill</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">print</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;</span><span class="s">)</span><span class="s">&#34;</span><span class="p">)</span><span class="p">;</span> 
+        <span class="n">count</span><span class="o">-</span><span class="o">-</span><span class="p">;</span>
+        <span class="n">broadcast</span><span class="p">(</span><span class="o">&amp;</span><span class="n">empty</span><span class="p">)</span><span class="p">;</span> <span class="c1">//用signal对应if.
+</span><span class="c1"></span>        <span class="n">mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>信号量解决</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#</span><span class="cp">define N 6</span><span class="cp">
+</span><span class="cp"></span>
+<span class="n">sem_t</span> <span class="n">empty</span> <span class="o">=</span> <span class="n">N</span><span class="p">,</span> <span class="n">fill</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">void</span> <span class="nf">producer</span><span class="p">(</span><span class="p">)</span><span class="p">{</span>
+    <span class="n">P</span><span class="p">(</span><span class="o">&amp;</span><span class="n">empty</span><span class="p">)</span><span class="p">;</span>
+    <span class="n">print</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;</span><span class="s">(</span><span class="s">&#34;</span><span class="p">)</span><span class="p">;</span>
+    <span class="n">V</span><span class="p">(</span><span class="o">&amp;</span><span class="n">fill</span><span class="p">)</span><span class="p">;</span> 
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">consumer</span><span class="p">(</span><span class="p">)</span><span class="p">{</span>
+    <span class="n">P</span><span class="p">(</span><span class="o">&amp;</span><span class="n">fill</span><span class="p">)</span><span class="p">;</span>
+    <span class="n">print</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;</span><span class="s">)</span><span class="s">&#34;</span><span class="p">)</span><span class="p">;</span>
+    <span class="n">V</span><span class="p">(</span><span class="o">&amp;</span><span class="n">empty</span><span class="p">)</span><span class="p">;</span> 
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>但请注意：<font color=red size=3>复杂同步问题有效的信号量很难设计，所以条件变量才是正道!!<del>(正道的光&hellip;)</del></font></li>
+</ul>
+<a class="post-dummy-target" id="哲学家吃饭问题"></a><h3>哲学家吃饭问题</h3>
+<ul>
+<li>问题描述：有若干哲学家在圆桌上吃饭，每两个哲学家之间有一把叉子，一位哲学家需要同时获得左右两把叉子才能吃饭，如何调度吃饭。</li>
+<li>条件变量</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#</span><span class="cp">define cond empty[left] &amp;&amp; empty[right]</span><span class="cp">
+</span><span class="cp"></span>
+<span class="kt">void</span> <span class="nf">philosopher</span><span class="p">(</span><span class="p">)</span><span class="p">{</span>
+    <span class="n">mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span>
+    <span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="n">cond</span><span class="p">)</span><span class="p">{</span>
+        <span class="n">wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cv</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">get_forks</span><span class="p">(</span><span class="p">)</span><span class="p">;</span>
+    <span class="n">mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span>
+
+    <span class="n">philosopher_eat_dinner</span><span class="p">(</span><span class="p">)</span><span class="p">;</span>
+
+    <span class="n">mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span>
+    <span class="n">give_back_forks</span><span class="p">(</span><span class="p">)</span><span class="p">;</span>
+    <span class="n">broadcast</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cv</span><span class="p">)</span><span class="p">;</span>
+    <span class="n">mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span>
+    
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>或者设置一个管理员，让哲学家去申请叉子，管理员负责分配。</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-06-09</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span><a href="//twitter.com/share?url=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%2593%258D%25E4%25BD%259C%25E7%25B3%25BB%25E7%25BB%259F%2f%25E5%2590%258C%25E6%25AD%25A5%25E6%259D%25A1%25E4%25BB%25B6%25E5%258F%2598%25E9%2587%258F%25E4%25BF%25A1%25E5%258F%25B7%25E9%2587%258F%25E7%2594%259F%25E4%25BA%25A7%25E8%2580%2585%25E6%25B6%2588%25E8%25B4%25B9%25E8%2580%2585%25E9%2597%25AE%25E9%25A2%2598%25E5%2593%25B2%25E5%25AD%25A6%25E5%25AE%25B6%25E5%2590%2583%25E9%25A5%25AD%25E9%2597%25AE%25E9%25A2%2598%2f&amp;text=%e5%90%8c%e6%ad%a5%7b%e6%9d%a1%e4%bb%b6%e5%8f%98%e9%87%8f%ef%bc%8c%e4%bf%a1%e5%8f%b7%e9%87%8f%ef%bc%8c%e7%94%9f%e4%ba%a7%e8%80%85%e6%b6%88%e8%b4%b9%e8%80%85%e9%97%ae%e9%a2%98%ef%bc%8c%e5%93%b2%e5%ad%a6%e5%ae%b6%e5%90%83%e9%a5%ad%e9%97%ae%e9%a2%98%7d&amp;via=" target="_blank" title="Share on Twitter">
+            <i class="fab fa-twitter fa-fw"></i>
+        </a><a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%2593%258D%25E4%25BD%259C%25E7%25B3%25BB%25E7%25BB%259F%2f%25E5%2590%258C%25E6%25AD%25A5%25E6%259D%25A1%25E4%25BB%25B6%25E5%258F%2598%25E9%2587%258F%25E4%25BF%25A1%25E5%258F%25B7%25E9%2587%258F%25E7%2594%259F%25E4%25BA%25A7%25E8%2580%2585%25E6%25B6%2588%25E8%25B4%25B9%25E8%2580%2585%25E9%2597%25AE%25E9%25A2%2598%25E5%2593%25B2%25E5%25AD%25A6%25E5%25AE%25B6%25E5%2590%2583%25E9%25A5%25AD%25E9%2597%25AE%25E9%25A2%2598%2f" target="_blank" title="Share on Facebook">
+            <i class="fab fa-facebook-square fa-fw"></i>
+        </a><a href="//reddit.com/submit?url=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%2593%258D%25E4%25BD%259C%25E7%25B3%25BB%25E7%25BB%259F%2f%25E5%2590%258C%25E6%25AD%25A5%25E6%259D%25A1%25E4%25BB%25B6%25E5%258F%2598%25E9%2587%258F%25E4%25BF%25A1%25E5%258F%25B7%25E9%2587%258F%25E7%2594%259F%25E4%25BA%25A7%25E8%2580%2585%25E6%25B6%2588%25E8%25B4%25B9%25E8%2580%2585%25E9%2597%25AE%25E9%25A2%2598%25E5%2593%25B2%25E5%25AD%25A6%25E5%25AE%25B6%25E5%2590%2583%25E9%25A5%25AD%25E9%2597%25AE%25E9%25A2%2598%2f&amp;title=%e5%90%8c%e6%ad%a5%7b%e6%9d%a1%e4%bb%b6%e5%8f%98%e9%87%8f%ef%bc%8c%e4%bf%a1%e5%8f%b7%e9%87%8f%ef%bc%8c%e7%94%9f%e4%ba%a7%e8%80%85%e6%b6%88%e8%b4%b9%e8%80%85%e9%97%ae%e9%a2%98%ef%bc%8c%e5%93%b2%e5%ad%a6%e5%ae%b6%e5%90%83%e9%a5%ad%e9%97%ae%e9%a2%98%7d" target="_blank" title="Share on Reddit">
+            <i class="fab fa-reddit fa-fw"></i>
+        </a></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://jarviszly.com">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B9%B6%E5%8F%91%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84malloc-free%E7%AE%97%E6%B3%95/" class="prev" rel="prev" title="并发数据结构malloc Free算法"><i class="fas fa-angle-left fa-fw"></i>并发数据结构malloc Free算法</a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright">
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://jarviszly.com/" target="_blank">Lingyu Zhang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.miit.gov.cn/">苏ICP备20008191号-1</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.gov.cn/portal/index"></i>苏公网安备 32011302320886号</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/js/lib/jquery/jquery.slim.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><script src="/js/lib/katex/katex.min.js"></script><script defer src="/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script defer src="/js/lib/katex/copy-tex.min.js"></script><script defer src="/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$$", right: "$$", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/js/blog.min.js"></script>
+</body>
+</html>

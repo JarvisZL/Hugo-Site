@@ -1,0 +1,134 @@
+# 同步{条件变量，信号量，生产者消费者问题，哲学家吃饭问题}
+
+
+## 同步
+- 两个(或多个)线程在一定时间内保持一定的关联。
+- 直白的来说：
+  - 互斥：各个线程单独完成自己的事情。
+  - 同步：多个线程协作完成一件事情，所以在某些时候线程之间需要知道彼此的状态。
+
+## 实现同步
+
+### 条件变量(极其重要)
+- 同步的本质: 当一个条件满足时，线程继续执行，否则等待。
+- 则用一个条件变量(对象)对应表示该条件。
+  - 当条件不满足时，在该对象处等待。
+  - 当一个线程发现某个条件满足时，唤醒该条件变量对应的线程(一个或者所有)
+- 条件变量API
+```c
+wait(&cv); //在cv条件变量处等在。
+signal(&cv)/notify(&cv); //唤醒一个cv条件变量对应线程。
+broadcast(&cv)/notifyall(&cv); //唤醒cv条件变量对应的所有线程。
+```
+- 在使用条件变量时，常常需要使用某个变量来表示条件，而该变量<font color=red size=3>是所有线程共享的</font>，所以在访问时需要使用锁(互斥锁)来保护，所以<font color=red size=3>条件变量搭配互斥锁一起完成同步</font>
+```c
+mutex_lock(&mutex);
+// do some things
+wait(&cv,&mutex); //在wait中会先释放掉该互斥锁，再等待，被唤醒时会先尝试重新获得该互斥锁。
+// do some things
+mutex_unlock(&mutex);
+
+//signal不需要用mutexlock保护
+```
+- 需要注意的是使用条件变量是一定<font color=red size=3>一个条件对应一个条件变量。</font>
+
+
+### 信号量
+- 信号量 = 带计数条件变量(相当于条件变量和控制条件的变量综合) + 互斥锁。
+- 通俗理解：将信号量看作更衣室的手环，拿到手环才可以进入更衣室否则等待。
+- 当手环数量为1时，信号量的作用和互斥锁一致。
+- 信号量API
+```c
+P(&semv); //申请一个手环，如果拿到就返回否则等待。
+V(&semv); //用户生成一个手环，交给等待用户或者管理者。
+```
+
+
+
+## 经典同步问题
+
+### 生产者消费者问题
+- 问题描述：
+  - 生产者：不断向队列中Push对象。
+  - 消费者：不断从队列中Pop对象。
+  - 队列有一定的容量限制。
+- 简化问题：
+  - 生产者：打印左括号(。
+  - 消费者：打印右括号)。
+  - 打印的左右括号需要相互匹配，括号嵌套深度为N。
+
+- 条件变量解决
+```c
+#define N 6
+
+int count = 0;
+void producer(){
+    while(1){
+        mutex_lock(&mutex);
+        while(count == N){//或者改用if,但while更好。
+            wait(&empty, &mutex);
+        }
+        print("("); 
+        count++;
+        broadcast(&fill); //用signal对应if.
+        mutex_unlock(&mutex);
+    }
+}
+
+void consumer(){
+    while(1){
+        mutex_lock(&mutex);
+        while(count == 0){ //或者改用if,但while更好。
+            wait(&fill, &mutex);
+        }
+        print(")"); 
+        count--;
+        broadcast(&empty); //用signal对应if.
+        mutex_unlock(&mutex);
+    }
+}
+```
+
+- 信号量解决
+```c
+#define N 6
+
+sem_t empty = N, fill = 0;
+void producer(){
+    P(&empty);
+    print("(");
+    V(&fill); 
+}
+
+void consumer(){
+    P(&fill);
+    print(")");
+    V(&empty); 
+}
+```
+- 但请注意：<font color=red size=3>复杂同步问题有效的信号量很难设计，所以条件变量才是正道!!<del>(正道的光...)</del></font>
+
+### 哲学家吃饭问题
+- 问题描述：有若干哲学家在圆桌上吃饭，每两个哲学家之间有一把叉子，一位哲学家需要同时获得左右两把叉子才能吃饭，如何调度吃饭。
+- 条件变量
+```c
+#define cond empty[left] && empty[right]
+
+void philosopher(){
+    mutex_lock(&mutex);
+    while(!cond){
+        wait(&cv, &mutex);
+    }
+    get_forks();
+    mutex_unlock(&mutex);
+
+    philosopher_eat_dinner();
+
+    mutex_lock(&mutex);
+    give_back_forks();
+    broadcast(&cv);
+    mutex_unlock(&mutex);
+    
+}
+```
+- 或者设置一个管理员，让哲学家去申请叉子，管理员负责分配。

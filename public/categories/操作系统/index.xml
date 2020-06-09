@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Sat, 30 May 2020 21:37:09 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jun 2020 22:29:06 +0800</lastBuildDate>
     
 	<atom:link href="https://jarviszly.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>同步{条件变量，信号量，生产者消费者问题，哲学家吃饭问题}</title>
+      <link>https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%90%8C%E6%AD%A5%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E4%BF%A1%E5%8F%B7%E9%87%8F%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98%E5%93%B2%E5%AD%A6%E5%AE%B6%E5%90%83%E9%A5%AD%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Tue, 09 Jun 2020 22:29:06 +0800</pubDate>
+      
+      <guid>https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%90%8C%E6%AD%A5%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E4%BF%A1%E5%8F%B7%E9%87%8F%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98%E5%93%B2%E5%AD%A6%E5%AE%B6%E5%90%83%E9%A5%AD%E9%97%AE%E9%A2%98/</guid>
+      <description>同步  两个(或多个)线程在一定时间内保持一定的关联。 直白的来说：  互斥：各个线程单独完成自己的事情。 同步：多个线程协作完成一件事情，所以在某些时候线程之间需要知道彼此的状态。    实现同步 条件变量(极其重要)  同步的本质: 当一个条件满足时，线程继续执行，否则等待。 则用一个条件变量(对象)对应表示该条件。  当条件不满足时，在该对象处等待。 当一个线程发现某个条件满足时，唤醒该条件变量对应的线程(一个或者所有)   条件变量API  1 2 3  wait(&amp;amp;cv); //在cv条件变量处等在。 signal(&amp;amp;cv)/notify(&amp;amp;cv); //唤醒一个cv条件变量对应线程。 broadcast(&amp;amp;cv)/notifyall(&amp;amp;cv); //唤醒cv条件变量对应的所有线程。    在使用条件变量时，常常需要使用某个变量来表示条件，而该变量是所有线程共享的，所以在访问时需要使用锁(互斥锁)来保护，所以条件变量搭配互斥锁一起完成同步  1 2 3 4 5 6 7  mutex_lock(&amp;amp;mutex); // do some things wait(&amp;amp;cv,&amp;amp;mutex); //在wait中会先释放掉该互斥锁，再等待，被唤醒时会先尝试重新获得该互斥锁。 // do some things mutex_unlock(&amp;amp;mutex); //signal不需要用mutexlock保护    需要注意的是使用条件变量是一定一个条件对应一个条件变量。  信号量  信号量 = 带计数条件变量(相当于条件变量和控制条件的变量综合) + 互斥锁。 通俗理解：将信号量看作更衣室的手环，拿到手环才可以进入更衣室否则等待。 当手环数量为1时，信号量的作用和互斥锁一致。 信号量API  1 2  P(&amp;amp;semv); //申请一个手环，如果拿到就返回否则等待。 V(&amp;amp;semv); //用户生成一个手环，交给等待用户或者管理者。   经典同步问题 生产者消费者问题   问题描述：</description>
+    </item>
     
     <item>
       <title>并发数据结构malloc Free算法</title>
