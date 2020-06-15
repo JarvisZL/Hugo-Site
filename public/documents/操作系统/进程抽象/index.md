@@ -1,0 +1,55 @@
+# 进程抽象
+
+
+## 回顾操作系统
+- 在应用程序看来操作系统就是一组系统调用。
+- 在底层硬件看来操作系统就是一个C程序，一个状态机。
+- 操作系统是对进程状态机的模拟，这种模拟就是所谓的虚拟化，进程认为自己独占cpu。
+
+- 操作系统中常见API
+  - 进程(状态机)管理
+    - fork: 拷贝一份当前的进程(包括内存，寄存器现场，操作系统的对象，libc中缓冲区等等)。
+    - execve: 替换当前进程为另一个进程，从头执行。
+    - exit: 退出当前进程。
+  - 存储(地址空间)管理
+    - mmap: 地址空间和物理内存之间的映射。
+    - brk: 虚拟地址空间管理
+  - 文件(数据对象)管理
+    - open,close: 文件访问管理
+    - read,write: 数据管理
+    - mkdir, link, unlink: 目录管理
+
+## 进程抽象-fork,execve,exit
+
+### fork
+- 复制一个一摸一样的进程出来，一个返回子进程pid，子进程则返回0。
+
+```c
+#define N 2
+
+for(int i = 0; i < N; ++i){
+    fork();
+    printf("hello,world.");
+}
+```
+- 运行这部分代码，可以发现在shell标准输出中打印出了6个hello,world.
+- 但是如果重定向到文件或者用管道和wc统计有多少行，则会发现有8个hello,world.
+- 原因就是重定向到文件等存在缓冲区，fork同样会复制缓冲区。
+
+### execve
+- 替换当前进程为目标进程，并开始执行。
+```c
+execve(filename, argv, envp);
+```
+
+- 使用env命令可以查看当前环境变量
+  - PATH:可执行文件的搜索目录，当要执行某一个可执行文件时，会按照PATH中的路经搜索。
+  - PWD：当前路经
+  - HOME：home目录
+  - PS1：shell的提示符
+ 
+### exit
+- 不同的exit函数
+  - exit(0): stdlib.h中的libc函数，其在执行过程中会调用atexit注册的函数。
+  - _exit(0): glibc的syscall warpper，其在执行过程中执行exit_group终止当前进程中所有线程。不会调用atexit
+  - syscall(SYS_exit,0): 强制调用exit系统调用，执行exit终止当前线程，不会调用atexit.

@@ -7,10 +7,23 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Thu, 11 Jun 2020 22:51:05 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 15 Jun 2020 12:30:41 +0800</lastBuildDate>
     
 	<atom:link href="https://jarviszly.com/documents/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>进程抽象</title>
+      <link>https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E6%8A%BD%E8%B1%A1/</link>
+      <pubDate>Mon, 15 Jun 2020 12:30:41 +0800</pubDate>
+      
+      <guid>https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E6%8A%BD%E8%B1%A1/</guid>
+      <description>回顾操作系统   在应用程序看来操作系统就是一组系统调用。
+  在底层硬件看来操作系统就是一个C程序，一个状态机。
+  操作系统是对进程状态机的模拟，这种模拟就是所谓的虚拟化，进程认为自己独占cpu。
+  操作系统中常见API
+ 进程(状态机)管理  fork: 拷贝一份当前的进程(包括内存，寄存器现场，操作系统的对象，libc中缓冲区等等)。 execve: 替换当前进程为另一个进程，从头执行。 exit: 退出当前进程。   存储(地址空间)管理  mmap: 地址空间和物理内存之间的映射。 brk: 虚拟地址空间管理   文件(数据对象)管理  open,close: 文件访问管理 read,write: 数据管理 mkdir, link, unlink: 目录管理      进程抽象-fork,execve,exit fork  复制一个一摸一样的进程出来，一个返回子进程pid，子进程则返回0。  1 2 3 4 5 6  #define N 2 for(int i = 0; i &amp;lt; N; ++i){ fork(); printf(&amp;#34;hello,world.</description>
+    </item>
     
     <item>
       <title>虚存,Linux进程地址空间</title>
