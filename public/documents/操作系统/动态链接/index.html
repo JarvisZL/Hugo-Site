@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>动态链接 | 浙语临湖</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E6%8A%BD%E8%B1%A1/" /><link rel="canonical" href="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="动态链接" />
+<meta property="og:description" content="静态链接  为了一个程序不同部分的解耦，可以将一个程序分成若干个文件是十分必要的，那么不同的文件最终怎么变成一个可执行文件加载到操作系统上执行的。  1 2 3 4 5 6 7 8 9 10 11 12 13 14  //a.c int foo(int a, int b){ return a &#43; b; } //b.c int x = 100, y = 200; //main.c extern int x,y; int foo(int a,int b); int main(){ printf(&#34;%d &#43; %d = %d\n&#34;,x,y,foo(x,y)); }     不同的文件通过编译形成不同的$.o$文件，查看$main.o$可以发现，其对$x,y,foo$的使用，都使用$0(%rip)$代替($rip$寻址，但偏移量不知)。
+  在静态链接的之后，就会根据ELF文件头信息，正确地填入偏移量，ELF文件中都是符号地址-4，是因为此时rip指向的是下一条指令，其相对于所需填入的地方增加了4个字节($0(%rip)$中的0占4字节)。
+  静态ELF加载器：
+ 在加载静态链接得到的可执行文件时，直接根据ELF程序头表中信息使用mmap将文件中对应部分映射到地址空间中即可。    动态链接  如果都是用静态链接太耗费资源。  需求1  所需动态链接的库只含有代码。 实现：直接使用mmap将这部分映射到对应程序的地址空间，这样也保证了在物理内存中只有一个该库函数的备份。 实现前提：代码需要是位置无关代码，引用跳转使用(PC相对寻址)。  需求2  所需动态链接的库含有本库使用的代码和数据。 实现：同样只需要mmap，因为数据也可以根据数据和PC的Offset来相对寻址。  需求3  在一个动态链接库中可以使用其他动态链接库的符号。 实现：使用表来记录相应的函数的地址。比如在foo中调用bar，动态链接器先加载bar所在的库，然后加载foo时，就将bar所在的地址填入表格中。  Linux中的动态链接-GOT和PLT   linux中动态链接同样使用了需求3类似的理念，用表格来记录地址，一个程序有一个GOT表，其结构如下：" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5/" />
+<meta property="article:published_time" content="2020-06-15T23:05:37+08:00" />
+<meta property="article:modified_time" content="2020-06-15T23:05:37+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="动态链接"/>
+<meta name="twitter:description" content="静态链接  为了一个程序不同部分的解耦，可以将一个程序分成若干个文件是十分必要的，那么不同的文件最终怎么变成一个可执行文件加载到操作系统上执行的。  1 2 3 4 5 6 7 8 9 10 11 12 13 14  //a.c int foo(int a, int b){ return a &#43; b; } //b.c int x = 100, y = 200; //main.c extern int x,y; int foo(int a,int b); int main(){ printf(&#34;%d &#43; %d = %d\n&#34;,x,y,foo(x,y)); }     不同的文件通过编译形成不同的$.o$文件，查看$main.o$可以发现，其对$x,y,foo$的使用，都使用$0(%rip)$代替($rip$寻址，但偏移量不知)。
+  在静态链接的之后，就会根据ELF文件头信息，正确地填入偏移量，ELF文件中都是符号地址-4，是因为此时rip指向的是下一条指令，其相对于所需填入的地方增加了4个字节($0(%rip)$中的0占4字节)。
+  静态ELF加载器：
+ 在加载静态链接得到的可执行文件时，直接根据ELF程序头表中信息使用mmap将文件中对应部分映射到地址空间中即可。    动态链接  如果都是用静态链接太耗费资源。  需求1  所需动态链接的库只含有代码。 实现：直接使用mmap将这部分映射到对应程序的地址空间，这样也保证了在物理内存中只有一个该库函数的备份。 实现前提：代码需要是位置无关代码，引用跳转使用(PC相对寻址)。  需求2  所需动态链接的库含有本库使用的代码和数据。 实现：同样只需要mmap，因为数据也可以根据数据和PC的Offset来相对寻址。  需求3  在一个动态链接库中可以使用其他动态链接库的符号。 实现：使用表来记录相应的函数的地址。比如在foo中调用bar，动态链接器先加载bar所在的库，然后加载foo时，就将bar所在的地址填入表格中。  Linux中的动态链接-GOT和PLT   linux中动态链接同样使用了需求3类似的理念，用表格来记录地址，一个程序有一个GOT表，其结构如下："/>
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "动态链接",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/jarviszly.com\/documents\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszly.com\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "documents","wordcount":  143 ,
+        "url": "https:\/\/jarviszly.com\/documents\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5\/","datePublished": "2020-06-15T23:05:37\x2b08:00","dateModified": "2020-06-15T23:05:37\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "JarvisZhang",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszly.com\/images\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/forkawesome/fork-awesome.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://jarviszly.com">浙语临湖</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://jarviszly.com">浙语临湖</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">动态链接</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://jarviszly.com" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
+                </a>&nbsp;<span class="post-category">included in&nbsp;<i class="far fa-folder fa-fw"></i><a href="https://jarviszly.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;</span></div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-06-15>2020-06-15</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 143 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>1 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#静态链接">静态链接</a></li>
+    <li><a href="#动态链接">动态链接</a>
+      <ul>
+        <li><a href="#需求1">需求1</a></li>
+        <li><a href="#需求2">需求2</a></li>
+        <li><a href="#需求3">需求3</a></li>
+        <li><a href="#linux中的动态链接-got和plt">Linux中的动态链接-GOT和PLT</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#静态链接">静态链接</a></li>
+    <li><a href="#动态链接">动态链接</a>
+      <ul>
+        <li><a href="#需求1">需求1</a></li>
+        <li><a href="#需求2">需求2</a></li>
+        <li><a href="#需求3">需求3</a></li>
+        <li><a href="#linux中的动态链接-got和plt">Linux中的动态链接-GOT和PLT</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><a class="post-dummy-target" id="静态链接"></a><h2>静态链接</h2>
+<ul>
+<li>为了一个程序不同部分的解耦，可以将一个程序分成若干个文件是十分必要的，那么不同的文件最终怎么变成一个可执行文件加载到操作系统上执行的。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="c1">//a.c
+</span><span class="c1"></span><span class="kt">int</span> <span class="nf">foo</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span><span class="p">{</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">//b.c
+</span><span class="c1"></span><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">200</span><span class="p">;</span>
+
+<span class="c1">//main.c
+</span><span class="c1"></span><span class="k">extern</span> <span class="kt">int</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">;</span>
+<span class="kt">int</span> <span class="nf">foo</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span><span class="kt">int</span> <span class="n">b</span><span class="p">)</span><span class="p">;</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="p">)</span><span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;</span><span class="s">%d + %d = %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">foo</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="p">)</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>不同的文件通过编译形成不同的$.o$文件，查看$main.o$可以发现，其对$x,y,foo$的使用，都使用$0(%rip)$代替($rip$寻址，但偏移量不知)。</p>
+</li>
+<li>
+<p>在静态链接的之后，就会根据ELF文件头信息，正确地填入偏移量，ELF文件中都是符号地址-4，是因为此时rip指向的是下一条指令，其相对于所需填入的地方增加了4个字节($0(%rip)$中的0占4字节)。</p>
+</li>
+<li>
+<p>静态ELF加载器：</p>
+<ul>
+<li>在加载静态链接得到的可执行文件时，直接根据ELF程序头表中信息使用mmap将文件中对应部分映射到地址空间中即可。</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="动态链接"></a><h2>动态链接</h2>
+<ul>
+<li>如果都是用静态链接太耗费资源。</li>
+</ul>
+<a class="post-dummy-target" id="需求1"></a><h3>需求1</h3>
+<ul>
+<li>所需动态链接的库只含有代码。</li>
+<li>实现：直接使用mmap将这部分映射到对应程序的地址空间，这样也保证了在物理内存中只有一个该库函数的备份。</li>
+<li>实现前提：代码需要是位置无关代码，引用跳转使用(PC相对寻址)。</li>
+</ul>
+<a class="post-dummy-target" id="需求2"></a><h3>需求2</h3>
+<ul>
+<li>所需动态链接的库含有本库使用的代码和数据。</li>
+<li>实现：同样只需要mmap，因为数据也可以根据数据和PC的Offset来相对寻址。</li>
+</ul>
+<a class="post-dummy-target" id="需求3"></a><h3>需求3</h3>
+<ul>
+<li><font color=red size=3>在一个动态链接库中可以使用其他动态链接库的符号。</font></li>
+<li>实现：使用表来记录相应的函数的地址。比如在foo中调用bar，动态链接器先加载bar所在的库，然后加载foo时，就将bar所在的地址填入表格中。</li>
+</ul>
+<a class="post-dummy-target" id="linux中的动态链接-got和plt"></a><h3>Linux中的动态链接-GOT和PLT</h3>
+<ul>
+<li>
+<p>linux中动态链接同样使用了需求3类似的理念，用表格来记录地址，一个程序有一个GOT表，其结构如下：</p>
+<ul>
+<li>$GOT[0] = .dynamic$ (所在的节的首地址)</li>
+<li>$GOT[1] = link~map$  (用于遍历依赖的动态链接库)</li>
+<li>$GOT[2] = _dl_runtime_resolve$地址，该函数用来解析符号(即确定符号的地址)。</li>
+<li>剩下的表项就是一个个所需的动态符号地址。</li>
+</ul>
+</li>
+<li>
+<p>那么如果一开始就把所有符号都解析一遍，可能最后程序使用的只是极少部分，显然不合理。</p>
+</li>
+<li>
+<p>一个trival解决办法</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="c1">// 将调用printf函数翻译成指令 call printf_internal
+</span><span class="c1"></span>
+<span class="kt">int</span> <span class="nf">printf_internal</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">fmt</span><span class="p">,</span> <span class="p">.</span><span class="p">.</span><span class="p">.</span><span class="p">)</span><span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">GOT</span><span class="p">[</span><span class="n">PRINTF</span><span class="p">]</span><span class="p">)</span><span class="p">{</span>
+        <span class="n">GOT</span><span class="p">[</span><span class="n">PRINTF</span><span class="p">]</span> <span class="o">=</span> <span class="n">call_dl_runtime_resolve</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;</span><span class="s">printf</span><span class="s">&#34;</span><span class="p">)</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">GOT</span><span class="p">[</span><span class="n">PRINTF</span><span class="p">]</span><span class="p">(</span><span class="p">.</span><span class="p">.</span><span class="p">.</span><span class="p">)</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>但问题在于每一次调用prinf都要执行一次判断。</li>
+<li>引入plt的巧妙设计使得不需要这一次额外的判断，具体代码如下</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">&lt;.plt&gt;
+    pushq &lt;GOT+0x8&gt;
+    jmpq &lt;GOT+0x10&gt;
+    nopl 0x0(%rax)
+
+&lt;printf@plt&gt;
+    jmpq printf@GOT
+    pushq 0x0
+    jmpq &lt;.plt&gt;
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>初始的时候 $printf@GOT$的地址就是其下一条指令$pushq$ 0x0的地址。
+<ul>
+<li>首次调用$printf$:
+<ul>
+<li>先$push$ 0x0(这里0表示$printf$)</li>
+<li>跳转到$&lt;.plt&gt;$执行</li>
+<li>将$GOT[1]$压栈</li>
+<li>跳转$GOT[2]$执行(即去解析$printf$的地址)</li>
+</ul>
+</li>
+<li>首次调用后，会将$printf$的地址填入$printf@GOT$处，则之后调用，直接通过该处地址直接跳转执行。</li>
+</ul>
+</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-06-15</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span><a href="//twitter.com/share?url=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%2593%258D%25E4%25BD%259C%25E7%25B3%25BB%25E7%25BB%259F%2f%25E5%258A%25A8%25E6%2580%2581%25E9%2593%25BE%25E6%258E%25A5%2f&amp;text=%e5%8a%a8%e6%80%81%e9%93%be%e6%8e%a5&amp;via=" target="_blank" title="Share on Twitter">
+            <i class="fab fa-twitter fa-fw"></i>
+        </a><a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%2593%258D%25E4%25BD%259C%25E7%25B3%25BB%25E7%25BB%259F%2f%25E5%258A%25A8%25E6%2580%2581%25E9%2593%25BE%25E6%258E%25A5%2f" target="_blank" title="Share on Facebook">
+            <i class="fab fa-facebook-square fa-fw"></i>
+        </a><a href="//reddit.com/submit?url=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%2593%258D%25E4%25BD%259C%25E7%25B3%25BB%25E7%25BB%259F%2f%25E5%258A%25A8%25E6%2580%2581%25E9%2593%25BE%25E6%258E%25A5%2f&amp;title=%e5%8a%a8%e6%80%81%e9%93%be%e6%8e%a5" target="_blank" title="Share on Reddit">
+            <i class="fab fa-reddit fa-fw"></i>
+        </a></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://jarviszly.com">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E6%8A%BD%E8%B1%A1/" class="prev" rel="prev" title="进程抽象"><i class="fas fa-angle-left fa-fw"></i>进程抽象</a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright">
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://jarviszly.com/" target="_blank">Lingyu Zhang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.miit.gov.cn/">苏ICP备20008191号-1</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.gov.cn/portal/index"></i>苏公网安备 32011302320886号</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/js/lib/jquery/jquery.slim.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><script src="/js/lib/katex/katex.min.js"></script><script defer src="/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script defer src="/js/lib/katex/copy-tex.min.js"></script><script defer src="/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$$", right: "$$", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/js/blog.min.js"></script>
+</body>
+</html>
