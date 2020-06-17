@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>DemandPaging | 浙语临湖</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%A4%84%E7%90%86%E5%99%A8%E8%B0%83%E5%BA%A6/" /><link rel="canonical" href="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/demandpaging/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="DemandPaging" />
+<meta property="og:description" content="Demand Paging(按需求分配页面)  mmap实际上只是做了一些标记，并没有实际上的分配物理内存，所以mmap的速度很快。 实际上，在execve重置进程的时候，此时只需要  在物理内存中分配一个页面给该进程的cr3. 修改进程对应的映射函数或者说映射数据结构(cr3), 使得进程虚拟地址空间中的内核代码和物理内存中的os代码建立映射。 在操作系统的数据中必然存在一个数据结构来表示该进程，如下 1 2 3 4 5 6 7 8 9  struct mm_area{ _Area range; //内存映射的区间  int prot, flags, fd, offset;//映射的属性  struct page* pages; //用于遍历该映射中所有的页面。 } struct task{ struct mm_area areas[16]; ... }   只需要在加载时设置好这些$mm_area$,就可以。
+ 然后将$rip$置为$ELF~entry$(静态链接)或者 $lib.so$(动态链接)执行即可。 当发生缺页情况或者dereference nullptr时，cr2寄存器中会保留发生异常的地址，然后根据这些信息到$tas$k的$mm_area$去查询有没有匹配的，如果没有匹配则出现异常，否则根据$mm_area$中信息从磁盘中读取数据到物理内存中。    Swap  Demand paging的另一个用途就是其反方向。 一个进程已经分配了页面，但我们可以主动将该页面swap out,保存到磁盘中，然后使用原来该页面的物理内存，当又需要该部分数据时，又swap in. LRU是较好的Swap策略。  Shared Objects 和 外部符号   动态链接库采用GOT表格，而如果修改对应的GOT表项，比如将printf对应的表项的地址改为自己写的printf_wrapper的地址，那么当我们调用printf时就会去执行printf_wrapper，而我们在printf_wrapper中同样可以去调用printf函数，并且在之前打印一些log，这样我们就得到了ltrace" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/demandpaging/" />
+<meta property="article:published_time" content="2020-06-17T11:04:30+08:00" />
+<meta property="article:modified_time" content="2020-06-17T11:04:30+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="DemandPaging"/>
+<meta name="twitter:description" content="Demand Paging(按需求分配页面)  mmap实际上只是做了一些标记，并没有实际上的分配物理内存，所以mmap的速度很快。 实际上，在execve重置进程的时候，此时只需要  在物理内存中分配一个页面给该进程的cr3. 修改进程对应的映射函数或者说映射数据结构(cr3), 使得进程虚拟地址空间中的内核代码和物理内存中的os代码建立映射。 在操作系统的数据中必然存在一个数据结构来表示该进程，如下 1 2 3 4 5 6 7 8 9  struct mm_area{ _Area range; //内存映射的区间  int prot, flags, fd, offset;//映射的属性  struct page* pages; //用于遍历该映射中所有的页面。 } struct task{ struct mm_area areas[16]; ... }   只需要在加载时设置好这些$mm_area$,就可以。
+ 然后将$rip$置为$ELF~entry$(静态链接)或者 $lib.so$(动态链接)执行即可。 当发生缺页情况或者dereference nullptr时，cr2寄存器中会保留发生异常的地址，然后根据这些信息到$tas$k的$mm_area$去查询有没有匹配的，如果没有匹配则出现异常，否则根据$mm_area$中信息从磁盘中读取数据到物理内存中。    Swap  Demand paging的另一个用途就是其反方向。 一个进程已经分配了页面，但我们可以主动将该页面swap out,保存到磁盘中，然后使用原来该页面的物理内存，当又需要该部分数据时，又swap in. LRU是较好的Swap策略。  Shared Objects 和 外部符号   动态链接库采用GOT表格，而如果修改对应的GOT表项，比如将printf对应的表项的地址改为自己写的printf_wrapper的地址，那么当我们调用printf时就会去执行printf_wrapper，而我们在printf_wrapper中同样可以去调用printf函数，并且在之前打印一些log，这样我们就得到了ltrace"/>
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "DemandPaging",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/jarviszly.com\/documents\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/demandpaging\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszly.com\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "documents","wordcount":  57 ,
+        "url": "https:\/\/jarviszly.com\/documents\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/demandpaging\/","datePublished": "2020-06-17T11:04:30\x2b08:00","dateModified": "2020-06-17T11:04:30\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "JarvisZhang",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszly.com\/images\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/forkawesome/fork-awesome.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://jarviszly.com">浙语临湖</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://jarviszly.com">浙语临湖</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">DemandPaging</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://jarviszly.com" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
+                </a>&nbsp;<span class="post-category">included in&nbsp;<i class="far fa-folder fa-fw"></i><a href="https://jarviszly.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;</span></div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-06-17>2020-06-17</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 57 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>1 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#demand-paging按需求分配页面">Demand Paging(按需求分配页面)</a></li>
+    <li><a href="#swap">Swap</a></li>
+    <li><a href="#shared-objects-和-外部符号">Shared Objects 和 外部符号</a></li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#demand-paging按需求分配页面">Demand Paging(按需求分配页面)</a></li>
+    <li><a href="#swap">Swap</a></li>
+    <li><a href="#shared-objects-和-外部符号">Shared Objects 和 外部符号</a></li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><a class="post-dummy-target" id="demand-paging按需求分配页面"></a><h2>Demand Paging(按需求分配页面)</h2>
+<ul>
+<li>mmap实际上只是做了一些标记，并没有实际上的分配物理内存，所以mmap的速度很快。</li>
+<li>实际上，在execve重置进程的时候，此时只需要
+<ul>
+<li>在物理内存中分配一个页面给该进程的cr3.</li>
+<li>修改进程对应的映射函数或者说映射数据结构(cr3), 使得进程虚拟地址空间中的内核代码和物理内存中的os代码建立映射。</li>
+<li>在操作系统的数据中必然存在一个数据结构来表示该进程，如下
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="k">struct</span> <span class="n">mm_area</span><span class="p">{</span>
+    <span class="n">_Area</span> <span class="n">range</span><span class="p">;</span> <span class="c1">//内存映射的区间
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="n">prot</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">offset</span><span class="p">;</span><span class="c1">//映射的属性
+</span><span class="c1"></span>    <span class="k">struct</span> <span class="n">page</span><span class="o">*</span> <span class="n">pages</span><span class="p">;</span> <span class="c1">//用于遍历该映射中所有的页面。
+</span><span class="c1"></span><span class="p">}</span>
+<span class="k">struct</span> <span class="n">task</span><span class="p">{</span>
+    <span class="k">struct</span> <span class="n">mm_area</span> <span class="n">areas</span><span class="p">[</span><span class="mi">16</span><span class="p">]</span><span class="p">;</span>
+    <span class="p">.</span><span class="p">.</span><span class="p">.</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>只需要在加载时设置好这些$mm_area$,就可以。</p>
+</li>
+<li>然后将$rip$置为$ELF~entry$(静态链接)或者 $lib.so$(动态链接)执行即可。</li>
+<li>当发生缺页情况或者dereference nullptr时，cr2寄存器中会保留发生异常的地址，然后根据这些信息到$tas$k的$mm_area$去查询有没有匹配的，如果没有匹配则出现异常，否则根据$mm_area$中信息从磁盘中读取数据到物理内存中。</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="swap"></a><h2>Swap</h2>
+<ul>
+<li>Demand paging的另一个用途就是其反方向。</li>
+<li>一个进程已经分配了页面，但我们可以主动将该页面swap out,保存到磁盘中，然后使用原来该页面的物理内存，当又需要该部分数据时，又swap in.</li>
+<li>LRU是较好的Swap策略。</li>
+</ul>
+<a class="post-dummy-target" id="shared-objects-和-外部符号"></a><h2>Shared Objects 和 外部符号</h2>
+<ul>
+<li>
+<p>动态链接库采用GOT表格，而如果修改对应的GOT表项，比如将printf对应的表项的地址改为自己写的printf_wrapper的地址，那么当我们调用printf时就会去执行printf_wrapper，而我们在printf_wrapper中同样可以去调用printf函数，并且在之前打印一些log，这样我们就得到了<font color=red size=3>ltrace</font></p>
+</li>
+<li>
+<p>如果两个动态库中同时定义了同一个动态符号，则先到先得，如果我们能让自己写的一个动态库在其他所有动态库之前被加载进去，那么就能使得进程在调用某些函数时，进入我们的动态库执行，这就实现了<font color=red size=3>lhooking</font>，在linux中提供了环境变量<font color=red size=3>LD_PRELOAD</font>，设置这个环境变量为相应的动态库，其就能在加载完系统必须的动态库后第一个被加载。</p>
+</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-06-17</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span><a href="//twitter.com/share?url=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%2593%258D%25E4%25BD%259C%25E7%25B3%25BB%25E7%25BB%259F%2fdemandpaging%2f&amp;text=DemandPaging&amp;via=" target="_blank" title="Share on Twitter">
+            <i class="fab fa-twitter fa-fw"></i>
+        </a><a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%2593%258D%25E4%25BD%259C%25E7%25B3%25BB%25E7%25BB%259F%2fdemandpaging%2f" target="_blank" title="Share on Facebook">
+            <i class="fab fa-facebook-square fa-fw"></i>
+        </a><a href="//reddit.com/submit?url=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%2593%258D%25E4%25BD%259C%25E7%25B3%25BB%25E7%25BB%259F%2fdemandpaging%2f&amp;title=DemandPaging" target="_blank" title="Share on Reddit">
+            <i class="fab fa-reddit fa-fw"></i>
+        </a></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://jarviszly.com">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%A4%84%E7%90%86%E5%99%A8%E8%B0%83%E5%BA%A6/" class="prev" rel="prev" title="处理器调度"><i class="fas fa-angle-left fa-fw"></i>处理器调度</a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright">
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://jarviszly.com/" target="_blank">Lingyu Zhang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.miit.gov.cn/">苏ICP备20008191号-1</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.gov.cn/portal/index"></i>苏公网安备 32011302320886号</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/js/lib/jquery/jquery.slim.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><script src="/js/lib/katex/katex.min.js"></script><script defer src="/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script defer src="/js/lib/katex/copy-tex.min.js"></script><script defer src="/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$$", right: "$$", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/js/blog.min.js"></script>
+</body>
+</html>

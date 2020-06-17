@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Sun, 07 Jun 2020 13:38:18 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 16 Jun 2020 16:37:05 +0800</lastBuildDate>
     
 	<atom:link href="https://jarviszly.com/blogs/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Android Monkey GetMainApps</title>
+      <link>https://jarviszly.com/blogs/android-monkey-getmainapps/</link>
+      <pubDate>Tue, 16 Jun 2020 16:37:05 +0800</pubDate>
+      
+      <guid>https://jarviszly.com/blogs/android-monkey-getmainapps/</guid>
+      <description>getMainApps函数 作用  根据命令中-p和-c参数来在设备中寻找符合条件的Activities.  代码分析 1 2 3 4 5 6 7 8 9 10 11 12  try{ mMainCategories.forEach { if (it == null) return@forEach val intent = Intent(Intent.ACTION_MAIN) if (it.isNotEmpty()) { intent.addCategory(it) } val mainApps = mPm!!.queryIntentActivities(intent, null, 0, UserHandle.myUserId()) ... } ... }    上述代码设置隐式的Intent,然后通过mpm查询设备中符合Intent这些属性的Activity放入mainApps中。 此处mainApps实际上是一个list&amp;lt;ResolveInfo&amp;gt;  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23  try{ .</description>
+    </item>
     
     <item>
       <title>买股票最大利润DP</title>
