@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Android Monkey EventSource | 浙语临湖</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszly.com/blogs/android-monkey-run/" /><link rel="canonical" href="https://jarviszly.com/blogs/android-monkey-eventsource/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="Android Monkey EventSource" />
+<meta property="og:description" content="run函数中申明不同的EventSource  脚本运行：命令中使用了-f且只有一个脚本则直接使用该脚本进行测试  1 2 3 4 5 6 7  mScriptFileNames.size == 1 -&gt; { //script mode, ignore other options  mEventSource = MonkeySourceScript(mRandom!!, mScriptFileNames[0]!!, mThrottle, mRandomizeThrottle, mProfileWaitTime, mDeviceSleepTime) mEventSource.setVerbose(mVerbose) mCountEvents = false }    随机脚本运行：命令中使用了-f且包含多个脚本则随机运行这些脚本进行测试 如果有参数setup,则先运行带-setup的脚本用于配置环境等  1 2 3 4 5 6 7 8 9 10 11 12 13  mScriptFileNames.size &gt; 1 -&gt; { mEventSource = if (mSetupFileName != null) { mCount&#43;&#43; MonkeySourceRandomScript(mSetupFileName, mScriptFileNames, mThrottle, mRandomizeThrottle, mRandom!" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jarviszly.com/blogs/android-monkey-eventsource/" />
+<meta property="article:published_time" content="2020-06-17T17:33:09+08:00" />
+<meta property="article:modified_time" content="2020-06-17T17:33:09+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Android Monkey EventSource"/>
+<meta name="twitter:description" content="run函数中申明不同的EventSource  脚本运行：命令中使用了-f且只有一个脚本则直接使用该脚本进行测试  1 2 3 4 5 6 7  mScriptFileNames.size == 1 -&gt; { //script mode, ignore other options  mEventSource = MonkeySourceScript(mRandom!!, mScriptFileNames[0]!!, mThrottle, mRandomizeThrottle, mProfileWaitTime, mDeviceSleepTime) mEventSource.setVerbose(mVerbose) mCountEvents = false }    随机脚本运行：命令中使用了-f且包含多个脚本则随机运行这些脚本进行测试 如果有参数setup,则先运行带-setup的脚本用于配置环境等  1 2 3 4 5 6 7 8 9 10 11 12 13  mScriptFileNames.size &gt; 1 -&gt; { mEventSource = if (mSetupFileName != null) { mCount&#43;&#43; MonkeySourceRandomScript(mSetupFileName, mScriptFileNames, mThrottle, mRandomizeThrottle, mRandom!"/>
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Android Monkey EventSource",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/jarviszly.com\/blogs\/android-monkey-eventsource\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszly.com\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "blogs","keywords": "Android, Monkey","wordcount":  634 ,
+        "url": "https:\/\/jarviszly.com\/blogs\/android-monkey-eventsource\/","datePublished": "2020-06-17T17:33:09\x2b08:00","dateModified": "2020-06-17T17:33:09\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "JarvisZhang",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszly.com\/images\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/forkawesome/fork-awesome.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://jarviszly.com">浙语临湖</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://jarviszly.com">浙语临湖</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">Android Monkey EventSource</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://jarviszly.com" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
+                </a>&nbsp;</div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-06-17>2020-06-17</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 634 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>3 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#run函数中申明不同的eventsource">run函数中申明不同的EventSource</a></li>
+    <li><a href="#monkeysourcerandom分析">MonkeySourceRandom分析</a></li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#run函数中申明不同的eventsource">run函数中申明不同的EventSource</a></li>
+    <li><a href="#monkeysourcerandom分析">MonkeySourceRandom分析</a></li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><a class="post-dummy-target" id="run函数中申明不同的eventsource"></a><h2>run函数中申明不同的EventSource</h2>
+<ul>
+<li><strong>脚本运行</strong>：命令中使用了-f且只有一个脚本则直接使用该脚本进行测试</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">mScriptFileNames</span><span class="p">.</span><span class="n">size</span> <span class="p">=</span><span class="p">=</span> <span class="m">1</span> <span class="p">-</span><span class="p">&gt;</span> <span class="p">{</span>
+    <span class="c1">//script mode, ignore other options
+</span><span class="c1"></span>    <span class="n">mEventSource</span> <span class="p">=</span> <span class="n">MonkeySourceScript</span><span class="p">(</span><span class="n">mRandom</span><span class="o">!!</span><span class="p">,</span> <span class="n">mScriptFileNames</span><span class="p">[</span><span class="m">0</span><span class="p">]</span><span class="o">!!</span><span class="p">,</span> 
+        <span class="n">mThrottle</span><span class="p">,</span> <span class="n">mRandomizeThrottle</span><span class="p">,</span> <span class="n">mProfileWaitTime</span><span class="p">,</span> <span class="n">mDeviceSleepTime</span><span class="p">)</span>
+    <span class="n">mEventSource</span><span class="p">.</span><span class="n">setVerbose</span><span class="p">(</span><span class="n">mVerbose</span><span class="p">)</span>
+    <span class="n">mCountEvents</span> <span class="p">=</span> <span class="k">false</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><strong>随机脚本运行</strong>：命令中使用了-f且包含多个脚本则随机运行这些脚本进行测试</li>
+<li>如果有参数setup,则先运行带-setup的脚本用于配置环境等</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">mScriptFileNames</span><span class="p">.</span><span class="n">size</span> <span class="p">&gt;</span> <span class="m">1</span> <span class="p">-</span><span class="p">&gt;</span> <span class="p">{</span>
+    <span class="n">mEventSource</span> <span class="p">=</span> <span class="k">if</span> <span class="p">(</span><span class="n">mSetupFileName</span> <span class="p">!</span><span class="p">=</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">mCount</span><span class="p">+</span><span class="p">+</span>
+            <span class="n">MonkeySourceRandomScript</span><span class="p">(</span><span class="n">mSetupFileName</span><span class="p">,</span> <span class="n">mScriptFileNames</span><span class="p">,</span> <span class="n">mThrottle</span><span class="p">,</span>
+                <span class="n">mRandomizeThrottle</span><span class="p">,</span> <span class="n">mRandom</span><span class="o">!!</span><span class="p">,</span> <span class="n">mProfileWaitTime</span><span class="p">,</span> <span class="n">mDeviceSleepTime</span><span class="p">,</span> 
+                <span class="n">mRandomizeScript</span><span class="p">)</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">MonkeySourceRandomScript</span><span class="p">(</span><span class="n">mScriptFileNames</span><span class="p">,</span> <span class="n">mThrottle</span><span class="p">,</span> <span class="n">mRandomizeScript</span><span class="p">,</span> 
+                <span class="n">mRandom</span><span class="o">!!</span><span class="p">,</span><span class="n">mProfileWaitTime</span><span class="p">,</span> <span class="n">mDeviceSleepTime</span><span class="p">,</span> <span class="n">mRandomizeScript</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="n">mEventSource</span><span class="p">.</span><span class="n">setVerbose</span><span class="p">(</span><span class="n">mVerbose</span><span class="p">)</span>
+    <span class="n">mCountEvents</span> <span class="p">=</span> <span class="k">false</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><strong>远程运行</strong>：如果monkey参数包含“–port”，则通过MonkeySourceNetwork()运行远程调用</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"> <span class="c1">//TODO: implement network-source Monkey
+</span><span class="c1"></span><span class="n">mServerPort</span> <span class="p">!</span><span class="p">=</span> <span class="p">-</span><span class="m">1</span> <span class="p">-</span><span class="p">&gt;</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="n">Exception</span><span class="p">(</span><span class="s">&#34;not implemented yet!&#34;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><strong>随机执行(default)</strong></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">when</span><span class="p">{</span>
+    <span class="p">.</span><span class="p">.</span><span class="p">.</span>
+    <span class="k">else</span> <span class="p">-</span><span class="p">&gt;</span> <span class="p">{</span>
+        <span class="c1">// random source by default
+</span><span class="c1"></span>        <span class="c1">//check seeding performance
+</span><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="n">mVerbose</span> <span class="p">&gt;</span><span class="p">=</span> <span class="m">2</span><span class="p">)</span> <span class="p">{</span> <span class="n">Logger</span><span class="p">.</span><span class="n">lPrintln</span><span class="p">(</span><span class="s">&#34;// Seeded: $mSeed&#34;</span><span class="p">)</span> <span class="p">}</span>
+
+        <span class="n">mEventSource</span> <span class="p">=</span> <span class="n">MonkeySourceRandom</span><span class="p">(</span><span class="n">mRandom</span><span class="o">!!</span><span class="p">,</span> <span class="n">mMainApps</span><span class="p">,</span> <span class="n">mThrottle</span><span class="p">,</span> <span class="n">mRandomizeThrottle</span><span class="p">,</span>
+            <span class="n">mPermissionTargetSystem</span><span class="p">)</span>
+        <span class="n">mEventSource</span><span class="p">.</span><span class="n">setVerbose</span><span class="p">(</span><span class="n">mVerbose</span><span class="p">)</span>
+
+        <span class="c1">//set any of the factors that has been set
+</span><span class="c1"></span>        <span class="n">mFactors</span><span class="p">.</span><span class="n">forEachIndexed</span> <span class="p">{</span> <span class="n">index</span><span class="p">,</span> <span class="n">fl</span> <span class="p">-</span><span class="p">&gt;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">fl</span> <span class="p">&lt;</span><span class="p">=</span> <span class="m">0f</span><span class="p">)</span> <span class="p">{</span>
+                <span class="p">(</span><span class="n">mEventSource</span> <span class="k">as</span> <span class="n">MonkeySourceRandom</span><span class="p">)</span><span class="p">.</span><span class="n">setFactors</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">fl</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">//in random mode, we start with a random activity
+</span><span class="c1"></span>        <span class="p">(</span><span class="n">mEventSource</span> <span class="k">as</span> <span class="n">MonkeySourceRandom</span><span class="p">)</span><span class="p">.</span><span class="n">generateActivity</span><span class="p">(</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>获取对应的EventSource后，会调用相应的validate()函数来验证并调整各个event所占的比例。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="c1">// validate source generator
+</span><span class="c1"></span><span class="k">if</span> <span class="p">(</span><span class="p">!</span><span class="n">mEventSource</span><span class="p">.</span><span class="n">validate</span><span class="p">(</span><span class="p">)</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="p">-</span><span class="m">5</span> <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="monkeysourcerandom分析"></a><h2>MonkeySourceRandom分析</h2>
+<ul>
+<li>该文件对应了默认的事件生成方式。</li>
+<li>当在run中声明这个类的一个对象的时候会调用内部的init, 给各个事件初始化一个比例。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">init</span> <span class="p">{</span>
+    <span class="c1">// default values for random distributions
+</span><span class="c1"></span>    <span class="c1">// note, these are straight percentages, tomatch user input (cmd line args)
+</span><span class="c1"></span>    <span class="c1">// but they will be converted to 0..1 valuesbefore the main loop runs.
+</span><span class="c1"></span>    <span class="n">mFactors</span><span class="p">[</span><span class="n">FACTOR_TOUCH</span><span class="p">]</span> <span class="p">=</span> <span class="m">25.0f</span>
+    <span class="n">mFactors</span><span class="p">[</span><span class="n">FACTOR_MOTION</span><span class="p">]</span> <span class="p">=</span> <span class="m">20.0f</span>
+    <span class="n">mFactors</span><span class="p">[</span><span class="n">FACTOR_TRACKBALL</span><span class="p">]</span> <span class="p">=</span> <span class="m">0f</span>
+    <span class="c1">// Adjust the values if we want to enablerotation by default.
+</span><span class="c1"></span>    <span class="n">mFactors</span><span class="p">[</span><span class="n">FACTOR_ROTATION</span><span class="p">]</span> <span class="p">=</span> <span class="m">10.0f</span>
+    <span class="n">mFactors</span><span class="p">[</span><span class="n">FACTOR_NAV</span><span class="p">]</span> <span class="p">=</span> <span class="m">5.0f</span>
+    <span class="n">mFactors</span><span class="p">[</span><span class="n">FACTOR_MAJORNAV</span><span class="p">]</span> <span class="p">=</span> <span class="m">5.0f</span>
+    <span class="n">mFactors</span><span class="p">[</span><span class="n">FACTOR_SYSOPS</span><span class="p">]</span> <span class="p">=</span> <span class="m">5.0f</span>
+    <span class="n">mFactors</span><span class="p">[</span><span class="n">FACTOR_APPSWITCH</span><span class="p">]</span> <span class="p">=</span> <span class="m">5.0f</span>
+    <span class="n">mFactors</span><span class="p">[</span><span class="n">FACTOR_FLIP</span><span class="p">]</span> <span class="p">=</span> <span class="m">0f</span>
+    <span class="c1">// disbale permission by default
+</span><span class="c1"></span>    <span class="n">mFactors</span><span class="p">[</span><span class="n">FACTOR_PERMISSION</span><span class="p">]</span> <span class="p">=</span> <span class="m">5.0f</span>
+    <span class="n">mFactors</span><span class="p">[</span><span class="n">FACTOR_ANYTHING</span><span class="p">]</span> <span class="p">=</span> <span class="m">10.0f</span>
+    <span class="n">mFactors</span><span class="p">[</span><span class="n">FACTOR_PINCHZOOM</span><span class="p">]</span> <span class="p">=</span> <span class="m">10.0f</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>该类的validate函数及其被调用函数为</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">override</span> <span class="k">fun</span> <span class="nf">validate</span><span class="p">(</span><span class="p">)</span><span class="p">:</span> <span class="n">Boolean</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="py">ret</span> <span class="p">=</span> <span class="k">true</span>
+    <span class="c1">// only populate &amp; dump permissions if enabled
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">mFactors</span><span class="p">[</span><span class="n">FACTOR_PERMISSION</span><span class="p">]</span> <span class="p">!</span><span class="p">=</span> <span class="m">0.0f</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ret</span> <span class="p">=</span> <span class="n">ret</span> <span class="n">and</span> <span class="n">mPermissionUtil</span><span class="p">.</span><span class="n">populatePermissionsMapping</span><span class="p">(</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="p">&amp;</span><span class="p">&amp;</span> <span class="n">mVerbose</span> <span class="p">&gt;</span><span class="p">=</span> <span class="m">2</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">mPermissionUtil</span><span class="p">.</span><span class="n">dump</span><span class="p">(</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">ret</span> <span class="n">and</span> <span class="n">adjustEventFactors</span><span class="p">(</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="p">.</span><span class="p">.</span>
+
+<span class="k">private</span> <span class="k">fun</span> <span class="nf">adjustEventFactors</span><span class="p">(</span><span class="p">)</span><span class="p">:</span> <span class="n">Boolean</span> <span class="p">{</span>
+    <span class="c1">// go through all values and compute totals for user &amp; default values
+</span><span class="c1"></span>    <span class="k">val</span> <span class="err">(</span><span class="py">userSum</span><span class="p">,</span> <span class="n">defaultSum</span><span class="p">,</span> <span class="n">defaultCount</span><span class="p">)</span> <span class="p">=</span> <span class="n">mFactors</span><span class="p">.</span><span class="n">fold</span><span class="p">(</span><span class="n">Triple</span><span class="p">(</span><span class="m">0f</span><span class="p">,</span> <span class="m">0f</span><span class="p">,</span> <span class="m">0</span><span class="p">)</span><span class="p">)</span><span class="p">{</span> 
+        <span class="p">(</span><span class="n">userFold</span><span class="p">,</span> <span class="n">defaultFold</span><span class="p">,</span> <span class="n">defaultCount</span><span class="p">)</span><span class="p">,</span> 
+        <span class="n">factor</span> <span class="p">-</span><span class="p">&gt;</span> 
+        <span class="k">if</span> <span class="p">(</span><span class="n">factor</span> <span class="p">&lt;</span><span class="p">=</span> <span class="m">0f</span><span class="p">)</span> <span class="p">{</span> <span class="n">Triple</span><span class="p">(</span><span class="n">userFold</span><span class="p">-</span><span class="n">factor</span><span class="p">,</span> <span class="n">defaultFold</span><span class="p">,</span> <span class="n">defaultCount</span><span class="p">)</span><span class="p">}</span>
+        <span class="k">else</span> <span class="p">{</span><span class="n">Triple</span><span class="p">(</span><span class="n">userFold</span><span class="p">,</span> <span class="n">defaultFold</span><span class="p">+</span><span class="n">factor</span><span class="p">,</span> <span class="n">defaultCount</span><span class="p">+</span><span class="m">1</span><span class="p">)</span><span class="p">}</span>
+    <span class="p">}</span>
+    <span class="c1">// if the user request was &gt; 100%, reject it
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">userSum</span> <span class="p">&gt;</span> <span class="m">100f</span><span class="p">)</span><span class="p">{</span>
+        <span class="n">Logger</span><span class="p">.</span><span class="n">lPrintln</span><span class="p">(</span><span class="s">&#34;** Event weights &gt; 100%&#34;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">false</span>
+    <span class="p">}</span>
+    <span class="c1">//if the user specified all of the weights, they need to be 100%
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">defaultCount</span> <span class="p">=</span><span class="p">=</span> <span class="m">0</span> <span class="p">&amp;</span><span class="p">&amp;</span> <span class="p">(</span><span class="n">userSum</span> <span class="p">&lt;</span> <span class="m">99.9f</span> <span class="p">|</span><span class="p">|</span> <span class="n">userSum</span> <span class="p">&gt;</span> <span class="m">100.1f</span><span class="p">)</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Logger</span><span class="p">.</span><span class="n">lPrintln</span><span class="p">(</span><span class="s">&#34;** Event weight != 100%&#34;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">false</span>
+    <span class="p">}</span>
+    <span class="c1">// compute the adjustment necessary
+</span><span class="c1"></span>    <span class="k">var</span> <span class="py">defaultsTarget</span> <span class="p">=</span> <span class="m">100f</span> <span class="p">-</span> <span class="n">userSum</span>
+    <span class="k">val</span> <span class="py">defaultsAdjustment</span> <span class="p">=</span> <span class="n">defaultsTarget</span> <span class="p">/</span> <span class="n">defaultSum</span>
+    <span class="c1">//fix all values, by adjusting defaults, or flipping user values back to &gt;0
+</span><span class="c1"></span>    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="m">0</span> <span class="n">until</span> <span class="n">FACTORZ_COUNT</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">mFactors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">=</span> <span class="k">if</span> <span class="p">(</span><span class="n">mFactors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">&lt;</span><span class="p">=</span> <span class="m">0f</span><span class="p">)</span> <span class="p">{</span><span class="p">-</span><span class="n">mFactors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">}</span>
+        <span class="k">else</span> <span class="p">{</span><span class="n">mFactors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">*</span> <span class="n">defaultsAdjustment</span><span class="p">}</span>
+    <span class="p">}</span>
+    <span class="c1">// if verbose show factors
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">mVerbose</span> <span class="p">&gt;</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Logger</span><span class="p">.</span><span class="n">lPrintln</span><span class="p">(</span><span class="s">&#34;// Event percentages:&#34;</span><span class="p">)</span>
+        <span class="n">mFactors</span><span class="p">.</span><span class="n">forEachIndexed</span> <span class="p">{</span> <span class="n">index</span><span class="p">,</span> <span class="n">fl</span> <span class="p">-</span><span class="p">&gt;</span>
+            <span class="n">Logger</span><span class="p">.</span><span class="n">lPrintln</span><span class="p">(</span><span class="s">&#34;// $index: $fl%&#34;</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="p">!</span><span class="n">validateKeys</span><span class="p">(</span><span class="p">)</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">false</span>
+    <span class="p">}</span>
+    <span class="c1">//finally, normalize and convert to running sum
+</span><span class="c1"></span>    <span class="k">var</span> <span class="py">sum</span> <span class="p">=</span> <span class="m">0f</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="m">0</span> <span class="n">until</span> <span class="n">FACTORZ_COUNT</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">sum</span> <span class="p">+</span><span class="p">=</span> <span class="n">mFactors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">/</span> <span class="m">100f</span>
+        <span class="n">mFactors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">=</span> <span class="n">sum</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="k">true</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>adjustEventFactors 统计当前用户设定的比例userSum和剩余的系统初始化的比例defaultSum和剩余系统初始化事件比例的个数defaultCount.</li>
+<li>统计完后判断是否符合不会超过100等限制。</li>
+<li>然后将defaultSum等比例缩放到100 - userSum，使得两者相加为100.</li>
+<li><font color=red size=3>validatekeys</font></li>
+<li>最后进行归一化并采取0-1区间划分的方法.</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-06-17</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span><a href="//twitter.com/share?url=https%3a%2f%2fjarviszly.com%2fblogs%2fandroid-monkey-eventsource%2f&amp;text=Android%20Monkey%20EventSource&amp;via=" target="_blank" title="Share on Twitter">
+            <i class="fab fa-twitter fa-fw"></i>
+        </a><a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fjarviszly.com%2fblogs%2fandroid-monkey-eventsource%2f" target="_blank" title="Share on Facebook">
+            <i class="fab fa-facebook-square fa-fw"></i>
+        </a><a href="//reddit.com/submit?url=https%3a%2f%2fjarviszly.com%2fblogs%2fandroid-monkey-eventsource%2f&amp;title=Android%20Monkey%20EventSource" target="_blank" title="Share on Reddit">
+            <i class="fab fa-reddit fa-fw"></i>
+        </a></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span class="tag">
+                        <a href="https://jarviszly.com/tags/android/"><i class="fas fa-tag fa-fw"></i>&nbsp;Android</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="https://jarviszly.com/tags/monkey/"><i class="fas fa-tag fa-fw"></i>&nbsp;Monkey</a>&nbsp;
+                    </span></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://jarviszly.com">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://jarviszly.com/blogs/android-monkey-run/" class="prev" rel="prev" title="Android Monkey Run"><i class="fas fa-angle-left fa-fw"></i>Android Monkey Run</a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright">
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://jarviszly.com/" target="_blank">Lingyu Zhang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.miit.gov.cn/">苏ICP备20008191号-1</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.gov.cn/portal/index"></i>苏公网安备 32011302320886号</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/js/lib/jquery/jquery.slim.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><script src="/js/lib/katex/katex.min.js"></script><script defer src="/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script defer src="/js/lib/katex/copy-tex.min.js"></script><script defer src="/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$$", right: "$$", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/js/blog.min.js"></script>
+</body>
+</html>

@@ -7,10 +7,28 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Tue, 16 Jun 2020 16:37:05 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 17 Jun 2020 17:33:09 +0800</lastBuildDate>
     
 	<atom:link href="https://jarviszly.com/blogs/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Android Monkey EventSource</title>
+      <link>https://jarviszly.com/blogs/android-monkey-eventsource/</link>
+      <pubDate>Wed, 17 Jun 2020 17:33:09 +0800</pubDate>
+      
+      <guid>https://jarviszly.com/blogs/android-monkey-eventsource/</guid>
+      <description>run函数中申明不同的EventSource  脚本运行：命令中使用了-f且只有一个脚本则直接使用该脚本进行测试  1 2 3 4 5 6 7  mScriptFileNames.size == 1 -&amp;gt; { //script mode, ignore other options  mEventSource = MonkeySourceScript(mRandom!!, mScriptFileNames[0]!!, mThrottle, mRandomizeThrottle, mProfileWaitTime, mDeviceSleepTime) mEventSource.setVerbose(mVerbose) mCountEvents = false }    随机脚本运行：命令中使用了-f且包含多个脚本则随机运行这些脚本进行测试 如果有参数setup,则先运行带-setup的脚本用于配置环境等  1 2 3 4 5 6 7 8 9 10 11 12 13  mScriptFileNames.size &amp;gt; 1 -&amp;gt; { mEventSource = if (mSetupFileName != null) { mCount++ MonkeySourceRandomScript(mSetupFileName, mScriptFileNames, mThrottle, mRandomizeThrottle, mRandom!</description>
+    </item>
+    
+    <item>
+      <title>Android Monkey Run</title>
+      <link>https://jarviszly.com/blogs/android-monkey-run/</link>
+      <pubDate>Wed, 17 Jun 2020 13:48:36 +0800</pubDate>
+      
+      <guid>https://jarviszly.com/blogs/android-monkey-run/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Android Monkey GetMainApps</title>
