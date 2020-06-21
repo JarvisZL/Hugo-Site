@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>终端和shell 应用眼中的OS | 浙语临湖</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/demandpaging/" /><link rel="next" href="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E4%BF%A1%E5%8F%B7%E5%92%8Cjobcontrol/" /><link rel="canonical" href="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%BB%88%E7%AB%AF%E5%92%8Cshell-%E5%BA%94%E7%94%A8%E7%9C%BC%E4%B8%AD%E7%9A%84os/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="终端和shell 应用眼中的OS" />
+<meta property="og:description" content="终端  终端是操作系统中的一个对象,也是一个I/O设备。 在Unix看来，终端也是一个文件(everything is a file)  ANSI Escape Codes  终端支持Escape Codes，通过这些Codes可以完成屏幕清除/滚动，设置颜色等。 如果用cat输出某些二进制文件之后，可能会发生一些神奇的事情，比如光标没了之类的，这是因为可能该二进制文件中正好有一个负责控制光标的Escape Code，然后其在终端中输入就执行了。 可以用reset来还原终端  终端的模式  默认是cooked mode, 也就是终端自带一个行编辑器，按下回车才去执行这一行的命令 还有一个raw mode，按键就返回。  向终端输出  使用ls &ndash;color等变体发现  ls &ndash;color : 显示颜色，输出在一行 ls &ndash;color | less : 不显示颜色(只显示ESC序列)并在多行输出。   那么发生了为什么？ 使用strace 和 lstrace 康康不同层面干了什么吧 查看ltrace可以发现，都调用了一个isatty()函数，用来判断标准输出是不是终端，然后自适应输出。 查看strace可以发现isatty()会调用一个系统调用ioctl().  Shell  操作系统 = 对象 &#43; API, 那么用户怎么调用API? shell是一门编程语言.  interactive shell: 收到一行执行一行  env | grep PS1   non-interactive shell: 就是普通的语言解释器  bash -c &lsquo;env&rsquo; | grep PS1     shell是人机接口,interactive shell将用户给I/O设备的指令翻译成了系统调用的序列, 也就是说shell是用户眼中的操作系统(I/O设备)和应用眼中的操作系统(syscall)的桥梁。 shell正如其名，它是操作系统内核对外的一个外壳，外界将需要传达的shell，shell则翻译成一系列系统调用然后传达给内核。 shell的分类：CLI/GUI  shell的实现  shell的实现中有两个最基本的功能：向操作系统的某个对象读和写，比如cat命令，通过strace可以发现调用了read和write两个系统调用，这两个系统调用都是向文件描述符里读或写，那么什么是文件描述符 文件描述符： 是一个指向操作系统中某个对象的指针，是进程(状态机)的一部分，所以在fork的时候也会被拷贝。  shell中的重定向 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20  echo Hello World &gt; a." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%BB%88%E7%AB%AF%E5%92%8Cshell-%E5%BA%94%E7%94%A8%E7%9C%BC%E4%B8%AD%E7%9A%84os/" />
+<meta property="article:published_time" content="2020-06-19T22:05:47+08:00" />
+<meta property="article:modified_time" content="2020-06-19T22:05:47+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="终端和shell 应用眼中的OS"/>
+<meta name="twitter:description" content="终端  终端是操作系统中的一个对象,也是一个I/O设备。 在Unix看来，终端也是一个文件(everything is a file)  ANSI Escape Codes  终端支持Escape Codes，通过这些Codes可以完成屏幕清除/滚动，设置颜色等。 如果用cat输出某些二进制文件之后，可能会发生一些神奇的事情，比如光标没了之类的，这是因为可能该二进制文件中正好有一个负责控制光标的Escape Code，然后其在终端中输入就执行了。 可以用reset来还原终端  终端的模式  默认是cooked mode, 也就是终端自带一个行编辑器，按下回车才去执行这一行的命令 还有一个raw mode，按键就返回。  向终端输出  使用ls &ndash;color等变体发现  ls &ndash;color : 显示颜色，输出在一行 ls &ndash;color | less : 不显示颜色(只显示ESC序列)并在多行输出。   那么发生了为什么？ 使用strace 和 lstrace 康康不同层面干了什么吧 查看ltrace可以发现，都调用了一个isatty()函数，用来判断标准输出是不是终端，然后自适应输出。 查看strace可以发现isatty()会调用一个系统调用ioctl().  Shell  操作系统 = 对象 &#43; API, 那么用户怎么调用API? shell是一门编程语言.  interactive shell: 收到一行执行一行  env | grep PS1   non-interactive shell: 就是普通的语言解释器  bash -c &lsquo;env&rsquo; | grep PS1     shell是人机接口,interactive shell将用户给I/O设备的指令翻译成了系统调用的序列, 也就是说shell是用户眼中的操作系统(I/O设备)和应用眼中的操作系统(syscall)的桥梁。 shell正如其名，它是操作系统内核对外的一个外壳，外界将需要传达的shell，shell则翻译成一系列系统调用然后传达给内核。 shell的分类：CLI/GUI  shell的实现  shell的实现中有两个最基本的功能：向操作系统的某个对象读和写，比如cat命令，通过strace可以发现调用了read和write两个系统调用，这两个系统调用都是向文件描述符里读或写，那么什么是文件描述符 文件描述符： 是一个指向操作系统中某个对象的指针，是进程(状态机)的一部分，所以在fork的时候也会被拷贝。  shell中的重定向 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20  echo Hello World &gt; a."/>
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "终端和shell 应用眼中的OS",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/jarviszly.com\/documents\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E7%BB%88%E7%AB%AF%E5%92%8Cshell-%E5%BA%94%E7%94%A8%E7%9C%BC%E4%B8%AD%E7%9A%84os\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszly.com\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "documents","wordcount":  136 ,
+        "url": "https:\/\/jarviszly.com\/documents\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E7%BB%88%E7%AB%AF%E5%92%8Cshell-%E5%BA%94%E7%94%A8%E7%9C%BC%E4%B8%AD%E7%9A%84os\/","datePublished": "2020-06-19T22:05:47\x2b08:00","dateModified": "2020-06-19T22:05:47\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "JarvisZhang",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszly.com\/images\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/forkawesome/fork-awesome.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://jarviszly.com">浙语临湖</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://jarviszly.com">浙语临湖</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">终端和shell 应用眼中的OS</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://jarviszly.com" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
+                </a>&nbsp;<span class="post-category">included in&nbsp;<i class="far fa-folder fa-fw"></i><a href="https://jarviszly.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;</span></div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-06-19>2020-06-19</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 136 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>1 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#终端">终端</a>
+      <ul>
+        <li><a href="#ansi-escape-codes">ANSI Escape Codes</a></li>
+        <li><a href="#终端的模式">终端的模式</a></li>
+        <li><a href="#向终端输出">向终端输出</a></li>
+      </ul>
+    </li>
+    <li><a href="#shell">Shell</a>
+      <ul>
+        <li><a href="#shell的实现">shell的实现</a></li>
+        <li><a href="#shell中的重定向">shell中的重定向</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#终端">终端</a>
+      <ul>
+        <li><a href="#ansi-escape-codes">ANSI Escape Codes</a></li>
+        <li><a href="#终端的模式">终端的模式</a></li>
+        <li><a href="#向终端输出">向终端输出</a></li>
+      </ul>
+    </li>
+    <li><a href="#shell">Shell</a>
+      <ul>
+        <li><a href="#shell的实现">shell的实现</a></li>
+        <li><a href="#shell中的重定向">shell中的重定向</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><a class="post-dummy-target" id="终端"></a><h2>终端</h2>
+<ul>
+<li>终端是操作系统中的一个<font color=red size=3>对象</font>,也是一个I/O设备。</li>
+<li>在Unix看来，终端也是一个文件(everything is a file)</li>
+</ul>
+<a class="post-dummy-target" id="ansi-escape-codes"></a><h3>ANSI Escape Codes</h3>
+<ul>
+<li>终端支持Escape Codes，通过这些Codes可以完成屏幕清除/滚动，设置颜色等。</li>
+<li>如果用cat输出某些二进制文件之后，可能会发生一些神奇的事情，比如光标没了之类的，这是因为可能该二进制文件中正好有一个负责控制光标的Escape Code，然后其在终端中输入就执行了。</li>
+<li>可以用reset来还原终端</li>
+</ul>
+<a class="post-dummy-target" id="终端的模式"></a><h3>终端的模式</h3>
+<ul>
+<li>默认是cooked mode, 也就是终端自带一个行编辑器，按下回车才去执行这一行的命令</li>
+<li>还有一个raw mode，按键就返回。</li>
+</ul>
+<a class="post-dummy-target" id="向终端输出"></a><h3>向终端输出</h3>
+<ul>
+<li>使用ls &ndash;color等变体发现
+<ul>
+<li>ls &ndash;color : 显示颜色，输出在一行</li>
+<li>ls &ndash;color | less : 不显示颜色(只显示ESC序列)并在多行输出。</li>
+</ul>
+</li>
+<li>那么发生了为什么？ 使用strace 和 lstrace 康康不同层面干了什么吧</li>
+<li>查看ltrace可以发现，都调用了一个isatty()函数，用来判断标准输出是不是终端，然后自适应输出。</li>
+<li>查看strace可以发现isatty()会调用一个系统调用ioctl().</li>
+</ul>
+<a class="post-dummy-target" id="shell"></a><h2>Shell</h2>
+<ul>
+<li>操作系统 = 对象 + API, 那么用户怎么调用API?</li>
+<li>shell是一门<font color=red size=3>编程语言</font>.
+<ul>
+<li>interactive shell: 收到一行执行一行
+<ul>
+<li>env | grep PS1</li>
+</ul>
+</li>
+<li>non-interactive shell: 就是普通的语言解释器
+<ul>
+<li>bash -c &lsquo;env&rsquo; | grep PS1</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>shell是<font color=red size=3>人机接口</font>,interactive shell将用户给I/O设备的指令翻译成了系统调用的序列, 也就是说shell是用户眼中的操作系统(I/O设备)和应用眼中的操作系统(syscall)的桥梁。</li>
+<li>shell正如其名，它是操作系统内核对外的一个外壳，外界将需要传达的shell，shell则翻译成一系列系统调用然后传达给内核。</li>
+<li>shell的分类：CLI/GUI</li>
+</ul>
+<a class="post-dummy-target" id="shell的实现"></a><h3>shell的实现</h3>
+<ul>
+<li>shell的实现中有两个最基本的功能：向操作系统的某个对象读和写，比如cat命令，通过strace可以发现调用了read和write两个系统调用，这两个系统调用都是向文件描述符里读或写，那么<font color=blue size=3>什么是文件描述符</font></li>
+<li><strong>文件描述符：</strong> 是一个指向操作系统中某个对象的指针，是进程(状态机)的一部分，所以在fork的时候也会被拷贝。</li>
+</ul>
+<a class="post-dummy-target" id="shell中的重定向"></a><h3>shell中的重定向</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="n">echo</span> <span class="n">Hello</span> <span class="n">World</span> <span class="o">&gt;</span> <span class="n">a</span><span class="p">.</span><span class="n">txt</span>
+<span class="c1">//上面的shell命令发生了什么
+</span><span class="c1"></span>
+<span class="n">pid_t</span> <span class="n">p</span> <span class="o">=</span> <span class="n">fork</span><span class="p">(</span><span class="p">)</span><span class="p">;</span>
+<span class="k">if</span><span class="p">(</span><span class="n">p</span> <span class="o">=</span><span class="o">=</span> <span class="mi">0</span><span class="p">)</span><span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">redirect_stdout</span><span class="p">)</span><span class="p">{</span>
+        <span class="n">fd</span> <span class="o">=</span> <span class="n">open</span><span class="p">(</span><span class="p">.</span><span class="p">.</span><span class="p">.</span><span class="p">)</span><span class="p">;</span>
+        <span class="n">dup</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">STDOUT_FILENO</span><span class="p">)</span><span class="p">;</span>
+        <span class="n">close</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">redirect_</span><span class="p">.</span><span class="p">.</span><span class="p">.</span><span class="p">)</span><span class="p">{</span>
+        <span class="p">.</span><span class="p">.</span><span class="p">.</span>
+    <span class="p">}</span>
+    <span class="p">.</span><span class="p">.</span><span class="p">.</span>
+    <span class="n">execve</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="n">envp</span><span class="p">)</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">else</span><span class="p">{</span>
+    <span class="c1">//如果父进程没有在后台执行就等到子进程完成
+</span><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">background</span><span class="p">)</span> <span class="n">wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">status</span><span class="p">)</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>可以发现重定向的过程就是：1)打开目标文件。2)使用dup复制文件描述符。3)释放打开所使用的文件描述符。</li>
+<li>所以可以解释为什么<font color=blue size=3>sudo echo hello &gt; /etc/a.txt</font>还是permission denied.</li>
+<li>因为我们从上面发现，重定向发生在execve之前，所以在重定向时还没有sudo权限。</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-06-19</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span><a href="//twitter.com/share?url=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%2593%258D%25E4%25BD%259C%25E7%25B3%25BB%25E7%25BB%259F%2f%25E7%25BB%2588%25E7%25AB%25AF%25E5%2592%258Cshell-%25E5%25BA%2594%25E7%2594%25A8%25E7%259C%25BC%25E4%25B8%25AD%25E7%259A%2584os%2f&amp;text=%e7%bb%88%e7%ab%af%e5%92%8cshell%20%e5%ba%94%e7%94%a8%e7%9c%bc%e4%b8%ad%e7%9a%84OS&amp;via=" target="_blank" title="Share on Twitter">
+            <i class="fab fa-twitter fa-fw"></i>
+        </a><a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%2593%258D%25E4%25BD%259C%25E7%25B3%25BB%25E7%25BB%259F%2f%25E7%25BB%2588%25E7%25AB%25AF%25E5%2592%258Cshell-%25E5%25BA%2594%25E7%2594%25A8%25E7%259C%25BC%25E4%25B8%25AD%25E7%259A%2584os%2f" target="_blank" title="Share on Facebook">
+            <i class="fab fa-facebook-square fa-fw"></i>
+        </a><a href="//reddit.com/submit?url=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%2593%258D%25E4%25BD%259C%25E7%25B3%25BB%25E7%25BB%259F%2f%25E7%25BB%2588%25E7%25AB%25AF%25E5%2592%258Cshell-%25E5%25BA%2594%25E7%2594%25A8%25E7%259C%25BC%25E4%25B8%25AD%25E7%259A%2584os%2f&amp;title=%e7%bb%88%e7%ab%af%e5%92%8cshell%20%e5%ba%94%e7%94%a8%e7%9c%bc%e4%b8%ad%e7%9a%84OS" target="_blank" title="Share on Reddit">
+            <i class="fab fa-reddit fa-fw"></i>
+        </a></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://jarviszly.com">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/demandpaging/" class="prev" rel="prev" title="DemandPaging"><i class="fas fa-angle-left fa-fw"></i>DemandPaging</a>
+            <a href="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E4%BF%A1%E5%8F%B7%E5%92%8Cjobcontrol/" class="next" rel="next" title="信号和jobcontrol">信号和jobcontrol<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright">
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://jarviszly.com/" target="_blank">Lingyu Zhang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.miit.gov.cn/">苏ICP备20008191号-1</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.gov.cn/portal/index"></i>苏公网安备 32011302320886号</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/js/lib/jquery/jquery.slim.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><script src="/js/lib/katex/katex.min.js"></script><script defer src="/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script defer src="/js/lib/katex/copy-tex.min.js"></script><script defer src="/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$$", right: "$$", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/js/blog.min.js"></script>
+</body>
+</html>

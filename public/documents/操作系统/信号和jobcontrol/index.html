@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>信号和jobcontrol | 浙语临湖</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%BB%88%E7%AB%AF%E5%92%8Cshell-%E5%BA%94%E7%94%A8%E7%9C%BC%E4%B8%AD%E7%9A%84os/" /><link rel="canonical" href="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E4%BF%A1%E5%8F%B7%E5%92%8Cjobcontrol/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="信号和jobcontrol" />
+<meta property="og:description" content="信号机制  想要实现ctrl&#43;c使得进程退出，如何实现？  谁收到了ctrl&#43;c这个东西?  如果在shell中运行一个cat, 然后ctrl&#43;c会发现cat退出  此时shell在wait等待cat执行完返回，所以其不是收到处理ctrl&#43;c的地方 cat此时正在执行read系统调用等待用户的输入，所以也不是。   实际上是操作系统的对象终端，其收到ctrl&#43;c后会给cat进程发送一个SIGINT的信号。那么怎么样实现信号机制，使得无论该进程在干什么，都能被通知。  信号机制的实现  这样的需求可以联想到ICS中提到的硬件的中断机制，将硬件上的中断机制搬到进程上来当作信号机制。 假设cat进程在cpu上运行，当tty收到一个ctrl&#43;c，操作系统会等到该cpu上一个中断到来，此时cat进程的所有信息(寄存器现场，内存)都被保存到了他的栈上实际上也在物理内存中，所以操作系统可以去修改这部分内存，在其间插入跳转到Signal处理的代码去执行，于是该进程就一定能够被通知。 在linux中提供了一些API，比如c语言中的signal可以注册一个处理某个信号的函数，这样就能够捕获到系统中的信号，从而做出不同的行为。  job control  如果一个进程中fork了很多个进程，那么在这个进程执行的时候，如果ctrl&#43;c，那么应该是要所有fork的进程都要退出。 但是，如果这样，那么在shell上执行的所有进程都是通过shell进程fork出来的，那么此时ctrl&#43;c，岂不是所有的进程都被杀死，所以这样简单的设计显然是不够的，应该将这些进程分组管理。 而实际上，在linux系统中，当一个shell启动后就会构成一个session结构，而session结构有一个control terminal和若干进程组。  进程组中的进程具有不同进程号，但是具有相同的进程组号，fork子进程会继承父进程的pgid，而execve不会改变pgid. shell每次fork出新进程都会为其创造一个独立的进程组。 在一个session中，任意时刻，都只能有一个位于前台的进程组。 信号会发送给前台进程组中所有的进程。 man 8 setpgid    " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E4%BF%A1%E5%8F%B7%E5%92%8Cjobcontrol/" />
+<meta property="article:published_time" content="2020-06-21T20:59:55+08:00" />
+<meta property="article:modified_time" content="2020-06-21T20:59:55+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="信号和jobcontrol"/>
+<meta name="twitter:description" content="信号机制  想要实现ctrl&#43;c使得进程退出，如何实现？  谁收到了ctrl&#43;c这个东西?  如果在shell中运行一个cat, 然后ctrl&#43;c会发现cat退出  此时shell在wait等待cat执行完返回，所以其不是收到处理ctrl&#43;c的地方 cat此时正在执行read系统调用等待用户的输入，所以也不是。   实际上是操作系统的对象终端，其收到ctrl&#43;c后会给cat进程发送一个SIGINT的信号。那么怎么样实现信号机制，使得无论该进程在干什么，都能被通知。  信号机制的实现  这样的需求可以联想到ICS中提到的硬件的中断机制，将硬件上的中断机制搬到进程上来当作信号机制。 假设cat进程在cpu上运行，当tty收到一个ctrl&#43;c，操作系统会等到该cpu上一个中断到来，此时cat进程的所有信息(寄存器现场，内存)都被保存到了他的栈上实际上也在物理内存中，所以操作系统可以去修改这部分内存，在其间插入跳转到Signal处理的代码去执行，于是该进程就一定能够被通知。 在linux中提供了一些API，比如c语言中的signal可以注册一个处理某个信号的函数，这样就能够捕获到系统中的信号，从而做出不同的行为。  job control  如果一个进程中fork了很多个进程，那么在这个进程执行的时候，如果ctrl&#43;c，那么应该是要所有fork的进程都要退出。 但是，如果这样，那么在shell上执行的所有进程都是通过shell进程fork出来的，那么此时ctrl&#43;c，岂不是所有的进程都被杀死，所以这样简单的设计显然是不够的，应该将这些进程分组管理。 而实际上，在linux系统中，当一个shell启动后就会构成一个session结构，而session结构有一个control terminal和若干进程组。  进程组中的进程具有不同进程号，但是具有相同的进程组号，fork子进程会继承父进程的pgid，而execve不会改变pgid. shell每次fork出新进程都会为其创造一个独立的进程组。 在一个session中，任意时刻，都只能有一个位于前台的进程组。 信号会发送给前台进程组中所有的进程。 man 8 setpgid    "/>
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "信号和jobcontrol",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/jarviszly.com\/documents\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E4%BF%A1%E5%8F%B7%E5%92%8Cjobcontrol\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszly.com\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "documents","wordcount":  25 ,
+        "url": "https:\/\/jarviszly.com\/documents\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E4%BF%A1%E5%8F%B7%E5%92%8Cjobcontrol\/","datePublished": "2020-06-21T20:59:55\x2b08:00","dateModified": "2020-06-21T20:59:55\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "JarvisZhang",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszly.com\/images\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/forkawesome/fork-awesome.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://jarviszly.com">浙语临湖</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://jarviszly.com">浙语临湖</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">信号和jobcontrol</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://jarviszly.com" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
+                </a>&nbsp;<span class="post-category">included in&nbsp;<i class="far fa-folder fa-fw"></i><a href="https://jarviszly.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;</span></div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-06-21>2020-06-21</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 25 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>1 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#信号机制">信号机制</a>
+      <ul>
+        <li><a href="#谁收到了ctrlc这个东西">谁收到了ctrl+c这个东西?</a></li>
+        <li><a href="#信号机制的实现">信号机制的实现</a></li>
+      </ul>
+    </li>
+    <li><a href="#job-control">job control</a></li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#信号机制">信号机制</a>
+      <ul>
+        <li><a href="#谁收到了ctrlc这个东西">谁收到了ctrl+c这个东西?</a></li>
+        <li><a href="#信号机制的实现">信号机制的实现</a></li>
+      </ul>
+    </li>
+    <li><a href="#job-control">job control</a></li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><a class="post-dummy-target" id="信号机制"></a><h2>信号机制</h2>
+<ul>
+<li>想要实现ctrl+c使得进程退出，如何实现？</li>
+</ul>
+<a class="post-dummy-target" id="谁收到了ctrlc这个东西"></a><h3>谁收到了ctrl+c这个东西?</h3>
+<ul>
+<li>如果在shell中运行一个cat, 然后ctrl+c会发现cat退出
+<ul>
+<li>此时shell在wait等待cat执行完返回，所以其不是收到处理ctrl+c的地方</li>
+<li>cat此时正在执行read系统调用等待用户的输入，所以也不是。</li>
+</ul>
+</li>
+<li>实际上是操作系统的对象<font color=red size=3>终端</font>，其收到ctrl+c后会给cat进程发送一个SIGINT的信号。那么怎么样实现信号机制，使得无论该进程在干什么，都能被通知。</li>
+</ul>
+<a class="post-dummy-target" id="信号机制的实现"></a><h3>信号机制的实现</h3>
+<ul>
+<li>这样的需求可以联想到ICS中提到的硬件的中断机制，将硬件上的中断机制搬到进程上来当作信号机制。</li>
+<li>假设cat进程在cpu上运行，当tty收到一个ctrl+c，操作系统会等到该cpu上一个中断到来，此时cat进程的所有信息(寄存器现场，内存)都被保存到了他的栈上实际上也在物理内存中，所以操作系统可以去修改这部分内存，在其间插入跳转到Signal处理的代码去执行，于是该进程就一定能够被通知。</li>
+<li>在linux中提供了一些API，比如c语言中的signal可以注册一个处理某个信号的函数，这样就能够捕获到系统中的信号，从而做出不同的行为。</li>
+</ul>
+<a class="post-dummy-target" id="job-control"></a><h2>job control</h2>
+<ul>
+<li>如果一个进程中fork了很多个进程，那么在这个进程执行的时候，如果ctrl+c，那么应该是要所有fork的进程都要退出。</li>
+<li>但是，如果这样，那么在shell上执行的所有进程都是通过shell进程fork出来的，那么此时ctrl+c，岂不是所有的进程都被杀死，所以这样简单的设计显然是不够的，应该将这些进程分组管理。</li>
+<li>而实际上，在linux系统中，当一个shell启动后就会构成一个session结构，而session结构有一个control terminal和若干进程组。
+<ul>
+<li>进程组中的进程具有不同进程号，但是具有相同的进程组号，fork子进程会继承父进程的pgid，而execve不会改变pgid.</li>
+<li>shell每次fork出新进程都会为其创造一个独立的进程组。</li>
+<li>在一个session中，任意时刻，都只能有一个位于前台的进程组。</li>
+<li>信号会发送给前台进程组中所有的进程。</li>
+<li>man 8 setpgid</li>
+</ul>
+</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-06-21</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span><a href="//twitter.com/share?url=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%2593%258D%25E4%25BD%259C%25E7%25B3%25BB%25E7%25BB%259F%2f%25E4%25BF%25A1%25E5%258F%25B7%25E5%2592%258Cjobcontrol%2f&amp;text=%e4%bf%a1%e5%8f%b7%e5%92%8cjobcontrol&amp;via=" target="_blank" title="Share on Twitter">
+            <i class="fab fa-twitter fa-fw"></i>
+        </a><a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%2593%258D%25E4%25BD%259C%25E7%25B3%25BB%25E7%25BB%259F%2f%25E4%25BF%25A1%25E5%258F%25B7%25E5%2592%258Cjobcontrol%2f" target="_blank" title="Share on Facebook">
+            <i class="fab fa-facebook-square fa-fw"></i>
+        </a><a href="//reddit.com/submit?url=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%2593%258D%25E4%25BD%259C%25E7%25B3%25BB%25E7%25BB%259F%2f%25E4%25BF%25A1%25E5%258F%25B7%25E5%2592%258Cjobcontrol%2f&amp;title=%e4%bf%a1%e5%8f%b7%e5%92%8cjobcontrol" target="_blank" title="Share on Reddit">
+            <i class="fab fa-reddit fa-fw"></i>
+        </a></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://jarviszly.com">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%BB%88%E7%AB%AF%E5%92%8Cshell-%E5%BA%94%E7%94%A8%E7%9C%BC%E4%B8%AD%E7%9A%84os/" class="prev" rel="prev" title="终端和shell 应用眼中的OS"><i class="fas fa-angle-left fa-fw"></i>终端和shell 应用眼中的OS</a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright">
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://jarviszly.com/" target="_blank">Lingyu Zhang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.miit.gov.cn/">苏ICP备20008191号-1</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.gov.cn/portal/index"></i>苏公网安备 32011302320886号</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/js/lib/jquery/jquery.slim.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><script src="/js/lib/katex/katex.min.js"></script><script defer src="/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script defer src="/js/lib/katex/copy-tex.min.js"></script><script defer src="/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$$", right: "$$", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/js/blog.min.js"></script>
+</body>
+</html>
