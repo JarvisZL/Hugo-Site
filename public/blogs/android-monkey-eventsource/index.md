@@ -93,7 +93,19 @@ init {
     mFactors[FACTOR_PINCHZOOM] = 10.0f
 }
 ```
-- 该类的validate函数及其被调用函数为
+### generateActivity()如下
+```kotlin
+fun generateActivity() {
+    val e = MonkeyActivityEvent(mMainApp[mRandom.nextInt(mMainApps.size)])
+    mQ.addLast(e)
+}
+```
+- 将用从getMainApps里得到的可以启动的app中随机的一个声明一个MonkeyActivityEvent的对象,并加入到MonkeyEventQueue mQ中
+```kotlin
+class MonkeyActivityEvent(private val mApp: ComponentName, public val mAlarmTime: Long = 0) :MonkeyEvent(EVENT_TYPE_ACTIVITY)
+```
+
+### 该类的validate函数及其被调用函数为
 ```kotlin
 override fun validate(): Boolean {
     var ret = true
@@ -157,5 +169,109 @@ private fun adjustEventFactors(): Boolean {
 - adjustEventFactors 统计当前用户设定的比例userSum和剩余的系统初始化的比例defaultSum和剩余系统初始化事件比例的个数defaultCount.
 - 统计完后判断是否符合不会超过100等限制。
 - 然后将defaultSum等比例缩放到100 - userSum，使得两者相加为100.
-- <font color=red size=3>validatekeys</font> 
+- <font color=red size=3>validatekeys</font> 用于检查一些key比如home,back之类的
 - 最后进行归一化并采取0-1区间划分的方法.
+
+
+
+### getNextEvent()
+- 在函数runMonkeyCycle中会调用该函数来获取下一个注入事件。
+```kotlin
+override fun getNextEvent(): MonkeyEvent {
+    if (mQ.isEmpty()) {
+        generateEvents()
+    }
+    mEventCount++
+    val e = mQ.first
+    mQ.removeFirst()
+    return e
+}
+```
+- 如果mQ不为空，那么以为这mQ中还有由generateActivity()得到的event.(即还有可以启动的app)
+- 如果mQ为空，意味着需要启动的app都已经启动了，然后可以去生成一些压力测试的事件.
+
+### generateEvents()
+- 在getNextEvent()中被调用
+```kotlin
+private fun generateEvents() {
+    val cls = mRandom.nextFloat()
+    var lastKey: Int
+    when{
+        //触摸
+        cls < mFactors[FACTOR_TOUCH] ->{
+            println("Touch")
+            generatePointerEven(mRandom, GESTURE_TAP)
+            return
+        }
+        //手势
+        cls < mFactors[FACTOR_MOTION]-> {
+            println("Motion")
+            generatePointerEven(mRandom, GESTURE_DRAG)
+            return
+        }
+        //二指缩放
+        cls < mFactor[FACTOR_PINCHZOOM] -> {
+            println("PINCHZOOM")
+            generatePointerEven(mRandom,GESTURE_PINCH_OR_ZOOM)
+            return
+        }
+        //轨迹球(已被弃用)
+        cls < mFactor[FACTOR_TRACKBALL] -> {
+            println("TrackBall")
+            generateTrackballEven(mRandom)
+            return
+        }
+        //旋转
+        cls < mFactors[FACTOR_ROTATION]-> {
+            println("Rotation")
+            generateRotationEven(mRandom)
+            return
+        }
+        //请求权限
+        cls  < mFactor[FACTOR_PERMISSION] -> {
+            println("Permission")
+            val permissionEvent =mPermissionUtilgenerateRandomPermissionEvet(mRandom)
+            if (permissionEvent ==null) {
+                if (mVerbose > 1) {
+                    Logger.lPrintl("WARNING: Unableto generatepermission event")
+                }
+                // no permission eventcan be generated,generate a touch eventinstead
+                generatePointerEven(mRandom, GESTURE_TAP)
+                return
+            }
+            mQ.add(permissionEvent)
+            return
+        }
+    }
+    ......
+}
+```
+- 随机生成一个事件
+- <font color=red size=3>TBD</font>
+
+### generatePointerEvent
+- 用来生成Touch, Motion, PinchZoom事件
+```kotlin
+private fun generatePointerEvent(random: Random, gesture: Int) {
+    //获取默认显示器
+    val display = DisplayManagerGlobal.getInstance().getRealDisplay(Display.DEFAULT_DISPLAY)
+
+    //随机生成点和偏移量
+    val p1 = randomPoint(random, display)
+    val v1 = randomVector(random)
+
+    //从开机到现在的毫秒数
+    val downAt = SystemClock.uptimeMillis()
+
+    //加入DOWN(按下)标记的Touch事件
+    mQ.addLast(
+        MonkeyTouchEvent(MotionEvent.ACTION_DOWN)
+        .setDownTime(downAt)
+        .addPointer(0, p1.x, p1.y)
+        .setIntermediateNote(false)
+    )
+}
+```
+- <font color=red size=3> TBD</font>
+
+<font color=red size=5> TBD </font>

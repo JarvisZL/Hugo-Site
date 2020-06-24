@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>Android Monkey EventSource | 浙语临湖</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noodp" />
-<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszly.com/blogs/android-monkey-run/" /><link rel="canonical" href="https://jarviszly.com/blogs/android-monkey-eventsource/" />
+<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszly.com/blogs/android-monkey-run/" /><link rel="next" href="https://jarviszly.com/blogs/android-monkey-runmonkeycycles/" /><link rel="canonical" href="https://jarviszly.com/blogs/android-monkey-eventsource/" />
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -35,7 +35,7 @@
                 "url": "https:\/\/jarviszly.com\/cover.png",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "blogs","keywords": "Android, Monkey","wordcount":  634 ,
+            },"genre": "blogs","keywords": "Android, Monkey","wordcount":  918 ,
         "url": "https:\/\/jarviszly.com\/blogs\/android-monkey-eventsource\/","datePublished": "2020-06-17T17:33:09\x2b08:00","dateModified": "2020-06-17T17:33:09\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "JarvisZhang",
@@ -79,14 +79,22 @@
                     <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
                 </a>&nbsp;</div>
             <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-06-17>2020-06-17</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>about 634 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>3 min&nbsp;</div>
+                <i class="fas fa-pencil-alt fa-fw"></i>about 918 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>5 min&nbsp;</div>
         </div><div class="post-toc" id="post-toc">
                 <h2 class="post-toc-title">Contents</h2>
                 <div class="post-toc-content"><nav id="TableOfContents">
   <ul>
     <li><a href="#run函数中申明不同的eventsource">run函数中申明不同的EventSource</a></li>
-    <li><a href="#monkeysourcerandom分析">MonkeySourceRandom分析</a></li>
+    <li><a href="#monkeysourcerandom分析">MonkeySourceRandom分析</a>
+      <ul>
+        <li><a href="#generateactivity如下">generateActivity()如下</a></li>
+        <li><a href="#该类的validate函数及其被调用函数为">该类的validate函数及其被调用函数为</a></li>
+        <li><a href="#getnextevent">getNextEvent()</a></li>
+        <li><a href="#generateevents">generateEvents()</a></li>
+        <li><a href="#generatepointerevent">generatePointerEvent</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div>
@@ -101,7 +109,15 @@
                     <div class="post-toc-content"><nav id="TableOfContentsMobile">
   <ul>
     <li><a href="#run函数中申明不同的eventsource">run函数中申明不同的EventSource</a></li>
-    <li><a href="#monkeysourcerandom分析">MonkeySourceRandom分析</a></li>
+    <li><a href="#monkeysourcerandom分析">MonkeySourceRandom分析</a>
+      <ul>
+        <li><a href="#generateactivity如下">generateActivity()如下</a></li>
+        <li><a href="#该类的validate函数及其被调用函数为">该类的validate函数及其被调用函数为</a></li>
+        <li><a href="#getnextevent">getNextEvent()</a></li>
+        <li><a href="#generateevents">generateEvents()</a></li>
+        <li><a href="#generatepointerevent">generatePointerEvent</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
                 </details>
@@ -297,9 +313,33 @@
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
+</div><a class="post-dummy-target" id="generateactivity如下"></a><h3>generateActivity()如下</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">fun</span> <span class="nf">generateActivity</span><span class="p">(</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">val</span> <span class="py">e</span> <span class="p">=</span> <span class="n">MonkeyActivityEvent</span><span class="p">(</span><span class="n">mMainApp</span><span class="p">[</span><span class="n">mRandom</span><span class="p">.</span><span class="n">nextInt</span><span class="p">(</span><span class="n">mMainApps</span><span class="p">.</span><span class="n">size</span><span class="p">)</span><span class="p">]</span><span class="p">)</span>
+    <span class="n">mQ</span><span class="p">.</span><span class="n">addLast</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
 </div><ul>
-<li>该类的validate函数及其被调用函数为</li>
+<li>将用从getMainApps里得到的可以启动的app中随机的一个声明一个MonkeyActivityEvent的对象,并加入到MonkeyEventQueue mQ中</li>
 </ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">MonkeyActivityEvent</span><span class="p">(</span><span class="k">private</span> <span class="k">val</span> <span class="py">mApp</span><span class="p">:</span> <span class="n">ComponentName</span><span class="p">,</span> <span class="k">public</span> <span class="k">val</span> <span class="py">mAlarmTime</span><span class="p">:</span> <span class="n">Long</span> <span class="p">=</span> <span class="m">0</span><span class="p">)</span> <span class="p">:</span><span class="n">MonkeyEvent</span><span class="p">(</span><span class="n">EVENT_TYPE_ACTIVITY</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="该类的validate函数及其被调用函数为"></a><h3>该类的validate函数及其被调用函数为</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -426,9 +466,211 @@
 <li>adjustEventFactors 统计当前用户设定的比例userSum和剩余的系统初始化的比例defaultSum和剩余系统初始化事件比例的个数defaultCount.</li>
 <li>统计完后判断是否符合不会超过100等限制。</li>
 <li>然后将defaultSum等比例缩放到100 - userSum，使得两者相加为100.</li>
-<li><font color=red size=3>validatekeys</font></li>
+<li><font color=red size=3>validatekeys</font> 用于检查一些key比如home,back之类的</li>
 <li>最后进行归一化并采取0-1区间划分的方法.</li>
 </ul>
+<a class="post-dummy-target" id="getnextevent"></a><h3>getNextEvent()</h3>
+<ul>
+<li>在函数runMonkeyCycle中会调用该函数来获取下一个注入事件。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">override</span> <span class="k">fun</span> <span class="nf">getNextEvent</span><span class="p">(</span><span class="p">)</span><span class="p">:</span> <span class="n">MonkeyEvent</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">mQ</span><span class="p">.</span><span class="n">isEmpty</span><span class="p">(</span><span class="p">)</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">generateEvents</span><span class="p">(</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="n">mEventCount</span><span class="p">+</span><span class="p">+</span>
+    <span class="k">val</span> <span class="py">e</span> <span class="p">=</span> <span class="n">mQ</span><span class="p">.</span><span class="n">first</span>
+    <span class="n">mQ</span><span class="p">.</span><span class="n">removeFirst</span><span class="p">(</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">e</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>如果mQ不为空，那么以为这mQ中还有由generateActivity()得到的event.(即还有可以启动的app)</li>
+<li>如果mQ为空，意味着需要启动的app都已经启动了，然后可以去生成一些压力测试的事件.</li>
+</ul>
+<a class="post-dummy-target" id="generateevents"></a><h3>generateEvents()</h3>
+<ul>
+<li>在getNextEvent()中被调用</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">private</span> <span class="k">fun</span> <span class="nf">generateEvents</span><span class="p">(</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">val</span> <span class="py">cls</span> <span class="p">=</span> <span class="n">mRandom</span><span class="p">.</span><span class="n">nextFloat</span><span class="p">(</span><span class="p">)</span>
+    <span class="k">var</span> <span class="py">lastKey</span><span class="p">:</span> <span class="n">Int</span>
+    <span class="k">when</span><span class="p">{</span>
+        <span class="c1">//触摸
+</span><span class="c1"></span>        <span class="n">cls</span> <span class="p">&lt;</span> <span class="n">mFactors</span><span class="p">[</span><span class="n">FACTOR_TOUCH</span><span class="p">]</span> <span class="p">-</span><span class="p">&gt;</span><span class="p">{</span>
+            <span class="n">println</span><span class="p">(</span><span class="s">&#34;Touch&#34;</span><span class="p">)</span>
+            <span class="n">generatePointerEven</span><span class="p">(</span><span class="n">mRandom</span><span class="p">,</span> <span class="n">GESTURE_TAP</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="p">}</span>
+        <span class="c1">//手势
+</span><span class="c1"></span>        <span class="n">cls</span> <span class="p">&lt;</span> <span class="n">mFactors</span><span class="p">[</span><span class="n">FACTOR_MOTION</span><span class="p">]</span><span class="p">-</span><span class="p">&gt;</span> <span class="p">{</span>
+            <span class="n">println</span><span class="p">(</span><span class="s">&#34;Motion&#34;</span><span class="p">)</span>
+            <span class="n">generatePointerEven</span><span class="p">(</span><span class="n">mRandom</span><span class="p">,</span> <span class="n">GESTURE_DRAG</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="p">}</span>
+        <span class="c1">//二指缩放
+</span><span class="c1"></span>        <span class="n">cls</span> <span class="p">&lt;</span> <span class="n">mFactor</span><span class="p">[</span><span class="n">FACTOR_PINCHZOOM</span><span class="p">]</span> <span class="p">-</span><span class="p">&gt;</span> <span class="p">{</span>
+            <span class="n">println</span><span class="p">(</span><span class="s">&#34;PINCHZOOM&#34;</span><span class="p">)</span>
+            <span class="n">generatePointerEven</span><span class="p">(</span><span class="n">mRandom</span><span class="p">,</span><span class="n">GESTURE_PINCH_OR_ZOOM</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="p">}</span>
+        <span class="c1">//轨迹球(已被弃用)
+</span><span class="c1"></span>        <span class="n">cls</span> <span class="p">&lt;</span> <span class="n">mFactor</span><span class="p">[</span><span class="n">FACTOR_TRACKBALL</span><span class="p">]</span> <span class="p">-</span><span class="p">&gt;</span> <span class="p">{</span>
+            <span class="n">println</span><span class="p">(</span><span class="s">&#34;TrackBall&#34;</span><span class="p">)</span>
+            <span class="n">generateTrackballEven</span><span class="p">(</span><span class="n">mRandom</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="p">}</span>
+        <span class="c1">//旋转
+</span><span class="c1"></span>        <span class="n">cls</span> <span class="p">&lt;</span> <span class="n">mFactors</span><span class="p">[</span><span class="n">FACTOR_ROTATION</span><span class="p">]</span><span class="p">-</span><span class="p">&gt;</span> <span class="p">{</span>
+            <span class="n">println</span><span class="p">(</span><span class="s">&#34;Rotation&#34;</span><span class="p">)</span>
+            <span class="n">generateRotationEven</span><span class="p">(</span><span class="n">mRandom</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="p">}</span>
+        <span class="c1">//请求权限
+</span><span class="c1"></span>        <span class="n">cls</span>  <span class="p">&lt;</span> <span class="n">mFactor</span><span class="p">[</span><span class="n">FACTOR_PERMISSION</span><span class="p">]</span> <span class="p">-</span><span class="p">&gt;</span> <span class="p">{</span>
+            <span class="n">println</span><span class="p">(</span><span class="s">&#34;Permission&#34;</span><span class="p">)</span>
+            <span class="k">val</span> <span class="py">permissionEvent</span> <span class="p">=</span><span class="n">mPermissionUtilgenerateRandomPermissionEvet</span><span class="p">(</span><span class="n">mRandom</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">permissionEvent</span> <span class="p">=</span><span class="p">=</span><span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">mVerbose</span> <span class="p">&gt;</span> <span class="m">1</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">Logger</span><span class="p">.</span><span class="n">lPrintl</span><span class="p">(</span><span class="s">&#34;WARNING: Unableto generatepermission event&#34;</span><span class="p">)</span>
+                <span class="p">}</span>
+                <span class="c1">// no permission eventcan be generated,generate a touch eventinstead
+</span><span class="c1"></span>                <span class="n">generatePointerEven</span><span class="p">(</span><span class="n">mRandom</span><span class="p">,</span> <span class="n">GESTURE_TAP</span><span class="p">)</span>
+                <span class="k">return</span>
+            <span class="p">}</span>
+            <span class="n">mQ</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">permissionEvent</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="p">.</span><span class="p">.</span><span class="p">.</span><span class="p">.</span><span class="p">.</span><span class="p">.</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>随机生成一个事件</li>
+<li><font color=red size=3>TBD</font></li>
+</ul>
+<a class="post-dummy-target" id="generatepointerevent"></a><h3>generatePointerEvent</h3>
+<ul>
+<li>用来生成Touch, Motion, PinchZoom事件</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">private</span> <span class="k">fun</span> <span class="nf">generatePointerEvent</span><span class="p">(</span><span class="n">random</span><span class="p">:</span> <span class="n">Random</span><span class="p">,</span> <span class="n">gesture</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//获取默认显示器
+</span><span class="c1"></span>    <span class="k">val</span> <span class="py">display</span> <span class="p">=</span> <span class="n">DisplayManagerGlobal</span><span class="p">.</span><span class="n">getInstance</span><span class="p">(</span><span class="p">)</span><span class="p">.</span><span class="n">getRealDisplay</span><span class="p">(</span><span class="n">Display</span><span class="p">.</span><span class="n">DEFAULT_DISPLAY</span><span class="p">)</span>
+
+    <span class="c1">//随机生成点和偏移量
+</span><span class="c1"></span>    <span class="k">val</span> <span class="py">p1</span> <span class="p">=</span> <span class="n">randomPoint</span><span class="p">(</span><span class="n">random</span><span class="p">,</span> <span class="n">display</span><span class="p">)</span>
+    <span class="k">val</span> <span class="py">v1</span> <span class="p">=</span> <span class="n">randomVector</span><span class="p">(</span><span class="n">random</span><span class="p">)</span>
+
+    <span class="c1">//从开机到现在的毫秒数
+</span><span class="c1"></span>    <span class="k">val</span> <span class="py">downAt</span> <span class="p">=</span> <span class="n">SystemClock</span><span class="p">.</span><span class="n">uptimeMillis</span><span class="p">(</span><span class="p">)</span>
+
+    <span class="c1">//加入DOWN(按下)标记的Touch事件
+</span><span class="c1"></span>    <span class="n">mQ</span><span class="p">.</span><span class="n">addLast</span><span class="p">(</span>
+        <span class="n">MonkeyTouchEvent</span><span class="p">(</span><span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_DOWN</span><span class="p">)</span>
+        <span class="p">.</span><span class="n">setDownTime</span><span class="p">(</span><span class="n">downAt</span><span class="p">)</span>
+        <span class="p">.</span><span class="n">addPointer</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">p1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p1</span><span class="p">.</span><span class="n">y</span><span class="p">)</span>
+        <span class="p">.</span><span class="n">setIntermediateNote</span><span class="p">(</span><span class="k">false</span><span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><font color=red size=3> TBD</font></li>
+</ul>
+<p><font color=red size=5> TBD </font></p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
@@ -460,7 +702,8 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="https://jarviszly.com/blogs/android-monkey-run/" class="prev" rel="prev" title="Android Monkey Run"><i class="fas fa-angle-left fa-fw"></i>Android Monkey Run</a></div>
+    <div class="post-nav"><a href="https://jarviszly.com/blogs/android-monkey-run/" class="prev" rel="prev" title="Android Monkey Run"><i class="fas fa-angle-left fa-fw"></i>Android Monkey Run</a>
+            <a href="https://jarviszly.com/blogs/android-monkey-runmonkeycycles/" class="next" rel="next" title="Android Monkey RunMonkeyCycles">Android Monkey RunMonkeyCycles<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div class="post-comment"></div>
     </article></div>

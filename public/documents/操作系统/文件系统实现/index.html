@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>文件系统实现 | 浙语临湖</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9Fapi/" /><link rel="canonical" href="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%AE%9E%E7%8E%B0/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="文件系统实现" />
+<meta property="og:description" content="分析  文件系统实现的本质回到了数据结构的设计上。 而数据结构课所学的都是讲的如何在内存上实现出各种数据结构。 内存在多级缓存的帮助下实现了随机访问，并且有多个内存管理的API 而对于磁盘来说，其不能随机访问任意一个bit，而是按照块为单位进行读写，所以每一个bit的访问不是O(1)的，没有malloc等函数的支持，只有read_blk,write_blk. 设计需求：一个树状的结构。 如果只考虑存储文件，一个虚拟磁盘可能对应多个物理磁盘上的块，而这些块不一定是连续的，所以很自然地想到使用链表。 链表有两种方式：  指针和数据放在同一个块中。  优点：不需要额外分配存放指针的空间 缺点: 数据的大小不是2的幂次(因为有一部分是指针)，在lseek的时候就不能使用移位操作来进行。   单独分配几个块存放所有的指针。  优点：局部性好，lseek更快 缺点：集中存放一旦损坏损失大     目录的实现：目录也是一个文件，只不过是在该文件中实现了一个目录的数据结构比如key-value mapping, 通过tag标记让文件系统访问该文件时按照目录的方式。  FAT(File Allocation Table)  采取的是集中存放指针的方法，使用备份的方式来降低损坏造成巨大损失的风险。 在FAT中，将多个块(512B)看作一个cluster，然后以cluster为单位来管理文件。   其中每一个表项  0：未分配 ffffff7: bad cluster(这个cluster损坏) ffffff8-ffffffe,-1：EOF 2&hellip;: 已分配且是下一个块的编号    性能与可靠性  性能  FAT对于小文件来说十分合适 对于大文件来说不理想，因为如果要读取大文件最后一个bit，那么还是得遍历该文件。   可靠性  维护多个备份防止元数据损坏造成额外的开销    ext2/Unix文件系统  和FAT不同的是需要支持链接，所以其树状结构中的节点都是指针。 更关键的是该文件系统提供对大文件的高效的随机访问，设计者在其元数据中使用了类似页表的方式来完成索引。   目录结构：inode编号 &#43; 该项长度 &#43; name长度 &#43; 文件类型 &#43; 4字节对齐的name  性能和可靠性  大文件随机读写性能提高，小文件读写性能同样很好。 但同样和FAT具有存储可靠性的问题。  " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%AE%9E%E7%8E%B0/" />
+<meta property="article:published_time" content="2020-06-24T12:06:05+08:00" />
+<meta property="article:modified_time" content="2020-06-24T12:06:05+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="文件系统实现"/>
+<meta name="twitter:description" content="分析  文件系统实现的本质回到了数据结构的设计上。 而数据结构课所学的都是讲的如何在内存上实现出各种数据结构。 内存在多级缓存的帮助下实现了随机访问，并且有多个内存管理的API 而对于磁盘来说，其不能随机访问任意一个bit，而是按照块为单位进行读写，所以每一个bit的访问不是O(1)的，没有malloc等函数的支持，只有read_blk,write_blk. 设计需求：一个树状的结构。 如果只考虑存储文件，一个虚拟磁盘可能对应多个物理磁盘上的块，而这些块不一定是连续的，所以很自然地想到使用链表。 链表有两种方式：  指针和数据放在同一个块中。  优点：不需要额外分配存放指针的空间 缺点: 数据的大小不是2的幂次(因为有一部分是指针)，在lseek的时候就不能使用移位操作来进行。   单独分配几个块存放所有的指针。  优点：局部性好，lseek更快 缺点：集中存放一旦损坏损失大     目录的实现：目录也是一个文件，只不过是在该文件中实现了一个目录的数据结构比如key-value mapping, 通过tag标记让文件系统访问该文件时按照目录的方式。  FAT(File Allocation Table)  采取的是集中存放指针的方法，使用备份的方式来降低损坏造成巨大损失的风险。 在FAT中，将多个块(512B)看作一个cluster，然后以cluster为单位来管理文件。   其中每一个表项  0：未分配 ffffff7: bad cluster(这个cluster损坏) ffffff8-ffffffe,-1：EOF 2&hellip;: 已分配且是下一个块的编号    性能与可靠性  性能  FAT对于小文件来说十分合适 对于大文件来说不理想，因为如果要读取大文件最后一个bit，那么还是得遍历该文件。   可靠性  维护多个备份防止元数据损坏造成额外的开销    ext2/Unix文件系统  和FAT不同的是需要支持链接，所以其树状结构中的节点都是指针。 更关键的是该文件系统提供对大文件的高效的随机访问，设计者在其元数据中使用了类似页表的方式来完成索引。   目录结构：inode编号 &#43; 该项长度 &#43; name长度 &#43; 文件类型 &#43; 4字节对齐的name  性能和可靠性  大文件随机读写性能提高，小文件读写性能同样很好。 但同样和FAT具有存储可靠性的问题。  "/>
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "文件系统实现",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/jarviszly.com\/documents\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%AE%9E%E7%8E%B0\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszly.com\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "documents","wordcount":  52 ,
+        "url": "https:\/\/jarviszly.com\/documents\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%AE%9E%E7%8E%B0\/","datePublished": "2020-06-24T12:06:05\x2b08:00","dateModified": "2020-06-24T12:06:05\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "JarvisZhang",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszly.com\/images\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/forkawesome/fork-awesome.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://jarviszly.com">浙语临湖</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://jarviszly.com">浙语临湖</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">文件系统实现</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://jarviszly.com" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
+                </a>&nbsp;<span class="post-category">included in&nbsp;<i class="far fa-folder fa-fw"></i><a href="https://jarviszly.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;</span></div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-06-24>2020-06-24</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 52 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>1 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#分析">分析</a></li>
+    <li><a href="#fatfile-allocation-table">FAT(File Allocation Table)</a>
+      <ul>
+        <li><a href="#性能与可靠性">性能与可靠性</a></li>
+      </ul>
+    </li>
+    <li><a href="#ext2unix文件系统">ext2/Unix文件系统</a>
+      <ul>
+        <li><a href="#性能和可靠性">性能和可靠性</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#分析">分析</a></li>
+    <li><a href="#fatfile-allocation-table">FAT(File Allocation Table)</a>
+      <ul>
+        <li><a href="#性能与可靠性">性能与可靠性</a></li>
+      </ul>
+    </li>
+    <li><a href="#ext2unix文件系统">ext2/Unix文件系统</a>
+      <ul>
+        <li><a href="#性能和可靠性">性能和可靠性</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><a class="post-dummy-target" id="分析"></a><h2>分析</h2>
+<ul>
+<li>文件系统实现的本质回到了数据结构的设计上。</li>
+<li>而数据结构课所学的都是讲的如何在内存上实现出各种数据结构。</li>
+<li>内存在多级缓存的帮助下实现了随机访问，并且有多个内存管理的API</li>
+<li>而对于磁盘来说，其不能随机访问任意一个bit，而是按照块为单位进行读写，所以每一个bit的访问不是O(1)的，没有malloc等函数的支持，只有read_blk,write_blk.</li>
+<li>设计需求：一个树状的结构。</li>
+<li>如果只考虑存储文件，一个虚拟磁盘可能对应多个物理磁盘上的块，而这些块不一定是连续的，所以很自然地想到使用链表。</li>
+<li>链表有两种方式：
+<ul>
+<li>指针和数据放在同一个块中。
+<ul>
+<li>优点：不需要额外分配存放指针的空间</li>
+<li>缺点: 数据的大小不是2的幂次(因为有一部分是指针)，在lseek的时候就不能使用移位操作来进行。</li>
+</ul>
+</li>
+<li>单独分配几个块存放所有的指针。
+<ul>
+<li>优点：局部性好，lseek更快</li>
+<li>缺点：集中存放一旦损坏损失大</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>目录的实现：目录也是一个文件，只不过是在该文件中实现了一个目录的数据结构比如key-value mapping, 通过tag标记让文件系统访问该文件时按照目录的方式。</li>
+</ul>
+<a class="post-dummy-target" id="fatfile-allocation-table"></a><h2>FAT(File Allocation Table)</h2>
+<ul>
+<li>采取的是集中存放指针的方法，使用备份的方式来降低损坏造成巨大损失的风险。</li>
+<li>在FAT中，将多个块(512B)看作一个cluster，然后以cluster为单位来管理文件。</li>
+<li><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f/FAT.png" alt="" class="lazyload"></figure>
+</li>
+<li>其中每一个表项
+<ul>
+<li>0：未分配</li>
+<li>ffffff7: bad cluster(这个cluster损坏)</li>
+<li>ffffff8-ffffffe,-1：EOF</li>
+<li>2&hellip;: 已分配且是下一个块的编号</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="性能与可靠性"></a><h3>性能与可靠性</h3>
+<ul>
+<li>性能
+<ul>
+<li>FAT对于小文件来说十分合适</li>
+<li>对于大文件来说不理想，因为如果要读取大文件最后一个bit，那么还是得遍历该文件。</li>
+</ul>
+</li>
+<li>可靠性
+<ul>
+<li>维护多个备份防止元数据损坏造成额外的开销</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="ext2unix文件系统"></a><h2>ext2/Unix文件系统</h2>
+<ul>
+<li>和FAT不同的是需要支持链接，所以其树状结构中的节点都是指针。</li>
+<li>更关键的是该文件系统提供对大文件的高效的随机访问，设计者在其元数据中使用了类似页表的方式来完成索引。</li>
+<li><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/images/documents/%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f/ext2.png" alt="" class="lazyload"></figure>
+</li>
+<li>目录结构：inode编号 + 该项长度 + name长度 + 文件类型 + 4字节对齐的name</li>
+</ul>
+<a class="post-dummy-target" id="性能和可靠性"></a><h3>性能和可靠性</h3>
+<ul>
+<li>大文件随机读写性能提高，小文件读写性能同样很好。</li>
+<li>但同样和FAT具有存储可靠性的问题。</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-06-24</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span><a href="//twitter.com/share?url=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%2593%258D%25E4%25BD%259C%25E7%25B3%25BB%25E7%25BB%259F%2f%25E6%2596%2587%25E4%25BB%25B6%25E7%25B3%25BB%25E7%25BB%259F%25E5%25AE%259E%25E7%258E%25B0%2f&amp;text=%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f%e5%ae%9e%e7%8e%b0&amp;via=" target="_blank" title="Share on Twitter">
+            <i class="fab fa-twitter fa-fw"></i>
+        </a><a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%2593%258D%25E4%25BD%259C%25E7%25B3%25BB%25E7%25BB%259F%2f%25E6%2596%2587%25E4%25BB%25B6%25E7%25B3%25BB%25E7%25BB%259F%25E5%25AE%259E%25E7%258E%25B0%2f" target="_blank" title="Share on Facebook">
+            <i class="fab fa-facebook-square fa-fw"></i>
+        </a><a href="//reddit.com/submit?url=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%2593%258D%25E4%25BD%259C%25E7%25B3%25BB%25E7%25BB%259F%2f%25E6%2596%2587%25E4%25BB%25B6%25E7%25B3%25BB%25E7%25BB%259F%25E5%25AE%259E%25E7%258E%25B0%2f&amp;title=%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f%e5%ae%9e%e7%8e%b0" target="_blank" title="Share on Reddit">
+            <i class="fab fa-reddit fa-fw"></i>
+        </a></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://jarviszly.com">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9Fapi/" class="prev" rel="prev" title="文件系统API"><i class="fas fa-angle-left fa-fw"></i>文件系统API</a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright">
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://jarviszly.com/" target="_blank">Lingyu Zhang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.miit.gov.cn/">苏ICP备20008191号-1</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.gov.cn/portal/index"></i>苏公网安备 32011302320886号</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/js/lib/jquery/jquery.slim.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><script src="/js/lib/katex/katex.min.js"></script><script defer src="/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script defer src="/js/lib/katex/copy-tex.min.js"></script><script defer src="/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$$", right: "$$", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/js/blog.min.js"></script>
+</body>
+</html>

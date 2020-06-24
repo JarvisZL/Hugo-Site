@@ -7,10 +7,37 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Sun, 21 Jun 2020 20:59:55 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jun 2020 12:06:05 +0800</lastBuildDate>
     
 	<atom:link href="https://jarviszly.com/documents/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>文件系统实现</title>
+      <link>https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Wed, 24 Jun 2020 12:06:05 +0800</pubDate>
+      
+      <guid>https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%AE%9E%E7%8E%B0/</guid>
+      <description>分析  文件系统实现的本质回到了数据结构的设计上。 而数据结构课所学的都是讲的如何在内存上实现出各种数据结构。 内存在多级缓存的帮助下实现了随机访问，并且有多个内存管理的API 而对于磁盘来说，其不能随机访问任意一个bit，而是按照块为单位进行读写，所以每一个bit的访问不是O(1)的，没有malloc等函数的支持，只有read_blk,write_blk. 设计需求：一个树状的结构。 如果只考虑存储文件，一个虚拟磁盘可能对应多个物理磁盘上的块，而这些块不一定是连续的，所以很自然地想到使用链表。 链表有两种方式：  指针和数据放在同一个块中。  优点：不需要额外分配存放指针的空间 缺点: 数据的大小不是2的幂次(因为有一部分是指针)，在lseek的时候就不能使用移位操作来进行。   单独分配几个块存放所有的指针。  优点：局部性好，lseek更快 缺点：集中存放一旦损坏损失大     目录的实现：目录也是一个文件，只不过是在该文件中实现了一个目录的数据结构比如key-value mapping, 通过tag标记让文件系统访问该文件时按照目录的方式。  FAT(File Allocation Table)  采取的是集中存放指针的方法，使用备份的方式来降低损坏造成巨大损失的风险。 在FAT中，将多个块(512B)看作一个cluster，然后以cluster为单位来管理文件。   其中每一个表项  0：未分配 ffffff7: bad cluster(这个cluster损坏) ffffff8-ffffffe,-1：EOF 2&amp;hellip;: 已分配且是下一个块的编号    性能与可靠性  性能  FAT对于小文件来说十分合适 对于大文件来说不理想，因为如果要读取大文件最后一个bit，那么还是得遍历该文件。   可靠性  维护多个备份防止元数据损坏造成额外的开销    ext2/Unix文件系统  和FAT不同的是需要支持链接，所以其树状结构中的节点都是指针。 更关键的是该文件系统提供对大文件的高效的随机访问，设计者在其元数据中使用了类似页表的方式来完成索引。   目录结构：inode编号 + 该项长度 + name长度 + 文件类型 + 4字节对齐的name  性能和可靠性  大文件随机读写性能提高，小文件读写性能同样很好。 但同样和FAT具有存储可靠性的问题。  </description>
+    </item>
+    
+    <item>
+      <title>文件系统API</title>
+      <link>https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9Fapi/</link>
+      <pubDate>Tue, 23 Jun 2020 22:16:46 +0800</pubDate>
+      
+      <guid>https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9Fapi/</guid>
+      <description>为什么需要文件系统  应用程序直接通过设备驱动程序访问存储设备不合适  多个应用程序并发访问存储设备 一个有Bug的应用程序可能直接损坏整个存储设备。   所以需要在这个基础上再添加一层抽象层，将一个磁盘抽象成多个虚拟磁盘。 文件系统就是对存储设备的虚拟化。  磁盘(I/O设备)是一个可读可写的字节序列 虚拟磁盘是一个动态的可读可写的字节序列   从实现方面来看，文件系统就是在持久化存储设备上的数据结构。  规定了数据的存储方式 提供了对数据结构进行的一些操作    文件API lseek, mmap, ftruncate  mmap  open一个文件后可以使用mmap(MAP_SHARED)将文件映射到地址空间，使用mmap(MAP_PRIVATE)创建一个文件的copy-on-write的副本   问题在于：如果我们使用mmap映射的长度超过文件大小，然后访问了超过文件大小的内容，会发生什么 mmap手册已经说明：会返回一个SIGBUS的信号 ftruncate可以改变一个文件的大小，lseek可以改变读写文件偏移量，那么这三个API可能会相互影响。  比如 mmap 2MB, lseek 3MB, ftruncate 1MB 那么之后读写在哪里？    偏移量管理  从上面一个例子可以知道偏移量管理十分重要。  当进程fork的时候，对于文件描述符是浅拷贝，也就是说父子进程共享一个偏移量。 当使用dup的时候，对于文件描述符也是浅拷贝。 使用open的时候，获得一个独立的offset.    文件系统API-管理众多虚拟磁盘 目录管理  mkdir, rmdir  硬链接和软链接  硬链接  需求：有的时候需要一个文件被多个目录引用，但不像要不必要的拷贝 ln filename newfilename 只允许文件对文件的硬链接，不允许目录的硬链接也不允许跨文件系统的硬链接。 而实际上对于Linux的文件系统来说，其树状结构的每一个叶节点并不是想FAT文件系统一样就是一个文件，而是一个指向某个虚拟磁盘的指针，于是，维护好每个虚拟磁盘的引用计数就能很好地实现硬链接，查看rm的系统调用可以发现使用的是unlink.</description>
+    </item>
+    
+    <item>
+      <title>设备驱动</title>
+      <link>https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8/</link>
+      <pubDate>Tue, 23 Jun 2020 12:07:06 +0800</pubDate>
+      
+      <guid>https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8/</guid>
+      <description>I/O设备的抽象  cpu使用指令访问设备寄存器/设备存储。 在此意义上，很多东西都属于I/O设备，比如PIC,总线,DMA等。 而对于应用程序  应用程序具有访问I/O设备有需求 应用程序直接访问I/O设备是不现实的  I/O设备多样，应用程序难以写出portable的代码 不同应用之间需要同步协调各个I/O资源的使用     所以操作系统应该对I/O设备进行一定的抽象。 需求分析  printf: 希望向设备写入一些数据，所以需要write功能 浏览器：希望从某个TCP连接中读取数据，所以需要read功能 &amp;hellip;   所以分析可能需要的API为  read: 读出数据 write: 写入数据 ioctl: 读取/更改设备状态   操作系统建立一个新的抽象层，将不同的I/O设备抽象成为系统中可读可写&amp;hellip;的对象。 这样就能用同一个接口去访问不同的I/O设备，实现接口的代码就是设备驱动程序  设备驱动程序  设备驱动程序就是硬件抽象层的实现。 因为硬件抽象层使得应用程序看不到实际上的I/O设备，所以其实可以创造一些虚拟的，实际上不存在的设备。  如/dev/zero, /dev/null, /dev/urandom   在Linux系统中，everything is a file, 所以其设备驱动也就是文件所需要的一些操作。  特殊的设备-磁盘和网卡  磁盘的特性  以数据块为单位访问 使用DMA传输数据 应用程序一般不会直接访问，而是由文件系统访问。 大量的并发访问   网卡  超高速设备 &amp;hellip;   所以针对这两个设备，linux使用了另外的单独的抽象。  </description>
+    </item>
     
     <item>
       <title>信号和jobcontrol</title>

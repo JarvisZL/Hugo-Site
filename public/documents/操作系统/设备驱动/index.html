@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>设备驱动 | 浙语临湖</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E4%BF%A1%E5%8F%B7%E5%92%8Cjobcontrol/" /><link rel="next" href="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9Fapi/" /><link rel="canonical" href="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="设备驱动" />
+<meta property="og:description" content="I/O设备的抽象  cpu使用指令访问设备寄存器/设备存储。 在此意义上，很多东西都属于I/O设备，比如PIC,总线,DMA等。 而对于应用程序  应用程序具有访问I/O设备有需求 应用程序直接访问I/O设备是不现实的  I/O设备多样，应用程序难以写出portable的代码 不同应用之间需要同步协调各个I/O资源的使用     所以操作系统应该对I/O设备进行一定的抽象。 需求分析  printf: 希望向设备写入一些数据，所以需要write功能 浏览器：希望从某个TCP连接中读取数据，所以需要read功能 &hellip;   所以分析可能需要的API为  read: 读出数据 write: 写入数据 ioctl: 读取/更改设备状态   操作系统建立一个新的抽象层，将不同的I/O设备抽象成为系统中可读可写&hellip;的对象。 这样就能用同一个接口去访问不同的I/O设备，实现接口的代码就是设备驱动程序  设备驱动程序  设备驱动程序就是硬件抽象层的实现。 因为硬件抽象层使得应用程序看不到实际上的I/O设备，所以其实可以创造一些虚拟的，实际上不存在的设备。  如/dev/zero, /dev/null, /dev/urandom   在Linux系统中，everything is a file, 所以其设备驱动也就是文件所需要的一些操作。  特殊的设备-磁盘和网卡  磁盘的特性  以数据块为单位访问 使用DMA传输数据 应用程序一般不会直接访问，而是由文件系统访问。 大量的并发访问   网卡  超高速设备 &hellip;   所以针对这两个设备，linux使用了另外的单独的抽象。  " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8/" />
+<meta property="article:published_time" content="2020-06-23T12:07:06+08:00" />
+<meta property="article:modified_time" content="2020-06-23T12:07:06+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="设备驱动"/>
+<meta name="twitter:description" content="I/O设备的抽象  cpu使用指令访问设备寄存器/设备存储。 在此意义上，很多东西都属于I/O设备，比如PIC,总线,DMA等。 而对于应用程序  应用程序具有访问I/O设备有需求 应用程序直接访问I/O设备是不现实的  I/O设备多样，应用程序难以写出portable的代码 不同应用之间需要同步协调各个I/O资源的使用     所以操作系统应该对I/O设备进行一定的抽象。 需求分析  printf: 希望向设备写入一些数据，所以需要write功能 浏览器：希望从某个TCP连接中读取数据，所以需要read功能 &hellip;   所以分析可能需要的API为  read: 读出数据 write: 写入数据 ioctl: 读取/更改设备状态   操作系统建立一个新的抽象层，将不同的I/O设备抽象成为系统中可读可写&hellip;的对象。 这样就能用同一个接口去访问不同的I/O设备，实现接口的代码就是设备驱动程序  设备驱动程序  设备驱动程序就是硬件抽象层的实现。 因为硬件抽象层使得应用程序看不到实际上的I/O设备，所以其实可以创造一些虚拟的，实际上不存在的设备。  如/dev/zero, /dev/null, /dev/urandom   在Linux系统中，everything is a file, 所以其设备驱动也就是文件所需要的一些操作。  特殊的设备-磁盘和网卡  磁盘的特性  以数据块为单位访问 使用DMA传输数据 应用程序一般不会直接访问，而是由文件系统访问。 大量的并发访问   网卡  超高速设备 &hellip;   所以针对这两个设备，linux使用了另外的单独的抽象。  "/>
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "设备驱动",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/jarviszly.com\/documents\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszly.com\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "documents","wordcount":  44 ,
+        "url": "https:\/\/jarviszly.com\/documents\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8\/","datePublished": "2020-06-23T12:07:06\x2b08:00","dateModified": "2020-06-23T12:07:06\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "JarvisZhang",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszly.com\/images\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/forkawesome/fork-awesome.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://jarviszly.com">浙语临湖</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://jarviszly.com">浙语临湖</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">设备驱动</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://jarviszly.com" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
+                </a>&nbsp;<span class="post-category">included in&nbsp;<i class="far fa-folder fa-fw"></i><a href="https://jarviszly.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;</span></div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-06-23>2020-06-23</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 44 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>1 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#io设备的抽象">I/O设备的抽象</a></li>
+    <li><a href="#设备驱动程序">设备驱动程序</a>
+      <ul>
+        <li><a href="#特殊的设备-磁盘和网卡">特殊的设备-磁盘和网卡</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#io设备的抽象">I/O设备的抽象</a></li>
+    <li><a href="#设备驱动程序">设备驱动程序</a>
+      <ul>
+        <li><a href="#特殊的设备-磁盘和网卡">特殊的设备-磁盘和网卡</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><a class="post-dummy-target" id="io设备的抽象"></a><h2>I/O设备的抽象</h2>
+<ul>
+<li>cpu使用指令访问设备寄存器/设备存储。</li>
+<li>在此意义上，很多东西都属于I/O设备，比如PIC,总线,DMA等。</li>
+<li>而对于应用程序
+<ul>
+<li>应用程序具有访问I/O设备有需求</li>
+<li>应用程序直接访问I/O设备是不现实的
+<ul>
+<li>I/O设备多样，应用程序难以写出portable的代码</li>
+<li>不同应用之间需要同步协调各个I/O资源的使用</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>所以操作系统应该对I/O设备进行一定的抽象。</li>
+<li>需求分析
+<ul>
+<li>printf: 希望向设备写入一些数据，所以需要write功能</li>
+<li>浏览器：希望从某个TCP连接中读取数据，所以需要read功能</li>
+<li>&hellip;</li>
+</ul>
+</li>
+<li>所以分析可能需要的API为
+<ul>
+<li>read: 读出数据</li>
+<li>write: 写入数据</li>
+<li>ioctl: 读取/更改设备状态</li>
+</ul>
+</li>
+<li>操作系统建立一个新的抽象层，将不同的I/O设备抽象成为系统中可读可写&hellip;的对象。</li>
+<li>这样就能用同一个接口去访问不同的I/O设备，实现接口的代码就是<strong>设备驱动程序</strong></li>
+</ul>
+<a class="post-dummy-target" id="设备驱动程序"></a><h2>设备驱动程序</h2>
+<ul>
+<li>设备驱动程序就是硬件抽象层的实现。</li>
+<li>因为硬件抽象层使得应用程序看不到实际上的I/O设备，所以其实可以创造一些虚拟的，实际上不存在的设备。
+<ul>
+<li>如/dev/zero, /dev/null, /dev/urandom</li>
+</ul>
+</li>
+<li>在Linux系统中，everything is a file, 所以其设备驱动也就是文件所需要的一些操作。</li>
+</ul>
+<a class="post-dummy-target" id="特殊的设备-磁盘和网卡"></a><h3>特殊的设备-磁盘和网卡</h3>
+<ul>
+<li>磁盘的特性
+<ul>
+<li>以数据块为单位访问</li>
+<li>使用DMA传输数据</li>
+<li>应用程序一般不会直接访问，而是由文件系统访问。</li>
+<li>大量的并发访问</li>
+</ul>
+</li>
+<li>网卡
+<ul>
+<li>超高速设备</li>
+<li>&hellip;</li>
+</ul>
+</li>
+<li>所以针对这两个设备，linux使用了另外的单独的抽象。</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-06-23</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span><a href="//twitter.com/share?url=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%2593%258D%25E4%25BD%259C%25E7%25B3%25BB%25E7%25BB%259F%2f%25E8%25AE%25BE%25E5%25A4%2587%25E9%25A9%25B1%25E5%258A%25A8%2f&amp;text=%e8%ae%be%e5%a4%87%e9%a9%b1%e5%8a%a8&amp;via=" target="_blank" title="Share on Twitter">
+            <i class="fab fa-twitter fa-fw"></i>
+        </a><a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%2593%258D%25E4%25BD%259C%25E7%25B3%25BB%25E7%25BB%259F%2f%25E8%25AE%25BE%25E5%25A4%2587%25E9%25A9%25B1%25E5%258A%25A8%2f" target="_blank" title="Share on Facebook">
+            <i class="fab fa-facebook-square fa-fw"></i>
+        </a><a href="//reddit.com/submit?url=https%3a%2f%2fjarviszly.com%2fdocuments%2f%25E6%2593%258D%25E4%25BD%259C%25E7%25B3%25BB%25E7%25BB%259F%2f%25E8%25AE%25BE%25E5%25A4%2587%25E9%25A9%25B1%25E5%258A%25A8%2f&amp;title=%e8%ae%be%e5%a4%87%e9%a9%b1%e5%8a%a8" target="_blank" title="Share on Reddit">
+            <i class="fab fa-reddit fa-fw"></i>
+        </a></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://jarviszly.com">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E4%BF%A1%E5%8F%B7%E5%92%8Cjobcontrol/" class="prev" rel="prev" title="信号和jobcontrol"><i class="fas fa-angle-left fa-fw"></i>信号和jobcontrol</a>
+            <a href="https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9Fapi/" class="next" rel="next" title="文件系统API">文件系统API<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright">
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://jarviszly.com/" target="_blank">Lingyu Zhang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.miit.gov.cn/">苏ICP备20008191号-1</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.gov.cn/portal/index"></i>苏公网安备 32011302320886号</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/js/lib/jquery/jquery.slim.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><script src="/js/lib/katex/katex.min.js"></script><script defer src="/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script defer src="/js/lib/katex/copy-tex.min.js"></script><script defer src="/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$$", right: "$$", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/js/blog.min.js"></script>
+</body>
+</html>
