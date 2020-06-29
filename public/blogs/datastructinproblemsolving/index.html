@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>DatastructInproblemsolving | 浙语临湖</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="浙语临湖的博客"><link rel="prev" href="https://jarviszly.com/blogs/algorithminproblemsolving/" /><link rel="canonical" href="https://jarviszly.com/blogs/datastructinproblemsolving/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="DatastructInproblemsolving" />
+<meta property="og:description" content="ADT  an ADT may be defined as a &ldquo;class of objects whose logical behavior is defined by a set of values and a set of operations&rdquo;  Stack  a stack is an abstract data type that serves as a collection of elements, with two principal operations:  push, which adds an element to the collection pop, which removes the most recently added element that was not yet removed.   the strattegy is LIFO(last in, first out)." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jarviszly.com/blogs/datastructinproblemsolving/" />
+<meta property="article:published_time" content="2020-06-28T14:13:54+08:00" />
+<meta property="article:modified_time" content="2020-06-28T14:13:54+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="DatastructInproblemsolving"/>
+<meta name="twitter:description" content="ADT  an ADT may be defined as a &ldquo;class of objects whose logical behavior is defined by a set of values and a set of operations&rdquo;  Stack  a stack is an abstract data type that serves as a collection of elements, with two principal operations:  push, which adds an element to the collection pop, which removes the most recently added element that was not yet removed.   the strattegy is LIFO(last in, first out)."/>
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "DatastructInproblemsolving",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/jarviszly.com\/blogs\/datastructinproblemsolving\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszly.com\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "blogs","keywords": "datastruct, problem-solving","wordcount":  391 ,
+        "url": "https:\/\/jarviszly.com\/blogs\/datastructinproblemsolving\/","datePublished": "2020-06-28T14:13:54\x2b08:00","dateModified": "2020-06-28T14:13:54\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "JarvisZhang",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/jarviszly.com\/images\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/forkawesome/fork-awesome.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://jarviszly.com">浙语临湖</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://jarviszly.com">浙语临湖</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://jarviszly.com/blogs" title="">Blog Posts</a><a class="menu-item" href="https://jarviszly.com/categories" title="">Notes</a><a class="menu-item" href="https://jarviszly.com/slides" title="">Slides</a><a class="menu-item" href="https://jarviszly.com/about" title="">About</a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">DatastructInproblemsolving</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://jarviszly.com" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
+                </a>&nbsp;</div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-06-28>2020-06-28</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 391 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>2 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#adt">ADT</a></li>
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="#heap">heap</a></li>
+    <li><a href="#queue">queue</a></li>
+    <li><a href="#linked-list">linked list</a></li>
+    <li><a href="#array">array</a></li>
+    <li><a href="#hash-table">hash table</a></li>
+    <li><a href="#red-black-tree">Red-black tree</a></li>
+    <li><a href="#并查集">并查集</a></li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#adt">ADT</a></li>
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="#heap">heap</a></li>
+    <li><a href="#queue">queue</a></li>
+    <li><a href="#linked-list">linked list</a></li>
+    <li><a href="#array">array</a></li>
+    <li><a href="#hash-table">hash table</a></li>
+    <li><a href="#red-black-tree">Red-black tree</a></li>
+    <li><a href="#并查集">并查集</a></li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><a class="post-dummy-target" id="adt"></a><h2>ADT</h2>
+<ul>
+<li>an ADT may be defined as a &ldquo;class of objects whose logical behavior is defined by a set of values and a set of operations&rdquo;</li>
+</ul>
+<a class="post-dummy-target" id="stack"></a><h2>Stack</h2>
+<ul>
+<li>a stack is an abstract data type that serves as a collection of elements, with two principal operations:
+<ul>
+<li><strong>push</strong>, which adds an element to the collection</li>
+<li><strong>pop</strong>, which removes the most recently added element that was not yet removed.</li>
+</ul>
+</li>
+<li>the strattegy is LIFO(last in, first out).</li>
+</ul>
+<a class="post-dummy-target" id="heap"></a><h2>heap</h2>
+<ul>
+<li>i think we can think of a heap as an almost complete[1] tree that satisfies the heap property:
+<ul>
+<li>max(min) heap, for any given node C, if P is a parent node of C, then he value)of P is greater(smaller) than or equal to the value of C.</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="queue"></a><h2>queue</h2>
+<ul>
+<li>a queue is a collection of elements with first in first out strategy and that the elements are maintained in a sequence.</li>
+<li>we can modify a queue by adding elements at one end of the sequence and  removing elements from the other end of the sequence.</li>
+</ul>
+<a class="post-dummy-target" id="linked-list"></a><h2>linked list</h2>
+<ul>
+<li>a linked list is a linear collection of data elements, whose order is not given by their physical placement in memory. Instead, each element points to the next.</li>
+<li>In its most basic form, each node contains: data, and a reference (in other words, a link) to the next node in the sequence.</li>
+</ul>
+<a class="post-dummy-target" id="array"></a><h2>array</h2>
+<ul>
+<li>an array is a linear collection of elements, which is stored contiguously in memory.</li>
+</ul>
+<a class="post-dummy-target" id="hash-table"></a><h2>hash table</h2>
+<ul>
+<li>a hash table (hash map) is a data structure that can map keys to values.</li>
+<li>A hash table uses a hash function to compute a hash code, into an array, from which the desired value can be found.</li>
+</ul>
+<a class="post-dummy-target" id="red-black-tree"></a><h2>Red-black tree</h2>
+<ul>
+<li>a red–black tree is a kind of self-balancing binary search tree. Each node stores an extra arrtribute representing color, used to ensure that the tree remains approximately balanced during insertions and deletions.
+<ul>
+<li>the root node and leaf nodes are black.</li>
+<li>if a node is red then its children should be black.</li>
+<li>Every path from a given node to leaves should has the same number of black nodes.</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="并查集"></a><h2>并查集</h2>
+<ul>
+<li>It is a tree-shaped data structure, used to deal with some merge and query problems on disjoint sets. it has two principal operations:
+<ul>
+<li>Union: Merge two subsets into one set</li>
+<li>Find: Find the representative element of the set where the given element is located</li>
+</ul>
+</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-06-28</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span><a href="//twitter.com/share?url=https%3a%2f%2fjarviszly.com%2fblogs%2fdatastructinproblemsolving%2f&amp;text=DatastructInproblemsolving&amp;via=" target="_blank" title="Share on Twitter">
+            <i class="fab fa-twitter fa-fw"></i>
+        </a><a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fjarviszly.com%2fblogs%2fdatastructinproblemsolving%2f" target="_blank" title="Share on Facebook">
+            <i class="fab fa-facebook-square fa-fw"></i>
+        </a><a href="//reddit.com/submit?url=https%3a%2f%2fjarviszly.com%2fblogs%2fdatastructinproblemsolving%2f&amp;title=DatastructInproblemsolving" target="_blank" title="Share on Reddit">
+            <i class="fab fa-reddit fa-fw"></i>
+        </a></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span class="tag">
+                        <a href="https://jarviszly.com/tags/datastruct/"><i class="fas fa-tag fa-fw"></i>&nbsp;datastruct</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="https://jarviszly.com/tags/problem-solving/"><i class="fas fa-tag fa-fw"></i>&nbsp;problem-solving</a>&nbsp;
+                    </span></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://jarviszly.com">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://jarviszly.com/blogs/algorithminproblemsolving/" class="prev" rel="prev" title="AlgorithmInproblemsolving"><i class="fas fa-angle-left fa-fw"></i>AlgorithmInproblemsolving</a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright">
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://jarviszly.com/" target="_blank">Lingyu Zhang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.miit.gov.cn/">苏ICP备20008191号-1</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                <span class="icp"><a href="http://www.beian.gov.cn/portal/index"></i>苏公网安备 32011302320886号</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/js/lib/jquery/jquery.slim.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><script src="/js/lib/katex/katex.min.js"></script><script defer src="/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script defer src="/js/lib/katex/copy-tex.min.js"></script><script defer src="/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$$", right: "$$", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/js/blog.min.js"></script>
+</body>
+</html>

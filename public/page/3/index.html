@@ -19,7 +19,7 @@
 <meta property="og:description" content="浙语临湖的博客" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://jarviszly.com/" />
-<meta property="og:updated_time" content="2020-06-24T12:06:05+08:00" />
+<meta property="og:updated_time" content="2020-06-28T14:13:54+08:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="浙语临湖"/>
 <meta name="twitter:description" content="浙语临湖的博客"/>
@@ -72,26 +72,22 @@
     </a></div>
 </div>
 <article class="post" itemscope itemtype="http://schema.org/Article"><h1 class="post-title post-list-title" itemprop="name headline">
-        <a href="https://jarviszly.com/blogs/android-monkey-getmainapps/">Android Monkey GetMainApps</a>
+        <a href="https://jarviszly.com/blogs/android-monkey-eventsource/">Android Monkey EventSource</a>
     </h1><div class="post-meta"><a class="author" href="https://jarviszly.com" rel="author" target="_blank">
             <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
-        </a>published on  <time datetime=2020-06-16>2020-06-16</time>&nbsp;</div><div class="post-content">getMainApps函数 作用  根据命令中-p和-c参数来在设备中寻找符合条件的Activities.  代码分析 1 2 3 4 5 6 7 8 9 10 11 12  try{ mMainCategories.forEach { if (it == null) return@forEach val intent = Intent(Intent.ACTION_MAIN) if (it.isNotEmpty()) { intent.addCategory(it) } val mainApps = mPm!!.queryIntentActivities(intent, null, 0, UserHandle.myUserId()) ... } ... }    上述代码设置隐式的Intent,然后通过mpm查询设备中符合Intent这些属性的Activity放入mainApps中。 此处mainApps实际上是一个list&lt;ResolveInfo&gt;  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23  try{ .</div><div class="post-footer">
-        <a href="https://jarviszly.com/blogs/android-monkey-getmainapps/">Read More</a><div class="post-tags"><span class="tag">
+        </a>published on  <time datetime=2020-06-17>2020-06-17</time>&nbsp;</div><div class="post-content">run函数中申明不同的EventSource  脚本运行：命令中使用了-f且只有一个脚本则直接使用该脚本进行测试  1 2 3 4 5 6 7  mScriptFileNames.size == 1 -&gt; { //script mode, ignore other options  mEventSource = MonkeySourceScript(mRandom!!, mScriptFileNames[0]!!, mThrottle, mRandomizeThrottle, mProfileWaitTime, mDeviceSleepTime) mEventSource.setVerbose(mVerbose) mCountEvents = false }    随机脚本运行：命令中使用了-f且包含多个脚本则随机运行这些脚本进行测试 如果有参数setup,则先运行带-setup的脚本用于配置环境等  1 2 3 4 5 6 7 8 9 10 11 12 13  mScriptFileNames.size &gt; 1 -&gt; { mEventSource = if (mSetupFileName != null) { mCount++ MonkeySourceRandomScript(mSetupFileName, mScriptFileNames, mThrottle, mRandomizeThrottle, mRandom!</div><div class="post-footer">
+        <a href="https://jarviszly.com/blogs/android-monkey-eventsource/">Read More</a><div class="post-tags"><span class="tag">
                         &nbsp;<a href="https://jarviszly.com/tags/android/"><i class="fas fa-tag fa-fw"></i>&nbsp;Android</a>
                     </span><span class="tag">
                         &nbsp;<a href="https://jarviszly.com/tags/monkey/"><i class="fas fa-tag fa-fw"></i>&nbsp;Monkey</a>
                     </span></div></div>
 </article>
 <article class="post" itemscope itemtype="http://schema.org/Article"><h1 class="post-title post-list-title" itemprop="name headline">
-        <a href="https://jarviszly.com/blogs/%E4%B9%B0%E8%82%A1%E7%A5%A8%E6%9C%80%E5%A4%A7%E5%88%A9%E6%B6%A6dp/">买股票最大利润DP</a>
+        <a href="https://jarviszly.com/blogs/android-monkey-run/">Android Monkey Run</a>
     </h1><div class="post-meta"><a class="author" href="https://jarviszly.com" rel="author" target="_blank">
             <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
-        </a>published on  <time datetime=2020-06-07>2020-06-07</time>&nbsp;</div><div class="post-content">彩票类题目描述  给定一个数组prices,第i项表示第i天买入或卖出彩票的价格，买入之前必须将当前手里的彩票卖出，一个买入卖出组合被称作一次交易，一共可以进行K次交易，最大利润是多少？  状态表示和转移  每天有买入，卖出，不操作三种情况，并且其中买入次数收到K的限制，所以需要确定下来天数i,当前剩余的买入次数k，和当日操作结束后是否拥有股票来确定唯一一个状态。  1 2 3 4 5  /* 状态表示 */ // 表示前i天共拥有k次交易次数且第i天操作结束后没有拥有股票时的最大利润。 dp[i][k][0]; // 表示前i天共拥有k次交易次数且第i天操作结束后拥有股票时的最大利润。 dp[i][k][1];    而对于第i天，其操作结束后是否拥有股票和第i-1天有关。  1 2 3 4 5 6 7 8 9 10 11 12 13 14  /* 状态转移 */ /* 第i天操作后不拥有股票： 第i-1天操作后不拥有股票，且第i天没有操作 第i-1天拥有股票且第i天卖出 */ dp[i][k][0] = max(dp[i-1][k][0], dp[i-1][k][1] + prices[i]); /* 第i天操作后拥有股票： 第i-1天操作后拥有股票，且第i天没有操作 第i-1天不拥有股票且第i天买入 */ dp[i][k][1] = max(dp[i-1][k][1], dp[i-1][k-1][0] - prices[i]); //此处用k表示剩余买入的次数，表示剩余卖出的次数结果一样。    考虑初始化状态，第0天的时候，如果操作后不拥有股票，说明没有操作，利润位0，反之如果第0天时还剩余交易次数，且操作后拥有股票则说明第0天买入，利润为0 - prices[0]。  1 2 3 4 5  for(int i = 0; i &lt;= k; ++i){ dp[0][i][0] = 0; dp[0][i][1] = 0 - prices[0]; } dp[0][0][1] = INT_MIN; //(用INT_MIN表示不可能)   </div><div class="post-footer">
-        <a href="https://jarviszly.com/blogs/%E4%B9%B0%E8%82%A1%E7%A5%A8%E6%9C%80%E5%A4%A7%E5%88%A9%E6%B6%A6dp/">Read More</a><div class="post-tags"><span class="tag">
-                        &nbsp;<a href="https://jarviszly.com/tags/oj/"><i class="fas fa-tag fa-fw"></i>&nbsp;OJ</a>
-                    </span><span class="tag">
-                        &nbsp;<a href="https://jarviszly.com/tags/dp/"><i class="fas fa-tag fa-fw"></i>&nbsp;DP</a>
-                    </span></div></div>
+        </a>published on  <time datetime=2020-06-17>2020-06-17</time>&nbsp;</div><div class="post-content"></div><div class="post-footer">
+        <a href="https://jarviszly.com/blogs/android-monkey-run/">Read More</a></div>
 </article>
 <ul class="pagination"><li class="page-item ">
                     <span class="page-link">
@@ -112,6 +108,10 @@
                 </li><li class="page-item ">
                     <span class="page-link">
                         <a href="/page/5/">5</a>
+                    </span>
+                </li><li class="page-item ">
+                    <span class="page-link">
+                        <a href="/page/6/">6</a>
                     </span>
                 </li></ul></div></div>
             </main><footer class="footer">

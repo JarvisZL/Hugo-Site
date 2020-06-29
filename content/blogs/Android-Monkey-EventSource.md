@@ -270,26 +270,91 @@ private fun generateEvents() {
 - 随机生成一个事件
 - <font color=red size=3>TBD</font>
 
+### random类函数(随机生成点，偏移量和随机移动)
+```kotlin
+private fun randomPoint(random: Random, display: Display): PointF {
+    // since Display.getWidth() is deprecated, usethe recommanded way; x is width and y is height
+    val size = Point()
+    display.getSize(size)
+    return PointF(random.nextInt(size.x).toFloat(),random.nextInt(size.y).toFloat())
+}
+private fun randomVector(random: Random) =
+    PointF((random.nextFloat() - 0.5f) * 50,(random.nextFloat() - 0.5f) * 50)
+private fun randomWalk(random: Random, display:Display, point: PointF, vector: PointF) {
+    val size = Point()
+    //获取屏幕的宽(存入size.x)和高(存入size.y)
+    display.getSize(size)
+    //max和min是防止移动超过范围
+    point.x = Math.max(Math.min(point.x + randomnextFloat() * vector.x, size.x.toFloat()), 0f)
+    point.y = Math.max(Math.min(point.y + randomnextFloat() * vector.y, size.y.toFloat()), 0f)
+}
+```
+
+
 ### generatePointerEvent
 - 用来生成Touch, Motion, PinchZoom事件
 ```kotlin
 private fun generatePointerEvent(random: Random, gesture: Int) {
     //获取默认显示器
-    val display = DisplayManagerGlobal.getInstance().getRealDisplay(Display.DEFAULT_DISPLAY)
-
+    val display = DisplayManagerGlobal.getInstance(.getRealDisplay(Display.DEFAULT_DISPLAY)
     //随机生成点和偏移量
     val p1 = randomPoint(random, display)
     val v1 = randomVector(random)
-
     //从开机到现在的毫秒数
     val downAt = SystemClock.uptimeMillis()
-
-    //加入DOWN(按下)标记的Touch事件
+    //第一个手指按下
     mQ.addLast(
-        MonkeyTouchEvent(MotionEvent.ACTION_DOWN)
-        .setDownTime(downAt)
-        .addPointer(0, p1.x, p1.y)
-        .setIntermediateNote(false)
+        MonkeyTouchEvent(MotionEvent.ACTION_DOWN)setDownTime(downAt).addPointer(0, p1.x, p1y)
+            .setIntermediateNote(false)
+    )
+    // sometimes we'll move during the touch
+    if (gesture == GESTURE_DRAG) {
+        repeat(random.nextInt(10)) {
+            randomWalk(random, display, p1, v1)
+            //println("add MOVE")
+            mQ.addLast(
+                MonkeyTouchEvent(MotionEventACTION_MOVE).setDownTime(downAt)addPointer(0, p1.x, p1.y)
+                    .setIntermediateNote(true)
+            )
+           // println((mQ.last as MonkeyMotionEvent.getAction())
+        }
+    }
+    else if (gesture == GESTURE_PINCH_OR_ZOOM) {
+        val p2 = randomPoint(random, display)
+        val v2 = randomVector(random)
+        randomWalk(random, display, p1, v1)
+        mQ.addLast(
+            MonkeyTouchEvent(
+                //Action_POINTER_DOWN 表示有非主要指按下即之前已经有手指在屏幕上
+                //or == |
+                // 1 shl index_shift 表示这个actio的index是1， 使用第8到15位作为index
+                MotionEvent.ACTION_POINTER_DOWN or(1 shl MotionEventACTION_POINTER_INDEX_SHIFT)
+            ).setDownTime(downAt)
+                .addPointer(0, p1.x, p1.y)addPointer(1, p2.x, p2.y)setIntermediateNote(true)
+        )
+        repeat(random.nextInt(10)) {
+            randomWalk(random, display, p1, v1)
+            randomWalk(random, display, p2, v2)
+            mQ.addLast(
+                MonkeyTouchEvent(MotionEventACTION_MOVE).setDownTime(downAt)addPointer(0, p1.x, p1.y)
+                    .addPointer(1, p2.x, p2.y)setIntermediateNote(true)
+            )
+        }
+        randomWalk(random, display, p1, v1)
+        randomWalk(random, display, p2, v2)
+        //第二个手指离开
+        mQ.addLast(
+            MonkeyTouchEvent(MotionEventACTION_POINTER_UP or (1 shl MotionEventACTION_POINTER_INDEX_SHIFT))
+                .setDownTime(downAt).addPointer(0,p1.x, p1.y).addPointer(1, p2.x, p2y)
+                .setIntermediateNote(true)
+        )
+    }
+    //randomwalk后位置保存在p1中
+    randomWalk(random, display, p1, v1)
+    //第一个手指离开
+    mQ.addLast(
+        MonkeyTouchEvent(MotionEvent.ACTION_UP)setDownTime(downAt).addPointer(0, p1.x, p1y)
+            .setIntermediateNote(false)
     )
 }
 ```

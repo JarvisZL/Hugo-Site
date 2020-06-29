@@ -7,10 +7,28 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Wed, 24 Jun 2020 12:06:05 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2020 10:04:53 +0800</lastBuildDate>
     
 	<atom:link href="https://jarviszly.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>崩溃一致性</title>
+      <link>https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B4%A9%E6%BA%83%E4%B8%80%E8%87%B4%E6%80%A7/</link>
+      <pubDate>Sat, 27 Jun 2020 10:04:53 +0800</pubDate>
+      
+      <guid>https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B4%A9%E6%BA%83%E4%B8%80%E8%87%B4%E6%80%A7/</guid>
+      <description>崩溃一致性  希望文件系统在任何时候都能保持一致性。 导致不一致的原因: 数据结构的维护需要多个数据块的写入  RAID: $write(V_0) \rightarrow write(A_0), write(B_0)$ ext2(文件追写一块): $write(inode),write(bitmap),write(data)$   磁盘收到多个I/O请求，磁盘是有权利调换一些顺序的，除非收到一个flush请求。 比如上面第二种情况  inode写入了：导致指向了没有分配的地方，以后可能被分配导致两个文件共享这部分，十分严重的问题.(corrupt fs) bitmap写入了：导致了分配了一块，但是没有办法访问到也没有办法free，导致了(deadblock). data写入了：相当于写了一些garbage到文件系统中 inode,bitmap写入了：数据未写入，相当于文件内容出错(corrupt file) inode,data写入了：同样可能导致共享问题(corrupt fs) bitmap,data写入了：deadblock    fsck(File System Checking)  根据磁盘中已有的信息，恢复出最可能的数据结构的状态，但有时候很难决定什么是对的结构。 fsck也是一个程序，有可能在其运行过程中发生崩溃，这时文件系统可能进入彻底无法恢复的状态 所以需要一个更加&amp;quot;constructive&amp;quot;的办法实现崩溃一致性，所以提出了journaling.  journaling  实现append-only的block vector  比如append(234)到1后面，要不然就全部写入要不然就认为全部没有写入的原子append 写完234后使用一次flush，成功返回后写入一个OK标记再flush，只有第二次flush返回成功才认为前面已经都写入磁盘。   实现数据结构有两种方法，第一种是常见的记录其结构，另一种是记录使用该数据结构的一些操作，而在实现了append-only的基础上，可以使用append-only记录这些操作。  从而保证先将操作记录写入磁盘，然后再执行这些操作。   journaling的优化  合并多个flush标记Tx减少log大小 不记录Txbegin,Txend而是记录checksum,Tx的长度    </description>
+    </item>
+    
+    <item>
+      <title>持久数据的可靠性RAID</title>
+      <link>https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%8C%81%E4%B9%85%E6%95%B0%E6%8D%AE%E7%9A%84%E5%8F%AF%E9%9D%A0%E6%80%A7raid/</link>
+      <pubDate>Fri, 26 Jun 2020 11:10:06 +0800</pubDate>
+      
+      <guid>https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%8C%81%E4%B9%85%E6%95%B0%E6%8D%AE%E7%9A%84%E5%8F%AF%E9%9D%A0%E6%80%A7raid/</guid>
+      <description>持久数据的可靠性  增加持久数据可靠性的方法-备份  random corruption(某块随机损坏)和FAT备份  损坏情况  元数据(FAT)损坏-高破坏性 系统文件损坏-可能造成无法开机 数据文件损坏-丢失一个文件，勉强可以接受   应对部分数据损坏-自动备份最重要的数据(FAT)$\times k$  k由文件系统初始化时设置 更改FAT时需要对多个FAT同时更改   性能影响  FAT读取：不受影响，从任意一个读取即可，当FAT-i损坏的时候，从FAT-i+1读取即可 FAT更新：需要同时写入k个，但因为FAT部分经常访问所以其在内存中有副本，所以其实写入磁盘的频率很低   可靠性分析：  假设有一个FAT有n个cluster，每个以p概率损坏 可以抵抗任意连续不超过n个的损坏。 原来存在损坏$1-(1-p)^n$变成$1-(1-p^k)^n$   FAT损坏恢复(M5)  mmap将所有cluster读入内存 分类所有的cluster(目录文件，bitmap头，bitmap数据) 然后解析目录文件找到bitmap头，根据假设bitmap头后面的一些cluster就是bitmap数据，可以进行简单的恢复，或者根据相似性去进行更严谨的恢复    fail-stop(整块磁盘坏掉)和RAID  RAID(廉价磁盘冗余阵列)  把多块磁盘虚拟成一块虚拟磁盘(RAID) 允许任意一块磁盘的损坏 利用带宽  比如有两个磁盘，需要读取1234，则可以发成从A中读12，从B中读34，可以通过DMA并行完成，从而提高读取效率。 写入的时候，也可以利用DMA并行的写入，虽然浪费了一半的带宽。     RAID更多的设计空间  RAID-0: 不考虑备份，可以用两块1G的磁盘虚拟成一块2G的磁盘，并且相对一块2G的物理磁盘读写效率提升了一倍。 RAID-1: 就是上面所说的备份 RAID-10: 将上面两种组合起来，比如4块盘，先分别用两块构成RAID-1，然后在其基础上构成一个RAID-0 $v_0,v_1,v_2,v_3 \rightarrow A_0,B_0,C_0,D_0,E_0$，用多一块磁盘实现任意一块物理盘损坏的容忍和高效率，类似于奇偶校验。  $A,B,C,D$中对应存放$v_0,v_1,v_2,v_3$的值，而$E$中存放$v_0\oplus v_1 \oplus v_2 \oplus v_3$ 性能：随机读顺序读都是$80%$带宽，顺序写也是$80%$带宽(提前在内存中算好奇偶校验然后一起写)，随机写(单独写一块时，读取该块原来的数据和对应的校验磁盘中的对应数据)$P^\prime = P \oplus oldval \oplus newval$   性能瓶颈解决办法：将校验位P均匀分布到每一个磁盘中。      更可靠的存储 </description>
+    </item>
     
     <item>
       <title>文件系统实现</title>

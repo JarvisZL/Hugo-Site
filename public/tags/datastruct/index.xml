@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>datastruct on 浙语临湖</title>
+    <link>https://jarviszly.com/tags/datastruct/</link>
+    <description>Recent content in datastruct on 浙语临湖</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Sun, 28 Jun 2020 14:13:54 +0800</lastBuildDate>
+    
+	<atom:link href="https://jarviszly.com/tags/datastruct/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>DatastructInproblemsolving</title>
+      <link>https://jarviszly.com/blogs/datastructinproblemsolving/</link>
+      <pubDate>Sun, 28 Jun 2020 14:13:54 +0800</pubDate>
+      
+      <guid>https://jarviszly.com/blogs/datastructinproblemsolving/</guid>
+      <description>ADT  an ADT may be defined as a &amp;ldquo;class of objects whose logical behavior is defined by a set of values and a set of operations&amp;rdquo;  Stack  a stack is an abstract data type that serves as a collection of elements, with two principal operations:  push, which adds an element to the collection pop, which removes the most recently added element that was not yet removed.   the strattegy is LIFO(last in, first out).</description>
+    </item>
+    
+  </channel>
+</rss>

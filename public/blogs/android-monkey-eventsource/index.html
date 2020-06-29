@@ -35,7 +35,7 @@
                 "url": "https:\/\/jarviszly.com\/cover.png",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "blogs","keywords": "Android, Monkey","wordcount":  918 ,
+            },"genre": "blogs","keywords": "Android, Monkey","wordcount":  1186 ,
         "url": "https:\/\/jarviszly.com\/blogs\/android-monkey-eventsource\/","datePublished": "2020-06-17T17:33:09\x2b08:00","dateModified": "2020-06-17T17:33:09\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "JarvisZhang",
@@ -79,8 +79,8 @@
                     <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
                 </a>&nbsp;</div>
             <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-06-17>2020-06-17</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>about 918 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>5 min&nbsp;</div>
+                <i class="fas fa-pencil-alt fa-fw"></i>about 1186 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>6 min&nbsp;</div>
         </div><div class="post-toc" id="post-toc">
                 <h2 class="post-toc-title">Contents</h2>
                 <div class="post-toc-content"><nav id="TableOfContents">
@@ -92,6 +92,7 @@
         <li><a href="#该类的validate函数及其被调用函数为">该类的validate函数及其被调用函数为</a></li>
         <li><a href="#getnextevent">getNextEvent()</a></li>
         <li><a href="#generateevents">generateEvents()</a></li>
+        <li><a href="#random类函数随机生成点偏移量和随机移动">random类函数(随机生成点，偏移量和随机移动)</a></li>
         <li><a href="#generatepointerevent">generatePointerEvent</a></li>
       </ul>
     </li>
@@ -115,6 +116,7 @@
         <li><a href="#该类的validate函数及其被调用函数为">该类的validate函数及其被调用函数为</a></li>
         <li><a href="#getnextevent">getNextEvent()</a></li>
         <li><a href="#generateevents">generateEvents()</a></li>
+        <li><a href="#random类函数随机生成点偏移量和随机移动">random类函数(随机生成点，偏移量和随机移动)</a></li>
         <li><a href="#generatepointerevent">generatePointerEvent</a></li>
       </ul>
     </li>
@@ -619,7 +621,46 @@
 <li>随机生成一个事件</li>
 <li><font color=red size=3>TBD</font></li>
 </ul>
-<a class="post-dummy-target" id="generatepointerevent"></a><h3>generatePointerEvent</h3>
+<a class="post-dummy-target" id="random类函数随机生成点偏移量和随机移动"></a><h3>random类函数(随机生成点，偏移量和随机移动)</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">private</span> <span class="k">fun</span> <span class="nf">randomPoint</span><span class="p">(</span><span class="n">random</span><span class="p">:</span> <span class="n">Random</span><span class="p">,</span> <span class="n">display</span><span class="p">:</span> <span class="n">Display</span><span class="p">)</span><span class="p">:</span> <span class="n">PointF</span> <span class="p">{</span>
+    <span class="c1">// since Display.getWidth() is deprecated, usethe recommanded way; x is width and y is height
+</span><span class="c1"></span>    <span class="k">val</span> <span class="py">size</span> <span class="p">=</span> <span class="n">Point</span><span class="p">(</span><span class="p">)</span>
+    <span class="n">display</span><span class="p">.</span><span class="n">getSize</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">PointF</span><span class="p">(</span><span class="n">random</span><span class="p">.</span><span class="n">nextInt</span><span class="p">(</span><span class="n">size</span><span class="p">.</span><span class="n">x</span><span class="p">)</span><span class="p">.</span><span class="n">toFloat</span><span class="p">(</span><span class="p">)</span><span class="p">,</span><span class="n">random</span><span class="p">.</span><span class="n">nextInt</span><span class="p">(</span><span class="n">size</span><span class="p">.</span><span class="n">y</span><span class="p">)</span><span class="p">.</span><span class="n">toFloat</span><span class="p">(</span><span class="p">)</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="k">private</span> <span class="k">fun</span> <span class="nf">randomVector</span><span class="p">(</span><span class="n">random</span><span class="p">:</span> <span class="n">Random</span><span class="p">)</span> <span class="p">=</span>
+    <span class="n">PointF</span><span class="p">(</span><span class="p">(</span><span class="n">random</span><span class="p">.</span><span class="n">nextFloat</span><span class="p">(</span><span class="p">)</span> <span class="p">-</span> <span class="m">0.5f</span><span class="p">)</span> <span class="p">*</span> <span class="m">50</span><span class="p">,</span><span class="p">(</span><span class="n">random</span><span class="p">.</span><span class="n">nextFloat</span><span class="p">(</span><span class="p">)</span> <span class="p">-</span> <span class="m">0.5f</span><span class="p">)</span> <span class="p">*</span> <span class="m">50</span><span class="p">)</span>
+<span class="k">private</span> <span class="k">fun</span> <span class="nf">randomWalk</span><span class="p">(</span><span class="n">random</span><span class="p">:</span> <span class="n">Random</span><span class="p">,</span> <span class="n">display</span><span class="p">:</span><span class="n">Display</span><span class="p">,</span> <span class="n">point</span><span class="p">:</span> <span class="n">PointF</span><span class="p">,</span> <span class="n">vector</span><span class="p">:</span> <span class="n">PointF</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">val</span> <span class="py">size</span> <span class="p">=</span> <span class="n">Point</span><span class="p">(</span><span class="p">)</span>
+    <span class="c1">//获取屏幕的宽(存入size.x)和高(存入size.y)
+</span><span class="c1"></span>    <span class="n">display</span><span class="p">.</span><span class="n">getSize</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+    <span class="c1">//max和min是防止移动超过范围
+</span><span class="c1"></span>    <span class="n">point</span><span class="p">.</span><span class="n">x</span> <span class="p">=</span> <span class="n">Math</span><span class="p">.</span><span class="n">max</span><span class="p">(</span><span class="n">Math</span><span class="p">.</span><span class="n">min</span><span class="p">(</span><span class="n">point</span><span class="p">.</span><span class="n">x</span> <span class="p">+</span> <span class="n">randomnextFloat</span><span class="p">(</span><span class="p">)</span> <span class="p">*</span> <span class="n">vector</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">size</span><span class="p">.</span><span class="n">x</span><span class="p">.</span><span class="n">toFloat</span><span class="p">(</span><span class="p">)</span><span class="p">)</span><span class="p">,</span> <span class="m">0f</span><span class="p">)</span>
+    <span class="n">point</span><span class="p">.</span><span class="n">y</span> <span class="p">=</span> <span class="n">Math</span><span class="p">.</span><span class="n">max</span><span class="p">(</span><span class="n">Math</span><span class="p">.</span><span class="n">min</span><span class="p">(</span><span class="n">point</span><span class="p">.</span><span class="n">y</span> <span class="p">+</span> <span class="n">randomnextFloat</span><span class="p">(</span><span class="p">)</span> <span class="p">*</span> <span class="n">vector</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">size</span><span class="p">.</span><span class="n">y</span><span class="p">.</span><span class="n">toFloat</span><span class="p">(</span><span class="p">)</span><span class="p">)</span><span class="p">,</span> <span class="m">0f</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="generatepointerevent"></a><h3>generatePointerEvent</h3>
 <ul>
 <li>用来生成Touch, Motion, PinchZoom事件</li>
 </ul>
@@ -644,25 +685,113 @@
 </span><span class="lnt">17
 </span><span class="lnt">18
 </span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">private</span> <span class="k">fun</span> <span class="nf">generatePointerEvent</span><span class="p">(</span><span class="n">random</span><span class="p">:</span> <span class="n">Random</span><span class="p">,</span> <span class="n">gesture</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">//获取默认显示器
-</span><span class="c1"></span>    <span class="k">val</span> <span class="py">display</span> <span class="p">=</span> <span class="n">DisplayManagerGlobal</span><span class="p">.</span><span class="n">getInstance</span><span class="p">(</span><span class="p">)</span><span class="p">.</span><span class="n">getRealDisplay</span><span class="p">(</span><span class="n">Display</span><span class="p">.</span><span class="n">DEFAULT_DISPLAY</span><span class="p">)</span>
-
+</span><span class="c1"></span>    <span class="k">val</span> <span class="py">display</span> <span class="p">=</span> <span class="n">DisplayManagerGlobal</span><span class="p">.</span><span class="n">getInstance</span><span class="p">(</span><span class="p">.</span><span class="n">getRealDisplay</span><span class="p">(</span><span class="n">Display</span><span class="p">.</span><span class="n">DEFAULT_DISPLAY</span><span class="p">)</span>
     <span class="c1">//随机生成点和偏移量
 </span><span class="c1"></span>    <span class="k">val</span> <span class="py">p1</span> <span class="p">=</span> <span class="n">randomPoint</span><span class="p">(</span><span class="n">random</span><span class="p">,</span> <span class="n">display</span><span class="p">)</span>
     <span class="k">val</span> <span class="py">v1</span> <span class="p">=</span> <span class="n">randomVector</span><span class="p">(</span><span class="n">random</span><span class="p">)</span>
-
     <span class="c1">//从开机到现在的毫秒数
 </span><span class="c1"></span>    <span class="k">val</span> <span class="py">downAt</span> <span class="p">=</span> <span class="n">SystemClock</span><span class="p">.</span><span class="n">uptimeMillis</span><span class="p">(</span><span class="p">)</span>
-
-    <span class="c1">//加入DOWN(按下)标记的Touch事件
+    <span class="c1">//第一个手指按下
 </span><span class="c1"></span>    <span class="n">mQ</span><span class="p">.</span><span class="n">addLast</span><span class="p">(</span>
-        <span class="n">MonkeyTouchEvent</span><span class="p">(</span><span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_DOWN</span><span class="p">)</span>
-        <span class="p">.</span><span class="n">setDownTime</span><span class="p">(</span><span class="n">downAt</span><span class="p">)</span>
-        <span class="p">.</span><span class="n">addPointer</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">p1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p1</span><span class="p">.</span><span class="n">y</span><span class="p">)</span>
-        <span class="p">.</span><span class="n">setIntermediateNote</span><span class="p">(</span><span class="k">false</span><span class="p">)</span>
+        <span class="n">MonkeyTouchEvent</span><span class="p">(</span><span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_DOWN</span><span class="p">)</span><span class="n">setDownTime</span><span class="p">(</span><span class="n">downAt</span><span class="p">)</span><span class="p">.</span><span class="n">addPointer</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">p1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p1y</span><span class="p">)</span>
+            <span class="p">.</span><span class="n">setIntermediateNote</span><span class="p">(</span><span class="k">false</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="c1">// sometimes we&#39;ll move during the touch
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">gesture</span> <span class="p">=</span><span class="p">=</span> <span class="n">GESTURE_DRAG</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">repeat</span><span class="p">(</span><span class="n">random</span><span class="p">.</span><span class="n">nextInt</span><span class="p">(</span><span class="m">10</span><span class="p">)</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">randomWalk</span><span class="p">(</span><span class="n">random</span><span class="p">,</span> <span class="n">display</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">v1</span><span class="p">)</span>
+            <span class="c1">//println(&#34;add MOVE&#34;)
+</span><span class="c1"></span>            <span class="n">mQ</span><span class="p">.</span><span class="n">addLast</span><span class="p">(</span>
+                <span class="n">MonkeyTouchEvent</span><span class="p">(</span><span class="n">MotionEventACTION_MOVE</span><span class="p">)</span><span class="p">.</span><span class="n">setDownTime</span><span class="p">(</span><span class="n">downAt</span><span class="p">)</span><span class="n">addPointer</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">p1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p1</span><span class="p">.</span><span class="n">y</span><span class="p">)</span>
+                    <span class="p">.</span><span class="n">setIntermediateNote</span><span class="p">(</span><span class="k">true</span><span class="p">)</span>
+            <span class="p">)</span>
+           <span class="c1">// println((mQ.last as MonkeyMotionEvent.getAction())
+</span><span class="c1"></span>        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">gesture</span> <span class="p">=</span><span class="p">=</span> <span class="n">GESTURE_PINCH_OR_ZOOM</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">val</span> <span class="py">p2</span> <span class="p">=</span> <span class="n">randomPoint</span><span class="p">(</span><span class="n">random</span><span class="p">,</span> <span class="n">display</span><span class="p">)</span>
+        <span class="k">val</span> <span class="py">v2</span> <span class="p">=</span> <span class="n">randomVector</span><span class="p">(</span><span class="n">random</span><span class="p">)</span>
+        <span class="n">randomWalk</span><span class="p">(</span><span class="n">random</span><span class="p">,</span> <span class="n">display</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">v1</span><span class="p">)</span>
+        <span class="n">mQ</span><span class="p">.</span><span class="n">addLast</span><span class="p">(</span>
+            <span class="n">MonkeyTouchEvent</span><span class="p">(</span>
+                <span class="c1">//Action_POINTER_DOWN 表示有非主要指按下即之前已经有手指在屏幕上
+</span><span class="c1"></span>                <span class="c1">//or == |
+</span><span class="c1"></span>                <span class="c1">// 1 shl index_shift 表示这个actio的index是1， 使用第8到15位作为index
+</span><span class="c1"></span>                <span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_POINTER_DOWN</span> <span class="n">or</span><span class="p">(</span><span class="m">1</span> <span class="n">shl</span> <span class="n">MotionEventACTION_POINTER_INDEX_SHIFT</span><span class="p">)</span>
+            <span class="p">)</span><span class="p">.</span><span class="n">setDownTime</span><span class="p">(</span><span class="n">downAt</span><span class="p">)</span>
+                <span class="p">.</span><span class="n">addPointer</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">p1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p1</span><span class="p">.</span><span class="n">y</span><span class="p">)</span><span class="n">addPointer</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">p2</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p2</span><span class="p">.</span><span class="n">y</span><span class="p">)</span><span class="n">setIntermediateNote</span><span class="p">(</span><span class="k">true</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">repeat</span><span class="p">(</span><span class="n">random</span><span class="p">.</span><span class="n">nextInt</span><span class="p">(</span><span class="m">10</span><span class="p">)</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">randomWalk</span><span class="p">(</span><span class="n">random</span><span class="p">,</span> <span class="n">display</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">v1</span><span class="p">)</span>
+            <span class="n">randomWalk</span><span class="p">(</span><span class="n">random</span><span class="p">,</span> <span class="n">display</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span>
+            <span class="n">mQ</span><span class="p">.</span><span class="n">addLast</span><span class="p">(</span>
+                <span class="n">MonkeyTouchEvent</span><span class="p">(</span><span class="n">MotionEventACTION_MOVE</span><span class="p">)</span><span class="p">.</span><span class="n">setDownTime</span><span class="p">(</span><span class="n">downAt</span><span class="p">)</span><span class="n">addPointer</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">p1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p1</span><span class="p">.</span><span class="n">y</span><span class="p">)</span>
+                    <span class="p">.</span><span class="n">addPointer</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">p2</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p2</span><span class="p">.</span><span class="n">y</span><span class="p">)</span><span class="n">setIntermediateNote</span><span class="p">(</span><span class="k">true</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">}</span>
+        <span class="n">randomWalk</span><span class="p">(</span><span class="n">random</span><span class="p">,</span> <span class="n">display</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">v1</span><span class="p">)</span>
+        <span class="n">randomWalk</span><span class="p">(</span><span class="n">random</span><span class="p">,</span> <span class="n">display</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span>
+        <span class="c1">//第二个手指离开
+</span><span class="c1"></span>        <span class="n">mQ</span><span class="p">.</span><span class="n">addLast</span><span class="p">(</span>
+            <span class="n">MonkeyTouchEvent</span><span class="p">(</span><span class="n">MotionEventACTION_POINTER_UP</span> <span class="n">or</span> <span class="p">(</span><span class="m">1</span> <span class="n">shl</span> <span class="n">MotionEventACTION_POINTER_INDEX_SHIFT</span><span class="p">)</span><span class="p">)</span>
+                <span class="p">.</span><span class="n">setDownTime</span><span class="p">(</span><span class="n">downAt</span><span class="p">)</span><span class="p">.</span><span class="n">addPointer</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="n">p1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p1</span><span class="p">.</span><span class="n">y</span><span class="p">)</span><span class="p">.</span><span class="n">addPointer</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">p2</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p2y</span><span class="p">)</span>
+                <span class="p">.</span><span class="n">setIntermediateNote</span><span class="p">(</span><span class="k">true</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">}</span>
+    <span class="c1">//randomwalk后位置保存在p1中
+</span><span class="c1"></span>    <span class="n">randomWalk</span><span class="p">(</span><span class="n">random</span><span class="p">,</span> <span class="n">display</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">v1</span><span class="p">)</span>
+    <span class="c1">//第一个手指离开
+</span><span class="c1"></span>    <span class="n">mQ</span><span class="p">.</span><span class="n">addLast</span><span class="p">(</span>
+        <span class="n">MonkeyTouchEvent</span><span class="p">(</span><span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_UP</span><span class="p">)</span><span class="n">setDownTime</span><span class="p">(</span><span class="n">downAt</span><span class="p">)</span><span class="p">.</span><span class="n">addPointer</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">p1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p1y</span><span class="p">)</span>
+            <span class="p">.</span><span class="n">setIntermediateNote</span><span class="p">(</span><span class="k">false</span><span class="p">)</span>
     <span class="p">)</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
