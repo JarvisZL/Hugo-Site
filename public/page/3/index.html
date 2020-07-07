@@ -19,7 +19,7 @@
 <meta property="og:description" content="浙语临湖的博客" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://jarviszly.com/" />
-<meta property="og:updated_time" content="2020-06-28T14:13:54+08:00" />
+<meta property="og:updated_time" content="2020-06-30T13:13:31+08:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="浙语临湖"/>
 <meta name="twitter:description" content="浙语临湖的博客"/>
@@ -72,6 +72,17 @@
     </a></div>
 </div>
 <article class="post" itemscope itemtype="http://schema.org/Article"><h1 class="post-title post-list-title" itemprop="name headline">
+        <a href="https://jarviszly.com/blogs/android-monkey-runmonkeycycles/">Android Monkey RunMonkeyCycles</a>
+    </h1><div class="post-meta"><a class="author" href="https://jarviszly.com" rel="author" target="_blank">
+            <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
+        </a>published on  <time datetime=2020-06-23>2020-06-23</time>&nbsp;</div><div class="post-content">run中调用runMonkeyCycles  在run函数中获取完对应的EventSource并validate之后，就会调用runMonkeyCycle函数开始执行event  1 2 3 4 5 6 7 8 9 10  mNetworkMonitor.start() var crashedAtCycle : Int try { /** where the magic happens*/ crashedAtCycle = runMonkeyCycles() } finally { //Release the rotation lock if it&#39;s still held and restore the original orientation  MonkeyRotationEvent(Surface.ROTATION_0, false).injectEvent(mWm!!, mAm!!, mVerbose) } mNetworkMonitor.stop()   runMonkeyCycles  在进行一系列初始化之后进入循环  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67  while (!</div><div class="post-footer">
+        <a href="https://jarviszly.com/blogs/android-monkey-runmonkeycycles/">Read More</a><div class="post-tags"><span class="tag">
+                        &nbsp;<a href="https://jarviszly.com/tags/android/"><i class="fas fa-tag fa-fw"></i>&nbsp;Android</a>
+                    </span><span class="tag">
+                        &nbsp;<a href="https://jarviszly.com/tags/monkey/"><i class="fas fa-tag fa-fw"></i>&nbsp;Monkey</a>
+                    </span></div></div>
+</article>
+<article class="post" itemscope itemtype="http://schema.org/Article"><h1 class="post-title post-list-title" itemprop="name headline">
         <a href="https://jarviszly.com/blogs/android-monkey-eventsource/">Android Monkey EventSource</a>
     </h1><div class="post-meta"><a class="author" href="https://jarviszly.com" rel="author" target="_blank">
             <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
@@ -81,13 +92,6 @@
                     </span><span class="tag">
                         &nbsp;<a href="https://jarviszly.com/tags/monkey/"><i class="fas fa-tag fa-fw"></i>&nbsp;Monkey</a>
                     </span></div></div>
-</article>
-<article class="post" itemscope itemtype="http://schema.org/Article"><h1 class="post-title post-list-title" itemprop="name headline">
-        <a href="https://jarviszly.com/blogs/android-monkey-run/">Android Monkey Run</a>
-    </h1><div class="post-meta"><a class="author" href="https://jarviszly.com" rel="author" target="_blank">
-            <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
-        </a>published on  <time datetime=2020-06-17>2020-06-17</time>&nbsp;</div><div class="post-content"></div><div class="post-footer">
-        <a href="https://jarviszly.com/blogs/android-monkey-run/">Read More</a></div>
 </article>
 <ul class="pagination"><li class="page-item ">
                     <span class="page-link">
@@ -110,8 +114,10 @@
                         <a href="/page/5/">5</a>
                     </span>
                 </li><li class="page-item ">
+                    <span class="page-link" aria-hidden="true">&hellip;</span>
+                </li><li class="page-item ">
                     <span class="page-link">
-                        <a href="/page/6/">6</a>
+                        <a href="/page/7/">7</a>
                     </span>
                 </li></ul></div></div>
             </main><footer class="footer">

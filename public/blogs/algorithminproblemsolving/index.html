@@ -35,7 +35,7 @@
                 "url": "https:\/\/jarviszly.com\/cover.png",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "blogs","keywords": "algorithm, problem-solving","wordcount":  633 ,
+            },"genre": "blogs","keywords": "algorithm, problem-solving","wordcount":  1248 ,
         "url": "https:\/\/jarviszly.com\/blogs\/algorithminproblemsolving\/","datePublished": "2020-06-27T17:06:38\x2b08:00","dateModified": "2020-06-27T17:06:38\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "JarvisZhang",
@@ -79,8 +79,8 @@
                     <i class="fas fa-user-circle fa-fw"></i>Lingyu Zhang
                 </a>&nbsp;</div>
             <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-06-27>2020-06-27</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>about 633 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>3 min&nbsp;</div>
+                <i class="fas fa-pencil-alt fa-fw"></i>about 1248 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>6 min&nbsp;</div>
         </div><div class="post-toc" id="post-toc">
                 <h2 class="post-toc-title">Contents</h2>
                 <div class="post-toc-content"><nav id="TableOfContents">
@@ -92,6 +92,10 @@
         <li><a href="#冒泡排序">冒泡排序</a></li>
         <li><a href="#选择排序">选择排序</a></li>
         <li><a href="#插入排序">插入排序</a></li>
+      </ul>
+    </li>
+    <li><a href="#动规和贪心">动规和贪心</a>
+      <ul>
         <li><a href="#动态规划">动态规划</a>
           <ul>
             <li><a href="#最优子结构">最优子结构</a></li>
@@ -106,8 +110,19 @@
         <li><a href="#广度优先搜索">广度优先搜索</a></li>
         <li><a href="#最小生成树-prim">最小生成树-prim</a></li>
         <li><a href="#最小生成树-kruskal">最小生成树-kruskal</a></li>
+        <li><a href="#单元最短路-bellmanford">单元最短路-Bellmanford</a></li>
+        <li><a href="#单元最短路-dijksta">单元最短路-Dijksta</a></li>
+        <li><a href="#多源最短路-floyd-warshall">多源最短路-Floyd-Warshall</a></li>
       </ul>
     </li>
+    <li><a href="#流">流</a>
+      <ul>
+        <li><a href="#流网络flow-network">流网络(flow network)</a></li>
+        <li><a href="#残存网络residuals-network">残存网络(residuals network)</a></li>
+        <li><a href="#增广路径augmenting-paths">增广路径(augmenting paths)</a></li>
+      </ul>
+    </li>
+    <li><a href="#p-vs--np">P vs  NP</a></li>
   </ul>
 </nav></div>
             </div>
@@ -128,6 +143,10 @@
         <li><a href="#冒泡排序">冒泡排序</a></li>
         <li><a href="#选择排序">选择排序</a></li>
         <li><a href="#插入排序">插入排序</a></li>
+      </ul>
+    </li>
+    <li><a href="#动规和贪心">动规和贪心</a>
+      <ul>
         <li><a href="#动态规划">动态规划</a>
           <ul>
             <li><a href="#最优子结构">最优子结构</a></li>
@@ -142,8 +161,19 @@
         <li><a href="#广度优先搜索">广度优先搜索</a></li>
         <li><a href="#最小生成树-prim">最小生成树-prim</a></li>
         <li><a href="#最小生成树-kruskal">最小生成树-kruskal</a></li>
+        <li><a href="#单元最短路-bellmanford">单元最短路-Bellmanford</a></li>
+        <li><a href="#单元最短路-dijksta">单元最短路-Dijksta</a></li>
+        <li><a href="#多源最短路-floyd-warshall">多源最短路-Floyd-Warshall</a></li>
       </ul>
     </li>
+    <li><a href="#流">流</a>
+      <ul>
+        <li><a href="#流网络flow-network">流网络(flow network)</a></li>
+        <li><a href="#残存网络residuals-network">残存网络(residuals network)</a></li>
+        <li><a href="#增广路径augmenting-paths">增广路径(augmenting paths)</a></li>
+      </ul>
+    </li>
+    <li><a href="#p-vs--np">P vs  NP</a></li>
   </ul>
 </nav></div>
                 </details>
@@ -279,6 +309,7 @@ public:
 <ul>
 <li>Loop n times, In the i-th loop, insert the i-th element into the first i-1 elements of the array.</li>
 </ul>
+<a class="post-dummy-target" id="动规和贪心"></a><h2>动规和贪心</h2>
 <a class="post-dummy-target" id="动态规划"></a><h3>动态规划</h3>
 <ul>
 <li>Dynamic programming simplifies a complicated problem by breaking it down into simpler sub-problems in a recursive manner.</li>
@@ -326,6 +357,91 @@ public:
 <li>if the edge e connects two different trees then add it in F to combine two trees into one single tree.</li>
 </ul>
 </li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="单元最短路-bellmanford"></a><h3>单元最短路-Bellmanford</h3>
+<ul>
+<li>The Bellman–Ford algorithm is an algorithm that computes shortest paths from a single source vertex to all of the other vertices in a weighted digraph.<strong>(O(VE))</strong></li>
+<li>If a graph contains a &ldquo;negative cycle&rdquo; that is reachable from the source, the Bellman–Ford algorithm can detect and report the negative cycle</li>
+<li>works:
+<ul>
+<li>Before show how it works, I need to introduce the relax operation. assume we use an array <strong>d</strong> to record the current shortest path from single source to others. we name the single source <strong>s</strong> and two other vetices <strong>i</strong> and <strong>j</strong> which are connected by an edge. the relax is that if $d[i] &lt; d[j] + w(i,j)$, then we set $d[i]$ with $d[j] + w(i,j)$</li>
+<li>it works as follows:
+<ul>
+<li>Initialize the array d with the weight of edges.</li>
+<li>loop V - 1 times, each time relax every edge in the graph.</li>
+<li>if there is one edge can be relaxed after V - 1 loops, then there is a negative cycle in the graph.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="单元最短路-dijksta"></a><h3>单元最短路-Dijksta</h3>
+<ul>
+<li>The Dijstra algorithm is an algorithm that computes shortest paths from a single source vertex to all of the other vertices in a weighted digraph.</li>
+<li>It assumes there is no negative edge in the graph. $O(V^2)$ for array-based priorityqueue, and $O(VlgV + E)$ for Fibonacci heap</li>
+<li>works:
+<ul>
+<li>&hellip;.</li>
+<li>it works as follows:
+<ul>
+<li>Initialize the array d with the weight of edges and mark all nodes unvisited.</li>
+<li>Repeatly, mark the node  <strong>i</strong> visited and node <strong>i</strong> satisfies the d[i] is the smallest in values of unvisited nodes in array d . and then relax the edges which connect with the node <strong>i</strong>.</li>
+<li>when all the nodes are visited, we get the shortest paths record in array d.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="多源最短路-floyd-warshall"></a><h3>多源最短路-Floyd-Warshall</h3>
+<ul>
+<li>Floyd–Warshall algorithm is an algorithm for finding shortest paths in a weighted graph with positive or negative edge weights (but with no negative cycles).</li>
+<li>it works as follows:
+<ul>
+<li>use a matrix <strong>d</strong> to record the shortest paths.</li>
+<li>Initialize.</li>
+<li>The main block of the algorithm has three layers loop. the second loop traverses through the start point i, and the third loop traverses through the end point j. The outter loop traverses through the node k that may in the path from i to j, and set d[i][j] with the minimum of (d[i][k] + d[k][j])</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="流"></a><h2>流</h2>
+<a class="post-dummy-target" id="流网络flow-network"></a><h3>流网络(flow network)</h3>
+<ul>
+<li>a flow network is a directed graph where each edge has a capacity and each edge receives a flow. The amount of flow on an edge cannot exceed the capacity of the edge.</li>
+<li>The node where all the flows come from called source, the node where all the flows goes to called sink.  A flow must satisfy the restriction that the amount of flow into a node equals the amount of flow out of it, unless it&rsquo;s source or sink.</li>
+</ul>
+<a class="post-dummy-target" id="残存网络residuals-network"></a><h3>残存网络(residuals network)</h3>
+<ul>
+<li>the residuals capacity of an edge is its capacity minus the amount of flow on it.</li>
+<li>if the residuals capacity of an edge is positive, add it in the residuals network.</li>
+</ul>
+<a class="post-dummy-target" id="增广路径augmenting-paths"></a><h3>增广路径(augmenting paths)</h3>
+<ul>
+<li>an augmenting path is a path in the residuals network.</li>
+<li>A network is at maximum flow if and only if there is no augmenting path in the residual network $G_f$.</li>
+</ul>
+<a class="post-dummy-target" id="p-vs--np"></a><h2>P vs  NP</h2>
+<ul>
+<li>
+<p>P: if a problem can be solved by some algorithms in polynomial time, the problem is a P problem.</p>
+</li>
+<li>
+<p>NP: if a problem can be verified with a answer in polynomial time, the problem is a NP problem.</p>
+</li>
+<li>
+<p>NP-hard: NP-hard problems are those at least as hard as NP problems. all the NP problems can be reduced to NP-hard problems in polynomial time.</p>
+</li>
+<li>
+<p>NP-completeness: if a problem is a NP problem and also a NP-hard problem, then it&rsquo;s a NP-competeness problem.</p>
+</li>
+<li>
+<p>NP-completeness problem:</p>
+<ul>
+<li>图中最大团问题(团：任意两点都有一条边即完全图)</li>
+<li>图中最小顶点覆盖问题</li>
+<li>哈密尔顿回路问题</li>
+<li>旅行商问题</li>
 </ul>
 </li>
 </ul>

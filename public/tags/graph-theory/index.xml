@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Graph Theory on 浙语临湖</title>
+    <link>https://jarviszly.com/tags/graph-theory/</link>
+    <description>Recent content in Graph Theory on 浙语临湖</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Tue, 30 Jun 2020 12:08:20 +0800</lastBuildDate>
+    
+	<atom:link href="https://jarviszly.com/tags/graph-theory/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>GraphTheory</title>
+      <link>https://jarviszly.com/blogs/graphtheory/</link>
+      <pubDate>Tue, 30 Jun 2020 12:08:20 +0800</pubDate>
+      
+      <guid>https://jarviszly.com/blogs/graphtheory/</guid>
+      <description>图论 正则图(regular graph)  图中所有顶点的度数一样。  生成子图(spanning) 和 诱导子图(induced)  生成子图：具有原图所有的顶点和部分边。 诱导子图：an induced subgraph of a graph is another graph, formed from a subset of the vertices of the graph and all of the edges connecting pairs of vertices in that subset.  图的同构(isomorphism)  an isomorphism of graphs G and H is a bijection between the vertex sets of G and H the graph isomorphism is an equivalence relation.  自反(reflexive property)，对称(symmetric property)，传递(transitive property)。    匹配  a matching in a graph is a set of edges without common vertices.</description>
+    </item>
+    
+  </channel>
+</rss>

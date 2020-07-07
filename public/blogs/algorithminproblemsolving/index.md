@@ -128,6 +128,7 @@ public:
 ### 插入排序
 - Loop n times, In the i-th loop, insert the i-th element into the first i-1 elements of the array.
 
+## 动规和贪心
 
 ### 动态规划
 -  Dynamic programming simplifies a complicated problem by breaking it down into simpler sub-problems in a recursive manner.
@@ -166,3 +167,58 @@ public:
   - then do the following things: while S is not empty
     - remove a edge e with minimum weight from S.
     - if the edge e connects two different trees then add it in F to combine two trees into one single tree.
+
+### 单元最短路-Bellmanford 
+- The Bellman–Ford algorithm is an algorithm that computes shortest paths from a single source vertex to all of the other vertices in a weighted digraph.**(O(VE))**
+- If a graph contains a "negative cycle" that is reachable from the source, the Bellman–Ford algorithm can detect and report the negative cycle
+- works:
+  - Before show how it works, I need to introduce the relax operation. assume we use an array **d** to record the current shortest path from single source to others. we name the single source **s** and two other vetices **i** and **j** which are connected by an edge. the relax is that if $d[i] < d[j] + w(i,j)$, then we set $d[i]$ with $d[j] + w(i,j)$
+  - it works as follows:
+    - Initialize the array d with the weight of edges.
+    - loop V - 1 times, each time relax every edge in the graph.
+    - if there is one edge can be relaxed after V - 1 loops, then there is a negative cycle in the graph. 
+
+### 单元最短路-Dijksta
+- The Dijstra algorithm is an algorithm that computes shortest paths from a single source vertex to all of the other vertices in a weighted digraph.
+- It assumes there is no negative edge in the graph. $O(V^2)$ for array-based priorityqueue, and $O(VlgV + E)$ for Fibonacci heap
+- works:
+  - ....
+  - it works as follows:
+    -  Initialize the array d with the weight of edges and mark all nodes unvisited.
+    -  Repeatly, mark the node  **i** visited and node **i** satisfies the d[i] is the smallest in values of unvisited nodes in array d . and then relax the edges which connect with the node **i**.
+    -  when all the nodes are visited, we get the shortest paths record in array d.
+
+
+### 多源最短路-Floyd-Warshall
+- Floyd–Warshall algorithm is an algorithm for finding shortest paths in a weighted graph with positive or negative edge weights (but with no negative cycles).
+- it works as follows:
+  - use a matrix **d** to record the shortest paths.
+  - Initialize.
+  - The main block of the algorithm has three layers loop. the second loop traverses through the start point i, and the third loop traverses through the end point j. The outter loop traverses through the node k that may in the path from i to j, and set d[i][j] with the minimum of (d[i][k] + d[k][j])
+
+## 流
+
+### 流网络(flow network)
+-  a flow network is a directed graph where each edge has a capacity and each edge receives a flow. The amount of flow on an edge cannot exceed the capacity of the edge.  
+-  The node where all the flows come from called source, the node where all the flows goes to called sink.  A flow must satisfy the restriction that the amount of flow into a node equals the amount of flow out of it, unless it's source or sink.
+
+### 残存网络(residuals network)
+- the residuals capacity of an edge is its capacity minus the amount of flow on it.
+- if the residuals capacity of an edge is positive, add it in the residuals network.
+
+### 增广路径(augmenting paths)
+- an augmenting path is a path in the residuals network.
+- A network is at maximum flow if and only if there is no augmenting path in the residual network $G_f$.
+
+
+## P vs  NP
+- P: if a problem can be solved by some algorithms in polynomial time, the problem is a P problem.
+- NP: if a problem can be verified with a answer in polynomial time, the problem is a NP problem.
+- NP-hard: NP-hard problems are those at least as hard as NP problems. all the NP problems can be reduced to NP-hard problems in polynomial time.
+- NP-completeness: if a problem is a NP problem and also a NP-hard problem, then it's a NP-competeness problem.
+
+- NP-completeness problem: 
+  - 图中最大团问题(团：任意两点都有一条边即完全图)
+  - 图中最小顶点覆盖问题
+  - 哈密尔顿回路问题
+  - 旅行商问题

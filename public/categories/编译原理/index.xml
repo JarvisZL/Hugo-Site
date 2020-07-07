@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Thu, 19 Mar 2020 10:23:12 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 30 Jun 2020 13:13:31 +0800</lastBuildDate>
     
 	<atom:link href="https://jarviszly.com/categories/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>词法分析</title>
+      <link>https://jarviszly.com/documents/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90/</link>
+      <pubDate>Tue, 30 Jun 2020 13:13:31 +0800</pubDate>
+      
+      <guid>https://jarviszly.com/documents/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90/</guid>
+      <description>词法单元，模式，词素  词法单元：词法分析器识别出来的单元，其是一个类别名称(比如标识符，字符串等) 模式：是词法分析器去识别输入字节流中哪些东西是哪种词法单元的模板。 词素：是被识别为词法单元的实例。  正则表达式 归纳步骤  选择： $(r) | (s) = L(r) | L(S)$ 表示r或者s 连接：$(r)(s) = L(r)L(s)$ 闭包：$(r)^* (L(r))^*$ 括号：$((r)) = L(r)$  扩展运算符  一个或多个：$r^+$ 0个或一个：$r?$ 字符类: $[a-z]$或者$[0-9]$  词法单元的识别(状态转换图)  节点(状态)，边(从一个状态到另一个状态) 词法分析器的实际是模拟转换图的运行。  有穷自动机  本质上和状态转换图相同但其只回答yes/or 分为NFA(不确定有穷自动机)和DFA(确定的有穷自动机)  不确定有穷自动机  一个有穷的状态集合S, 一个输入符号集合$\Sigma$ 转换函数对于每个状态和收到的字符给出相应的后继状态集合 S中的某个状态$s_0$被指定为开始状态，其一个子集F被指定为接受状态集合 其不确定性在于，对于一个状态a和输入e其后继状态不唯一。  确定的有穷自动机  对NFA加上限制  没有标号为$\epsilon$的转换 对于每个状态和每个输入，有且仅有一条出去的边。    从表示到执行   正则表达式到NFA
+ 构造，对于多个正则表达式，先分别构造NFA，然后加一个$s_0$然后$s_0$可以$\epsilon$转移到任意一个NFA的开始。    NFA到DFA</description>
+    </item>
     
     <item>
       <title>语法制导的翻译</title>
