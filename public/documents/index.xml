@@ -363,17 +363,6 @@
     </item>
     
     <item>
-      <title>数据库</title>
-      <link>https://jarviszly.com/documents/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
-      <pubDate>Sat, 29 Feb 2020 12:53:01 +0800</pubDate>
-      
-      <guid>https://jarviszly.com/documents/%E6%95%B0%E6%8D%AE%E5%BA%93/</guid>
-      <description>数据库 Tips  注意只有$\cdots$的的时候，在关系代数中是考虑被减数取哪一个关系，而在关系演算中是考虑是否要多加一项来保证类似于选过课，买过商品的约束，在sql中考虑是否通过类似于where sno in (select sno from SC where&amp;hellip;)来保证  关于加入成绩的关系代数  选修了CS系开设的所有课程且所修的所有课程成绩合格 $$(\pi_{sno,cno}(L) \div \pi_{cno}(\sigma_{dept = &amp;lsquo;CS&amp;rsquo;}(C))) - \pi_{sno}(\sigma_{g &amp;lt; 60}(L))$$ 选修了CS系开设的所有课程且这些课程的成绩合格 $$\pi_{sno,cno}(\sigma_{g \geq 60}(L))\div \pi_{cno}(\sigma_{dept = &amp;lsquo;CS&amp;rsquo;}(C))$$ 选修了自己院系开设的所有课程且这些课程成绩合格 $$\pi_{sno}(L) - \pi_{sno}[\pi_{sno,cno}(C \infty S) - \pi_{sno,cno}(\sigma_{g \geq 60}(L))]$$ 像这种对自己院系(城市)的所有什么做了什么的情况通常用减法来表示除法  两重所有  通过所有销售过所有的商品的供应商购买过商品的客户
-销售过所有商品的供应商：$\pi_{aid,pid}(O) \div \pi_{pid}(P)$ $$\pi_{cid,aid}(O) \div (\pi_{aid,pid}(O) \div \pi_{pid}(P))$$ 向NY市所有客户都销售过所有单价大于1的商品的供应商
-此处并非使用两个除法，需要搞清楚条件是什么!!,除数应该是NY市的客户和单价大于1的商品两个集合的笛卡尔乘积：$\pi_{cid}(\sigma_{city =&#39;NY&amp;rsquo;}(C)) \times \pi_{pid}(\sigma_{price &amp;gt; 1}(P))$ $$\pi_{aid,cid,pid}(O)\div [\pi_{cid}(\sigma_{city =&#39;NY&amp;rsquo;}(C)) \times \pi_{pid}(\sigma_{price &amp;gt; 1}(P))]$$  </description>
-    </item>
-    
-    <item>
       <title>语法分析</title>
       <link>https://jarviszly.com/documents/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90/</link>
       <pubDate>Thu, 27 Feb 2020 10:06:04 +0800</pubDate>
