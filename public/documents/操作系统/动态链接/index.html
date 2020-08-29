@@ -42,7 +42,7 @@
                 "width":  800 ,
                 "height":  600 
             },"genre": "documents","wordcount":  143 ,
-        "url": "https:\/\/jarviszly.com\/documents\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5\/","datePublished": "2020-06-15T23:05:37\x2b08:00","dateModified": "2020-06-15T23:05:37\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "https:\/\/jarviszly.com\/documents\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5\/","datePublished": "2020-06-15T23:05:37\u002b08:00","dateModified": "2020-06-15T23:05:37\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "JarvisZhang",
                 "logo": {
@@ -148,7 +148,7 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-c" data-lang="c"><span class="c1">//a.c
-</span><span class="c1"></span><span class="kt">int</span> <span class="nf">foo</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span><span class="p">{</span>
+</span><span class="c1"></span><span class="kt">int</span> <span class="nf">foo</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">){</span>
     <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">;</span>
 <span class="p">}</span>
 
@@ -157,9 +157,9 @@
 
 <span class="c1">//main.c
 </span><span class="c1"></span><span class="k">extern</span> <span class="kt">int</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">;</span>
-<span class="kt">int</span> <span class="nf">foo</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span><span class="kt">int</span> <span class="n">b</span><span class="p">)</span><span class="p">;</span>
-<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="p">)</span><span class="p">{</span>
-    <span class="n">printf</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;</span><span class="s">%d + %d = %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">foo</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="p">)</span><span class="p">;</span>
+<span class="kt">int</span> <span class="nf">foo</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span><span class="kt">int</span> <span class="n">b</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;%d + %d = %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">foo</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">));</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
@@ -229,11 +229,11 @@
 <td class="lntd">
 <pre class="chroma"><code class="language-c" data-lang="c"><span class="c1">// 将调用printf函数翻译成指令 call printf_internal
 </span><span class="c1"></span>
-<span class="kt">int</span> <span class="nf">printf_internal</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">fmt</span><span class="p">,</span> <span class="p">.</span><span class="p">.</span><span class="p">.</span><span class="p">)</span><span class="p">{</span>
-    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">GOT</span><span class="p">[</span><span class="n">PRINTF</span><span class="p">]</span><span class="p">)</span><span class="p">{</span>
-        <span class="n">GOT</span><span class="p">[</span><span class="n">PRINTF</span><span class="p">]</span> <span class="o">=</span> <span class="n">call_dl_runtime_resolve</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;</span><span class="s">printf</span><span class="s">&#34;</span><span class="p">)</span><span class="p">;</span>
+<span class="kt">int</span> <span class="nf">printf_internal</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">fmt</span><span class="p">,</span> <span class="p">...){</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">GOT</span><span class="p">[</span><span class="n">PRINTF</span><span class="p">]){</span>
+        <span class="n">GOT</span><span class="p">[</span><span class="n">PRINTF</span><span class="p">]</span> <span class="o">=</span> <span class="n">call_dl_runtime_resolve</span><span class="p">(</span><span class="s">&#34;printf&#34;</span><span class="p">);</span>
     <span class="p">}</span>
-    <span class="k">return</span> <span class="n">GOT</span><span class="p">[</span><span class="n">PRINTF</span><span class="p">]</span><span class="p">(</span><span class="p">.</span><span class="p">.</span><span class="p">.</span><span class="p">)</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">GOT</span><span class="p">[</span><span class="n">PRINTF</span><span class="p">](...);</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>

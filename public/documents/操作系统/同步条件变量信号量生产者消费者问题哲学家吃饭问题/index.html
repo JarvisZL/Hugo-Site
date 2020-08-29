@@ -36,7 +36,7 @@
                 "width":  800 ,
                 "height":  600 
             },"genre": "documents","wordcount":  220 ,
-        "url": "https:\/\/jarviszly.com\/documents\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E5%90%8C%E6%AD%A5%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E4%BF%A1%E5%8F%B7%E9%87%8F%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98%E5%93%B2%E5%AD%A6%E5%AE%B6%E5%90%83%E9%A5%AD%E9%97%AE%E9%A2%98\/","datePublished": "2020-06-09T22:29:06\x2b08:00","dateModified": "2020-06-09T22:29:06\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "https:\/\/jarviszly.com\/documents\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E5%90%8C%E6%AD%A5%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E4%BF%A1%E5%8F%B7%E9%87%8F%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98%E5%93%B2%E5%AD%A6%E5%AE%B6%E5%90%83%E9%A5%AD%E9%97%AE%E9%A2%98\/","datePublished": "2020-06-09T22:29:06\u002b08:00","dateModified": "2020-06-09T22:29:06\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "JarvisZhang",
                 "logo": {
@@ -156,9 +156,9 @@
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c" data-lang="c"><span class="n">wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cv</span><span class="p">)</span><span class="p">;</span> <span class="c1">//在cv条件变量处等在。
-</span><span class="c1"></span><span class="n">signal</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cv</span><span class="p">)</span><span class="o">/</span><span class="n">notify</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cv</span><span class="p">)</span><span class="p">;</span> <span class="c1">//唤醒一个cv条件变量对应线程。
-</span><span class="c1"></span><span class="n">broadcast</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cv</span><span class="p">)</span><span class="o">/</span><span class="n">notifyall</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cv</span><span class="p">)</span><span class="p">;</span> <span class="c1">//唤醒cv条件变量对应的所有线程。
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="n">wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cv</span><span class="p">);</span> <span class="c1">//在cv条件变量处等在。
+</span><span class="c1"></span><span class="n">signal</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cv</span><span class="p">)</span><span class="o">/</span><span class="n">notify</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cv</span><span class="p">);</span> <span class="c1">//唤醒一个cv条件变量对应线程。
+</span><span class="c1"></span><span class="n">broadcast</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cv</span><span class="p">)</span><span class="o">/</span><span class="n">notifyall</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cv</span><span class="p">);</span> <span class="c1">//唤醒cv条件变量对应的所有线程。
 </span></code></pre></td></tr></table>
 </div>
 </div><ul>
@@ -175,11 +175,11 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c" data-lang="c"><span class="n">mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span>
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="n">mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">);</span>
 <span class="c1">// do some things
-</span><span class="c1"></span><span class="n">wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cv</span><span class="p">,</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span> <span class="c1">//在wait中会先释放掉该互斥锁，再等待，被唤醒时会先尝试重新获得该互斥锁。
-</span><span class="c1"></span><span class="c1">// do some things
-</span><span class="c1"></span><span class="n">mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span>
+</span><span class="c1"></span><span class="n">wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cv</span><span class="p">,</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">);</span> <span class="c1">//在wait中会先释放掉该互斥锁，再等待，被唤醒时会先尝试重新获得该互斥锁。
+</span><span class="c1">// do some things
+</span><span class="c1"></span><span class="n">mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">);</span>
 
 <span class="c1">//signal不需要用mutexlock保护
 </span></code></pre></td></tr></table>
@@ -200,8 +200,8 @@
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c" data-lang="c"><span class="n">P</span><span class="p">(</span><span class="o">&amp;</span><span class="n">semv</span><span class="p">)</span><span class="p">;</span> <span class="c1">//申请一个手环，如果拿到就返回否则等待。
-</span><span class="c1"></span><span class="n">V</span><span class="p">(</span><span class="o">&amp;</span><span class="n">semv</span><span class="p">)</span><span class="p">;</span> <span class="c1">//用户生成一个手环，交给等待用户或者管理者。
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="n">P</span><span class="p">(</span><span class="o">&amp;</span><span class="n">semv</span><span class="p">);</span> <span class="c1">//申请一个手环，如果拿到就返回否则等待。
+</span><span class="c1"></span><span class="n">V</span><span class="p">(</span><span class="o">&amp;</span><span class="n">semv</span><span class="p">);</span> <span class="c1">//用户生成一个手环，交给等待用户或者管理者。
 </span></code></pre></td></tr></table>
 </div>
 </div><a class="post-dummy-target" id="经典同步问题"></a><h2>经典同步问题</h2>
@@ -259,32 +259,32 @@
 </span><span class="lnt">28
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#</span><span class="cp">define N 6</span><span class="cp">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#define N 6
 </span><span class="cp"></span>
 <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="kt">void</span> <span class="nf">producer</span><span class="p">(</span><span class="p">)</span><span class="p">{</span>
-    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="p">{</span>
-        <span class="n">mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span>
-        <span class="k">while</span><span class="p">(</span><span class="n">count</span> <span class="o">=</span><span class="o">=</span> <span class="n">N</span><span class="p">)</span><span class="p">{</span><span class="c1">//或者改用if,但while更好。
-</span><span class="c1"></span>            <span class="n">wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">empty</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span>
+<span class="kt">void</span> <span class="nf">producer</span><span class="p">(){</span>
+    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
+        <span class="n">mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">);</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">count</span> <span class="o">==</span> <span class="n">N</span><span class="p">){</span><span class="c1">//或者改用if,但while更好。
+</span><span class="c1"></span>            <span class="n">wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">empty</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">mutex</span><span class="p">);</span>
         <span class="p">}</span>
-        <span class="n">print</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;</span><span class="s">(</span><span class="s">&#34;</span><span class="p">)</span><span class="p">;</span> 
-        <span class="n">count</span><span class="o">+</span><span class="o">+</span><span class="p">;</span>
-        <span class="n">broadcast</span><span class="p">(</span><span class="o">&amp;</span><span class="n">fill</span><span class="p">)</span><span class="p">;</span> <span class="c1">//用signal对应if.
-</span><span class="c1"></span>        <span class="n">mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span>
+        <span class="n">print</span><span class="p">(</span><span class="s">&#34;(&#34;</span><span class="p">);</span> 
+        <span class="n">count</span><span class="o">++</span><span class="p">;</span>
+        <span class="n">broadcast</span><span class="p">(</span><span class="o">&amp;</span><span class="n">fill</span><span class="p">);</span> <span class="c1">//用signal对应if.
+</span><span class="c1"></span>        <span class="n">mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="kt">void</span> <span class="nf">consumer</span><span class="p">(</span><span class="p">)</span><span class="p">{</span>
-    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="p">{</span>
-        <span class="n">mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span>
-        <span class="k">while</span><span class="p">(</span><span class="n">count</span> <span class="o">=</span><span class="o">=</span> <span class="mi">0</span><span class="p">)</span><span class="p">{</span> <span class="c1">//或者改用if,但while更好。
-</span><span class="c1"></span>            <span class="n">wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">fill</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span>
+<span class="kt">void</span> <span class="nf">consumer</span><span class="p">(){</span>
+    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
+        <span class="n">mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">);</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span> <span class="c1">//或者改用if,但while更好。
+</span><span class="c1"></span>            <span class="n">wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">fill</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">mutex</span><span class="p">);</span>
         <span class="p">}</span>
-        <span class="n">print</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;</span><span class="s">)</span><span class="s">&#34;</span><span class="p">)</span><span class="p">;</span> 
-        <span class="n">count</span><span class="o">-</span><span class="o">-</span><span class="p">;</span>
-        <span class="n">broadcast</span><span class="p">(</span><span class="o">&amp;</span><span class="n">empty</span><span class="p">)</span><span class="p">;</span> <span class="c1">//用signal对应if.
-</span><span class="c1"></span>        <span class="n">mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span>
+        <span class="n">print</span><span class="p">(</span><span class="s">&#34;)&#34;</span><span class="p">);</span> 
+        <span class="n">count</span><span class="o">--</span><span class="p">;</span>
+        <span class="n">broadcast</span><span class="p">(</span><span class="o">&amp;</span><span class="n">empty</span><span class="p">);</span> <span class="c1">//用signal对应if.
+</span><span class="c1"></span>        <span class="n">mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
@@ -310,19 +310,19 @@
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#</span><span class="cp">define N 6</span><span class="cp">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#define N 6
 </span><span class="cp"></span>
 <span class="n">sem_t</span> <span class="n">empty</span> <span class="o">=</span> <span class="n">N</span><span class="p">,</span> <span class="n">fill</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="kt">void</span> <span class="nf">producer</span><span class="p">(</span><span class="p">)</span><span class="p">{</span>
-    <span class="n">P</span><span class="p">(</span><span class="o">&amp;</span><span class="n">empty</span><span class="p">)</span><span class="p">;</span>
-    <span class="n">print</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;</span><span class="s">(</span><span class="s">&#34;</span><span class="p">)</span><span class="p">;</span>
-    <span class="n">V</span><span class="p">(</span><span class="o">&amp;</span><span class="n">fill</span><span class="p">)</span><span class="p">;</span> 
+<span class="kt">void</span> <span class="nf">producer</span><span class="p">(){</span>
+    <span class="n">P</span><span class="p">(</span><span class="o">&amp;</span><span class="n">empty</span><span class="p">);</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">&#34;(&#34;</span><span class="p">);</span>
+    <span class="n">V</span><span class="p">(</span><span class="o">&amp;</span><span class="n">fill</span><span class="p">);</span> 
 <span class="p">}</span>
 
-<span class="kt">void</span> <span class="nf">consumer</span><span class="p">(</span><span class="p">)</span><span class="p">{</span>
-    <span class="n">P</span><span class="p">(</span><span class="o">&amp;</span><span class="n">fill</span><span class="p">)</span><span class="p">;</span>
-    <span class="n">print</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;</span><span class="s">)</span><span class="s">&#34;</span><span class="p">)</span><span class="p">;</span>
-    <span class="n">V</span><span class="p">(</span><span class="o">&amp;</span><span class="n">empty</span><span class="p">)</span><span class="p">;</span> 
+<span class="kt">void</span> <span class="nf">consumer</span><span class="p">(){</span>
+    <span class="n">P</span><span class="p">(</span><span class="o">&amp;</span><span class="n">fill</span><span class="p">);</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">&#34;)&#34;</span><span class="p">);</span>
+    <span class="n">V</span><span class="p">(</span><span class="o">&amp;</span><span class="n">empty</span><span class="p">);</span> 
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
@@ -356,22 +356,22 @@
 </span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#</span><span class="cp">define cond empty[left] &amp;&amp; empty[right]</span><span class="cp">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#define cond empty[left] &amp;&amp; empty[right]
 </span><span class="cp"></span>
-<span class="kt">void</span> <span class="nf">philosopher</span><span class="p">(</span><span class="p">)</span><span class="p">{</span>
-    <span class="n">mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span>
-    <span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="n">cond</span><span class="p">)</span><span class="p">{</span>
-        <span class="n">wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cv</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span>
+<span class="kt">void</span> <span class="nf">philosopher</span><span class="p">(){</span>
+    <span class="n">mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">);</span>
+    <span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="n">cond</span><span class="p">){</span>
+        <span class="n">wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cv</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">mutex</span><span class="p">);</span>
     <span class="p">}</span>
-    <span class="n">get_forks</span><span class="p">(</span><span class="p">)</span><span class="p">;</span>
-    <span class="n">mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span>
+    <span class="n">get_forks</span><span class="p">();</span>
+    <span class="n">mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">);</span>
 
-    <span class="n">philosopher_eat_dinner</span><span class="p">(</span><span class="p">)</span><span class="p">;</span>
+    <span class="n">philosopher_eat_dinner</span><span class="p">();</span>
 
-    <span class="n">mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span>
-    <span class="n">give_back_forks</span><span class="p">(</span><span class="p">)</span><span class="p">;</span>
-    <span class="n">broadcast</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cv</span><span class="p">)</span><span class="p">;</span>
-    <span class="n">mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span>
+    <span class="n">mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">);</span>
+    <span class="n">give_back_forks</span><span class="p">();</span>
+    <span class="n">broadcast</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cv</span><span class="p">);</span>
+    <span class="n">mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">);</span>
     
 <span class="p">}</span>
 </code></pre></td></tr></table>

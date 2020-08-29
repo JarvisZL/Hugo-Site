@@ -36,7 +36,7 @@
                 "width":  800 ,
                 "height":  600 
             },"genre": "blogs","keywords": "Android","wordcount":  148 ,
-        "url": "https:\/\/jarviszly.com\/blogs\/textviewinandroid\/","datePublished": "2020-03-24T22:40:56\x2b08:00","dateModified": "2020-03-24T22:40:56\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "https:\/\/jarviszly.com\/blogs\/textviewinandroid\/","datePublished": "2020-03-24T22:40:56\u002b08:00","dateModified": "2020-03-24T22:40:56\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "JarvisZhang",
                 "logo": {
@@ -173,12 +173,12 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-xml" data-lang="xml"> <span class="nt">&lt;TextView</span>
-    <span class="err">.</span><span class="err">.</span><span class="err">.</span>
+    <span class="err">...</span>
     <span class="na">android:shadowColor=</span><span class="s">&#34;#F9F900&#34;</span>
     <span class="na">android:shadowDx=</span><span class="s">&#34;10.0&#34;</span>
     <span class="na">android:shadowDy=</span><span class="s">&#34;10.0&#34;</span>
     <span class="na">android:shadowRadius=</span><span class="s">&#34;3.0&#34;</span>
-    <span class="err">.</span><span class="err">.</span><span class="err">.</span>
+    <span class="err">...</span>
 <span class="nt">/&gt;</span>
 </code></pre></td></tr></table>
 </div>
@@ -204,7 +204,7 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;TextView</span>  
-    <span class="err">.</span><span class="err">.</span><span class="err">.</span> 
+    <span class="err">...</span> 
     <span class="na">android:drawableTop=</span><span class="s">&#34;@drawable/p1&#34;</span>  
     <span class="na">android:drawableLeft=</span><span class="s">&#34;@drawable/p2&#34;</span>  
     <span class="na">android:drawableRight=</span><span class="s">&#34;@drawable/p3&#34;</span>  
@@ -228,13 +228,13 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">textview</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">txt</span><span class="o">)</span><span class="o">;</span>  
-<span class="n">Drawable</span><span class="o">[</span><span class="o">]</span> <span class="n">drawable</span> <span class="o">=</span> <span class="n">textview</span><span class="o">.</span><span class="na">getCompoundDrawables</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>  
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">textview</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">txt</span><span class="o">);</span>  
+<span class="n">Drawable</span><span class="o">[]</span> <span class="n">drawable</span> <span class="o">=</span> <span class="n">textview</span><span class="o">.</span><span class="na">getCompoundDrawables</span><span class="o">();</span>  
 <span class="c1">//drawable[1]x轴为(100,200),y轴为(0,200)
-</span><span class="c1"></span><span class="n">drawable</span><span class="o">[</span><span class="n">1</span><span class="o">]</span><span class="o">.</span><span class="na">setBounds</span><span class="o">(</span><span class="n">100</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">200</span><span class="o">,</span> <span class="n">200</span><span class="o">)</span><span class="o">;</span>  
+</span><span class="c1"></span><span class="n">drawable</span><span class="o">[</span><span class="n">1</span><span class="o">].</span><span class="na">setBounds</span><span class="o">(</span><span class="n">100</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">200</span><span class="o">,</span> <span class="n">200</span><span class="o">);</span>  
 <span class="c1">// 数组下表0~3,依次是:左上右下
-</span><span class="c1"></span><span class="n">textview</span><span class="o">.</span><span class="na">setCompoundDrawables</span><span class="o">(</span><span class="n">drawable</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="o">,</span> <span class="n">drawable</span><span class="o">[</span><span class="n">1</span><span class="o">]</span><span class="o">,</span> <span class="n">drawable</span><span class="o">[</span><span class="n">2</span><span class="o">]</span><span class="o">,</span>  
-        <span class="n">drawable</span><span class="o">[</span><span class="n">3</span><span class="o">]</span><span class="o">)</span><span class="o">;</span> 
+</span><span class="c1"></span><span class="n">textview</span><span class="o">.</span><span class="na">setCompoundDrawables</span><span class="o">(</span><span class="n">drawable</span><span class="o">[</span><span class="n">0</span><span class="o">],</span> <span class="n">drawable</span><span class="o">[</span><span class="n">1</span><span class="o">],</span> <span class="n">drawable</span><span class="o">[</span><span class="n">2</span><span class="o">],</span>  
+        <span class="n">drawable</span><span class="o">[</span><span class="n">3</span><span class="o">]);</span> 
 </code></pre></td></tr></table>
 </div>
 </div><a class="post-dummy-target" id="连接跳转"></a><h3>连接跳转</h3>
@@ -251,7 +251,7 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;TextView</span>  
-    <span class="err">.</span><span class="err">.</span><span class="err">.</span>
+    <span class="err">...</span>
     <span class="na">android:text=</span><span class="s">&#34;https://jarviszly.com&#34;</span>
     <span class="na">android:autoLink=</span><span class="s">&#34;web&#34;</span>
 <span class="nt">/&gt;</span>  
@@ -264,8 +264,8 @@
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">textview</span><span class="o">.</span><span class="na">setAutoLinkMask</span><span class="o">(</span><span class="n">Linkify</span><span class="o">.</span><span class="na">ALL</span><span class="o">)</span><span class="o">;</span>
-<span class="n">textview</span><span class="o">.</span><span class="na">setMovementMethod</span><span class="o">(</span><span class="n">LinkMovementMethod</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="o">)</span><span class="o">)</span><span class="o">;</span><span class="c1">//否则点击无响应。
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">textview</span><span class="o">.</span><span class="na">setAutoLinkMask</span><span class="o">(</span><span class="n">Linkify</span><span class="o">.</span><span class="na">ALL</span><span class="o">);</span>
+<span class="n">textview</span><span class="o">.</span><span class="na">setMovementMethod</span><span class="o">(</span><span class="n">LinkMovementMethod</span><span class="o">.</span><span class="na">getInstance</span><span class="o">());</span><span class="c1">//否则点击无响应。
 </span></code></pre></td></tr></table>
 </div>
 </div><a class="post-dummy-target" id="html"></a><h3>Html</h3>
@@ -278,11 +278,11 @@
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">TextView</span> <span class="n">textview</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span><span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">txt</span><span class="o">)</span><span class="o">;</span>
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">TextView</span> <span class="n">textview</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span><span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">txt</span><span class="o">);</span>
 <span class="n">String</span> <span class="n">s1</span> <span class="o">=</span> <span class="s">&#34;&lt;font color=&#39;blue&#39;&gt;&lt;b&gt;沿窗听风尘，痕迹都黯然。&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&#34;</span><span class="o">;</span>
-<span class="n">s1</span> <span class="o">+</span><span class="o">=</span> <span class="s">&#34;&lt;a href = &#39;https://jarviszly.com&#39;&gt;浙语临湖&lt;/a&gt;&#34;</span><span class="o">;</span>
-<span class="n">textview</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">Html</span><span class="o">.</span><span class="na">fromHtml</span><span class="o">(</span><span class="n">s1</span><span class="o">)</span><span class="o">)</span><span class="o">;</span>
-<span class="n">textview</span><span class="o">.</span><span class="na">setMovementMethod</span><span class="o">(</span><span class="n">LinkMovementMethod</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="o">)</span><span class="o">)</span><span class="o">;</span>
+<span class="n">s1</span> <span class="o">+=</span> <span class="s">&#34;&lt;a href = &#39;https://jarviszly.com&#39;&gt;浙语临湖&lt;/a&gt;&#34;</span><span class="o">;</span>
+<span class="n">textview</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">Html</span><span class="o">.</span><span class="na">fromHtml</span><span class="o">(</span><span class="n">s1</span><span class="o">));</span>
+<span class="n">textview</span><span class="o">.</span><span class="na">setMovementMethod</span><span class="o">(</span><span class="n">LinkMovementMethod</span><span class="o">.</span><span class="na">getInstance</span><span class="o">());</span>
 </code></pre></td></tr></table>
 </div>
 </div><a class="post-dummy-target" id="spannablestring定制"></a><h3>SpannableString定制</h3>

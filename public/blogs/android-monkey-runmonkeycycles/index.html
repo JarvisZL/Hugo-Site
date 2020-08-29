@@ -36,7 +36,7 @@
                 "width":  800 ,
                 "height":  600 
             },"genre": "blogs","keywords": "Android, Monkey","wordcount":  322 ,
-        "url": "https:\/\/jarviszly.com\/blogs\/android-monkey-runmonkeycycles\/","datePublished": "2020-06-23T15:14:18\x2b08:00","dateModified": "2020-06-23T15:14:18\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "https:\/\/jarviszly.com\/blogs\/android-monkey-runmonkeycycles\/","datePublished": "2020-06-23T15:14:18\u002b08:00","dateModified": "2020-06-23T15:14:18\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "JarvisZhang",
                 "logo": {
@@ -123,16 +123,16 @@
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">mNetworkMonitor</span><span class="p">.</span><span class="n">start</span><span class="p">(</span><span class="p">)</span>
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">mNetworkMonitor</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
 <span class="k">var</span> <span class="py">crashedAtCycle</span> <span class="p">:</span> <span class="n">Int</span>
 <span class="k">try</span> <span class="p">{</span>
     <span class="cm">/** where the magic happens*/</span>
-    <span class="n">crashedAtCycle</span> <span class="p">=</span> <span class="n">runMonkeyCycles</span><span class="p">(</span><span class="p">)</span>
+    <span class="n">crashedAtCycle</span> <span class="p">=</span> <span class="n">runMonkeyCycles</span><span class="p">()</span>
 <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
     <span class="c1">//Release the rotation lock if it&#39;s still held and restore the original orientation
-</span><span class="c1"></span>    <span class="n">MonkeyRotationEvent</span><span class="p">(</span><span class="n">Surface</span><span class="p">.</span><span class="n">ROTATION_0</span><span class="p">,</span> <span class="k">false</span><span class="p">)</span><span class="p">.</span><span class="n">injectEvent</span><span class="p">(</span><span class="n">mWm</span><span class="o">!!</span><span class="p">,</span> <span class="n">mAm</span><span class="o">!!</span><span class="p">,</span> <span class="n">mVerbose</span><span class="p">)</span>
+</span><span class="c1"></span>    <span class="n">MonkeyRotationEvent</span><span class="p">(</span><span class="n">Surface</span><span class="p">.</span><span class="n">ROTATION_0</span><span class="p">,</span> <span class="k">false</span><span class="p">).</span><span class="n">injectEvent</span><span class="p">(</span><span class="n">mWm</span><span class="o">!!</span><span class="p">,</span> <span class="n">mAm</span><span class="o">!!</span><span class="p">,</span> <span class="n">mVerbose</span><span class="p">)</span>
 <span class="p">}</span>
-<span class="n">mNetworkMonitor</span><span class="p">.</span><span class="n">stop</span><span class="p">(</span><span class="p">)</span>
+<span class="n">mNetworkMonitor</span><span class="p">.</span><span class="n">stop</span><span class="p">()</span>
 </code></pre></td></tr></table>
 </div>
 </div><a class="post-dummy-target" id="runmonkeycycles"></a><h2>runMonkeyCycles</h2>
@@ -210,63 +210,63 @@
 </span><span class="lnt">67
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">while</span> <span class="p">(</span><span class="p">!</span><span class="n">systemCrashed</span><span class="p">)</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">while</span> <span class="p">(!</span><span class="n">systemCrashed</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">//如果设置了运行多久，则使用time判断，否则使用count判断
 </span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">mRunningMillis</span> <span class="p">&lt;</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">cycleCounter</span> <span class="p">&gt;</span><span class="p">=</span> <span class="n">mCount</span><span class="p">)</span> <span class="k">break</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">cycleCounter</span> <span class="p">&gt;=</span> <span class="n">mCount</span><span class="p">)</span> <span class="k">break</span>
     <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="n">currentTime</span> <span class="p">=</span> <span class="n">SystemClock</span><span class="p">.</span><span class="n">elapsedRealtime</span><span class="p">(</span><span class="p">)</span>
+        <span class="n">currentTime</span> <span class="p">=</span> <span class="n">SystemClock</span><span class="p">.</span><span class="n">elapsedRealtime</span><span class="p">()</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">currentTime</span> <span class="p">&gt;</span> <span class="n">mEndTime</span><span class="p">)</span> <span class="k">break</span>
     <span class="p">}</span>
     <span class="c1">//一系列信息report
-</span><span class="c1"></span>    <span class="p">.</span><span class="p">.</span><span class="p">.</span><span class="p">.</span>
+</span><span class="c1"></span>    <span class="p">....</span>
 
     <span class="c1">//get the next event
-</span><span class="c1"></span>    <span class="k">val</span> <span class="py">ev</span> <span class="p">=</span> <span class="n">mEventSource</span><span class="p">.</span><span class="n">getNextEvent</span><span class="p">(</span><span class="p">)</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">ev</span> <span class="p">!</span><span class="p">=</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="c1"></span>    <span class="k">val</span> <span class="py">ev</span> <span class="p">=</span> <span class="n">mEventSource</span><span class="p">.</span><span class="n">getNextEvent</span><span class="p">()</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ev</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">var</span> <span class="py">failed</span> <span class="p">=</span> <span class="k">false</span>
-        <span class="k">when</span><span class="p">(</span><span class="n">ev</span><span class="p">.</span><span class="n">injectEvent</span><span class="p">(</span><span class="n">mWm</span><span class="o">!!</span><span class="p">,</span> <span class="n">mAm</span><span class="o">!!</span><span class="p">,</span> <span class="n">mVerbose</span><span class="p">)</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">MonkeyEvent</span><span class="p">.</span><span class="n">INJECT_FAIL</span> <span class="p">-</span><span class="p">&gt;</span> <span class="p">{</span>
-                <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="m">0.</span><span class="p">.</span><span class="m">4</span><span class="p">)</span><span class="p">{</span>
-                    <span class="k">if</span> <span class="p">(</span><span class="n">mVerbose</span> <span class="p">&gt;</span><span class="p">=</span> <span class="m">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">when</span><span class="p">(</span><span class="n">ev</span><span class="p">.</span><span class="n">injectEvent</span><span class="p">(</span><span class="n">mWm</span><span class="o">!!</span><span class="p">,</span> <span class="n">mAm</span><span class="o">!!</span><span class="p">,</span> <span class="n">mVerbose</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">MonkeyEvent</span><span class="p">.</span><span class="n">INJECT_FAIL</span> <span class="p">-&gt;</span> <span class="p">{</span>
+                <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="m">0.</span><span class="p">.</span><span class="m">4</span><span class="p">){</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">mVerbose</span> <span class="p">&gt;=</span> <span class="m">1</span><span class="p">)</span> <span class="p">{</span>
                         <span class="n">Logger</span><span class="p">.</span><span class="n">iLPrintln</span><span class="p">(</span><span class="s">&#34;Injection Faild, retry No. $i&#34;</span><span class="p">)</span>
                     <span class="p">}</span>
                     <span class="n">Thread</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="m">50</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="p">(</span><span class="n">ev</span><span class="p">.</span><span class="n">injectEvent</span><span class="p">(</span><span class="n">mWm</span><span class="o">!!</span><span class="p">,</span><span class="n">mAm</span><span class="o">!!</span><span class="p">,</span><span class="n">mVerbose</span><span class="p">)</span> <span class="p">!</span><span class="p">=</span> <span class="n">MonkeyEvent</span><span class="p">.</span><span class="n">INJECT_FAIL</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">ev</span><span class="p">.</span><span class="n">injectEvent</span><span class="p">(</span><span class="n">mWm</span><span class="o">!!</span><span class="p">,</span><span class="n">mAm</span><span class="o">!!</span><span class="p">,</span><span class="n">mVerbose</span><span class="p">)</span> <span class="p">!=</span> <span class="n">MonkeyEvent</span><span class="p">.</span><span class="n">INJECT_FAIL</span><span class="p">)</span>
                         <span class="k">break</span>
                 <span class="p">}</span>
                 <span class="n">Logger</span><span class="p">.</span><span class="n">lPrintln</span><span class="p">(</span><span class="s">&#34;   //Injection Failed ${ev.eventType} ${ev.eventId}, Given up&#34;</span><span class="p">)</span>
                 <span class="n">failed</span> <span class="p">=</span> <span class="k">true</span>
                 <span class="k">when</span> <span class="p">(</span><span class="n">ev</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="k">is</span> <span class="n">MonkeyKeyEvent</span> <span class="p">-</span><span class="p">&gt;</span> <span class="n">mDroppedKeyEvents</span><span class="p">+</span><span class="p">+</span>
-                    <span class="k">is</span> <span class="n">MonkeyMotionEvent</span> <span class="p">-</span><span class="p">&gt;</span> <span class="n">mDroppedPointerEvents</span><span class="p">+</span><span class="p">+</span>
-                    <span class="k">is</span> <span class="n">MonkeyFlipEvent</span> <span class="p">-</span><span class="p">&gt;</span> <span class="n">mDroppedFlipEvents</span><span class="p">+</span><span class="p">+</span>
-                    <span class="k">is</span> <span class="n">MonkeyRotationEvent</span> <span class="p">-</span><span class="p">&gt;</span> <span class="n">mDroppedRotationEvents</span><span class="p">+</span><span class="p">+</span>
+                    <span class="k">is</span> <span class="n">MonkeyKeyEvent</span> <span class="p">-&gt;</span> <span class="n">mDroppedKeyEvents</span><span class="p">++</span>
+                    <span class="k">is</span> <span class="n">MonkeyMotionEvent</span> <span class="p">-&gt;</span> <span class="n">mDroppedPointerEvents</span><span class="p">++</span>
+                    <span class="k">is</span> <span class="n">MonkeyFlipEvent</span> <span class="p">-&gt;</span> <span class="n">mDroppedFlipEvents</span><span class="p">++</span>
+                    <span class="k">is</span> <span class="n">MonkeyRotationEvent</span> <span class="p">-&gt;</span> <span class="n">mDroppedRotationEvents</span><span class="p">++</span>
                 <span class="p">}</span>
             <span class="p">}</span>
-            <span class="n">MonkeyEvent</span><span class="p">.</span><span class="n">INJECT_ERROR_REMOTE_EXCEPTION</span> <span class="p">-</span><span class="p">&gt;</span> <span class="p">{</span>
+            <span class="n">MonkeyEvent</span><span class="p">.</span><span class="n">INJECT_ERROR_REMOTE_EXCEPTION</span> <span class="p">-&gt;</span> <span class="p">{</span>
                 <span class="n">systemCrashed</span> <span class="p">=</span> <span class="k">true</span>
                 <span class="n">System</span><span class="p">.</span><span class="n">err</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&#34;** Error: RemoteException while injecting event.&#34;</span><span class="p">)</span>
             <span class="p">}</span>
-            <span class="n">MonkeyEvent</span><span class="p">.</span><span class="n">INJECT_ERROR_SECURITY_EXCEPTION</span> <span class="p">-</span><span class="p">&gt;</span> <span class="p">{</span>
+            <span class="n">MonkeyEvent</span><span class="p">.</span><span class="n">INJECT_ERROR_SECURITY_EXCEPTION</span> <span class="p">-&gt;</span> <span class="p">{</span>
                 <span class="n">systemCrashed</span> <span class="p">=</span> <span class="p">!</span><span class="n">mIgnoreSecurityExceptions</span>
             <span class="p">}</span>
         <span class="p">}</span>
 
         <span class="c1">// Don&#39;t count throttling as an event
-</span><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="n">ev</span> <span class="p">!</span><span class="k">is</span> <span class="n">MonkeyThrottleEvent</span> <span class="p">&amp;</span><span class="p">&amp;</span> <span class="p">!</span><span class="n">failed</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">eventCounter</span><span class="p">+</span><span class="p">+</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">mCountEvents</span><span class="p">)</span><span class="p">{</span>
-                <span class="n">cycleCounter</span><span class="p">+</span><span class="p">+</span>
+</span><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="n">ev</span> <span class="p">!</span><span class="k">is</span> <span class="n">MonkeyThrottleEvent</span> <span class="p">&amp;&amp;</span> <span class="p">!</span><span class="n">failed</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">eventCounter</span><span class="p">++</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">mCountEvents</span><span class="p">){</span>
+                <span class="n">cycleCounter</span><span class="p">++</span>
             <span class="p">}</span>
         <span class="p">}</span>
     <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="p">!</span><span class="n">mCountEvents</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">cycleCounter</span><span class="p">+</span><span class="p">+</span>
+        <span class="k">if</span> <span class="p">(!</span><span class="n">mCountEvents</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">cycleCounter</span><span class="p">++</span>
             <span class="n">writeScriptLog</span><span class="p">(</span><span class="n">cycleCounter</span><span class="p">)</span>
             <span class="c1">// Capture the bugreport after n iteration
 </span><span class="c1"></span>            <span class="k">if</span> <span class="p">(</span><span class="n">mGetPeriodicBugreport</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">cycleCounter</span> <span class="p">%</span> <span class="n">mBugreportFrequency</span> <span class="p">=</span><span class="p">=</span> <span class="m">0L</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">cycleCounter</span> <span class="p">%</span> <span class="n">mBugreportFrequency</span> <span class="p">==</span> <span class="m">0L</span><span class="p">)</span> <span class="p">{</span>
                     <span class="n">mRequestPeriodicBugreport</span> <span class="p">=</span> <span class="k">true</span>
                 <span class="p">}</span>
             <span class="p">}</span>

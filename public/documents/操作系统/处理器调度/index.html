@@ -36,7 +36,7 @@
                 "width":  800 ,
                 "height":  600 
             },"genre": "documents","wordcount":  119 ,
-        "url": "https:\/\/jarviszly.com\/documents\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E5%A4%84%E7%90%86%E5%99%A8%E8%B0%83%E5%BA%A6\/","datePublished": "2020-06-16T14:19:05\x2b08:00","dateModified": "2020-06-16T14:19:05\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "https:\/\/jarviszly.com\/documents\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E5%A4%84%E7%90%86%E5%99%A8%E8%B0%83%E5%BA%A6\/","datePublished": "2020-06-16T14:19:05\u002b08:00","dateModified": "2020-06-16T14:19:05\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "JarvisZhang",
                 "logo": {
@@ -179,9 +179,9 @@
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c" data-lang="c"><span class="n">s64</span> <span class="n">delta</span> <span class="o">=</span> <span class="p">(</span><span class="n">s64</span><span class="p">)</span><span class="p">(</span><span class="n">a</span><span class="o">-</span><span class="o">&gt;</span><span class="n">vruntime</span> <span class="o">-</span> <span class="n">b</span><span class="o">-</span><span class="o">&gt;</span><span class="n">vruntime</span><span class="p">)</span><span class="p">;</span>
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="n">s64</span> <span class="n">delta</span> <span class="o">=</span> <span class="p">(</span><span class="n">s64</span><span class="p">)(</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">vruntime</span> <span class="o">-</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">vruntime</span><span class="p">);</span>
 <span class="c1">//如果delta &lt; 0, 则说明应该调度a.
-</span><span class="c1"></span><span class="c1">//否则应该调度b.
+</span><span class="c1">//否则应该调度b.
 </span><span class="c1"></span>
 <span class="cm">/* 如果a溢出了那么在数值上a-&gt;vruntime远小于
 </span><span class="cm">*  b-&gt;vruntime，但是两者的差转换为带符号64位整
@@ -218,17 +218,17 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-c" data-lang="c"><span class="n">thread_1</span> <span class="p">{</span>
-  <span class="n">P</span><span class="p">(</span><span class="n">empty</span><span class="p">)</span><span class="p">;</span>
-  <span class="n">printf</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;</span><span class="s">(</span><span class="s">&#34;</span><span class="p">)</span><span class="p">;</span>
-  <span class="n">V</span><span class="p">(</span><span class="n">fill</span><span class="p">)</span><span class="p">;</span>
+  <span class="n">P</span><span class="p">(</span><span class="n">empty</span><span class="p">);</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">&#34;(&#34;</span><span class="p">);</span>
+  <span class="n">V</span><span class="p">(</span><span class="n">fill</span><span class="p">);</span>
 <span class="p">}</span> 
 <span class="n">thread_2</span><span class="p">{</span>
-  <span class="n">P</span><span class="p">(</span><span class="n">fill</span><span class="p">)</span><span class="p">;</span>
-  <span class="n">printf</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;</span><span class="s">)</span><span class="s">&#34;</span><span class="p">)</span><span class="p">;</span>
-  <span class="n">V</span><span class="p">(</span><span class="n">empty</span><span class="p">)</span><span class="p">;</span>
+  <span class="n">P</span><span class="p">(</span><span class="n">fill</span><span class="p">);</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">&#34;)&#34;</span><span class="p">);</span>
+  <span class="n">V</span><span class="p">(</span><span class="n">empty</span><span class="p">);</span>
 <span class="p">}</span>
 <span class="n">thread_3</span><span class="p">{</span>
-  <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="p">;</span>
+  <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
@@ -257,17 +257,17 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-c" data-lang="c"><span class="n">bad_guy</span><span class="p">{</span>
-  <span class="n">mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span>
-  <span class="p">.</span><span class="p">.</span><span class="p">.</span>
-  <span class="n">mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span>
+  <span class="n">mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">);</span>
+  <span class="p">...</span>
+  <span class="n">mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">);</span>
 <span class="p">}</span>
 <span class="n">nice_guy</span><span class="p">{</span>
-  <span class="p">.</span><span class="p">.</span><span class="p">.</span>
+  <span class="p">...</span>
 <span class="p">}</span>
 <span class="n">very_nice_guy</span><span class="p">{</span>
-  <span class="n">mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span>
-  <span class="p">.</span><span class="p">.</span><span class="p">.</span>
-  <span class="n">mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">)</span><span class="p">;</span>
+  <span class="n">mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">);</span>
+  <span class="p">...</span>
+  <span class="n">mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>

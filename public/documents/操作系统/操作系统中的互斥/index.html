@@ -36,7 +36,7 @@
                 "width":  800 ,
                 "height":  600 
             },"genre": "documents","wordcount":  155 ,
-        "url": "https:\/\/jarviszly.com\/documents\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E4%BA%92%E6%96%A5\/","datePublished": "2020-05-30T20:56:25\x2b08:00","dateModified": "2020-05-30T20:56:25\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "https:\/\/jarviszly.com\/documents\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E4%BA%92%E6%96%A5\/","datePublished": "2020-05-30T20:56:25\u002b08:00","dateModified": "2020-05-30T20:56:25\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "JarvisZhang",
                 "logo": {
@@ -117,11 +117,11 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-C" data-lang="C"><span class="kt">void</span> <span class="nf">func</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">arg</span><span class="p">)</span><span class="p">{</span>
-    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="p">{</span>
-        <span class="n">lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">biglock</span><span class="p">)</span><span class="p">;</span>
-        <span class="n">printf</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;</span><span class="s">Thread-%s on CPU #%d acuquired the lock</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">arg</span><span class="p">,</span><span class="n">_cpu</span><span class="p">(</span><span class="p">)</span><span class="p">)</span><span class="p">;</span>
-        <span class="n">unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">biglock</span><span class="p">)</span><span class="p">;</span>
+<pre class="chroma"><code class="language-C" data-lang="C"><span class="kt">void</span> <span class="nf">func</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">arg</span><span class="p">){</span>
+    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
+        <span class="n">lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">biglock</span><span class="p">);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Thread-%s on CPU #%d acuquired the lock</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">arg</span><span class="p">,</span><span class="n">_cpu</span><span class="p">());</span>
+        <span class="n">unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">biglock</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
@@ -144,14 +144,14 @@
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-C" data-lang="C"><span class="kt">void</span> <span class="nf">spin_lock</span><span class="p">(</span><span class="n">spinlock_t</span> <span class="o">&amp;</span><span class="n">lk</span><span class="p">)</span><span class="p">{</span>
-    <span class="n">cli</span><span class="p">(</span><span class="p">)</span><span class="p">;</span>
-    <span class="k">while</span><span class="p">(</span><span class="n">atomic_xchg</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lk</span><span class="o">-</span><span class="o">&gt;</span><span class="n">locked</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="p">)</span><span class="p">;</span>
+<pre class="chroma"><code class="language-C" data-lang="C"><span class="kt">void</span> <span class="nf">spin_lock</span><span class="p">(</span><span class="n">spinlock_t</span> <span class="o">&amp;</span><span class="n">lk</span><span class="p">){</span>
+    <span class="n">cli</span><span class="p">();</span>
+    <span class="k">while</span><span class="p">(</span><span class="n">atomic_xchg</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lk</span><span class="o">-&gt;</span><span class="n">locked</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span>
 <span class="p">}</span>
 
-<span class="kt">void</span> <span class="nf">spin_unlock</span><span class="p">(</span><span class="n">spinlock_t</span> <span class="o">&amp;</span><span class="n">lk</span><span class="p">)</span><span class="p">{</span>
-    <span class="n">atomic_xchg</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lk</span><span class="o">-</span><span class="o">&gt;</span><span class="n">locked</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="p">;</span>
-    <span class="n">sti</span><span class="p">(</span><span class="p">)</span><span class="p">;</span>
+<span class="kt">void</span> <span class="nf">spin_unlock</span><span class="p">(</span><span class="n">spinlock_t</span> <span class="o">&amp;</span><span class="n">lk</span><span class="p">){</span>
+    <span class="n">atomic_xchg</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lk</span><span class="o">-&gt;</span><span class="n">locked</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+    <span class="n">sti</span><span class="p">();</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
@@ -189,9 +189,9 @@
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-C" data-lang="C"><span class="kt">void</span> <span class="nf">mutex_lock</span><span class="p">(</span><span class="n">mutexlock_t</span> <span class="o">&amp;</span><span class="n">lk</span><span class="p">)</span><span class="p">{</span>
-    <span class="k">while</span><span class="p">(</span><span class="n">atomic_xchg</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lk</span><span class="o">-</span><span class="o">&gt;</span><span class="n">locked</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="p">)</span><span class="p">{</span>
-        <span class="n">let_another_thread_to_execute</span><span class="p">(</span><span class="p">)</span><span class="p">;</span>
+<pre class="chroma"><code class="language-C" data-lang="C"><span class="kt">void</span> <span class="nf">mutex_lock</span><span class="p">(</span><span class="n">mutexlock_t</span> <span class="o">&amp;</span><span class="n">lk</span><span class="p">){</span>
+    <span class="k">while</span><span class="p">(</span><span class="n">atomic_xchg</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lk</span><span class="o">-&gt;</span><span class="n">locked</span><span class="p">,</span> <span class="mi">1</span><span class="p">)){</span>
+        <span class="n">let_another_thread_to_execute</span><span class="p">();</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
@@ -232,31 +232,31 @@
 </span><span class="lnt">27
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">mutex_lock</span><span class="p">(</span><span class="n">mutexlock_t</span> <span class="o">&amp;</span><span class="n">lk</span><span class="p">)</span><span class="p">{</span>
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">mutex_lock</span><span class="p">(</span><span class="n">mutexlock_t</span> <span class="o">&amp;</span><span class="n">lk</span><span class="p">){</span>
     <span class="kt">int</span> <span class="n">acquired</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="n">spin_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lk</span><span class="o">-</span><span class="o">&gt;</span><span class="n">spinlock</span><span class="p">)</span><span class="p">;</span><span class="c1">//保护等待队列
-</span><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="n">lk</span><span class="o">-</span><span class="o">&gt;</span><span class="n">locked</span> <span class="o">!</span><span class="o">=</span> <span class="mi">0</span><span class="p">)</span><span class="p">{</span>
-        <span class="n">enqueue</span><span class="p">(</span><span class="n">lk</span><span class="o">-</span><span class="o">&gt;</span><span class="n">wait_list</span><span class="p">,</span> <span class="n">current</span><span class="p">)</span><span class="p">;</span>
-        <span class="n">current</span><span class="o">-</span><span class="o">&gt;</span><span class="n">status</span> <span class="o">=</span> <span class="n">BLOCKED</span><span class="p">;</span>
+    <span class="n">spin_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lk</span><span class="o">-&gt;</span><span class="n">spinlock</span><span class="p">);</span><span class="c1">//保护等待队列
+</span><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="n">lk</span><span class="o">-&gt;</span><span class="n">locked</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">){</span>
+        <span class="n">enqueue</span><span class="p">(</span><span class="n">lk</span><span class="o">-&gt;</span><span class="n">wait_list</span><span class="p">,</span> <span class="n">current</span><span class="p">);</span>
+        <span class="n">current</span><span class="o">-&gt;</span><span class="n">status</span> <span class="o">=</span> <span class="n">BLOCKED</span><span class="p">;</span>
     <span class="p">}</span>
     <span class="k">else</span><span class="p">{</span>
-        <span class="n">lk</span><span class="o">-</span><span class="o">&gt;</span><span class="n">locked</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">lk</span><span class="o">-&gt;</span><span class="n">locked</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
         <span class="n">acquired</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
     <span class="p">}</span>
-    <span class="n">spin_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lk</span><span class="o">-</span><span class="o">&gt;</span><span class="n">spinlock</span><span class="p">)</span><span class="p">;</span>
-    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">acquired</span><span class="p">)</span> <span class="n">yield</span><span class="p">(</span><span class="p">)</span><span class="p">;</span><span class="c1">//主动切换。
+    <span class="n">spin_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lk</span><span class="o">-&gt;</span><span class="n">spinlock</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">acquired</span><span class="p">)</span> <span class="n">yield</span><span class="p">();</span><span class="c1">//主动切换。
 </span><span class="c1"></span><span class="p">}</span>
 
-<span class="kt">void</span> <span class="nf">mutex_unlock</span><span class="p">(</span><span class="n">mutexlock_t</span> <span class="o">&amp;</span><span class="n">lk</span><span class="p">)</span><span class="p">{</span>
-    <span class="n">spin_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lk</span><span class="o">-</span><span class="o">&gt;</span><span class="n">spinlock</span><span class="p">)</span><span class="p">;</span>
-    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">empty</span><span class="p">(</span><span class="n">lk</span><span class="o">-</span><span class="o">&gt;</span><span class="n">wait_list</span><span class="p">)</span><span class="p">)</span><span class="p">{</span>
+<span class="kt">void</span> <span class="nf">mutex_unlock</span><span class="p">(</span><span class="n">mutexlock_t</span> <span class="o">&amp;</span><span class="n">lk</span><span class="p">){</span>
+    <span class="n">spin_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lk</span><span class="o">-&gt;</span><span class="n">spinlock</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">empty</span><span class="p">(</span><span class="n">lk</span><span class="o">-&gt;</span><span class="n">wait_list</span><span class="p">)){</span>
         <span class="c1">//不为空
-</span><span class="c1"></span>       <span class="k">struct</span> <span class="n">task_t</span><span class="o">*</span> <span class="n">task</span> <span class="o">=</span>  <span class="n">dequeque</span><span class="p">(</span><span class="n">lk</span><span class="o">-</span><span class="o">&gt;</span><span class="n">wait_list</span><span class="p">)</span><span class="p">;</span>
-       <span class="n">task</span><span class="o">-</span><span class="o">&gt;</span><span class="n">status</span> <span class="o">=</span> <span class="n">RUNNABLE</span><span class="p">;</span>
+</span><span class="c1"></span>       <span class="k">struct</span> <span class="n">task_t</span><span class="o">*</span> <span class="n">task</span> <span class="o">=</span>  <span class="n">dequeque</span><span class="p">(</span><span class="n">lk</span><span class="o">-&gt;</span><span class="n">wait_list</span><span class="p">);</span>
+       <span class="n">task</span><span class="o">-&gt;</span><span class="n">status</span> <span class="o">=</span> <span class="n">RUNNABLE</span><span class="p">;</span>
     <span class="p">}</span>
     <span class="k">else</span>
-        <span class="n">lk</span><span class="o">-</span><span class="o">&gt;</span><span class="n">locked</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="n">spin_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lk</span><span class="o">-</span><span class="o">&gt;</span><span class="n">spinlock</span><span class="p">)</span><span class="p">;</span>
+        <span class="n">lk</span><span class="o">-&gt;</span><span class="n">locked</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">spin_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lk</span><span class="o">-&gt;</span><span class="n">spinlock</span><span class="p">);</span>
 <span class="p">}</span>
 
 </code></pre></td></tr></table>

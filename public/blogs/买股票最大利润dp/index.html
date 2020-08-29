@@ -36,7 +36,7 @@
                 "width":  800 ,
                 "height":  600 
             },"genre": "blogs","keywords": "OJ, DP","wordcount":  88 ,
-        "url": "https:\/\/jarviszly.com\/blogs\/%E4%B9%B0%E8%82%A1%E7%A5%A8%E6%9C%80%E5%A4%A7%E5%88%A9%E6%B6%A6dp\/","datePublished": "2020-06-07T13:38:18\x2b08:00","dateModified": "2020-06-07T13:38:18\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "https:\/\/jarviszly.com\/blogs\/%E4%B9%B0%E8%82%A1%E7%A5%A8%E6%9C%80%E5%A4%A7%E5%88%A9%E6%B6%A6dp\/","datePublished": "2020-06-07T13:38:18\u002b08:00","dateModified": "2020-06-07T13:38:18\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "JarvisZhang",
                 "logo": {
@@ -124,9 +124,9 @@
 <td class="lntd">
 <pre class="chroma"><code class="language-c++" data-lang="c++"><span class="cm">/* 状态表示 */</span>
 <span class="c1">// 表示前i天共拥有k次交易次数且第i天操作结束后没有拥有股票时的最大利润。
-</span><span class="c1"></span><span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="p">;</span>  
+</span><span class="c1"></span><span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span>  
 <span class="c1">// 表示前i天共拥有k次交易次数且第i天操作结束后拥有股票时的最大利润。
-</span><span class="c1"></span><span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="p">;</span>
+</span><span class="c1"></span><span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">][</span><span class="mi">1</span><span class="p">];</span>
 </code></pre></td></tr></table>
 </div>
 </div><ul>
@@ -156,13 +156,13 @@
 </span><span class="cm">        第i-1天操作后不拥有股票，且第i天没有操作
 </span><span class="cm">        第i-1天拥有股票且第i天卖出
 </span><span class="cm">*/</span>
-<span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="p">,</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">)</span><span class="p">;</span>
+<span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">k</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">k</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
 <span class="cm">/* 
 </span><span class="cm">    第i天操作后拥有股票：
 </span><span class="cm">        第i-1天操作后拥有股票，且第i天没有操作
 </span><span class="cm">        第i-1天不拥有股票且第i天买入
 </span><span class="cm">*/</span>
-<span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="p">,</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="p">[</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">)</span><span class="p">;</span>
+<span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">k</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
 <span class="c1">//此处用k表示剩余买入的次数，表示剩余卖出的次数结果一样。
 </span></code></pre></td></tr></table>
 </div>
@@ -178,11 +178,11 @@
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span><span class="o">=</span> <span class="n">k</span><span class="p">;</span> <span class="o">+</span><span class="o">+</span><span class="n">i</span><span class="p">)</span><span class="p">{</span>
-    <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">-</span> <span class="n">prices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="p">;</span>
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">k</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+    <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">-</span> <span class="n">prices</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
 <span class="p">}</span>
-<span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">INT_MIN</span><span class="p">;</span> <span class="c1">//(用INT_MIN表示不可能)
+<span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">INT_MIN</span><span class="p">;</span> <span class="c1">//(用INT_MIN表示不可能)
 </span></code></pre></td></tr></table>
 </div>
 </div></div><div class="post-footer" id="post-footer">

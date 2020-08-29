@@ -36,7 +36,7 @@
                 "width":  800 ,
                 "height":  600 
             },"genre": "blogs","keywords": "Android, Monkey","wordcount":  1186 ,
-        "url": "https:\/\/jarviszly.com\/blogs\/android-monkey-eventsource\/","datePublished": "2020-06-17T17:33:09\x2b08:00","dateModified": "2020-06-17T17:33:09\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "https:\/\/jarviszly.com\/blogs\/android-monkey-eventsource\/","datePublished": "2020-06-17T17:33:09\u002b08:00","dateModified": "2020-06-17T17:33:09\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "JarvisZhang",
                 "logo": {
@@ -138,7 +138,7 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">mScriptFileNames</span><span class="p">.</span><span class="n">size</span> <span class="p">=</span><span class="p">=</span> <span class="m">1</span> <span class="p">-</span><span class="p">&gt;</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">mScriptFileNames</span><span class="p">.</span><span class="n">size</span> <span class="p">==</span> <span class="m">1</span> <span class="p">-&gt;</span> <span class="p">{</span>
     <span class="c1">//script mode, ignore other options
 </span><span class="c1"></span>    <span class="n">mEventSource</span> <span class="p">=</span> <span class="n">MonkeySourceScript</span><span class="p">(</span><span class="n">mRandom</span><span class="o">!!</span><span class="p">,</span> <span class="n">mScriptFileNames</span><span class="p">[</span><span class="m">0</span><span class="p">]</span><span class="o">!!</span><span class="p">,</span> 
         <span class="n">mThrottle</span><span class="p">,</span> <span class="n">mRandomizeThrottle</span><span class="p">,</span> <span class="n">mProfileWaitTime</span><span class="p">,</span> <span class="n">mDeviceSleepTime</span><span class="p">)</span>
@@ -168,9 +168,9 @@
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">mScriptFileNames</span><span class="p">.</span><span class="n">size</span> <span class="p">&gt;</span> <span class="m">1</span> <span class="p">-</span><span class="p">&gt;</span> <span class="p">{</span>
-    <span class="n">mEventSource</span> <span class="p">=</span> <span class="k">if</span> <span class="p">(</span><span class="n">mSetupFileName</span> <span class="p">!</span><span class="p">=</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">mCount</span><span class="p">+</span><span class="p">+</span>
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">mScriptFileNames</span><span class="p">.</span><span class="n">size</span> <span class="p">&gt;</span> <span class="m">1</span> <span class="p">-&gt;</span> <span class="p">{</span>
+    <span class="n">mEventSource</span> <span class="p">=</span> <span class="k">if</span> <span class="p">(</span><span class="n">mSetupFileName</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">mCount</span><span class="p">++</span>
             <span class="n">MonkeySourceRandomScript</span><span class="p">(</span><span class="n">mSetupFileName</span><span class="p">,</span> <span class="n">mScriptFileNames</span><span class="p">,</span> <span class="n">mThrottle</span><span class="p">,</span>
                 <span class="n">mRandomizeThrottle</span><span class="p">,</span> <span class="n">mRandom</span><span class="o">!!</span><span class="p">,</span> <span class="n">mProfileWaitTime</span><span class="p">,</span> <span class="n">mDeviceSleepTime</span><span class="p">,</span> 
                 <span class="n">mRandomizeScript</span><span class="p">)</span>
@@ -195,7 +195,7 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-kotlin" data-lang="kotlin"> <span class="c1">//TODO: implement network-source Monkey
-</span><span class="c1"></span><span class="n">mServerPort</span> <span class="p">!</span><span class="p">=</span> <span class="p">-</span><span class="m">1</span> <span class="p">-</span><span class="p">&gt;</span> <span class="p">{</span>
+</span><span class="c1"></span><span class="n">mServerPort</span> <span class="p">!=</span> <span class="p">-</span><span class="m">1</span> <span class="p">-&gt;</span> <span class="p">{</span>
     <span class="k">throw</span> <span class="n">Exception</span><span class="p">(</span><span class="s">&#34;not implemented yet!&#34;</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
@@ -230,25 +230,25 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">when</span><span class="p">{</span>
-    <span class="p">.</span><span class="p">.</span><span class="p">.</span>
-    <span class="k">else</span> <span class="p">-</span><span class="p">&gt;</span> <span class="p">{</span>
+    <span class="p">...</span>
+    <span class="k">else</span> <span class="p">-&gt;</span> <span class="p">{</span>
         <span class="c1">// random source by default
 </span><span class="c1"></span>        <span class="c1">//check seeding performance
-</span><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="n">mVerbose</span> <span class="p">&gt;</span><span class="p">=</span> <span class="m">2</span><span class="p">)</span> <span class="p">{</span> <span class="n">Logger</span><span class="p">.</span><span class="n">lPrintln</span><span class="p">(</span><span class="s">&#34;// Seeded: $mSeed&#34;</span><span class="p">)</span> <span class="p">}</span>
+</span><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="n">mVerbose</span> <span class="p">&gt;=</span> <span class="m">2</span><span class="p">)</span> <span class="p">{</span> <span class="n">Logger</span><span class="p">.</span><span class="n">lPrintln</span><span class="p">(</span><span class="s">&#34;// Seeded: $mSeed&#34;</span><span class="p">)</span> <span class="p">}</span>
 
         <span class="n">mEventSource</span> <span class="p">=</span> <span class="n">MonkeySourceRandom</span><span class="p">(</span><span class="n">mRandom</span><span class="o">!!</span><span class="p">,</span> <span class="n">mMainApps</span><span class="p">,</span> <span class="n">mThrottle</span><span class="p">,</span> <span class="n">mRandomizeThrottle</span><span class="p">,</span>
             <span class="n">mPermissionTargetSystem</span><span class="p">)</span>
         <span class="n">mEventSource</span><span class="p">.</span><span class="n">setVerbose</span><span class="p">(</span><span class="n">mVerbose</span><span class="p">)</span>
 
         <span class="c1">//set any of the factors that has been set
-</span><span class="c1"></span>        <span class="n">mFactors</span><span class="p">.</span><span class="n">forEachIndexed</span> <span class="p">{</span> <span class="n">index</span><span class="p">,</span> <span class="n">fl</span> <span class="p">-</span><span class="p">&gt;</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">fl</span> <span class="p">&lt;</span><span class="p">=</span> <span class="m">0f</span><span class="p">)</span> <span class="p">{</span>
-                <span class="p">(</span><span class="n">mEventSource</span> <span class="k">as</span> <span class="n">MonkeySourceRandom</span><span class="p">)</span><span class="p">.</span><span class="n">setFactors</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">fl</span><span class="p">)</span>
+</span><span class="c1"></span>        <span class="n">mFactors</span><span class="p">.</span><span class="n">forEachIndexed</span> <span class="p">{</span> <span class="n">index</span><span class="p">,</span> <span class="n">fl</span> <span class="p">-&gt;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">fl</span> <span class="p">&lt;=</span> <span class="m">0f</span><span class="p">)</span> <span class="p">{</span>
+                <span class="p">(</span><span class="n">mEventSource</span> <span class="k">as</span> <span class="n">MonkeySourceRandom</span><span class="p">).</span><span class="n">setFactors</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">fl</span><span class="p">)</span>
             <span class="p">}</span>
         <span class="p">}</span>
 
         <span class="c1">//in random mode, we start with a random activity
-</span><span class="c1"></span>        <span class="p">(</span><span class="n">mEventSource</span> <span class="k">as</span> <span class="n">MonkeySourceRandom</span><span class="p">)</span><span class="p">.</span><span class="n">generateActivity</span><span class="p">(</span><span class="p">)</span>
+</span><span class="c1"></span>        <span class="p">(</span><span class="n">mEventSource</span> <span class="k">as</span> <span class="n">MonkeySourceRandom</span><span class="p">).</span><span class="n">generateActivity</span><span class="p">()</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
@@ -263,7 +263,7 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="c1">// validate source generator
-</span><span class="c1"></span><span class="k">if</span> <span class="p">(</span><span class="p">!</span><span class="n">mEventSource</span><span class="p">.</span><span class="n">validate</span><span class="p">(</span><span class="p">)</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="p">-</span><span class="m">5</span> <span class="p">}</span>
+</span><span class="c1"></span><span class="k">if</span> <span class="p">(!</span><span class="n">mEventSource</span><span class="p">.</span><span class="n">validate</span><span class="p">())</span> <span class="p">{</span> <span class="k">return</span> <span class="p">-</span><span class="m">5</span> <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
 </div><a class="post-dummy-target" id="monkeysourcerandom分析"></a><h2>MonkeySourceRandom分析</h2>
@@ -324,8 +324,8 @@
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">fun</span> <span class="nf">generateActivity</span><span class="p">(</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">val</span> <span class="py">e</span> <span class="p">=</span> <span class="n">MonkeyActivityEvent</span><span class="p">(</span><span class="n">mMainApp</span><span class="p">[</span><span class="n">mRandom</span><span class="p">.</span><span class="n">nextInt</span><span class="p">(</span><span class="n">mMainApps</span><span class="p">.</span><span class="n">size</span><span class="p">)</span><span class="p">]</span><span class="p">)</span>
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">fun</span> <span class="nf">generateActivity</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">val</span> <span class="py">e</span> <span class="p">=</span> <span class="n">MonkeyActivityEvent</span><span class="p">(</span><span class="n">mMainApp</span><span class="p">[</span><span class="n">mRandom</span><span class="p">.</span><span class="n">nextInt</span><span class="p">(</span><span class="n">mMainApps</span><span class="p">.</span><span class="n">size</span><span class="p">)])</span>
     <span class="n">mQ</span><span class="p">.</span><span class="n">addLast</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
@@ -404,35 +404,35 @@
 </span><span class="lnt">58
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">override</span> <span class="k">fun</span> <span class="nf">validate</span><span class="p">(</span><span class="p">)</span><span class="p">:</span> <span class="n">Boolean</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">override</span> <span class="k">fun</span> <span class="nf">validate</span><span class="p">():</span> <span class="n">Boolean</span> <span class="p">{</span>
     <span class="k">var</span> <span class="py">ret</span> <span class="p">=</span> <span class="k">true</span>
     <span class="c1">// only populate &amp; dump permissions if enabled
-</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">mFactors</span><span class="p">[</span><span class="n">FACTOR_PERMISSION</span><span class="p">]</span> <span class="p">!</span><span class="p">=</span> <span class="m">0.0f</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">ret</span> <span class="p">=</span> <span class="n">ret</span> <span class="n">and</span> <span class="n">mPermissionUtil</span><span class="p">.</span><span class="n">populatePermissionsMapping</span><span class="p">(</span><span class="p">)</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="p">&amp;</span><span class="p">&amp;</span> <span class="n">mVerbose</span> <span class="p">&gt;</span><span class="p">=</span> <span class="m">2</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">mPermissionUtil</span><span class="p">.</span><span class="n">dump</span><span class="p">(</span><span class="p">)</span>
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">mFactors</span><span class="p">[</span><span class="n">FACTOR_PERMISSION</span><span class="p">]</span> <span class="p">!=</span> <span class="m">0.0f</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ret</span> <span class="p">=</span> <span class="n">ret</span> <span class="n">and</span> <span class="n">mPermissionUtil</span><span class="p">.</span><span class="n">populatePermissionsMapping</span><span class="p">()</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="p">&amp;&amp;</span> <span class="n">mVerbose</span> <span class="p">&gt;=</span> <span class="m">2</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">mPermissionUtil</span><span class="p">.</span><span class="n">dump</span><span class="p">()</span>
         <span class="p">}</span>
     <span class="p">}</span>
-    <span class="k">return</span> <span class="n">ret</span> <span class="n">and</span> <span class="n">adjustEventFactors</span><span class="p">(</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ret</span> <span class="n">and</span> <span class="n">adjustEventFactors</span><span class="p">()</span>
 <span class="p">}</span>
 
-<span class="p">.</span><span class="p">.</span><span class="p">.</span>
+<span class="p">...</span>
 
-<span class="k">private</span> <span class="k">fun</span> <span class="nf">adjustEventFactors</span><span class="p">(</span><span class="p">)</span><span class="p">:</span> <span class="n">Boolean</span> <span class="p">{</span>
+<span class="k">private</span> <span class="k">fun</span> <span class="nf">adjustEventFactors</span><span class="p">():</span> <span class="n">Boolean</span> <span class="p">{</span>
     <span class="c1">// go through all values and compute totals for user &amp; default values
-</span><span class="c1"></span>    <span class="k">val</span> <span class="err">(</span><span class="py">userSum</span><span class="p">,</span> <span class="n">defaultSum</span><span class="p">,</span> <span class="n">defaultCount</span><span class="p">)</span> <span class="p">=</span> <span class="n">mFactors</span><span class="p">.</span><span class="n">fold</span><span class="p">(</span><span class="n">Triple</span><span class="p">(</span><span class="m">0f</span><span class="p">,</span> <span class="m">0f</span><span class="p">,</span> <span class="m">0</span><span class="p">)</span><span class="p">)</span><span class="p">{</span> 
-        <span class="p">(</span><span class="n">userFold</span><span class="p">,</span> <span class="n">defaultFold</span><span class="p">,</span> <span class="n">defaultCount</span><span class="p">)</span><span class="p">,</span> 
-        <span class="n">factor</span> <span class="p">-</span><span class="p">&gt;</span> 
-        <span class="k">if</span> <span class="p">(</span><span class="n">factor</span> <span class="p">&lt;</span><span class="p">=</span> <span class="m">0f</span><span class="p">)</span> <span class="p">{</span> <span class="n">Triple</span><span class="p">(</span><span class="n">userFold</span><span class="p">-</span><span class="n">factor</span><span class="p">,</span> <span class="n">defaultFold</span><span class="p">,</span> <span class="n">defaultCount</span><span class="p">)</span><span class="p">}</span>
-        <span class="k">else</span> <span class="p">{</span><span class="n">Triple</span><span class="p">(</span><span class="n">userFold</span><span class="p">,</span> <span class="n">defaultFold</span><span class="p">+</span><span class="n">factor</span><span class="p">,</span> <span class="n">defaultCount</span><span class="p">+</span><span class="m">1</span><span class="p">)</span><span class="p">}</span>
+</span><span class="c1"></span>    <span class="k">val</span> <span class="err">(</span><span class="py">userSum</span><span class="p">,</span> <span class="n">defaultSum</span><span class="p">,</span> <span class="n">defaultCount</span><span class="p">)</span> <span class="p">=</span> <span class="n">mFactors</span><span class="p">.</span><span class="n">fold</span><span class="p">(</span><span class="n">Triple</span><span class="p">(</span><span class="m">0f</span><span class="p">,</span> <span class="m">0f</span><span class="p">,</span> <span class="m">0</span><span class="p">)){</span> 
+        <span class="p">(</span><span class="n">userFold</span><span class="p">,</span> <span class="n">defaultFold</span><span class="p">,</span> <span class="n">defaultCount</span><span class="p">),</span> 
+        <span class="n">factor</span> <span class="p">-&gt;</span> 
+        <span class="k">if</span> <span class="p">(</span><span class="n">factor</span> <span class="p">&lt;=</span> <span class="m">0f</span><span class="p">)</span> <span class="p">{</span> <span class="n">Triple</span><span class="p">(</span><span class="n">userFold</span><span class="p">-</span><span class="n">factor</span><span class="p">,</span> <span class="n">defaultFold</span><span class="p">,</span> <span class="n">defaultCount</span><span class="p">)}</span>
+        <span class="k">else</span> <span class="p">{</span><span class="n">Triple</span><span class="p">(</span><span class="n">userFold</span><span class="p">,</span> <span class="n">defaultFold</span><span class="p">+</span><span class="n">factor</span><span class="p">,</span> <span class="n">defaultCount</span><span class="p">+</span><span class="m">1</span><span class="p">)}</span>
     <span class="p">}</span>
     <span class="c1">// if the user request was &gt; 100%, reject it
-</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">userSum</span> <span class="p">&gt;</span> <span class="m">100f</span><span class="p">)</span><span class="p">{</span>
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">userSum</span> <span class="p">&gt;</span> <span class="m">100f</span><span class="p">){</span>
         <span class="n">Logger</span><span class="p">.</span><span class="n">lPrintln</span><span class="p">(</span><span class="s">&#34;** Event weights &gt; 100%&#34;</span><span class="p">)</span>
         <span class="k">return</span> <span class="k">false</span>
     <span class="p">}</span>
     <span class="c1">//if the user specified all of the weights, they need to be 100%
-</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">defaultCount</span> <span class="p">=</span><span class="p">=</span> <span class="m">0</span> <span class="p">&amp;</span><span class="p">&amp;</span> <span class="p">(</span><span class="n">userSum</span> <span class="p">&lt;</span> <span class="m">99.9f</span> <span class="p">|</span><span class="p">|</span> <span class="n">userSum</span> <span class="p">&gt;</span> <span class="m">100.1f</span><span class="p">)</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">defaultCount</span> <span class="p">==</span> <span class="m">0</span> <span class="p">&amp;&amp;</span> <span class="p">(</span><span class="n">userSum</span> <span class="p">&lt;</span> <span class="m">99.9f</span> <span class="p">||</span> <span class="n">userSum</span> <span class="p">&gt;</span> <span class="m">100.1f</span><span class="p">))</span> <span class="p">{</span>
         <span class="n">Logger</span><span class="p">.</span><span class="n">lPrintln</span><span class="p">(</span><span class="s">&#34;** Event weight != 100%&#34;</span><span class="p">)</span>
         <span class="k">return</span> <span class="k">false</span>
     <span class="p">}</span>
@@ -441,23 +441,23 @@
     <span class="k">val</span> <span class="py">defaultsAdjustment</span> <span class="p">=</span> <span class="n">defaultsTarget</span> <span class="p">/</span> <span class="n">defaultSum</span>
     <span class="c1">//fix all values, by adjusting defaults, or flipping user values back to &gt;0
 </span><span class="c1"></span>    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="m">0</span> <span class="n">until</span> <span class="n">FACTORZ_COUNT</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">mFactors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">=</span> <span class="k">if</span> <span class="p">(</span><span class="n">mFactors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">&lt;</span><span class="p">=</span> <span class="m">0f</span><span class="p">)</span> <span class="p">{</span><span class="p">-</span><span class="n">mFactors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">}</span>
+        <span class="n">mFactors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">=</span> <span class="k">if</span> <span class="p">(</span><span class="n">mFactors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">&lt;=</span> <span class="m">0f</span><span class="p">)</span> <span class="p">{-</span><span class="n">mFactors</span><span class="p">[</span><span class="n">i</span><span class="p">]}</span>
         <span class="k">else</span> <span class="p">{</span><span class="n">mFactors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">*</span> <span class="n">defaultsAdjustment</span><span class="p">}</span>
     <span class="p">}</span>
     <span class="c1">// if verbose show factors
 </span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">mVerbose</span> <span class="p">&gt;</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">Logger</span><span class="p">.</span><span class="n">lPrintln</span><span class="p">(</span><span class="s">&#34;// Event percentages:&#34;</span><span class="p">)</span>
-        <span class="n">mFactors</span><span class="p">.</span><span class="n">forEachIndexed</span> <span class="p">{</span> <span class="n">index</span><span class="p">,</span> <span class="n">fl</span> <span class="p">-</span><span class="p">&gt;</span>
+        <span class="n">mFactors</span><span class="p">.</span><span class="n">forEachIndexed</span> <span class="p">{</span> <span class="n">index</span><span class="p">,</span> <span class="n">fl</span> <span class="p">-&gt;</span>
             <span class="n">Logger</span><span class="p">.</span><span class="n">lPrintln</span><span class="p">(</span><span class="s">&#34;// $index: $fl%&#34;</span><span class="p">)</span>
         <span class="p">}</span>
     <span class="p">}</span>
-    <span class="k">if</span> <span class="p">(</span><span class="p">!</span><span class="n">validateKeys</span><span class="p">(</span><span class="p">)</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(!</span><span class="n">validateKeys</span><span class="p">())</span> <span class="p">{</span>
         <span class="k">return</span> <span class="k">false</span>
     <span class="p">}</span>
     <span class="c1">//finally, normalize and convert to running sum
 </span><span class="c1"></span>    <span class="k">var</span> <span class="py">sum</span> <span class="p">=</span> <span class="m">0f</span>
     <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="m">0</span> <span class="n">until</span> <span class="n">FACTORZ_COUNT</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">sum</span> <span class="p">+</span><span class="p">=</span> <span class="n">mFactors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">/</span> <span class="m">100f</span>
+        <span class="n">sum</span> <span class="p">+=</span> <span class="n">mFactors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">/</span> <span class="m">100f</span>
         <span class="n">mFactors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">=</span> <span class="n">sum</span>
     <span class="p">}</span>
     <span class="k">return</span> <span class="k">true</span>
@@ -488,13 +488,13 @@
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">override</span> <span class="k">fun</span> <span class="nf">getNextEvent</span><span class="p">(</span><span class="p">)</span><span class="p">:</span> <span class="n">MonkeyEvent</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">mQ</span><span class="p">.</span><span class="n">isEmpty</span><span class="p">(</span><span class="p">)</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">generateEvents</span><span class="p">(</span><span class="p">)</span>
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">override</span> <span class="k">fun</span> <span class="nf">getNextEvent</span><span class="p">():</span> <span class="n">MonkeyEvent</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">mQ</span><span class="p">.</span><span class="n">isEmpty</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">generateEvents</span><span class="p">()</span>
     <span class="p">}</span>
-    <span class="n">mEventCount</span><span class="p">+</span><span class="p">+</span>
+    <span class="n">mEventCount</span><span class="p">++</span>
     <span class="k">val</span> <span class="py">e</span> <span class="p">=</span> <span class="n">mQ</span><span class="p">.</span><span class="n">first</span>
-    <span class="n">mQ</span><span class="p">.</span><span class="n">removeFirst</span><span class="p">(</span><span class="p">)</span>
+    <span class="n">mQ</span><span class="p">.</span><span class="n">removeFirst</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">e</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
@@ -563,45 +563,45 @@
 </span><span class="lnt">52
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">private</span> <span class="k">fun</span> <span class="nf">generateEvents</span><span class="p">(</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">val</span> <span class="py">cls</span> <span class="p">=</span> <span class="n">mRandom</span><span class="p">.</span><span class="n">nextFloat</span><span class="p">(</span><span class="p">)</span>
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">private</span> <span class="k">fun</span> <span class="nf">generateEvents</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">val</span> <span class="py">cls</span> <span class="p">=</span> <span class="n">mRandom</span><span class="p">.</span><span class="n">nextFloat</span><span class="p">()</span>
     <span class="k">var</span> <span class="py">lastKey</span><span class="p">:</span> <span class="n">Int</span>
     <span class="k">when</span><span class="p">{</span>
         <span class="c1">//触摸
-</span><span class="c1"></span>        <span class="n">cls</span> <span class="p">&lt;</span> <span class="n">mFactors</span><span class="p">[</span><span class="n">FACTOR_TOUCH</span><span class="p">]</span> <span class="p">-</span><span class="p">&gt;</span><span class="p">{</span>
+</span><span class="c1"></span>        <span class="n">cls</span> <span class="p">&lt;</span> <span class="n">mFactors</span><span class="p">[</span><span class="n">FACTOR_TOUCH</span><span class="p">]</span> <span class="p">-&gt;{</span>
             <span class="n">println</span><span class="p">(</span><span class="s">&#34;Touch&#34;</span><span class="p">)</span>
             <span class="n">generatePointerEven</span><span class="p">(</span><span class="n">mRandom</span><span class="p">,</span> <span class="n">GESTURE_TAP</span><span class="p">)</span>
             <span class="k">return</span>
         <span class="p">}</span>
         <span class="c1">//手势
-</span><span class="c1"></span>        <span class="n">cls</span> <span class="p">&lt;</span> <span class="n">mFactors</span><span class="p">[</span><span class="n">FACTOR_MOTION</span><span class="p">]</span><span class="p">-</span><span class="p">&gt;</span> <span class="p">{</span>
+</span><span class="c1"></span>        <span class="n">cls</span> <span class="p">&lt;</span> <span class="n">mFactors</span><span class="p">[</span><span class="n">FACTOR_MOTION</span><span class="p">]-&gt;</span> <span class="p">{</span>
             <span class="n">println</span><span class="p">(</span><span class="s">&#34;Motion&#34;</span><span class="p">)</span>
             <span class="n">generatePointerEven</span><span class="p">(</span><span class="n">mRandom</span><span class="p">,</span> <span class="n">GESTURE_DRAG</span><span class="p">)</span>
             <span class="k">return</span>
         <span class="p">}</span>
         <span class="c1">//二指缩放
-</span><span class="c1"></span>        <span class="n">cls</span> <span class="p">&lt;</span> <span class="n">mFactor</span><span class="p">[</span><span class="n">FACTOR_PINCHZOOM</span><span class="p">]</span> <span class="p">-</span><span class="p">&gt;</span> <span class="p">{</span>
+</span><span class="c1"></span>        <span class="n">cls</span> <span class="p">&lt;</span> <span class="n">mFactor</span><span class="p">[</span><span class="n">FACTOR_PINCHZOOM</span><span class="p">]</span> <span class="p">-&gt;</span> <span class="p">{</span>
             <span class="n">println</span><span class="p">(</span><span class="s">&#34;PINCHZOOM&#34;</span><span class="p">)</span>
             <span class="n">generatePointerEven</span><span class="p">(</span><span class="n">mRandom</span><span class="p">,</span><span class="n">GESTURE_PINCH_OR_ZOOM</span><span class="p">)</span>
             <span class="k">return</span>
         <span class="p">}</span>
         <span class="c1">//轨迹球(已被弃用)
-</span><span class="c1"></span>        <span class="n">cls</span> <span class="p">&lt;</span> <span class="n">mFactor</span><span class="p">[</span><span class="n">FACTOR_TRACKBALL</span><span class="p">]</span> <span class="p">-</span><span class="p">&gt;</span> <span class="p">{</span>
+</span><span class="c1"></span>        <span class="n">cls</span> <span class="p">&lt;</span> <span class="n">mFactor</span><span class="p">[</span><span class="n">FACTOR_TRACKBALL</span><span class="p">]</span> <span class="p">-&gt;</span> <span class="p">{</span>
             <span class="n">println</span><span class="p">(</span><span class="s">&#34;TrackBall&#34;</span><span class="p">)</span>
             <span class="n">generateTrackballEven</span><span class="p">(</span><span class="n">mRandom</span><span class="p">)</span>
             <span class="k">return</span>
         <span class="p">}</span>
         <span class="c1">//旋转
-</span><span class="c1"></span>        <span class="n">cls</span> <span class="p">&lt;</span> <span class="n">mFactors</span><span class="p">[</span><span class="n">FACTOR_ROTATION</span><span class="p">]</span><span class="p">-</span><span class="p">&gt;</span> <span class="p">{</span>
+</span><span class="c1"></span>        <span class="n">cls</span> <span class="p">&lt;</span> <span class="n">mFactors</span><span class="p">[</span><span class="n">FACTOR_ROTATION</span><span class="p">]-&gt;</span> <span class="p">{</span>
             <span class="n">println</span><span class="p">(</span><span class="s">&#34;Rotation&#34;</span><span class="p">)</span>
             <span class="n">generateRotationEven</span><span class="p">(</span><span class="n">mRandom</span><span class="p">)</span>
             <span class="k">return</span>
         <span class="p">}</span>
         <span class="c1">//请求权限
-</span><span class="c1"></span>        <span class="n">cls</span>  <span class="p">&lt;</span> <span class="n">mFactor</span><span class="p">[</span><span class="n">FACTOR_PERMISSION</span><span class="p">]</span> <span class="p">-</span><span class="p">&gt;</span> <span class="p">{</span>
+</span><span class="c1"></span>        <span class="n">cls</span>  <span class="p">&lt;</span> <span class="n">mFactor</span><span class="p">[</span><span class="n">FACTOR_PERMISSION</span><span class="p">]</span> <span class="p">-&gt;</span> <span class="p">{</span>
             <span class="n">println</span><span class="p">(</span><span class="s">&#34;Permission&#34;</span><span class="p">)</span>
             <span class="k">val</span> <span class="py">permissionEvent</span> <span class="p">=</span><span class="n">mPermissionUtilgenerateRandomPermissionEvet</span><span class="p">(</span><span class="n">mRandom</span><span class="p">)</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">permissionEvent</span> <span class="p">=</span><span class="p">=</span><span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">permissionEvent</span> <span class="p">==</span><span class="k">null</span><span class="p">)</span> <span class="p">{</span>
                 <span class="k">if</span> <span class="p">(</span><span class="n">mVerbose</span> <span class="p">&gt;</span> <span class="m">1</span><span class="p">)</span> <span class="p">{</span>
                     <span class="n">Logger</span><span class="p">.</span><span class="n">lPrintl</span><span class="p">(</span><span class="s">&#34;WARNING: Unableto generatepermission event&#34;</span><span class="p">)</span>
                 <span class="p">}</span>
@@ -613,7 +613,7 @@
             <span class="k">return</span>
         <span class="p">}</span>
     <span class="p">}</span>
-    <span class="p">.</span><span class="p">.</span><span class="p">.</span><span class="p">.</span><span class="p">.</span><span class="p">.</span>
+    <span class="p">......</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
@@ -642,21 +642,21 @@
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">private</span> <span class="k">fun</span> <span class="nf">randomPoint</span><span class="p">(</span><span class="n">random</span><span class="p">:</span> <span class="n">Random</span><span class="p">,</span> <span class="n">display</span><span class="p">:</span> <span class="n">Display</span><span class="p">)</span><span class="p">:</span> <span class="n">PointF</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">private</span> <span class="k">fun</span> <span class="nf">randomPoint</span><span class="p">(</span><span class="n">random</span><span class="p">:</span> <span class="n">Random</span><span class="p">,</span> <span class="n">display</span><span class="p">:</span> <span class="n">Display</span><span class="p">):</span> <span class="n">PointF</span> <span class="p">{</span>
     <span class="c1">// since Display.getWidth() is deprecated, usethe recommanded way; x is width and y is height
-</span><span class="c1"></span>    <span class="k">val</span> <span class="py">size</span> <span class="p">=</span> <span class="n">Point</span><span class="p">(</span><span class="p">)</span>
+</span><span class="c1"></span>    <span class="k">val</span> <span class="py">size</span> <span class="p">=</span> <span class="n">Point</span><span class="p">()</span>
     <span class="n">display</span><span class="p">.</span><span class="n">getSize</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">PointF</span><span class="p">(</span><span class="n">random</span><span class="p">.</span><span class="n">nextInt</span><span class="p">(</span><span class="n">size</span><span class="p">.</span><span class="n">x</span><span class="p">)</span><span class="p">.</span><span class="n">toFloat</span><span class="p">(</span><span class="p">)</span><span class="p">,</span><span class="n">random</span><span class="p">.</span><span class="n">nextInt</span><span class="p">(</span><span class="n">size</span><span class="p">.</span><span class="n">y</span><span class="p">)</span><span class="p">.</span><span class="n">toFloat</span><span class="p">(</span><span class="p">)</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">PointF</span><span class="p">(</span><span class="n">random</span><span class="p">.</span><span class="n">nextInt</span><span class="p">(</span><span class="n">size</span><span class="p">.</span><span class="n">x</span><span class="p">).</span><span class="n">toFloat</span><span class="p">(),</span><span class="n">random</span><span class="p">.</span><span class="n">nextInt</span><span class="p">(</span><span class="n">size</span><span class="p">.</span><span class="n">y</span><span class="p">).</span><span class="n">toFloat</span><span class="p">())</span>
 <span class="p">}</span>
 <span class="k">private</span> <span class="k">fun</span> <span class="nf">randomVector</span><span class="p">(</span><span class="n">random</span><span class="p">:</span> <span class="n">Random</span><span class="p">)</span> <span class="p">=</span>
-    <span class="n">PointF</span><span class="p">(</span><span class="p">(</span><span class="n">random</span><span class="p">.</span><span class="n">nextFloat</span><span class="p">(</span><span class="p">)</span> <span class="p">-</span> <span class="m">0.5f</span><span class="p">)</span> <span class="p">*</span> <span class="m">50</span><span class="p">,</span><span class="p">(</span><span class="n">random</span><span class="p">.</span><span class="n">nextFloat</span><span class="p">(</span><span class="p">)</span> <span class="p">-</span> <span class="m">0.5f</span><span class="p">)</span> <span class="p">*</span> <span class="m">50</span><span class="p">)</span>
+    <span class="n">PointF</span><span class="p">((</span><span class="n">random</span><span class="p">.</span><span class="n">nextFloat</span><span class="p">()</span> <span class="p">-</span> <span class="m">0.5f</span><span class="p">)</span> <span class="p">*</span> <span class="m">50</span><span class="p">,(</span><span class="n">random</span><span class="p">.</span><span class="n">nextFloat</span><span class="p">()</span> <span class="p">-</span> <span class="m">0.5f</span><span class="p">)</span> <span class="p">*</span> <span class="m">50</span><span class="p">)</span>
 <span class="k">private</span> <span class="k">fun</span> <span class="nf">randomWalk</span><span class="p">(</span><span class="n">random</span><span class="p">:</span> <span class="n">Random</span><span class="p">,</span> <span class="n">display</span><span class="p">:</span><span class="n">Display</span><span class="p">,</span> <span class="n">point</span><span class="p">:</span> <span class="n">PointF</span><span class="p">,</span> <span class="n">vector</span><span class="p">:</span> <span class="n">PointF</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">val</span> <span class="py">size</span> <span class="p">=</span> <span class="n">Point</span><span class="p">(</span><span class="p">)</span>
+    <span class="k">val</span> <span class="py">size</span> <span class="p">=</span> <span class="n">Point</span><span class="p">()</span>
     <span class="c1">//获取屏幕的宽(存入size.x)和高(存入size.y)
 </span><span class="c1"></span>    <span class="n">display</span><span class="p">.</span><span class="n">getSize</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
     <span class="c1">//max和min是防止移动超过范围
-</span><span class="c1"></span>    <span class="n">point</span><span class="p">.</span><span class="n">x</span> <span class="p">=</span> <span class="n">Math</span><span class="p">.</span><span class="n">max</span><span class="p">(</span><span class="n">Math</span><span class="p">.</span><span class="n">min</span><span class="p">(</span><span class="n">point</span><span class="p">.</span><span class="n">x</span> <span class="p">+</span> <span class="n">randomnextFloat</span><span class="p">(</span><span class="p">)</span> <span class="p">*</span> <span class="n">vector</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">size</span><span class="p">.</span><span class="n">x</span><span class="p">.</span><span class="n">toFloat</span><span class="p">(</span><span class="p">)</span><span class="p">)</span><span class="p">,</span> <span class="m">0f</span><span class="p">)</span>
-    <span class="n">point</span><span class="p">.</span><span class="n">y</span> <span class="p">=</span> <span class="n">Math</span><span class="p">.</span><span class="n">max</span><span class="p">(</span><span class="n">Math</span><span class="p">.</span><span class="n">min</span><span class="p">(</span><span class="n">point</span><span class="p">.</span><span class="n">y</span> <span class="p">+</span> <span class="n">randomnextFloat</span><span class="p">(</span><span class="p">)</span> <span class="p">*</span> <span class="n">vector</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">size</span><span class="p">.</span><span class="n">y</span><span class="p">.</span><span class="n">toFloat</span><span class="p">(</span><span class="p">)</span><span class="p">)</span><span class="p">,</span> <span class="m">0f</span><span class="p">)</span>
+</span><span class="c1"></span>    <span class="n">point</span><span class="p">.</span><span class="n">x</span> <span class="p">=</span> <span class="n">Math</span><span class="p">.</span><span class="n">max</span><span class="p">(</span><span class="n">Math</span><span class="p">.</span><span class="n">min</span><span class="p">(</span><span class="n">point</span><span class="p">.</span><span class="n">x</span> <span class="p">+</span> <span class="n">randomnextFloat</span><span class="p">()</span> <span class="p">*</span> <span class="n">vector</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">size</span><span class="p">.</span><span class="n">x</span><span class="p">.</span><span class="n">toFloat</span><span class="p">()),</span> <span class="m">0f</span><span class="p">)</span>
+    <span class="n">point</span><span class="p">.</span><span class="n">y</span> <span class="p">=</span> <span class="n">Math</span><span class="p">.</span><span class="n">max</span><span class="p">(</span><span class="n">Math</span><span class="p">.</span><span class="n">min</span><span class="p">(</span><span class="n">point</span><span class="p">.</span><span class="n">y</span> <span class="p">+</span> <span class="n">randomnextFloat</span><span class="p">()</span> <span class="p">*</span> <span class="n">vector</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">size</span><span class="p">.</span><span class="n">y</span><span class="p">.</span><span class="n">toFloat</span><span class="p">()),</span> <span class="m">0f</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
@@ -733,30 +733,30 @@
 <td class="lntd">
 <pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">private</span> <span class="k">fun</span> <span class="nf">generatePointerEvent</span><span class="p">(</span><span class="n">random</span><span class="p">:</span> <span class="n">Random</span><span class="p">,</span> <span class="n">gesture</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">//获取默认显示器
-</span><span class="c1"></span>    <span class="k">val</span> <span class="py">display</span> <span class="p">=</span> <span class="n">DisplayManagerGlobal</span><span class="p">.</span><span class="n">getInstance</span><span class="p">(</span><span class="p">.</span><span class="n">getRealDisplay</span><span class="p">(</span><span class="n">Display</span><span class="p">.</span><span class="n">DEFAULT_DISPLAY</span><span class="p">)</span>
+</span><span class="c1"></span>    <span class="k">val</span> <span class="py">display</span> <span class="p">=</span> <span class="n">DisplayManagerGlobal</span><span class="p">.</span><span class="n">getInstance</span><span class="p">(.</span><span class="n">getRealDisplay</span><span class="p">(</span><span class="n">Display</span><span class="p">.</span><span class="n">DEFAULT_DISPLAY</span><span class="p">)</span>
     <span class="c1">//随机生成点和偏移量
 </span><span class="c1"></span>    <span class="k">val</span> <span class="py">p1</span> <span class="p">=</span> <span class="n">randomPoint</span><span class="p">(</span><span class="n">random</span><span class="p">,</span> <span class="n">display</span><span class="p">)</span>
     <span class="k">val</span> <span class="py">v1</span> <span class="p">=</span> <span class="n">randomVector</span><span class="p">(</span><span class="n">random</span><span class="p">)</span>
     <span class="c1">//从开机到现在的毫秒数
-</span><span class="c1"></span>    <span class="k">val</span> <span class="py">downAt</span> <span class="p">=</span> <span class="n">SystemClock</span><span class="p">.</span><span class="n">uptimeMillis</span><span class="p">(</span><span class="p">)</span>
+</span><span class="c1"></span>    <span class="k">val</span> <span class="py">downAt</span> <span class="p">=</span> <span class="n">SystemClock</span><span class="p">.</span><span class="n">uptimeMillis</span><span class="p">()</span>
     <span class="c1">//第一个手指按下
 </span><span class="c1"></span>    <span class="n">mQ</span><span class="p">.</span><span class="n">addLast</span><span class="p">(</span>
-        <span class="n">MonkeyTouchEvent</span><span class="p">(</span><span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_DOWN</span><span class="p">)</span><span class="n">setDownTime</span><span class="p">(</span><span class="n">downAt</span><span class="p">)</span><span class="p">.</span><span class="n">addPointer</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">p1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p1y</span><span class="p">)</span>
+        <span class="n">MonkeyTouchEvent</span><span class="p">(</span><span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_DOWN</span><span class="p">)</span><span class="n">setDownTime</span><span class="p">(</span><span class="n">downAt</span><span class="p">).</span><span class="n">addPointer</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">p1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p1y</span><span class="p">)</span>
             <span class="p">.</span><span class="n">setIntermediateNote</span><span class="p">(</span><span class="k">false</span><span class="p">)</span>
     <span class="p">)</span>
     <span class="c1">// sometimes we&#39;ll move during the touch
-</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">gesture</span> <span class="p">=</span><span class="p">=</span> <span class="n">GESTURE_DRAG</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">repeat</span><span class="p">(</span><span class="n">random</span><span class="p">.</span><span class="n">nextInt</span><span class="p">(</span><span class="m">10</span><span class="p">)</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">gesture</span> <span class="p">==</span> <span class="n">GESTURE_DRAG</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">repeat</span><span class="p">(</span><span class="n">random</span><span class="p">.</span><span class="n">nextInt</span><span class="p">(</span><span class="m">10</span><span class="p">))</span> <span class="p">{</span>
             <span class="n">randomWalk</span><span class="p">(</span><span class="n">random</span><span class="p">,</span> <span class="n">display</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">v1</span><span class="p">)</span>
             <span class="c1">//println(&#34;add MOVE&#34;)
 </span><span class="c1"></span>            <span class="n">mQ</span><span class="p">.</span><span class="n">addLast</span><span class="p">(</span>
-                <span class="n">MonkeyTouchEvent</span><span class="p">(</span><span class="n">MotionEventACTION_MOVE</span><span class="p">)</span><span class="p">.</span><span class="n">setDownTime</span><span class="p">(</span><span class="n">downAt</span><span class="p">)</span><span class="n">addPointer</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">p1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p1</span><span class="p">.</span><span class="n">y</span><span class="p">)</span>
+                <span class="n">MonkeyTouchEvent</span><span class="p">(</span><span class="n">MotionEventACTION_MOVE</span><span class="p">).</span><span class="n">setDownTime</span><span class="p">(</span><span class="n">downAt</span><span class="p">)</span><span class="n">addPointer</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">p1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p1</span><span class="p">.</span><span class="n">y</span><span class="p">)</span>
                     <span class="p">.</span><span class="n">setIntermediateNote</span><span class="p">(</span><span class="k">true</span><span class="p">)</span>
             <span class="p">)</span>
            <span class="c1">// println((mQ.last as MonkeyMotionEvent.getAction())
 </span><span class="c1"></span>        <span class="p">}</span>
     <span class="p">}</span>
-    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">gesture</span> <span class="p">=</span><span class="p">=</span> <span class="n">GESTURE_PINCH_OR_ZOOM</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">gesture</span> <span class="p">==</span> <span class="n">GESTURE_PINCH_OR_ZOOM</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">val</span> <span class="py">p2</span> <span class="p">=</span> <span class="n">randomPoint</span><span class="p">(</span><span class="n">random</span><span class="p">,</span> <span class="n">display</span><span class="p">)</span>
         <span class="k">val</span> <span class="py">v2</span> <span class="p">=</span> <span class="n">randomVector</span><span class="p">(</span><span class="n">random</span><span class="p">)</span>
         <span class="n">randomWalk</span><span class="p">(</span><span class="n">random</span><span class="p">,</span> <span class="n">display</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">v1</span><span class="p">)</span>
@@ -766,14 +766,14 @@
 </span><span class="c1"></span>                <span class="c1">//or == |
 </span><span class="c1"></span>                <span class="c1">// 1 shl index_shift 表示这个actio的index是1， 使用第8到15位作为index
 </span><span class="c1"></span>                <span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_POINTER_DOWN</span> <span class="n">or</span><span class="p">(</span><span class="m">1</span> <span class="n">shl</span> <span class="n">MotionEventACTION_POINTER_INDEX_SHIFT</span><span class="p">)</span>
-            <span class="p">)</span><span class="p">.</span><span class="n">setDownTime</span><span class="p">(</span><span class="n">downAt</span><span class="p">)</span>
+            <span class="p">).</span><span class="n">setDownTime</span><span class="p">(</span><span class="n">downAt</span><span class="p">)</span>
                 <span class="p">.</span><span class="n">addPointer</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">p1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p1</span><span class="p">.</span><span class="n">y</span><span class="p">)</span><span class="n">addPointer</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">p2</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p2</span><span class="p">.</span><span class="n">y</span><span class="p">)</span><span class="n">setIntermediateNote</span><span class="p">(</span><span class="k">true</span><span class="p">)</span>
         <span class="p">)</span>
-        <span class="n">repeat</span><span class="p">(</span><span class="n">random</span><span class="p">.</span><span class="n">nextInt</span><span class="p">(</span><span class="m">10</span><span class="p">)</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">repeat</span><span class="p">(</span><span class="n">random</span><span class="p">.</span><span class="n">nextInt</span><span class="p">(</span><span class="m">10</span><span class="p">))</span> <span class="p">{</span>
             <span class="n">randomWalk</span><span class="p">(</span><span class="n">random</span><span class="p">,</span> <span class="n">display</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">v1</span><span class="p">)</span>
             <span class="n">randomWalk</span><span class="p">(</span><span class="n">random</span><span class="p">,</span> <span class="n">display</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span>
             <span class="n">mQ</span><span class="p">.</span><span class="n">addLast</span><span class="p">(</span>
-                <span class="n">MonkeyTouchEvent</span><span class="p">(</span><span class="n">MotionEventACTION_MOVE</span><span class="p">)</span><span class="p">.</span><span class="n">setDownTime</span><span class="p">(</span><span class="n">downAt</span><span class="p">)</span><span class="n">addPointer</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">p1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p1</span><span class="p">.</span><span class="n">y</span><span class="p">)</span>
+                <span class="n">MonkeyTouchEvent</span><span class="p">(</span><span class="n">MotionEventACTION_MOVE</span><span class="p">).</span><span class="n">setDownTime</span><span class="p">(</span><span class="n">downAt</span><span class="p">)</span><span class="n">addPointer</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">p1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p1</span><span class="p">.</span><span class="n">y</span><span class="p">)</span>
                     <span class="p">.</span><span class="n">addPointer</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">p2</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p2</span><span class="p">.</span><span class="n">y</span><span class="p">)</span><span class="n">setIntermediateNote</span><span class="p">(</span><span class="k">true</span><span class="p">)</span>
             <span class="p">)</span>
         <span class="p">}</span>
@@ -781,8 +781,8 @@
         <span class="n">randomWalk</span><span class="p">(</span><span class="n">random</span><span class="p">,</span> <span class="n">display</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span>
         <span class="c1">//第二个手指离开
 </span><span class="c1"></span>        <span class="n">mQ</span><span class="p">.</span><span class="n">addLast</span><span class="p">(</span>
-            <span class="n">MonkeyTouchEvent</span><span class="p">(</span><span class="n">MotionEventACTION_POINTER_UP</span> <span class="n">or</span> <span class="p">(</span><span class="m">1</span> <span class="n">shl</span> <span class="n">MotionEventACTION_POINTER_INDEX_SHIFT</span><span class="p">)</span><span class="p">)</span>
-                <span class="p">.</span><span class="n">setDownTime</span><span class="p">(</span><span class="n">downAt</span><span class="p">)</span><span class="p">.</span><span class="n">addPointer</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="n">p1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p1</span><span class="p">.</span><span class="n">y</span><span class="p">)</span><span class="p">.</span><span class="n">addPointer</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">p2</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p2y</span><span class="p">)</span>
+            <span class="n">MonkeyTouchEvent</span><span class="p">(</span><span class="n">MotionEventACTION_POINTER_UP</span> <span class="n">or</span> <span class="p">(</span><span class="m">1</span> <span class="n">shl</span> <span class="n">MotionEventACTION_POINTER_INDEX_SHIFT</span><span class="p">))</span>
+                <span class="p">.</span><span class="n">setDownTime</span><span class="p">(</span><span class="n">downAt</span><span class="p">).</span><span class="n">addPointer</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="n">p1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p1</span><span class="p">.</span><span class="n">y</span><span class="p">).</span><span class="n">addPointer</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">p2</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p2y</span><span class="p">)</span>
                 <span class="p">.</span><span class="n">setIntermediateNote</span><span class="p">(</span><span class="k">true</span><span class="p">)</span>
         <span class="p">)</span>
     <span class="p">}</span>
@@ -790,7 +790,7 @@
 </span><span class="c1"></span>    <span class="n">randomWalk</span><span class="p">(</span><span class="n">random</span><span class="p">,</span> <span class="n">display</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">v1</span><span class="p">)</span>
     <span class="c1">//第一个手指离开
 </span><span class="c1"></span>    <span class="n">mQ</span><span class="p">.</span><span class="n">addLast</span><span class="p">(</span>
-        <span class="n">MonkeyTouchEvent</span><span class="p">(</span><span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_UP</span><span class="p">)</span><span class="n">setDownTime</span><span class="p">(</span><span class="n">downAt</span><span class="p">)</span><span class="p">.</span><span class="n">addPointer</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">p1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p1y</span><span class="p">)</span>
+        <span class="n">MonkeyTouchEvent</span><span class="p">(</span><span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_UP</span><span class="p">)</span><span class="n">setDownTime</span><span class="p">(</span><span class="n">downAt</span><span class="p">).</span><span class="n">addPointer</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">p1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p1y</span><span class="p">)</span>
             <span class="p">.</span><span class="n">setIntermediateNote</span><span class="p">(</span><span class="k">false</span><span class="p">)</span>
     <span class="p">)</span>
 <span class="p">}</span>

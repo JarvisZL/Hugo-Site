@@ -36,7 +36,7 @@
                 "width":  800 ,
                 "height":  600 
             },"genre": "documents","keywords": "计算机网络","wordcount":  353 ,
-        "url": "https:\/\/jarviszly.com\/documents\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%B8%89%E7%AB%A0\/","datePublished": "2020-02-29T13:03:02\x2b08:00","dateModified": "2020-02-29T13:03:02\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "https:\/\/jarviszly.com\/documents\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%AC%AC%E4%B8%89%E7%AB%A0\/","datePublished": "2020-02-29T13:03:02\u002b08:00","dateModified": "2020-02-29T13:03:02\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "JarvisZhang",
                 "logo": {
@@ -96,7 +96,7 @@
         </li>
         <li><a href="#udp用户数据协议">UDP(用户数据)协议</a></li>
         <li><a href="#可靠数据传输原理">可靠数据传输原理</a></li>
-        <li><a href="#tcp传输控制协议">TCP(传输控制)协议</a>
+        <li><a href="#tcp传输控制协议"><strong>TCP(传输控制)协议</strong></a>
           <ul>
             <li><a href="#tcp报文结构">TCP报文结构</a></li>
             <li><a href="#往返时间rtt与超时">往返时间(RTT)与超时</a></li>
@@ -132,7 +132,7 @@
         </li>
         <li><a href="#udp用户数据协议">UDP(用户数据)协议</a></li>
         <li><a href="#可靠数据传输原理">可靠数据传输原理</a></li>
-        <li><a href="#tcp传输控制协议">TCP(传输控制)协议</a>
+        <li><a href="#tcp传输控制协议"><strong>TCP(传输控制)协议</strong></a>
           <ul>
             <li><a href="#tcp报文结构">TCP报文结构</a></li>
             <li><a href="#往返时间rtt与超时">往返时间(RTT)与超时</a></li>
@@ -339,37 +339,37 @@
 <span class="n">NextSeqNum</span> <span class="o">=</span> <span class="n">InitialSeqNum</span>
 <span class="n">SendBase</span> <span class="o">=</span> <span class="n">InitialSeqNum</span>
 
-<span class="n">loop</span><span class="p">(</span><span class="err">永</span><span class="err">远</span><span class="p">)</span><span class="p">{</span>
+<span class="n">loop</span><span class="p">(</span><span class="err">永远</span><span class="p">){</span>
   <span class="k">switch</span><span class="p">(</span><span class="n">event</span><span class="p">)</span><span class="o">:</span>
     
-    <span class="k">case</span> <span class="err">从</span><span class="err">上</span><span class="err">层</span><span class="err">应</span><span class="err">用</span><span class="err">接</span><span class="err">收</span><span class="err">数</span><span class="err">据</span><span class="err">：</span>
-      <span class="err">生</span><span class="err">成</span><span class="err">序</span><span class="err">号</span><span class="err">为</span><span class="n">NextSeqNum的报文</span><span class="p">;</span>
-      <span class="k">if</span><span class="p">(</span><span class="err">定</span><span class="err">时</span><span class="err">器</span><span class="err">没</span><span class="err">有</span><span class="err">启</span><span class="err">动</span><span class="p">)</span><span class="p">{</span>
-        <span class="err">启</span><span class="err">动</span><span class="err">定</span><span class="err">时</span><span class="err">器</span><span class="p">;</span>
+    <span class="k">case</span> <span class="err">从上层应用接收数据：</span>
+      <span class="err">生成序号为</span><span class="n">NextSeqNum的报文</span><span class="p">;</span>
+      <span class="k">if</span><span class="p">(</span><span class="err">定时器没有启动</span><span class="p">){</span>
+        <span class="err">启动定时器</span><span class="p">;</span>
       <span class="p">}</span>
       <span class="err">向</span><span class="n">IP传递报文</span><span class="p">;</span>
-      <span class="n">NextSeqNum</span> <span class="o">+</span><span class="o">=</span> <span class="err">数</span><span class="err">据</span><span class="err">字</span><span class="err">节</span><span class="err">数</span><span class="p">;</span>
+      <span class="n">NextSeqNum</span> <span class="o">+=</span> <span class="err">数据字节数</span><span class="p">;</span>
       <span class="k">break</span><span class="p">;</span>
 
-    <span class="k">case</span> <span class="err">超</span><span class="err">时</span><span class="err">：</span>
-      <span class="err">重</span><span class="err">传</span><span class="n">SendBase对应的TCP报文</span><span class="p">;</span> <span class="cm">/*和GBN不同之处*/</span>
-      <span class="n">TimeoutInterval</span> <span class="o">*</span><span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-      <span class="err">重</span><span class="err">启</span><span class="err">定</span><span class="err">时</span><span class="err">器</span><span class="p">;</span> <span class="cm">/*每次重传一个报文后都会重新启动定时器*/</span>
+    <span class="k">case</span> <span class="err">超时：</span>
+      <span class="err">重传</span><span class="n">SendBase对应的TCP报文</span><span class="p">;</span> <span class="cm">/*和GBN不同之处*/</span>
+      <span class="n">TimeoutInterval</span> <span class="o">*=</span> <span class="mi">2</span><span class="p">;</span>
+      <span class="err">重启定时器</span><span class="p">;</span> <span class="cm">/*每次重传一个报文后都会重新启动定时器*/</span>
       <span class="k">break</span><span class="p">;</span>
 
-    <span class="k">case</span> <span class="err">接</span><span class="err">收</span><span class="n">ACK</span><span class="p">,</span> <span class="n">AN</span> <span class="o">=</span> <span class="nl">y</span><span class="p">:</span>
-      <span class="k">if</span><span class="p">(</span><span class="n">y</span> <span class="o">&gt;</span> <span class="n">SendBase</span><span class="p">)</span><span class="p">{</span>
+    <span class="k">case</span> <span class="err">接收</span><span class="n">ACK</span><span class="p">,</span> <span class="n">AN</span> <span class="o">=</span> <span class="nl">y</span><span class="p">:</span>
+      <span class="k">if</span><span class="p">(</span><span class="n">y</span> <span class="o">&gt;</span> <span class="n">SendBase</span><span class="p">){</span>
         <span class="n">SendBase</span> <span class="o">=</span> <span class="n">y</span><span class="p">;</span> <span class="cm">/*采取累计确认*/</span>
-        <span class="err">重</span><span class="err">新</span><span class="err">计</span><span class="err">算</span><span class="n">TimeoutInterval</span><span class="p">;</span>
-        <span class="k">if</span><span class="p">(</span><span class="err">仍</span><span class="err">有</span><span class="err">发</span><span class="err">送</span><span class="err">且</span><span class="err">未</span><span class="err">确</span><span class="err">认</span><span class="err">报</span><span class="err">文</span><span class="p">)</span><span class="p">{</span>
-          <span class="err">重</span><span class="err">启</span><span class="err">定</span><span class="err">时</span><span class="err">器</span><span class="p">;</span>
+        <span class="err">重新计算</span><span class="n">TimeoutInterval</span><span class="p">;</span>
+        <span class="k">if</span><span class="p">(</span><span class="err">仍有发送且未确认报文</span><span class="p">){</span>
+          <span class="err">重启定时器</span><span class="p">;</span>
         <span class="p">}</span>
       <span class="p">}</span>
       <span class="k">else</span><span class="p">{</span><span class="cm">/*实际上此时y == SendBase*/</span>
-          <span class="n">y的冗余数量</span> <span class="o">+</span><span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-          <span class="k">if</span><span class="p">(</span><span class="n">y的冗余数量</span> <span class="o">=</span><span class="o">=</span> <span class="mi">3</span><span class="p">)</span><span class="p">{</span>
+          <span class="n">y的冗余数量</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+          <span class="k">if</span><span class="p">(</span><span class="n">y的冗余数量</span> <span class="o">==</span> <span class="mi">3</span><span class="p">){</span>
             <span class="cm">/*快速重传*/</span>
-            <span class="err">立</span><span class="err">即</span><span class="err">重</span><span class="err">传</span><span class="err">序</span><span class="err">号</span><span class="err">为</span><span class="n">y对应的报文</span><span class="p">;</span>
+            <span class="err">立即重传序号为</span><span class="n">y对应的报文</span><span class="p">;</span>
           <span class="p">}</span>
       <span class="p">}</span>
       <span class="k">break</span><span class="p">;</span>

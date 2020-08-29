@@ -36,7 +36,7 @@
                 "width":  800 ,
                 "height":  600 
             },"genre": "blogs","keywords": "Android, java","wordcount":  113 ,
-        "url": "https:\/\/jarviszly.com\/blogs\/pairinandroidandjava\/","datePublished": "2020-03-25T10:45:04\x2b08:00","dateModified": "2020-03-25T10:45:04\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "https:\/\/jarviszly.com\/blogs\/pairinandroidandjava\/","datePublished": "2020-03-25T10:45:04\u002b08:00","dateModified": "2020-03-25T10:45:04\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "JarvisZhang",
                 "logo": {
@@ -132,13 +132,13 @@
 <span class="kd">public</span> <span class="kd">final</span> <span class="n">S</span> <span class="n">second</span>
 <span class="c1">//Constructors
 </span><span class="c1"></span><span class="n">Pair</span><span class="o">(</span><span class="n">F</span> <span class="n">first</span><span class="o">,</span> <span class="n">S</span> <span class="n">second</span><span class="o">)</span>
-<span class="n">e</span><span class="o">.</span><span class="na">g</span><span class="o">.</span> <span class="n">Pair</span> <span class="n">p1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Pair</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span><span class="n">String</span><span class="o">&gt;</span><span class="o">(</span><span class="n">0</span><span class="o">,</span><span class="s">&#34;hello&#34;</span><span class="o">)</span><span class="o">;</span>
+<span class="n">e</span><span class="o">.</span><span class="na">g</span><span class="o">.</span> <span class="n">Pair</span> <span class="n">p1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Pair</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span><span class="n">String</span><span class="o">&gt;(</span><span class="n">0</span><span class="o">,</span><span class="s">&#34;hello&#34;</span><span class="o">);</span>
 <span class="c1">// Public Methods
 </span><span class="c1"></span><span class="kd">static</span> <span class="o">&lt;</span><span class="n">A</span><span class="o">,</span><span class="n">B</span><span class="o">&gt;</span> <span class="n">Pair</span><span class="o">&lt;</span><span class="n">A</span><span class="o">,</span><span class="n">B</span><span class="o">&gt;</span> <span class="nf">creat</span><span class="o">(</span><span class="n">A</span> <span class="n">a</span><span class="o">,</span><span class="n">B</span> <span class="n">b</span><span class="o">)</span><span class="c1">//实际上内部调用构造函数完成。
-</span><span class="c1"></span><span class="n">e</span><span class="o">.</span><span class="na">g</span><span class="o">.</span> <span class="n">Pair</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">Pair</span><span class="o">.</span><span class="na">creat</span><span class="o">(</span><span class="n">1</span><span class="o">,</span><span class="s">&#34;world&#34;</span><span class="o">)</span><span class="o">;</span>
+</span><span class="c1"></span><span class="n">e</span><span class="o">.</span><span class="na">g</span><span class="o">.</span> <span class="n">Pair</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">Pair</span><span class="o">.</span><span class="na">creat</span><span class="o">(</span><span class="n">1</span><span class="o">,</span><span class="s">&#34;world&#34;</span><span class="o">);</span>
 
 <span class="kt">boolean</span> <span class="nf">equals</span><span class="o">(</span><span class="n">Object</span> <span class="n">o</span><span class="o">)</span>
-<span class="kt">int</span> <span class="nf">hashCode</span><span class="o">(</span><span class="o">)</span>
+<span class="kt">int</span> <span class="nf">hashCode</span><span class="o">()</span>
 <span class="n">String</span> <span class="n">toString</span>
 </code></pre></td></tr></table>
 </div>
@@ -170,14 +170,14 @@
 
 <span class="c1">//Constructors
 </span><span class="c1"></span><span class="n">Pair</span><span class="o">(</span><span class="n">K</span> <span class="n">key</span><span class="o">,</span> <span class="n">V</span> <span class="n">value</span><span class="o">)</span>
-<span class="n">e</span><span class="o">.</span><span class="na">g</span><span class="o">.</span> <span class="n">Pair</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">p1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Pair</span><span class="o">&lt;</span><span class="o">&gt;</span><span class="o">(</span><span class="n">0</span><span class="o">,</span><span class="s">&#34;hello&#34;</span><span class="o">)</span><span class="o">;</span>
+<span class="n">e</span><span class="o">.</span><span class="na">g</span><span class="o">.</span> <span class="n">Pair</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">p1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Pair</span><span class="o">&lt;&gt;(</span><span class="n">0</span><span class="o">,</span><span class="s">&#34;hello&#34;</span><span class="o">);</span>
 
 <span class="c1">//Instance Methods
 </span><span class="c1"></span><span class="kt">boolean</span> <span class="nf">equals</span><span class="o">(</span><span class="n">Object</span> <span class="n">o</span><span class="o">)</span>
-<span class="n">K</span> <span class="nf">getKey</span><span class="o">(</span><span class="o">)</span>
-<span class="n">V</span> <span class="nf">getValue</span><span class="o">(</span><span class="o">)</span>
-<span class="kt">int</span> <span class="nf">hashCode</span><span class="o">(</span><span class="o">)</span>
-<span class="n">String</span> <span class="nf">toString</span><span class="o">(</span><span class="o">)</span>
+<span class="n">K</span> <span class="nf">getKey</span><span class="o">()</span>
+<span class="n">V</span> <span class="nf">getValue</span><span class="o">()</span>
+<span class="kt">int</span> <span class="nf">hashCode</span><span class="o">()</span>
+<span class="n">String</span> <span class="nf">toString</span><span class="o">()</span>
 </code></pre></td></tr></table>
 </div>
 </div></div><div class="post-footer" id="post-footer">

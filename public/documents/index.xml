@@ -126,7 +126,7 @@
   在底层硬件看来操作系统就是一个C程序，一个状态机。
   操作系统是对进程状态机的模拟，这种模拟就是所谓的虚拟化，进程认为自己独占cpu。
   操作系统中常见API
- 进程(状态机)管理  fork: 拷贝一份当前的进程(包括内存，寄存器现场，操作系统的对象，libc中缓冲区等等)。 execve: 替换当前进程为另一个进程，从头执行。 exit: 退出当前进程。   存储(地址空间)管理  mmap: 地址空间和物理内存之间的映射。 brk: 虚拟地址空间管理   文件(数据对象)管理  open,close: 文件访问管理 read,write: 数据管理 mkdir, link, unlink: 目录管理      进程抽象-fork,execve,exit fork  复制一个一摸一样的进程出来，一个返回子进程pid，子进程则返回0。  1 2 3 4 5 6  #define N 2 for(int i = 0; i &amp;lt; N; ++i){ fork(); printf(&amp;#34;hello,world.</description>
+ 进程(状态机)管理  fork: 拷贝一份当前的进程(包括内存，寄存器现场，操作系统的对象，libc中缓冲区等等)。 execve: 替换当前进程为另一个进程，从头执行。 exit: 退出当前进程。   存储(地址空间)管理  mmap: 地址空间和物理内存之间的映射。 brk: 虚拟地址空间管理   文件(数据对象)管理  open,close: 文件访问管理 read,write: 数据管理 mkdir, link, unlink: 目录管理      进程抽象-fork,execve,exit fork  复制一个一摸一样的进程出来，一个返回子进程pid，子进程则返回0。  1 2 3 4 5 6  #define N 2  for(int i = 0; i &amp;lt; N; ++i){ fork(); printf(&amp;#34;hello,world.</description>
     </item>
     
     <item>
@@ -210,7 +210,7 @@
       <pubDate>Sun, 10 May 2020 21:48:04 +0800</pubDate>
       
       <guid>https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</guid>
-      <description>并发编程 并发和并行  并发(Concurrent): 多个执行流可以不按照一定的顺序执行 并行(Parallel): 多个执行流可以同时执行(多个处理器)  线程共享  线程之间共享所有代码和全局变量。 每个线程拥有自己的堆栈，独享寄存器。  C语言多线程编程之入门  POSIX Threads, man 7 pthreads, 需要gcc -lpthread gcc -I 选项增加include path(效果等价于 #include &amp;ldquo;&amp;quot;)  多线程编程之放弃 放弃原子性  由于 中断/异常 的机制，导致一个线程的代码(指令)不会按照其顺序执行。 例子：山寨支付宝(有钱人的生活就是这般枯燥无味)  1 2 3 4 5 6 7 8 9  int money bool pay(int cost){ if(money &amp;gt;= cost){ money -= cost; return true; } else return false; }   放弃顺序性  由于 编译器的优化 指令的顺序可能和程序的顺序不一致。 例子：不同优化等级的for循环累加  1 2 3 4  #define n 100000int sum = 0; for(int i = 0; i &amp;lt; n; ++i) sum++;    可以使用objdump -d 查看不同优化等级下的汇编代码。  放弃可见性  由于 CPU 的加速，导致指令不一定按照其显示的顺序执行。 例子：两个线程分别对x，y赋值并打印  1 2 3 4 5 6 7 8 9 10 11  int x = 0, y = 0; void thread_1(){ [1] x = 1; [2] printf(&amp;#34;y = %d\n&amp;#34;,y); } void thread_2(){ [3] y = 1; [4] printf(&amp;#34;x = %d\n&amp;#34;,x); }      x y 概率 调度顺序     0 0 0.</description>
+      <description>并发编程 并发和并行  并发(Concurrent): 多个执行流可以不按照一定的顺序执行 并行(Parallel): 多个执行流可以同时执行(多个处理器)  线程共享  线程之间共享所有代码和全局变量。 每个线程拥有自己的堆栈，独享寄存器。  C语言多线程编程之入门  POSIX Threads, man 7 pthreads, 需要gcc -lpthread gcc -I 选项增加include path(效果等价于 #include &amp;ldquo;&amp;quot;)  多线程编程之放弃 放弃原子性  由于 中断/异常 的机制，导致一个线程的代码(指令)不会按照其顺序执行。 例子：山寨支付宝(有钱人的生活就是这般枯燥无味)  1 2 3 4 5 6 7 8 9  int money bool pay(int cost){ if(money &amp;gt;= cost){ money -= cost; return true; } else return false; }   放弃顺序性  由于 编译器的优化 指令的顺序可能和程序的顺序不一致。 例子：不同优化等级的for循环累加  1 2 3 4  #define n 100000 int sum = 0; for(int i = 0; i &amp;lt; n; ++i) sum++;    可以使用objdump -d 查看不同优化等级下的汇编代码。  放弃可见性  由于 CPU 的加速，导致指令不一定按照其显示的顺序执行。 例子：两个线程分别对x，y赋值并打印  1 2 3 4 5 6 7 8 9 10 11  int x = 0, y = 0; void thread_1(){ [1] x = 1; [2] printf(&amp;#34;y = %d\n&amp;#34;,y); } void thread_2(){ [3] y = 1; [4] printf(&amp;#34;x = %d\n&amp;#34;,x); }      x y 概率 调度顺序     0 0 0.</description>
     </item>
     
     <item>
@@ -247,15 +247,6 @@
       
       <guid>https://jarviszly.com/documents/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/%E5%9B%BE%E5%85%83%E7%94%9F%E6%88%90%E8%AE%BE%E5%A4%87%E7%BA%A7%E7%AE%97%E6%B3%95/</guid>
       <description>图元生成(设备级)算法 输出图元类型  输出图元：描述图形构成的基本几何结构的子程序。 输出图元的生成：图形的设备级算法。 输出图元两大类  线画图元：矢量表示的二维图形  扫描转换：图形表示的数学方程离散化为点阵表示。   填充图元：点阵表示的二维图形  图形填充：确定图形定义点阵区域的内部点表示。      图元生成的基本操作  图元生成：将图形的几何表示转化为适当的设备操作  画点：将单个坐标位置转换成设备输出操作。 画线：将线路经换为两个指定端点位置间的多个点。    线画图元生成算法 扫描转换  将数学方程(无限的数学点)映射到有限像素区域内的实际的点 扫描转换：按光栅扫描显示原理对数学表示的线段离散取样方法  数值差分分析(DDA)算法  直接利用直线在x或者y方向的增量的线段扫描转换算法 离散取样: 使用x或y方向的单位增量间隔($\Delta x = \pm 1$或者$\Delta y = \pm 1$) 取样方向取决于直线斜率绝对值，哪个轴可变化距离大，就从哪个轴取样。 要求对于每一个像素点位置都必须取整 优点：比直接使用直线方程快 缺点：像素位置计算需要取整。  所以导致累计误差。 取整操作和浮点运算耗时。    </description>
-    </item>
-    
-    <item>
-      <title>第三部分</title>
-      <link>https://jarviszly.com/documents/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86/</link>
-      <pubDate>Wed, 11 Mar 2020 14:06:27 +0800</pubDate>
-      
-      <guid>https://jarviszly.com/documents/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86/</guid>
-      <description>Data Processing Data in the real world  不完全性：主要因为数据收集。 噪声：主要来自数据收集。  数据收集设备不准确 数据传输过程有干扰   不一致：主要来自数据集成  Major tasks of data preprocessing  数据清洗(Data cleaning)  修复丢失数据，消除噪声，解决不一致性等。   数据约简(Data reduction) 数据集成(Data integration)  将不同来源的数据集成   数据转换(Data transformation)  规范化和聚合(aggregation)    Data cleaning filling in missing values  丢弃有缺失的数据(Ignore the tuple) 人工填写缺失值(Fill in the missing value manually) 使用一个全局的常数(Use a global constant)  比如$&amp;quot;unknown&amp;quot;$   使用该属性的均值(Use the attribute mean) 使用同一类中该属性的均值(Use the attribute mean of the same class) 使用可能性最大的数值(Use the most probable value)  smoothing out noisy data  noise：在数据测量过程中随机错误或者误差。 装箱(Binning):  通过数据之间相邻关系来平滑一组排序好的数据   集群(Clustering)  将相似的数据放在同一集群中。   回归(Regression)  使用数学函数   数据审计(Data editing)  使用局部的平滑(local &amp;ldquo;smoothness&amp;rdquo;) 使用全局的一致(global consistency)    correcting inconsistent data  可以使用外部引用来修正一部分不一致数据 一些工具也可用于检测已知数据约束的违反情况  Data integration  模式集成(Schema integration)  元数据可以用来帮助模式集成   冗余处理(Handling redundancy)  在集成多个数据库时可能会出现冗余 一些冗余可以通过相关性分析来检测      Data transformation  规范化(Normalization)  使得属性的取值在一个规定的小范围内   平滑(Smoothing) 聚合(Aggregation) 泛化(Generalizaiton) 属性构造(Attribute construction)  Normalization  min-max normalization  $$v^\prime = \textcolor{green}{\dfrac{v - min_A}{max_A - min_A}}\textcolor{blue}{(new\_max_A - new\_min_A) }+ \textcolor{brown}{new\_min_A}$$  $\textcolor{green}{Part 1}$: 将原数据调整为单位1。 $\textcolor{blue}{Part 2}$: 得到新数据规范化后的长度。 $\textcolor{brown}{Part 3}$: 将新数据移到原来的位置。     z-score normalization  $$v^\prime = \dfrac{v - \bar{v}}{\sigma_v}$$   decimal scalint normalization  $$v^\prime = \dfrac{v}{10^j}$$ j is the smallest int such that $max(\vert v^\prime \vert) &amp;lt; 1$    Data reduction Feature selection/Atrribute Subset selection  去除不相关的属性，从Feature或者说Attribute中挑选一个子集，使得使用该子集的结果概率分布尽可能和原数据靠近。 贪心策略(1)：每次不断挑选最好的 贪心策略(2)：每次移除最差的 贪心策略(3)：每次不断挑选最好的并移除最差的 贪心策略(4)：使用决策树 遗传算法  信息增益(Information gain)  信息熵(information entropy)  信息熵是度量样本集合纯度最常用的一种指。 当前样本集合D中第k类样本所占的比例为$p_k(1,2,\cdots,n)$,则信息熵为 $$Ent(D) = -\sum_{i=1}^n p_k \log_2 p_k$$ $Ent(D)$的值越小，D的纯度越高。   信息增益  假定离散属性a有V个可能的取值$a_1,\cdots,a_v$，如果使用a来对样本集合D进行划分，则产生V个分支节点，其中第v个包含了D中所有在属性a上取值为$a_v$的数据记为$D_v$,则可以针对$D_v$计算出信息熵，同时赋予其权重$\dfrac{\vert D_v \vert}{\vert D\vert}$ 用属性a对样本集D进行划分所得到的信息增益为 $$Gain(D,a) = Ent(D) - \sum_{i=1}^V \dfrac{\vert D_v \vert}{\vert D\vert} Ent(D_v)$$ 一般而言，信息增益越大，则意味着使用属性a进行划分所得到的纯度提升越大。所以我们可以选择属性 $$a^* = \mathop{argmax}\limits_{a} Gain(D,a)$$    </description>
     </item>
     
     <item>
@@ -389,15 +380,6 @@
       
       <guid>https://jarviszly.com/documents/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90/</guid>
       <description>语法分析 语法分析器  基本作用  从词法分析器获得词法单元序列，确认该序列是否可以由语言的文法生成 对于语法错误的程序，报告错误信息 对于语法正确的程序，生成语法分析树(语法树) 语法分析器    分类  自顶向下语法分析器(用于处理LL文法)  从语法分析树的根部开始构造语法分析树   自底向上语法分析器(用于处理LR文法)  从语法分析树的叶子开始构造语法分析树   两个第一个L都表示从左到右，逐个扫描词法单元    上下文无关文法(CFG) 组成部分  终结符号：组成串的基本符号(词法单元名字) 非终结符号：表示串的集合的语法变量  在程序设计语言中通常对应于某个程序构造如$\textit{stmt}$   开始符号：某个被指定的非终结符号  对应的串的集合就是文法的语言   产生式：描述将终结符号和非终结符号组成串的方法  形式：头(左)部$\rightarrow$ 体(右)部 头部是一个非终结符号，右边是一个符号串 例如:$\textit{expression} \rightarrow \textit{expression} + \textit{term}$(加法表达式)    例子  简单算术表达式文法  终结符号: $id,+,-,*,/,(,)$ 非终结符号：$\textit{expression}, \textit{term}, \textit{factor}$ 开始符号：$\textit{expression}$ 产生式集合  $\textit{expression} \rightarrow \textit{expression} + \textit{term}$ $\textit{expression} \rightarrow \textit{expression} - \textit{term}$ $\textit{expression} \rightarrow \textit{term}$ $\textit{term} \rightarrow \textit{term} * \textit{factor}$ $\textit{term} \rightarrow \textit{term} / \textit{factor}$ $\textit{term} \rightarrow \textit{factor}$ $\textit{factor} \rightarrow (\textit{expression})$ $\textit{factor} \rightarrow id$   简单表示方法  $E\rightarrow E + T | E - T | T$ $T\rightarrow T*F | T / F | F$ $F\rightarrow (E) | id$ 上面的$|$是元符号      推导  将待处理的串的某个非终结符号替换为这个非终结符号的某个产生式的体(用右边替换左边) 从开始符号出发，不断替换，最终可以得到不同的 句型 正式定义   如果$A\rightarrow \gamma$是一个产生式，那么$\alpha A \beta \Longrightarrow \alpha \gamma \beta$</description>
-    </item>
-    
-    <item>
-      <title>第二部分</title>
-      <link>https://jarviszly.com/documents/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86/</link>
-      <pubDate>Wed, 26 Feb 2020 19:36:58 +0800</pubDate>
-      
-      <guid>https://jarviszly.com/documents/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86/</guid>
-      <description>&lt;h1 id=&#34;data-cube-and-olap&#34;&gt;Data Cube And OLAP&lt;/h1&gt;</description>
     </item>
     
     <item>

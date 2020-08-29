@@ -36,7 +36,7 @@
                 "width":  800 ,
                 "height":  600 
             },"genre": "blogs","keywords": "Android, Monkey","wordcount":  589 ,
-        "url": "https:\/\/jarviszly.com\/blogs\/android-monkey-events\/","datePublished": "2020-06-23T17:42:47\x2b08:00","dateModified": "2020-06-23T17:42:47\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "https:\/\/jarviszly.com\/blogs\/android-monkey-events\/","datePublished": "2020-06-23T17:42:47\u002b08:00","dateModified": "2020-06-23T17:42:47\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "JarvisZhang",
                 "logo": {
@@ -151,8 +151,8 @@
 </span><span class="c1"></span>    <span class="c1">//and to which source (e.g, screen or trackball), others can be mocked
 </span><span class="c1"></span>    <span class="k">private</span> <span class="k">val</span> <span class="py">mAction</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="k">private</span> <span class="k">var</span> <span class="py">mDownTime</span><span class="p">:</span> <span class="n">Long</span> <span class="p">=</span> <span class="p">-</span><span class="m">1L</span><span class="p">,</span>
     <span class="k">private</span> <span class="k">var</span> <span class="py">mEventTime</span><span class="p">:</span> <span class="n">Long</span> <span class="p">=</span> <span class="p">-</span><span class="m">1L</span><span class="p">,</span> <span class="k">private</span> <span class="k">var</span> <span class="py">mXPrecision</span> <span class="p">:</span> <span class="n">Float</span> <span class="p">=</span> <span class="m">1f</span><span class="p">,</span>
-    <span class="k">private</span> <span class="k">var</span> <span class="py">mYPrecision</span> <span class="p">:</span> <span class="n">Float</span> <span class="p">=</span> <span class="m">1f</span><span class="p">)</span> <span class="p">:</span> <span class="n">MonkeyEvent</span><span class="p">(</span><span class="n">type</span><span class="p">)</span><span class="p">{</span>
-        <span class="k">private</span> <span class="k">val</span> <span class="py">mPointers</span> <span class="p">=</span> <span class="n">SparseArray</span><span class="p">&lt;</span><span class="n">MotionEvent</span><span class="p">.</span><span class="n">PointerCoords</span><span class="p">&gt;</span><span class="p">(</span><span class="p">)</span>
+    <span class="k">private</span> <span class="k">var</span> <span class="py">mYPrecision</span> <span class="p">:</span> <span class="n">Float</span> <span class="p">=</span> <span class="m">1f</span><span class="p">)</span> <span class="p">:</span> <span class="n">MonkeyEvent</span><span class="p">(</span><span class="n">type</span><span class="p">){</span>
+        <span class="k">private</span> <span class="k">val</span> <span class="py">mPointers</span> <span class="p">=</span> <span class="n">SparseArray</span><span class="p">&lt;</span><span class="n">MotionEvent</span><span class="p">.</span><span class="n">PointerCoords</span><span class="p">&gt;()</span>
 
         <span class="c1">// If true, this is an intermediate step (more verbose logging, only)
 </span><span class="c1"></span>        <span class="k">private</span> <span class="k">var</span> <span class="py">mIntermediateNote</span><span class="p">:</span> <span class="n">Boolean</span> <span class="p">=</span> <span class="k">false</span>
@@ -165,14 +165,14 @@
 
         <span class="k">fun</span> <span class="nf">addPointer</span><span class="p">(</span><span class="n">id</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">Float</span><span class="p">)</span> <span class="p">=</span> <span class="n">addPointer</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="m">0F</span><span class="p">,</span> <span class="m">0F</span><span class="p">)</span>
         <span class="k">open</span> <span class="k">fun</span> <span class="nf">addPointer</span><span class="p">(</span><span class="n">id</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">Float</span><span class="p">,</span> <span class="n">pressure</span><span class="p">:</span> <span class="n">Float</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="n">Float</span><span class="p">)</span>  <span class="p">=</span> <span class="n">apply</span> <span class="p">{</span>
-            <span class="k">val</span> <span class="py">c</span> <span class="p">=</span> <span class="n">MotionEvent</span><span class="p">.</span><span class="n">PointerCoords</span><span class="p">(</span><span class="p">)</span>
+            <span class="k">val</span> <span class="py">c</span> <span class="p">=</span> <span class="n">MotionEvent</span><span class="p">.</span><span class="n">PointerCoords</span><span class="p">()</span>
             <span class="n">c</span><span class="p">.</span><span class="n">x</span> <span class="p">=</span> <span class="n">x</span>
             <span class="n">c</span><span class="p">.</span><span class="n">y</span> <span class="p">=</span> <span class="n">y</span>
             <span class="n">c</span><span class="p">.</span><span class="n">pressure</span> <span class="p">=</span> <span class="n">pressure</span>
             <span class="n">c</span><span class="p">.</span><span class="n">size</span> <span class="p">=</span> <span class="n">size</span>
             <span class="n">mPointers</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
         <span class="p">}</span>
-        <span class="p">.</span><span class="p">.</span><span class="p">.</span><span class="p">.</span><span class="p">.</span><span class="p">.</span>
+        <span class="p">......</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
@@ -216,10 +216,10 @@
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">fun</span> <span class="nf">getIntermediateNote</span><span class="p">(</span><span class="p">)</span> <span class="p">=</span> <span class="n">mIntermediateNote</span>
-<span class="k">fun</span> <span class="nf">getAction</span><span class="p">(</span><span class="p">)</span> <span class="p">=</span> <span class="n">mAction</span>
-<span class="k">fun</span> <span class="nf">getDownTime</span><span class="p">(</span><span class="p">)</span> <span class="p">=</span> <span class="n">mDownTime</span>
-<span class="k">fun</span> <span class="nf">getEventTime</span><span class="p">(</span><span class="p">)</span> <span class="p">=</span> <span class="n">mEventTime</span>
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">fun</span> <span class="nf">getIntermediateNote</span><span class="p">()</span> <span class="p">=</span> <span class="n">mIntermediateNote</span>
+<span class="k">fun</span> <span class="nf">getAction</span><span class="p">()</span> <span class="p">=</span> <span class="n">mAction</span>
+<span class="k">fun</span> <span class="nf">getDownTime</span><span class="p">()</span> <span class="p">=</span> <span class="n">mDownTime</span>
+<span class="k">fun</span> <span class="nf">getEventTime</span><span class="p">()</span> <span class="p">=</span> <span class="n">mEventTime</span>
 </code></pre></td></tr></table>
 </div>
 </div><ul>
@@ -267,41 +267,41 @@
 </span><span class="lnt">38
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">internal</span> <span class="k">fun</span> <span class="nf">getEvent</span><span class="p">(</span><span class="p">)</span><span class="p">:</span> <span class="n">MotionEvent</span> <span class="p">{</span>
-    <span class="k">val</span> <span class="py">pointerCount</span> <span class="p">=</span> <span class="n">mPointers</span><span class="p">.</span><span class="n">size</span><span class="p">(</span><span class="p">)</span>
-    <span class="k">val</span> <span class="py">pointerIds</span> <span class="p">=</span> <span class="n">IntArray</span><span class="p">(</span><span class="n">pointerCount</span><span class="p">)</span><span class="p">{</span><span class="n">mPointers</span><span class="p">.</span><span class="n">keyAt</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="p">}</span>
-    <span class="k">val</span> <span class="py">pointerCoords</span> <span class="p">=</span> <span class="n">Array</span><span class="p">&lt;</span><span class="n">MotionEventPointerCoords</span><span class="p">&gt;</span><span class="p">(</span><span class="n">pointerCount</span><span class="p">)</span><span class="p">{</span><span class="n">mPointers</span><span class="p">.</span><span class="n">valueA</span><span class="p">(</span><span class="n">it</span><span class="p">)</span><span class="p">}</span>
-    <span class="k">return</span> <span class="n">MotionEvent</span><span class="p">.</span><span class="n">obtain</span><span class="p">(</span><span class="n">mDownTime</span><span class="p">,</span> <span class="k">if</span><span class="p">(</span><span class="n">mEventTime</span> <span class="p">&lt;</span> <span class="m">0</span><span class="p">)</span> <span class="n">SystemClock</span><span class="p">.</span><span class="n">uptimeMillis</span><span class="p">(</span><span class="p">)</span><span class="k">else</span> <span class="n">mEventTime</span><span class="p">,</span>
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">internal</span> <span class="k">fun</span> <span class="nf">getEvent</span><span class="p">():</span> <span class="n">MotionEvent</span> <span class="p">{</span>
+    <span class="k">val</span> <span class="py">pointerCount</span> <span class="p">=</span> <span class="n">mPointers</span><span class="p">.</span><span class="n">size</span><span class="p">()</span>
+    <span class="k">val</span> <span class="py">pointerIds</span> <span class="p">=</span> <span class="n">IntArray</span><span class="p">(</span><span class="n">pointerCount</span><span class="p">){</span><span class="n">mPointers</span><span class="p">.</span><span class="n">keyAt</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="p">}</span>
+    <span class="k">val</span> <span class="py">pointerCoords</span> <span class="p">=</span> <span class="n">Array</span><span class="p">&lt;</span><span class="n">MotionEventPointerCoords</span><span class="p">&gt;(</span><span class="n">pointerCount</span><span class="p">){</span><span class="n">mPointers</span><span class="p">.</span><span class="n">valueA</span><span class="p">(</span><span class="n">it</span><span class="p">)}</span>
+    <span class="k">return</span> <span class="n">MotionEvent</span><span class="p">.</span><span class="n">obtain</span><span class="p">(</span><span class="n">mDownTime</span><span class="p">,</span> <span class="k">if</span><span class="p">(</span><span class="n">mEventTime</span> <span class="p">&lt;</span> <span class="m">0</span><span class="p">)</span> <span class="n">SystemClock</span><span class="p">.</span><span class="n">uptimeMillis</span><span class="p">()</span><span class="k">else</span> <span class="n">mEventTime</span><span class="p">,</span>
         <span class="n">mAction</span><span class="p">,</span> <span class="n">pointerCount</span><span class="p">,</span> <span class="n">pointerIds</span><span class="p">,</span><span class="n">pointerCoords</span><span class="p">,</span> <span class="n">mMetaState</span><span class="p">,</span> <span class="n">mXPrecision</span><span class="p">,</span><span class="n">mYPrecision</span><span class="p">,</span> <span class="n">mDeviceId</span><span class="p">,</span> <span class="n">mEdgeFlags</span><span class="p">,</span><span class="n">mSource</span><span class="p">,</span> <span class="n">mFlags</span>
     <span class="p">)</span>
 <span class="p">}</span>
-<span class="k">override</span> <span class="k">fun</span> <span class="nf">isThrottlable</span><span class="p">(</span><span class="p">)</span> <span class="p">=</span> <span class="n">mAction</span> <span class="p">=</span><span class="p">=</span><span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_UP</span>
-<span class="k">override</span> <span class="k">fun</span> <span class="nf">injectEvent</span><span class="p">(</span><span class="n">iwm</span><span class="p">:</span> <span class="n">IWindowManager</span><span class="p">,</span> <span class="n">iam</span><span class="p">:</span><span class="n">IActivityManager</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span><span class="p">:</span> <span class="n">Int</span> <span class="p">{</span>
+<span class="k">override</span> <span class="k">fun</span> <span class="nf">isThrottlable</span><span class="p">()</span> <span class="p">=</span> <span class="n">mAction</span> <span class="p">==</span><span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_UP</span>
+<span class="k">override</span> <span class="k">fun</span> <span class="nf">injectEvent</span><span class="p">(</span><span class="n">iwm</span><span class="p">:</span> <span class="n">IWindowManager</span><span class="p">,</span> <span class="n">iam</span><span class="p">:</span><span class="n">IActivityManager</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="n">Int</span><span class="p">):</span> <span class="n">Int</span> <span class="p">{</span>
     <span class="c1">//println(&#34;Inject Event! $mAction&#34;)
-</span><span class="c1"></span>    <span class="k">val</span> <span class="py">me</span> <span class="p">=</span> <span class="n">getEvent</span><span class="p">(</span><span class="p">)</span>
+</span><span class="c1"></span>    <span class="k">val</span> <span class="py">me</span> <span class="p">=</span> <span class="n">getEvent</span><span class="p">()</span>
     <span class="c1">//println(&#34;Inject Event! ${me.action}  ${meactionMasked}&#34;)
-</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="p">(</span><span class="n">verbose</span> <span class="p">&gt;</span> <span class="m">0</span> <span class="cm">/*&amp;&amp; !mIntermediateNote*/</span><span class="p">)</span> <span class="p">|</span><span class="p">|</span><span class="n">verbose</span> <span class="p">&gt;</span> <span class="m">1</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">val</span> <span class="py">points</span> <span class="p">=</span> <span class="n">StringBuilder</span><span class="p">(</span><span class="p">)</span>
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">((</span><span class="n">verbose</span> <span class="p">&gt;</span> <span class="m">0</span> <span class="cm">/*&amp;&amp; !mIntermediateNote*/</span><span class="p">)</span> <span class="p">||</span><span class="n">verbose</span> <span class="p">&gt;</span> <span class="m">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">val</span> <span class="py">points</span> <span class="p">=</span> <span class="n">StringBuilder</span><span class="p">()</span>
         <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="m">0</span> <span class="n">until</span> <span class="n">me</span><span class="p">.</span><span class="n">pointerCount</span><span class="p">)</span> <span class="p">{</span>
             <span class="n">points</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#34; ${me.getPointerId(i)}:({me.getX(i)},${me.getY(i)})&#34;</span><span class="p">)</span>
         <span class="p">}</span>
         <span class="n">Logger</span><span class="p">.</span><span class="n">lPrintln</span><span class="p">(</span><span class="s">&#34;:Sending ${getTypeLabel()}(${
 </span><span class="s"></span>            <span class="k">when</span><span class="p">(</span><span class="n">me</span><span class="p">.</span><span class="n">actionMasked</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_DOWN</span> <span class="p">-</span><span class="p">&gt;</span><span class="s">&#34;ACTION_DOWN&#34;</span>
-                <span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_MOVE</span> <span class="p">-</span><span class="p">&gt;</span><span class="s">&#34;ACTION_MOVE&#34;</span>
-                <span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_UP</span>   <span class="p">-</span><span class="p">&gt;</span><span class="s">&#34;ACTION_UP&#34;</span>
-                <span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_CANCEL</span> <span class="p">-</span><span class="p">&gt;</span><span class="s">&#34;ACTION_CANCEL&#34;</span>
-                <span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_POINTER_DOWN</span> <span class="p">-</span><span class="p">&gt;</span><span class="s">&#34;ACTION_POINTER_DOWN ${megetPointerId(me.actionIndex)}&#34;</span>
-                <span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_POINTER_UP</span> <span class="p">-</span><span class="p">&gt;</span><span class="s">&#34;ACTION_POINTER_UP ${me.getPointerI(me.actionIndex)}&#34;</span>
-                <span class="k">else</span> <span class="p">-</span><span class="p">&gt;</span> <span class="n">mAction</span>
+                <span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_DOWN</span> <span class="p">-&gt;</span><span class="s">&#34;ACTION_DOWN&#34;</span>
+                <span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_MOVE</span> <span class="p">-&gt;</span><span class="s">&#34;ACTION_MOVE&#34;</span>
+                <span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_UP</span>   <span class="p">-&gt;</span><span class="s">&#34;ACTION_UP&#34;</span>
+                <span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_CANCEL</span> <span class="p">-&gt;</span><span class="s">&#34;ACTION_CANCEL&#34;</span>
+                <span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_POINTER_DOWN</span> <span class="p">-&gt;</span><span class="s">&#34;ACTION_POINTER_DOWN ${megetPointerId(me.actionIndex)}&#34;</span>
+                <span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_POINTER_UP</span> <span class="p">-&gt;</span><span class="s">&#34;ACTION_POINTER_UP ${me.getPointerI(me.actionIndex)}&#34;</span>
+                <span class="k">else</span> <span class="p">-&gt;</span> <span class="n">mAction</span>
             <span class="p">}</span>
-        <span class="p">}</span><span class="p">)</span><span class="p">:</span><span class="err">$</span><span class="n">points</span><span class="s">&#34;)
+        <span class="p">}):</span><span class="err">$</span><span class="n">points</span><span class="s">&#34;)
 </span><span class="s"></span>    <span class="p">}</span>
     <span class="k">try</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="p">!</span><span class="n">InputManager</span><span class="p">.</span><span class="n">getInstance</span><span class="p">(</span><span class="p">)</span><span class="n">injectInputEvent</span><span class="p">(</span><span class="n">me</span><span class="p">,</span>
-                <span class="n">InputManagerINJECT_INPUT_EVENT_MODE_WAIT_FOR_FIISH</span><span class="p">)</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="n">INJECT_FAIL</span><span class="p">}</span>
+        <span class="k">if</span> <span class="p">(!</span><span class="n">InputManager</span><span class="p">.</span><span class="n">getInstance</span><span class="p">()</span><span class="n">injectInputEvent</span><span class="p">(</span><span class="n">me</span><span class="p">,</span>
+                <span class="n">InputManagerINJECT_INPUT_EVENT_MODE_WAIT_FOR_FIISH</span><span class="p">))</span> <span class="p">{</span><span class="k">return</span> <span class="n">INJECT_FAIL</span><span class="p">}</span>
     <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
-        <span class="n">me</span><span class="p">.</span><span class="n">recycle</span><span class="p">(</span><span class="p">)</span>
+        <span class="n">me</span><span class="p">.</span><span class="n">recycle</span><span class="p">()</span>
     <span class="p">}</span>
     <span class="k">return</span> <span class="n">INJECT_SUCCESS</span>
 <span class="p">}</span>
@@ -344,12 +344,12 @@
 <pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">MonkeyTouchEvent</span><span class="p">(</span><span class="n">action</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">:</span>
     <span class="n">MonkeyMotionEvent</span><span class="p">(</span><span class="n">EVENT_TYPE_TOUCH</span><span class="p">,</span> <span class="n">InputDevice</span><span class="p">.</span><span class="n">SOURCE_TOUCHSCREEN</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span> <span class="p">{</span>
 
-    <span class="k">override</span> <span class="k">fun</span> <span class="nf">getTypeLabel</span><span class="p">(</span><span class="p">)</span> <span class="p">=</span> <span class="s">&#34;Touch&#34;</span>
+    <span class="k">override</span> <span class="k">fun</span> <span class="nf">getTypeLabel</span><span class="p">()</span> <span class="p">=</span> <span class="s">&#34;Touch&#34;</span>
 
-    <span class="k">override</span> <span class="k">fun</span> <span class="nf">addPointer</span><span class="p">(</span><span class="n">id</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">Float</span><span class="p">,</span> <span class="n">pressure</span><span class="p">:</span> <span class="n">Float</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="n">Float</span><span class="p">)</span><span class="p">:</span> <span class="n">MonkeyMotionEvent</span> <span class="p">{</span>
+    <span class="k">override</span> <span class="k">fun</span> <span class="nf">addPointer</span><span class="p">(</span><span class="n">id</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">Float</span><span class="p">,</span> <span class="n">pressure</span><span class="p">:</span> <span class="n">Float</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="n">Float</span><span class="p">):</span> <span class="n">MonkeyMotionEvent</span> <span class="p">{</span>
         <span class="k">var</span> <span class="py">_y</span> <span class="p">=</span> <span class="n">y</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">_y</span> <span class="p">&lt;</span> <span class="n">statusBarHeight</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// avoid touch status bar
-</span><span class="c1"></span>            <span class="n">_y</span> <span class="p">=</span> <span class="p">(</span><span class="n">statusBarHeight</span> <span class="p">+</span> <span class="m">1</span><span class="p">)</span><span class="p">.</span><span class="n">toFloat</span><span class="p">(</span><span class="p">)</span>
+</span><span class="c1"></span>            <span class="n">_y</span> <span class="p">=</span> <span class="p">(</span><span class="n">statusBarHeight</span> <span class="p">+</span> <span class="m">1</span><span class="p">).</span><span class="n">toFloat</span><span class="p">()</span>
         <span class="p">}</span>
         <span class="k">return</span> <span class="k">super</span><span class="p">.</span><span class="n">addPointer</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">_y</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
     <span class="p">}</span>
@@ -360,10 +360,10 @@
 
         <span class="c1">//The status bar is 24 dp, and the statusBarHeight is its actual px
 </span><span class="c1"></span>        <span class="n">init</span> <span class="p">{</span>
-            <span class="k">val</span> <span class="py">display</span> <span class="p">=</span> <span class="n">DisplayManagerGlobal</span><span class="p">.</span><span class="n">getInstance</span><span class="p">(</span><span class="p">)</span><span class="p">.</span><span class="n">getRealDisplay</span><span class="p">(</span><span class="n">Display</span><span class="p">.</span><span class="n">DEFAULT_DISPLAY</span><span class="p">)</span>
-            <span class="k">val</span> <span class="py">dm</span> <span class="p">=</span> <span class="n">DisplayMetrics</span><span class="p">(</span><span class="p">)</span>
+            <span class="k">val</span> <span class="py">display</span> <span class="p">=</span> <span class="n">DisplayManagerGlobal</span><span class="p">.</span><span class="n">getInstance</span><span class="p">().</span><span class="n">getRealDisplay</span><span class="p">(</span><span class="n">Display</span><span class="p">.</span><span class="n">DEFAULT_DISPLAY</span><span class="p">)</span>
+            <span class="k">val</span> <span class="py">dm</span> <span class="p">=</span> <span class="n">DisplayMetrics</span><span class="p">()</span>
             <span class="n">display</span><span class="p">.</span><span class="n">getMetrics</span><span class="p">(</span><span class="n">dm</span><span class="p">)</span>
-            <span class="n">statusBarHeight</span> <span class="p">=</span> <span class="p">(</span><span class="m">24</span> <span class="p">*</span> <span class="n">dm</span><span class="p">.</span><span class="n">density</span><span class="p">)</span><span class="p">.</span><span class="n">toInt</span><span class="p">(</span><span class="p">)</span>
+            <span class="n">statusBarHeight</span> <span class="p">=</span> <span class="p">(</span><span class="m">24</span> <span class="p">*</span> <span class="n">dm</span><span class="p">.</span><span class="n">density</span><span class="p">).</span><span class="n">toInt</span><span class="p">()</span>
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>

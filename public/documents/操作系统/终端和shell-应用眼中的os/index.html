@@ -36,7 +36,7 @@
                 "width":  800 ,
                 "height":  600 
             },"genre": "documents","wordcount":  136 ,
-        "url": "https:\/\/jarviszly.com\/documents\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E7%BB%88%E7%AB%AF%E5%92%8Cshell-%E5%BA%94%E7%94%A8%E7%9C%BC%E4%B8%AD%E7%9A%84os\/","datePublished": "2020-06-19T22:05:47\x2b08:00","dateModified": "2020-06-19T22:05:47\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "https:\/\/jarviszly.com\/documents\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E7%BB%88%E7%AB%AF%E5%92%8Cshell-%E5%BA%94%E7%94%A8%E7%9C%BC%E4%B8%AD%E7%9A%84os\/","datePublished": "2020-06-19T22:05:47\u002b08:00","dateModified": "2020-06-19T22:05:47\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "JarvisZhang",
                 "logo": {
@@ -209,22 +209,22 @@
 <pre class="chroma"><code class="language-c" data-lang="c"><span class="n">echo</span> <span class="n">Hello</span> <span class="n">World</span> <span class="o">&gt;</span> <span class="n">a</span><span class="p">.</span><span class="n">txt</span>
 <span class="c1">//上面的shell命令发生了什么
 </span><span class="c1"></span>
-<span class="n">pid_t</span> <span class="n">p</span> <span class="o">=</span> <span class="n">fork</span><span class="p">(</span><span class="p">)</span><span class="p">;</span>
-<span class="k">if</span><span class="p">(</span><span class="n">p</span> <span class="o">=</span><span class="o">=</span> <span class="mi">0</span><span class="p">)</span><span class="p">{</span>
-    <span class="k">if</span><span class="p">(</span><span class="n">redirect_stdout</span><span class="p">)</span><span class="p">{</span>
-        <span class="n">fd</span> <span class="o">=</span> <span class="n">open</span><span class="p">(</span><span class="p">.</span><span class="p">.</span><span class="p">.</span><span class="p">)</span><span class="p">;</span>
-        <span class="n">dup</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">STDOUT_FILENO</span><span class="p">)</span><span class="p">;</span>
-        <span class="n">close</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span><span class="p">;</span>
+<span class="n">pid_t</span> <span class="n">p</span> <span class="o">=</span> <span class="n">fork</span><span class="p">();</span>
+<span class="k">if</span><span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">redirect_stdout</span><span class="p">){</span>
+        <span class="n">fd</span> <span class="o">=</span> <span class="n">open</span><span class="p">(...);</span>
+        <span class="n">dup</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">STDOUT_FILENO</span><span class="p">);</span>
+        <span class="n">close</span><span class="p">(</span><span class="n">fd</span><span class="p">);</span>
     <span class="p">}</span>
-    <span class="k">if</span><span class="p">(</span><span class="n">redirect_</span><span class="p">.</span><span class="p">.</span><span class="p">.</span><span class="p">)</span><span class="p">{</span>
-        <span class="p">.</span><span class="p">.</span><span class="p">.</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">redirect_</span><span class="p">...){</span>
+        <span class="p">...</span>
     <span class="p">}</span>
-    <span class="p">.</span><span class="p">.</span><span class="p">.</span>
-    <span class="n">execve</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="n">envp</span><span class="p">)</span><span class="p">;</span>
+    <span class="p">...</span>
+    <span class="n">execve</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="n">envp</span><span class="p">);</span>
 <span class="p">}</span>
 <span class="k">else</span><span class="p">{</span>
     <span class="c1">//如果父进程没有在后台执行就等到子进程完成
-</span><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">background</span><span class="p">)</span> <span class="n">wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">status</span><span class="p">)</span><span class="p">;</span>
+</span><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">background</span><span class="p">)</span> <span class="n">wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">status</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>

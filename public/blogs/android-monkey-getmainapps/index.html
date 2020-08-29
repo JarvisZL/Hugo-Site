@@ -36,7 +36,7 @@
                 "width":  800 ,
                 "height":  600 
             },"genre": "blogs","keywords": "Android, Monkey","wordcount":  158 ,
-        "url": "https:\/\/jarviszly.com\/blogs\/android-monkey-getmainapps\/","datePublished": "2020-06-16T16:37:05\x2b08:00","dateModified": "2020-06-16T16:37:05\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "https:\/\/jarviszly.com\/blogs\/android-monkey-getmainapps\/","datePublished": "2020-06-16T16:37:05\u002b08:00","dateModified": "2020-06-16T16:37:05\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "JarvisZhang",
                 "logo": {
@@ -137,15 +137,15 @@
 <td class="lntd">
 <pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">try</span><span class="p">{</span>
     <span class="n">mMainCategories</span><span class="p">.</span><span class="n">forEach</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">it</span> <span class="p">=</span><span class="p">=</span> <span class="k">null</span><span class="p">)</span> <span class="k">return</span><span class="n">@forEach</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">it</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span> <span class="k">return</span><span class="n">@forEach</span>
         <span class="k">val</span> <span class="py">intent</span> <span class="p">=</span> <span class="n">Intent</span><span class="p">(</span><span class="n">Intent</span><span class="p">.</span><span class="n">ACTION_MAIN</span><span class="p">)</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="n">isNotEmpty</span><span class="p">(</span><span class="p">)</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="n">isNotEmpty</span><span class="p">())</span> <span class="p">{</span>
             <span class="n">intent</span><span class="p">.</span><span class="n">addCategory</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
         <span class="p">}</span>
-        <span class="k">val</span> <span class="py">mainApps</span> <span class="p">=</span> <span class="n">mPm</span><span class="o">!!</span><span class="p">.</span><span class="n">queryIntentActivities</span><span class="p">(</span><span class="n">intent</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="n">UserHandle</span><span class="p">.</span><span class="n">myUserId</span><span class="p">(</span><span class="p">)</span><span class="p">)</span> 
-        <span class="p">.</span><span class="p">.</span><span class="p">.</span>      
+        <span class="k">val</span> <span class="py">mainApps</span> <span class="p">=</span> <span class="n">mPm</span><span class="o">!!</span><span class="p">.</span><span class="n">queryIntentActivities</span><span class="p">(</span><span class="n">intent</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="n">UserHandle</span><span class="p">.</span><span class="n">myUserId</span><span class="p">())</span> 
+        <span class="p">...</span>      
     <span class="p">}</span>
-    <span class="p">.</span><span class="p">.</span><span class="p">.</span>
+    <span class="p">...</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
@@ -181,26 +181,26 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">try</span><span class="p">{</span>
-    <span class="p">.</span><span class="p">.</span><span class="p">.</span>
-    <span class="n">mainApps</span><span class="p">.</span><span class="n">forEach</span> <span class="p">{</span> <span class="n">r</span> <span class="p">-</span><span class="p">&gt;</span>
+    <span class="p">...</span>
+    <span class="n">mainApps</span><span class="p">.</span><span class="n">forEach</span> <span class="p">{</span> <span class="n">r</span> <span class="p">-&gt;</span>
         <span class="k">val</span> <span class="py">packageName</span> <span class="p">=</span> <span class="n">r</span><span class="p">.</span><span class="n">activityInfoapplicationInfo</span><span class="p">.</span><span class="n">packageName</span>
         <span class="c1">//查看对应的包名是否在mValidPackages中或者mValidPackages为空
-</span><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="n">MonkeyUtils</span><span class="p">.</span><span class="n">sFiltercheckEnteringPackage</span><span class="p">(</span><span class="n">packageName</span><span class="p">)</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">mVerbose</span> <span class="p">&gt;</span><span class="p">=</span> <span class="m">2</span> <span class="p">)</span> <span class="p">{</span><span class="c1">// very verbose
+</span><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="n">MonkeyUtils</span><span class="p">.</span><span class="n">sFiltercheckEnteringPackage</span><span class="p">(</span><span class="n">packageName</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">mVerbose</span> <span class="p">&gt;=</span> <span class="m">2</span> <span class="p">)</span> <span class="p">{</span><span class="c1">// very verbose
 </span><span class="c1"></span>                <span class="n">Logger</span><span class="p">.</span><span class="n">lPrintln</span><span class="p">(</span><span class="s">&#34;// + Using main activity ${r.  activityInfo.name} from package &#34;</span> <span class="p">+</span>
                         <span class="s">&#34;$packageName)&#34;</span><span class="p">)</span>
             <span class="p">}</span>
             <span class="c1">//记录下app的uid和构建一个显示的ComponentName(用于之后启动对应的activity)
 </span><span class="c1"></span>            <span class="n">mUids</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">activityInfo</span><span class="p">.</span><span class="n">applicationInfo</span><span class="p">.</span><span class="n">uid</span><span class="p">)</span>
-            <span class="n">mMainApps</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">ComponentName</span><span class="p">(</span><span class="n">packageName</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span> <span class="n">activityInfo</span><span class="p">.</span><span class="n">name</span><span class="p">)</span><span class="p">)</span>
+            <span class="n">mMainApps</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">ComponentName</span><span class="p">(</span><span class="n">packageName</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span> <span class="n">activityInfo</span><span class="p">.</span><span class="n">name</span><span class="p">))</span>
         <span class="p">}</span> <span class="k">else</span><span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">mVerbose</span> <span class="p">&gt;</span><span class="p">=</span> <span class="m">3</span><span class="p">)</span> <span class="p">{</span> <span class="c1">//very very verbose
+            <span class="k">if</span> <span class="p">(</span><span class="n">mVerbose</span> <span class="p">&gt;=</span> <span class="m">3</span><span class="p">)</span> <span class="p">{</span> <span class="c1">//very very verbose
 </span><span class="c1"></span>                <span class="n">Logger</span><span class="p">.</span><span class="n">lPrintln</span><span class="p">(</span><span class="s">&#34;// - NOT USING main activity ${r.  activityInfo.name} from package&#34;</span> <span class="p">+</span>
                         <span class="s">&#34;$packageName)&#34;</span><span class="p">)</span>
             <span class="p">}</span>
         <span class="p">}</span>
     <span class="p">}</span>
-    <span class="p">.</span><span class="p">.</span><span class="p">.</span>
+    <span class="p">...</span>
 <span class="p">}</span>
 
 </code></pre></td></tr></table>
@@ -215,7 +215,7 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="c1">//当得到可以启动的app不为空时，返回true.
-</span><span class="c1"></span><span class="k">return</span> <span class="k">if</span> <span class="p">(</span><span class="n">mMainApps</span><span class="p">.</span><span class="n">isEmpty</span><span class="p">(</span><span class="p">)</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="c1"></span><span class="k">return</span> <span class="k">if</span> <span class="p">(</span><span class="n">mMainApps</span><span class="p">.</span><span class="n">isEmpty</span><span class="p">())</span> <span class="p">{</span>
             <span class="n">Logger</span><span class="p">.</span><span class="n">lPrintln</span><span class="p">(</span><span class="s">&#34;** No activities found to run monkey aborted&#34;</span><span class="p">)</span>
             <span class="k">false</span>
 <span class="p">}</span> <span class="k">else</span> <span class="k">true</span>

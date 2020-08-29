@@ -116,7 +116,7 @@
   在底层硬件看来操作系统就是一个C程序，一个状态机。
   操作系统是对进程状态机的模拟，这种模拟就是所谓的虚拟化，进程认为自己独占cpu。
   操作系统中常见API
- 进程(状态机)管理  fork: 拷贝一份当前的进程(包括内存，寄存器现场，操作系统的对象，libc中缓冲区等等)。 execve: 替换当前进程为另一个进程，从头执行。 exit: 退出当前进程。   存储(地址空间)管理  mmap: 地址空间和物理内存之间的映射。 brk: 虚拟地址空间管理   文件(数据对象)管理  open,close: 文件访问管理 read,write: 数据管理 mkdir, link, unlink: 目录管理      进程抽象-fork,execve,exit fork  复制一个一摸一样的进程出来，一个返回子进程pid，子进程则返回0。  1 2 3 4 5 6  #define N 2 for(int i = 0; i &amp;lt; N; ++i){ fork(); printf(&amp;#34;hello,world.</description>
+ 进程(状态机)管理  fork: 拷贝一份当前的进程(包括内存，寄存器现场，操作系统的对象，libc中缓冲区等等)。 execve: 替换当前进程为另一个进程，从头执行。 exit: 退出当前进程。   存储(地址空间)管理  mmap: 地址空间和物理内存之间的映射。 brk: 虚拟地址空间管理   文件(数据对象)管理  open,close: 文件访问管理 read,write: 数据管理 mkdir, link, unlink: 目录管理      进程抽象-fork,execve,exit fork  复制一个一摸一样的进程出来，一个返回子进程pid，子进程则返回0。  1 2 3 4 5 6  #define N 2  for(int i = 0; i &amp;lt; N; ++i){ fork(); printf(&amp;#34;hello,world.</description>
     </item>
     
     <item>
@@ -200,7 +200,7 @@
       <pubDate>Sun, 10 May 2020 21:48:04 +0800</pubDate>
       
       <guid>https://jarviszly.com/documents/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</guid>
-      <description>并发编程 并发和并行  并发(Concurrent): 多个执行流可以不按照一定的顺序执行 并行(Parallel): 多个执行流可以同时执行(多个处理器)  线程共享  线程之间共享所有代码和全局变量。 每个线程拥有自己的堆栈，独享寄存器。  C语言多线程编程之入门  POSIX Threads, man 7 pthreads, 需要gcc -lpthread gcc -I 选项增加include path(效果等价于 #include &amp;ldquo;&amp;quot;)  多线程编程之放弃 放弃原子性  由于 中断/异常 的机制，导致一个线程的代码(指令)不会按照其顺序执行。 例子：山寨支付宝(有钱人的生活就是这般枯燥无味)  1 2 3 4 5 6 7 8 9  int money bool pay(int cost){ if(money &amp;gt;= cost){ money -= cost; return true; } else return false; }   放弃顺序性  由于 编译器的优化 指令的顺序可能和程序的顺序不一致。 例子：不同优化等级的for循环累加  1 2 3 4  #define n 100000int sum = 0; for(int i = 0; i &amp;lt; n; ++i) sum++;    可以使用objdump -d 查看不同优化等级下的汇编代码。  放弃可见性  由于 CPU 的加速，导致指令不一定按照其显示的顺序执行。 例子：两个线程分别对x，y赋值并打印  1 2 3 4 5 6 7 8 9 10 11  int x = 0, y = 0; void thread_1(){ [1] x = 1; [2] printf(&amp;#34;y = %d\n&amp;#34;,y); } void thread_2(){ [3] y = 1; [4] printf(&amp;#34;x = %d\n&amp;#34;,x); }      x y 概率 调度顺序     0 0 0.</description>
+      <description>并发编程 并发和并行  并发(Concurrent): 多个执行流可以不按照一定的顺序执行 并行(Parallel): 多个执行流可以同时执行(多个处理器)  线程共享  线程之间共享所有代码和全局变量。 每个线程拥有自己的堆栈，独享寄存器。  C语言多线程编程之入门  POSIX Threads, man 7 pthreads, 需要gcc -lpthread gcc -I 选项增加include path(效果等价于 #include &amp;ldquo;&amp;quot;)  多线程编程之放弃 放弃原子性  由于 中断/异常 的机制，导致一个线程的代码(指令)不会按照其顺序执行。 例子：山寨支付宝(有钱人的生活就是这般枯燥无味)  1 2 3 4 5 6 7 8 9  int money bool pay(int cost){ if(money &amp;gt;= cost){ money -= cost; return true; } else return false; }   放弃顺序性  由于 编译器的优化 指令的顺序可能和程序的顺序不一致。 例子：不同优化等级的for循环累加  1 2 3 4  #define n 100000 int sum = 0; for(int i = 0; i &amp;lt; n; ++i) sum++;    可以使用objdump -d 查看不同优化等级下的汇编代码。  放弃可见性  由于 CPU 的加速，导致指令不一定按照其显示的顺序执行。 例子：两个线程分别对x，y赋值并打印  1 2 3 4 5 6 7 8 9 10 11  int x = 0, y = 0; void thread_1(){ [1] x = 1; [2] printf(&amp;#34;y = %d\n&amp;#34;,y); } void thread_2(){ [3] y = 1; [4] printf(&amp;#34;x = %d\n&amp;#34;,x); }      x y 概率 调度顺序     0 0 0.</description>
     </item>
     
   </channel>
